@@ -25,7 +25,7 @@ export const ActionButton: React.FC<ActionButtonProps> = ({
   return (
     <button
       onClick={onClick}
-      className={`rounded-[100px] inline-flex justify-center items-center gap-5 transition-all duration-300 font-vazirmatn text-lg font-medium ${sizeClasses} ${variantClasses} ${className}`}
+      className={`rounded-[100px] w-300px inline-flex justify-center items-center gap-5 transition-all duration-300 font-vazirmatn text-lg font-medium ${sizeClasses} ${variantClasses} ${className}`}
     >
       <span className="text-center [text-shadow:_0px_2px_4px_rgb(0_0_0_/_0.20)]">
         {label}
