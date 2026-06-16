@@ -1,5 +1,4 @@
 import { ActionButton } from "@/components/ui/ActionButton";
-import { ArrowRight } from "lucide-react";
 
 export const ProgramBanner = () => {
   return (

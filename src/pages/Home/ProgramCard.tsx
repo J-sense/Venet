@@ -308,7 +308,7 @@ const ProgramCard: React.FC<{ program: ProgramItem }> = ({ program }) => {
           onMouseEnter={(e) => {
             const el = e.currentTarget as HTMLElement;
             el.style.backdropFilter = "blur(16px) saturate(1.8)";
-            el.style.WebkitBackdropFilter = "blur(16px) saturate(1.8)";
+            el.style.setProperty("-webkit-backdrop-filter", "blur(16px) saturate(1.8)");
             el.style.background =
               "linear-gradient(180deg, rgba(59,130,246,0.22) 0%, rgba(59,130,246,0.10) 100%)";
             el.style.boxShadow =
@@ -319,7 +319,7 @@ const ProgramCard: React.FC<{ program: ProgramItem }> = ({ program }) => {
           onMouseLeave={(e) => {
             const el = e.currentTarget as HTMLElement;
             el.style.backdropFilter = "blur(12px) saturate(1.6)";
-            el.style.WebkitBackdropFilter = "blur(12px) saturate(1.6)";
+            el.style.setProperty("-webkit-backdrop-filter", "blur(12px) saturate(1.6)");
             el.style.background =
               "linear-gradient(180deg, rgba(255,255,255,0.11) 0%, rgba(255,255,255,0.04) 100%)";
             el.style.boxShadow =

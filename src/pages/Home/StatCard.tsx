@@ -1,5 +1,4 @@
 import { ActionButton } from "@/components/ui/ActionButton";
-import { SectionHeader } from "@/components/ui/TItleWithSubtitle";
 import React, { useState, useEffect, useCallback, useRef } from "react";
 
 interface TrainerItem {

@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router";
 import { Menu, X } from "lucide-react";
+import { AssessmentModal } from "@/components/assessment/AssessmentModal";
 
 export const CommonNavbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-
+  const [isAssessmentOpen, setIsAssessmentOpen] = useState(false);
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -59,13 +60,19 @@ export const CommonNavbar = () => {
               >
                 Log In
               </Link>
-              <Link
-                to="/register"
-                className="px-5 py-2 rounded-full text-sm font-medium text-white bg-[#3B82F6] hover:bg-blue-500 transition-colors shadow-lg shadow-blue-500/20"
+              <button
+                onClick={() => setIsAssessmentOpen(true)}
+                className="bg-[#007AFF] text-white px-8 py-4 rounded-full font-bold"
               >
-                Start Free
-              </Link>
+                Start Free Assessment
+              </button>
             </div>
+            {
+              <AssessmentModal
+                isOpen={isAssessmentOpen}
+                onClose={() => setIsAssessmentOpen(false)}
+              />
+            }
 
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -127,13 +134,12 @@ export const CommonNavbar = () => {
             >
               Log In
             </Link>
-            <Link
-              to="/register"
-              onClick={() => setMobileMenuOpen(false)}
-              className="w-full text-center py-3 bg-[#3B82F6] rounded-xl text-sm font-medium text-white"
+            <button
+              onClick={() => setIsAssessmentOpen(true)}
+              className="bg-[#007AFF] text-white px-8 py-4 rounded-full font-bold"
             >
-              Start Free
-            </Link>
+              Start Free Assessment
+            </button>
           </div>
         </div>
       )}

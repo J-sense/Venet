@@ -1,6 +1,5 @@
 import { ActionButton } from "@/components/ui/ActionButton";
 import { BlackActionButton } from "@/components/ui/BlackActionButton";
-import { Link } from "react-router";
 
 export const Banner = () => {
   return (

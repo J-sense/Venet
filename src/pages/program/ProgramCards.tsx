@@ -1,7 +1,6 @@
 import { BookOpen, Brain, Check, Heart } from "lucide-react";
-import React from "react";
 
-const programs = [
+export const programs = [
   {
     title: "Health & Fitness Program",
     desc: "Personalized fitness plans, nutrition guidance, and wellness tracking to help you achieve your health goals.",
