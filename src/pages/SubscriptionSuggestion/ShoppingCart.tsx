@@ -114,7 +114,7 @@ export const ShoppingCartPage = () => {
                     Monthly Total
                   </span>
                   <span className="text-white text-2xl font-normal font-['Inter']">
-                    $49.98
+                    ${total.toFixed(2)}
                   </span>
                 </div>
                 <p className="text-zinc-500 text-base font-normal font-['Inter']">

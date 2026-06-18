@@ -27,7 +27,7 @@ export const ProgramBanner = () => {
         <div className="relative w-full">
           {/* Replace this src with your specific dashboard image */}
           <img
-            src="/ProgrammeBanner.png"
+            src="/Mask group.png"
             alt="Programs Dashboard"
             className="w-full h-auto rounded-3xl shadow-2xl "
           />
