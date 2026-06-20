@@ -24,9 +24,10 @@ import ExpertsForgotPassword from "./pages/authPages/ExpertsForgotPassword";
 import ExpertsOverview from "./pages/dashboard/experts/overView/ExpertsOverview";
 import ExpertesAvailability from "./pages/dashboard/experts/Availability/ExpertesAvailability";
 import ExpertsProfile from "./pages/dashboard/experts/profile/ExpertsProfile";
-import ExpertsReview from "./pages/dashboard/experts/Reviews/ExpertsReview";
+
 import ExpertSettings from "./pages/dashboard/experts/Setting/ExpertSettings";
 import EXpertsMySession from "./pages/dashboard/experts/MySessions/EXpertsMySession";
+import { ExpertsReview } from "./pages/dashboard/experts/Reviews/ExpertsReview";
 
 export const App = () => {
   return (
