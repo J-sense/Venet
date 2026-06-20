@@ -64,7 +64,7 @@ export const navItemsForExperts: MenuItemsType[] = [
   },
   {
     label: "My Sessions",
-    href: "/dashboard/experts/my-sessions",
+    href: "/dashboard/experts/consultation",
     icon: VideoIcon,
   },
 ];

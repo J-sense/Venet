@@ -28,6 +28,7 @@ import ExpertsProfile from "./pages/dashboard/experts/profile/ExpertsProfile";
 import ExpertSettings from "./pages/dashboard/experts/Setting/ExpertSettings";
 import EXpertsMySession from "./pages/dashboard/experts/MySessions/EXpertsMySession";
 import { ExpertsReview } from "./pages/dashboard/experts/Reviews/ExpertsReview";
+import { ChatWindow } from "./pages/dashboard/experts/MySessions/ChatWindow";
 
 export const App = () => {
   return (
@@ -72,7 +73,12 @@ export const App = () => {
         <Route path="profile" element={<ExpertsProfile />} />
         <Route path="Reviews" element={<ExpertsReview />} />
         <Route path="Settings" element={<ExpertSettings />} />
-        <Route path="my-sessions" element={<EXpertsMySession />} />
+        {/* <Route path="my-sessions" element={<EXpertsMySession />} /> */}
+        <Route path="consultation" element={<EXpertsMySession />}>
+          {/* Remove the hardcoded div and point to ChatWindow */}
+          <Route path=":section" element={<ChatWindow />} />
+          <Route path=":section/:id" element={<ChatWindow />} />
+        </Route>
       </Route>
     </Routes>
   );
