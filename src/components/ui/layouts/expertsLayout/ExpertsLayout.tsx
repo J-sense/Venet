@@ -28,7 +28,7 @@ const ExpertsLayout = ({ navItems, user }: UserLayoutProps) => {
       {/* Main Content Area */}
       <div className="flex flex-col flex-1 lg:ml-[260px] transition-all duration-300 relative z-10">
         {/* Top Header */}
-        <header className="sticky top-0 z-40 h-20 bg-white/80 backdrop-blur-md border-b border-[#E8DED0] px-4 sm:px-8 flex items-center justify-between">
+        <header className="sticky top-0 z-40 h-20 bg-[#18181B80] backdrop-blur-md border-b border-[#E8DED0] px-4 sm:px-8 flex items-center justify-between">
           {/* Left: Mobile Menu Toggle */}
           <div className="flex items-center gap-4 flex-1">
             <button
@@ -49,7 +49,7 @@ const ExpertsLayout = ({ navItems, user }: UserLayoutProps) => {
           </div>
         </header>
 
-        <main className="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto">
+        <main className="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto bg-[#000000]">
           <Outlet />
         </main>
       </div>

@@ -21,6 +21,12 @@ import { VerifyIdentity } from "./pages/authPages/VerifyIdentity";
 import ExpertsRegister from "./pages/authPages/ExpertsRegister";
 import ExpertsLogin from "./pages/authPages/ExpertsLogin";
 import ExpertsForgotPassword from "./pages/authPages/ExpertsForgotPassword";
+import ExpertsOverview from "./pages/dashboard/experts/overView/ExpertsOverview";
+import ExpertesAvailability from "./pages/dashboard/experts/Availability/ExpertesAvailability";
+import ExpertsProfile from "./pages/dashboard/experts/profile/ExpertsProfile";
+import ExpertsReview from "./pages/dashboard/experts/Reviews/ExpertsReview";
+import ExpertSettings from "./pages/dashboard/experts/Setting/ExpertSettings";
+import EXpertsMySession from "./pages/dashboard/experts/MySessions/EXpertsMySession";
 
 export const App = () => {
   return (
@@ -58,7 +64,15 @@ export const App = () => {
       <Route
         path="/dashboard/experts"
         element={<ExpertsLayout navItems={navItemsForExperts} />}
-      ></Route>
+      >
+        <Route index element={<ExpertsOverview />} />
+        <Route path="overview" element={<ExpertsOverview />} />
+        <Route path="availability" element={<ExpertesAvailability />} />
+        <Route path="profile" element={<ExpertsProfile />} />
+        <Route path="Reviews" element={<ExpertsReview />} />
+        <Route path="Settings" element={<ExpertSettings />} />
+        <Route path="my-sessions" element={<EXpertsMySession />} />
+      </Route>
     </Routes>
   );
 };

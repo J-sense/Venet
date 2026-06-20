@@ -1,7 +1,15 @@
 import {
+  AppWindow,
+  CalendarDays,
+  Camera,
+  CircleUser,
   History,
   LayoutDashboard,
+  Settings,
   ShoppingBag,
+  Stars,
+  VideoIcon,
+  Videotape,
   type LucideIcon,
 } from "lucide-react";
 
@@ -30,18 +38,33 @@ export const navItemsForUser: MenuItemsType[] = [
 ];
 export const navItemsForExperts: MenuItemsType[] = [
   {
-    label: "Homesss",
-    href: "/admin/overview",
-    icon: LayoutDashboard,
+    label: "Overview",
+    href: "/dashboard/experts/overview",
+    icon: AppWindow,
   },
   {
-    label: "Userssss",
-    href: "/admin/users",
-    icon: History,
+    label: "Availability",
+    href: "/dashboard/experts/availability",
+    icon: CalendarDays,
   },
   {
-    label: "Revenuesss",
-    href: "/admin/revinue",
-    icon: ShoppingBag,
+    label: "Profile",
+    href: "/dashboard/experts/profile",
+    icon: CircleUser,
+  },
+  {
+    label: "Reviews",
+    href: "/dashboard/experts/Reviews",
+    icon: Stars,
+  },
+  {
+    label: "Settings",
+    href: "/dashboard/experts/Settings",
+    icon: Settings,
+  },
+  {
+    label: "My Sessions",
+    href: "/dashboard/experts/my-sessions",
+    icon: VideoIcon,
   },
 ];
