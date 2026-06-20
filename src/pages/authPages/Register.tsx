@@ -14,8 +14,11 @@ import { Button } from "@/components/ui/button";
 import { FormCard } from "@/components/auth/FormCard";
 import { FormInput } from "@/components/ui/FormInput";
 import { Checkbox } from "@/components/ui/checkbox";
+import { useState } from "react";
+import { AgreementModal } from "./AgreementModal";
+import { useNavigate } from "react-router";
 
-// 1. Define the registration schema
+// Schema
 const registerSchema = z
   .object({
     firstName: z.string().min(2, "First name is required"),
@@ -33,6 +36,11 @@ const registerSchema = z
   });
 
 export const Register = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const navigate = useNavigate();
+  const handleAcceptRegiste = () => {
+    navigate("/auth/experts-register");
+  };
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
@@ -122,7 +130,7 @@ export const Register = () => {
             {/* Submit Button */}
             <Button
               type="submit"
-              className="w-full h-14 px-7 py-3 bg-blue-600 hover:bg-blue-700 rounded-[82px] 
+              className="w-full h-14 px-7 py-3 bg-[#0A66C2] hover:bg-blue-700 rounded-[82px] 
                          inline-flex justify-center items-center gap-2.5 text-white text-md 
                          font-medium leading-8 transition-all"
             >
@@ -136,14 +144,22 @@ export const Register = () => {
                 Sign In
               </a>
             </div>
-
-            <div className="text-center text-xs text-gray-600 pt-2">
-              Are you a practitioner?{" "}
-              <a href="/auth/expert" className="text-blue-500 underline">
-                Join as an Expert
-              </a>
-            </div>
           </form>
+
+          {/* Join as Expert Link */}
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className="mt-4 text-blue-500 hover:text-blue-400 underline text-sm w-full text-center"
+          >
+            Join as an Expert
+          </button>
+
+          {/* Centered Modal */}
+          <AgreementModal
+            isOpen={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+            onAccept={handleAcceptRegiste}
+          />
         </Form>
       </FormCard>
     </AuthLayout>

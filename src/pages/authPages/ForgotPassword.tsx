@@ -39,7 +39,7 @@ export const ForgotPassword = () => {
 
             <Button
               type="submit"
-              className="w-full bg-blue-600 hover:bg-blue-700 h-14 rounded-[82px] text-md font-medium"
+              className="w-full bg-[#0A66C2] hover:bg-blue-700 h-14 rounded-[82px] text-md font-medium"
             >
               Send Reset Link
             </Button>

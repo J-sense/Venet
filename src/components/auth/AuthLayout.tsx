@@ -40,7 +40,7 @@ export const AuthLayout = ({ children, title, subtitle }: AuthLayoutProps) => {
 
           {/* Form Container */}
           <div className="w-full md:max-w-[400px] lg:max-w-[400px] relative z-10">
-            <div className="rounded-3xl bg-[#0A0A0A]/80 backdrop-blur-2xl border border-white/[0.08] p-8 shadow-[0_8px_40px_0_rgba(0,0,0,0.6)]">
+            <div className="rounded-3xl bg-[#191C2B] backdrop-blur-2xl border border-white/[0.08] p-8 shadow-[0_8px_40px_0_rgba(0,0,0,0.6)]">
               <div className="text-center my-2">
                 <h1 className="text-3xl font-bold text-white tracking-tight mb-2">
                   {title}

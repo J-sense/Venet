@@ -18,6 +18,9 @@ import { Login } from "./pages/authPages/Login";
 import { Register } from "./pages/authPages/Register";
 import { ForgotPassword } from "./pages/authPages/ForgotPassword";
 import { VerifyIdentity } from "./pages/authPages/VerifyIdentity";
+import ExpertsRegister from "./pages/authPages/ExpertsRegister";
+import ExpertsLogin from "./pages/authPages/ExpertsLogin";
+import ExpertsForgotPassword from "./pages/authPages/ExpertsForgotPassword";
 
 export const App = () => {
   return (
@@ -47,6 +50,9 @@ export const App = () => {
         <Route path="register" element={<Register />} />
         <Route path="forgot-password" element={<ForgotPassword />} />
         <Route path="otp-verification" element={<VerifyIdentity />} />
+        <Route path="experts-register" element={<ExpertsRegister />} />
+        <Route path="experts-login" element={<ExpertsLogin />} />
+        <Route path="experts-forget" element={<ExpertsForgotPassword />} />
         {/* <Route path="forgot-password" element={<ForgotPassword />} /> */}
       </Route>
       <Route

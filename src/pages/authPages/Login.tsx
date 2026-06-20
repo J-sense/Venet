@@ -64,7 +64,7 @@ export const Login = () => {
             {/* Sign In Button */}
             <button
               type="submit"
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3.5 rounded-full transition-all"
+              className="w-full bg-[#0A66C2] hover:bg-blue-700 text-white font-bold py-3.5 rounded-full transition-all"
             >
               Sign In
             </button>
@@ -83,7 +83,7 @@ export const Login = () => {
               type="button"
               className="w-full flex items-center justify-center gap-3 bg-blue-600/10 border border-blue-600/20 text-white py-3 rounded-full hover:bg-blue-600/20 transition-all"
             >
-              <img src="/google-icon.svg" alt="Google" className="w-5 h-5" />
+              <img src="/Google.png" alt="Google" className="w-5 h-5" />
               Google
             </button>
 

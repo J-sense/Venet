@@ -131,7 +131,7 @@ export const FormInput = ({
                 placeholder={placeholder}
                 className={[
                   "h-11 rounded text-sm text-white placeholder-gray-600",
-                  "bg-white/[0.04] border border-[#334155]",
+                  " border border-[#334155]",
                   "focus-visible:ring-0 focus-visible:ring-offset-0",
                   "focus-visible:border-blue-500/60 focus-visible:bg-blue-500/[0.05]",
                   "transition-all duration-200",
@@ -163,3 +163,5 @@ export const FormInput = ({
     />
   );
 };
+
+
