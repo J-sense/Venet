@@ -1,7 +1,9 @@
-import React from "react";
+import { SettingsLayout } from "@/components/experts/settings/SettingsLayout";
 
 export default function ExpertSettings() {
-  return <div>
-    fdskfjdsklfsd
-  </div>;
+  return (
+    <div>
+      <SettingsLayout />
+    </div>
+  );
 }

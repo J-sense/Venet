@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router";
+import { Navigate, Route, Routes } from "react-router";
 import CommonLayout from "./components/ui/layouts/CommonLayout";
 import HomeMain from "./pages/Home/HomeMain";
 import ProgrameMain from "./pages/program/ProgrameMain";
@@ -29,6 +29,8 @@ import ExpertSettings from "./pages/dashboard/experts/Setting/ExpertSettings";
 import EXpertsMySession from "./pages/dashboard/experts/MySessions/EXpertsMySession";
 import { ExpertsReview } from "./pages/dashboard/experts/Reviews/ExpertsReview";
 import { ChatWindow } from "./pages/dashboard/experts/MySessions/ChatWindow";
+import ExpertsSecurityPage from "./pages/dashboard/experts/Reviews/ExpertsSecurityPage";
+import ExpertsNotificationsPage from "./components/experts/settings/ExpertsNotificationsPage";
 
 export const App = () => {
   return (
@@ -72,7 +74,12 @@ export const App = () => {
         <Route path="availability" element={<ExpertesAvailability />} />
         <Route path="profile" element={<ExpertsProfile />} />
         <Route path="Reviews" element={<ExpertsReview />} />
-        <Route path="Settings" element={<ExpertSettings />} />
+        <Route path="settings" element={<ExpertSettings />}>
+          {/* This makes 'security' the default active page */}
+          <Route index element={<Navigate to="security" replace />} />
+          <Route path="security" element={<ExpertsSecurityPage />} />
+          <Route path="notifications" element={<ExpertsNotificationsPage />} />
+        </Route>
         {/* <Route path="my-sessions" element={<EXpertsMySession />} /> */}
         <Route path="consultation" element={<EXpertsMySession />}>
           {/* Remove the hardcoded div and point to ChatWindow */}

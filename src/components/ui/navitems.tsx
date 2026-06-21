@@ -1,7 +1,6 @@
 import {
   AppWindow,
   CalendarDays,
-  Camera,
   CircleUser,
   History,
   LayoutDashboard,
@@ -9,8 +8,7 @@ import {
   ShoppingBag,
   Stars,
   VideoIcon,
-  Videotape,
-  type LucideIcon,
+  type LucideIcon
 } from "lucide-react";
 
 export interface MenuItemsType {
@@ -59,7 +57,7 @@ export const navItemsForExperts: MenuItemsType[] = [
   },
   {
     label: "Settings",
-    href: "/dashboard/experts/Settings",
+    href: "/dashboard/experts/settings",
     icon: Settings,
   },
   {
