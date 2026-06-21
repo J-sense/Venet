@@ -1,105 +1,106 @@
-// src/components/ui/VideoCall.tsx
-import React, { useState, useEffect, useMemo } from "react";
-import AgoraRTC from "agora-rtc-sdk-ng";
-import {
-  AgoraRTCProvider,
-  useJoin,
-  useLocalCameraTrack,
-  useLocalMicrophoneTrack,
-  useRemoteUsers,
-  LocalVideoTrack,
-  RemoteUser,
-  useRTCClient,
-} from "agora-rtc-react";
+"use client";
 
-const VideoCallInner = ({
+import { ZegoUIKitPrebuilt } from "@zegocloud/zego-uikit-prebuilt";
+import { useEffect, useRef, useState } from "react";
+import {
+  Mic,
+  MicOff,
+  Video,
+  VideoOff,
+  PhoneOff,
+  MessageSquare,
+  MoreHorizontal,
+} from "lucide-react";
+
+const ZEGO_CONFIG = {
+  appID: 858072203,
+  serverSecret: "2a57a8f7c6cdf5088e20e3f32e2afd32",
+};
+
+export function VideoCall({
   channel,
   onLeave,
 }: {
   channel: string;
   onLeave: () => void;
-}) => {
+}) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const zp = useRef<ZegoUIKitPrebuilt | null>(null);
   const [micOn, setMicOn] = useState(true);
-  const client = useRTCClient();
-  const remoteUsers = useRemoteUsers();
-  const { localCameraTrack } = useLocalCameraTrack(true);
-  const { localMicrophoneTrack } = useLocalMicrophoneTrack(micOn);
+  const [camOn, setCamOn] = useState(true);
 
-  // Join the channel
-  useJoin({
-    appid: "c252fa208b16491c88bfe682ac306ba0",
-    channel: channel,
-    token:
-      "007eJxTYLBULi3cmuMnl/V989tTb9s//29eujLqdk6X0za72ujHj+8qMCQbmRqlJRoZWCQZmplYGiZbWCSlpZpZGCUmGxuYJSUabMkyy2oIZGTIcn3MwAiFID4LQ1heagkDAwAqtyI7",
-    uid: null,
-  });
-
-  // Debugging logs to verify connection
   useEffect(() => {
-    console.log("--- AGORA DEBUG ---");
-    console.log("Joined Channel:", channel);
-    client.on("user-joined", (user) =>
-      console.log("New user detected:", user.uid),
-    );
-  }, [client, channel]);
+    const initZego = async () => {
+      if (!containerRef.current) return;
+
+      const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
+        ZEGO_CONFIG.appID,
+        ZEGO_CONFIG.serverSecret,
+        channel,
+        Date.now().toString(),
+        "User Name",
+      );
+
+      zp.current = ZegoUIKitPrebuilt.create(kitToken);
+
+      zp.current.joinRoom({
+        container: containerRef.current,
+        scenario: { mode: ZegoUIKitPrebuilt.VideoConference },
+        showPreJoinView: false,
+        // Hiding default Zego UI to make space for your Tailwind interface
+        showRoomTimer: true,
+      });
+    };
+
+    initZego();
+  }, [channel]);
+
+  const toggleMic = () => {
+    zp.current?.muteMicrophone();
+    setMicOn(!micOn);
+  };
+
+  const toggleCam = () => {
+    zp.current?.muteCamera();
+    setCamOn(!camOn);
+  };
 
   return (
-    <div className="fixed inset-0 z-50 bg-black flex flex-col">
-      {/* Video Area */}
-      <div className="flex-1 relative w-full h-full">
-        {remoteUsers.length > 0 ? (
-          remoteUsers.map((user) => (
-            <div key={user.uid} className="absolute inset-0">
-              <RemoteUser user={user} playVideo playAudio />
-            </div>
-          ))
-        ) : (
-          <div className="flex items-center justify-center h-full text-gray-400">
-            Waiting for participant...
-          </div>
-        )}
+    <div className="relative w-full h-screen bg-zinc-900 overflow-hidden">
+      {/* Video Container */}
+      <div ref={containerRef} className="w-full h-full" />
 
-        {/* Local PiP Window */}
-        {localCameraTrack && (
-          <div className="absolute bottom-28 right-6 w-64 h-40 rounded-3xl overflow-hidden border-4 border-white/20 shadow-2xl z-20 bg-zinc-800">
-            <LocalVideoTrack track={localCameraTrack} play />
-          </div>
-        )}
-      </div>
-
-      {/* Control Bar */}
-      <div className="h-24 bg-[#0F172A] flex items-center justify-center gap-6 border-t border-white/10">
+      {/* Tailwind Custom Controls (Matching image_42673a.png layout) */}
+      <div className="absolute bottom-6 left-0 right-0 flex justify-center items-center gap-4">
         <button
-          onClick={() => setMicOn(!micOn)}
-          className={`w-16 h-16 rounded-full ${micOn ? "bg-zinc-700" : "bg-red-600"}`}
+          onClick={toggleMic}
+          className={`p-4 rounded-full ${micOn ? "bg-zinc-800" : "bg-red-500"} text-white`}
         >
-          {micOn ? "🎤" : "🔇"}
+          {micOn ? <Mic size={20} /> : <MicOff size={20} />}
         </button>
+
+        <button
+          onClick={toggleCam}
+          className={`p-4 rounded-full ${camOn ? "bg-zinc-800" : "bg-red-500"} text-white`}
+        >
+          {camOn ? <Video size={20} /> : <VideoOff size={20} />}
+        </button>
+
+        <button className="p-4 rounded-full bg-zinc-800 text-white">
+          <MessageSquare size={20} />
+        </button>
+
+        <button className="p-4 rounded-full bg-zinc-800 text-white">
+          <MoreHorizontal size={20} />
+        </button>
+
         <button
           onClick={onLeave}
-          className="bg-red-600 px-10 py-3 rounded-full text-white font-bold"
+          className="px-8 py-4 rounded-full bg-red-600 hover:bg-red-700 text-white font-semibold flex items-center gap-2"
         >
-          End Call
+          <PhoneOff size={20} /> End Call
         </button>
       </div>
     </div>
   );
-};
-
-export const VideoCall = ({
-  channel,
-  onLeave,
-}: {
-  channel: string;
-  onLeave: () => void;
-}) => {
-  const client = useMemo(
-    () => AgoraRTC.createClient({ mode: "rtc", codec: "vp8" }),
-    [],
-  );
-  return (
-    <AgoraRTCProvider client={client}>
-      <VideoCallInner channel={channel} onLeave={onLeave} />
-    </AgoraRTCProvider>
-  );
-};
+}
