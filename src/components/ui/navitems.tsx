@@ -8,7 +8,7 @@ import {
   ShoppingBag,
   Stars,
   VideoIcon,
-  type LucideIcon
+  type LucideIcon,
 } from "lucide-react";
 
 export interface MenuItemsType {
@@ -32,6 +32,11 @@ export const navItemsForUser: MenuItemsType[] = [
     label: "Talent Portal",
     href: "/dashboard/user/talent-portal", // Updated to reflect nesting
     icon: ShoppingBag,
+  },
+  {
+    label: "Settings",
+    href: "/dashboard/user/settings", // Updated to reflect nesting
+    icon: Settings,
   },
 ];
 export const navItemsForExperts: MenuItemsType[] = [

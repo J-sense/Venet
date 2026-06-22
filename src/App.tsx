@@ -31,6 +31,11 @@ import { ExpertsReview } from "./pages/dashboard/experts/Reviews/ExpertsReview";
 import { ChatWindow } from "./pages/dashboard/experts/MySessions/ChatWindow";
 import ExpertsSecurityPage from "./pages/dashboard/experts/Reviews/ExpertsSecurityPage";
 import ExpertsNotificationsPage from "./components/experts/settings/ExpertsNotificationsPage";
+import UserSettingsMain from "./pages/dashboard/user/Settings/SettingsMain";
+import UserAccountMain from "./pages/dashboard/user/Settings/Account/UserAccountMain";
+import UserSecurityMain from "./pages/dashboard/user/Settings/UserSecurityMain";
+import UserBillingMain from "./pages/dashboard/user/Settings/UserBillingMain";
+import UserNotifications from "./pages/dashboard/user/Settings/UserNotifications";
 
 export const App = () => {
   return (
@@ -54,6 +59,13 @@ export const App = () => {
         <Route index element={<UserHome />} />
         <Route path="certificates" element={<UserCertificates />} />
         <Route path="talent-portal" element={<TalentPortal />} />
+        <Route path="settings" element={<UserSettingsMain />}>
+          <Route index element={<Navigate to="account" replace />} />
+          <Route path="account" element={<UserAccountMain />} />
+          <Route path="security" element={<UserSecurityMain />} />
+          <Route path="billing" element={<UserBillingMain />} />
+          <Route path="notifications" element={<UserNotifications />} />
+        </Route>
       </Route>
       <Route path="/auth">
         <Route path="login" element={<Login />} />

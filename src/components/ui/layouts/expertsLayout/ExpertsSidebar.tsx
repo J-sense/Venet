@@ -39,7 +39,9 @@ export function ExpertsSidebar({ isOpen, onClose, navItems }: SidebarProps) {
 
         <div className="space-y-1">
           {navItems?.map((item) => {
-            const isActive = location.pathname === item.href;
+            const isActive =
+              location.pathname === item.href ||
+              location.pathname.startsWith(`${item.href}/`);
             const Icon = item.icon;
 
             return (

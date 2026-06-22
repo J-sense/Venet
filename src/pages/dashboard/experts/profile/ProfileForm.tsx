@@ -79,7 +79,7 @@ export default function ProfileForm() {
   >({});
   const [eduFiles, setEduFiles] = useState<Record<number, File>>({});
 
-  const form = useForm<ProfileFormData>({
+  const form = useForm({
     resolver: zodResolver(profileSchema),
     defaultValues: {
       firstName: "",
