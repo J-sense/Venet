@@ -1,5 +1,7 @@
-import React from "react";
+import LockPortal from "@/components/user/talentPortal/LocakPortal";
+import TalentPortalUnlocked from "@/components/user/talentPortal/TalentPortalUnlocked";
 
 export default function TalentPortal() {
-  return <div></div>;
+  const isSubscribed = false;
+  return <div>{isSubscribed ? <TalentPortalUnlocked /> : <LockPortal />}</div>;
 }
