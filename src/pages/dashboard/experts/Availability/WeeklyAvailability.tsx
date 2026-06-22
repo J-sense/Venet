@@ -124,96 +124,86 @@ const WeeklyAvailability: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-[#0A1324] text-white p-4 sm:p-6">
-      <div className="max-w-full ">
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-8">
-          {/* Left Navigation */}
-          <div className="bg-[#1E2A44] rounded-2xl px-5 py-3 flex items-center gap-4 w-1/2">
-            <div className="flex items-center gap-3">
-              <button className="p-2 hover:bg-gray-800 rounded-xl transition-colors">
-                <ChevronLeft size={24} className="text-gray-400" />
+      <div className="max-w-5xl mx-auto">
+        {/* Top Navigation + Buffer Time */}
+        <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4 mb-8">
+          <div className="bg-[#1E2A44] rounded-2xl px-4 py-3 flex items-center gap-3 w-full lg:w-auto">
+            <button className="p-2 hover:bg-gray-700 rounded-xl transition-colors">
+              <ChevronLeft size={22} className="text-gray-400" />
+            </button>
+            <button className="bg-[#25344A] px-5 py-2.5 rounded-2xl text-sm font-medium whitespace-nowrap">
+              Today
+            </button>
+            <div className="flex items-center gap-2 bg-[#1E2A44] px-4 py-2.5 rounded-2xl text-sm">
+              <button className="text-gray-400 hover:text-white">
+                <ChevronLeft size={18} />
               </button>
-
-              <button className="bg-[#1E2A44] px-6 py-2.5 rounded-2xl text-sm font-medium">
-                Today
+              <span className="font-medium whitespace-nowrap">
+                Jul 13 - 18, 2026
+              </span>
+              <button className="text-gray-400 hover:text-white">
+                <ChevronRight size={18} />
               </button>
-
-              <div className="flex items-center gap-2 bg-[#1E2A44] px-5 py-2.5 rounded-2xl text-sm">
-                <button className="text-gray-400 hover:text-white">
-                  <ChevronLeft size={18} />
-                </button>
-                <span className="font-medium">Jul 13 - 18, 2026</span>
-                <button className="text-gray-400 hover:text-white">
-                  <ChevronRight size={18} />
-                </button>
-              </div>
             </div>
           </div>
 
-          {/* Buffer Time - Right Side */}
-          <div className="bg-[#1E2A44] rounded-2xl px-5 py-3 flex items-center gap-4 w-1/2">
-            <div className="flex items-center justify-between p-3 bg-white/[0.03] border border-white/[0.05] rounded-xl">
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 bg-blue-500/10 rounded-full flex items-center justify-center text-blue-400">
-                  <Clock size={16} /> {/* Use Lucide Clock icon */}
-                </div>
-                <div>
-                  <div className="font-medium text-sm text-white">
-                    Buffer Time
-                  </div>
-                  <div className="text-[11px] text-white/40">
-                    Minutes between appointments
-                  </div>
+          {/* Buffer Time */}
+          <div className="bg-[#1E2A44] rounded-2xl px-5 py-3 flex items-center gap-4 w-full lg:w-auto">
+            <div className="flex items-center gap-3 flex-1">
+              <div className="w-9 h-9 bg-blue-500/10 rounded-full flex items-center justify-center text-blue-400">
+                <Clock size={18} />
+              </div>
+              <div>
+                <div className="font-medium text-sm">Buffer Time</div>
+                <div className="text-xs text-white/50">
+                  Minutes between appointments
                 </div>
               </div>
             </div>
-            <div className="flex flex-col justify-end">
-              <div className="flex items-center bg-[#0A1324] rounded-xl px-4 py-2">
-                <input
-                  type="number"
-                  value={bufferTime}
-                  onChange={(e) => setBufferTime(Number(e.target.value))}
-                  className="bg-transparent w-12 text-center text-lg font-semibold focus:outline-none"
-                />
-                <span className="text-gray-400 text-sm ml-1">minutes</span>
-              </div>
+            <div className="flex items-center bg-[#0A1324] rounded-xl px-4 py-2">
+              <input
+                type="number"
+                value={bufferTime}
+                onChange={(e) => setBufferTime(Number(e.target.value))}
+                className="bg-transparent w-14 text-center text-lg font-semibold focus:outline-none"
+              />
+              <span className="text-gray-400 text-sm ml-1">min</span>
             </div>
           </div>
         </div>
-        {/* Top Bar */}
 
-        {/* Days Container */}
-        <div className="space-y-3  rounded-3xl p-2 sm:p-4">
+        {/* Days List */}
+        <div className="space-y-4">
           {DAYS.map((day) => {
             const dayData = availability[day];
             return (
               <div
                 key={day}
-                className=" rounded-3xl p-5 sm:p-6 transition-all hover:bg-[#25344A]"
+                className="bg-[#1E2A44] rounded-3xl p-5 sm:p-6 transition-all hover:bg-[#25344A]"
               >
-                <div className="flex flex-col lg:flex-row lg:items-start gap-5 lg:gap-8">
-                  {/* Day Toggle + Label */}
-                  <div className="flex items-center gap-4 lg:w-56 shrink-0">
+                <div className="flex flex-col sm:flex-row sm:items-center gap-5">
+                  {/* Day Toggle */}
+                  <div className="flex items-center gap-4 sm:w-52 shrink-0">
                     <button
                       onClick={() => toggleDay(day)}
-                      className={`relative inline-flex h-8 w-14 items-center rounded-full transition-all ${
+                      className={`relative inline-flex h-9 w-16 items-center rounded-full transition-all ${
                         dayData.enabled ? "bg-blue-600" : "bg-gray-600"
                       }`}
                     >
                       <span
-                        className={`inline-block h-6 w-6 transform rounded-full bg-white shadow transition-transform ${
-                          dayData.enabled ? "translate-x-7" : "translate-x-1"
+                        className={`inline-block h-7 w-7 transform rounded-full bg-white shadow transition-transform ${
+                          dayData.enabled ? "translate-x-8" : "translate-x-1"
                         }`}
                       />
                     </button>
-
                     <div>
                       <div className="font-semibold text-lg">{day}</div>
                       <div className="text-gray-500 text-sm">16 Jun 2025</div>
                     </div>
                   </div>
 
-                  {/* Time Slots Section */}
-                  <div className="flex-1 max-w-[400px]">
+                  {/* Time Slots */}
+                  <div className="flex-1">
                     {dayData.enabled ? (
                       <div className="space-y-4">
                         {dayData.slots.map((slot, idx) => (
@@ -221,7 +211,7 @@ const WeeklyAvailability: React.FC = () => {
                             key={slot.id}
                             className="flex flex-col sm:flex-row items-start sm:items-center gap-3 group"
                           >
-                            <div className="flex-1 flex items-center gap-3 w-full">
+                            <div className="flex items-center gap-3 flex-1">
                               <select
                                 value={slot.start_time}
                                 onChange={(e) =>
@@ -232,7 +222,7 @@ const WeeklyAvailability: React.FC = () => {
                                     e.target.value,
                                   )
                                 }
-                                className="bg-[#334155] border border-gray-600 rounded-2xl px-4 py-3 text-sm focus:border-blue-500 flex-1 min-w-0"
+                                className="bg-[#334155] border border-gray-600 rounded-2xl px-4 py-3 text-sm focus:border-blue-500 w-full sm:w-auto min-w-[140px]"
                               >
                                 {TIME_OPTIONS.map((opt) => (
                                   <option key={opt.value} value={opt.value}>
@@ -241,7 +231,7 @@ const WeeklyAvailability: React.FC = () => {
                                 ))}
                               </select>
 
-                              <div className="text-gray-400 text-xl hidden sm:block">
+                              <div className="text-gray-400 text-xl hidden sm:block mx-1">
                                 →
                               </div>
 
@@ -255,7 +245,7 @@ const WeeklyAvailability: React.FC = () => {
                                     e.target.value,
                                   )
                                 }
-                                className="bg-[#334155] border border-gray-600 rounded-2xl px-4 py-3 text-sm focus:border-blue-500 flex-1 min-w-0"
+                                className="bg-[#334155] border border-gray-600 rounded-2xl px-4 py-3 text-sm focus:border-blue-500 w-full sm:w-auto min-w-[140px]"
                               >
                                 {TIME_OPTIONS.map((opt) => (
                                   <option key={opt.value} value={opt.value}>
@@ -268,7 +258,7 @@ const WeeklyAvailability: React.FC = () => {
                             {dayData.slots.length > 1 && (
                               <button
                                 onClick={() => removeSlot(day, idx)}
-                                className="opacity-0 group-hover:opacity-100 p-2 hover:bg-red-500/10 rounded-xl text-red-400 mt-1 sm:mt-0"
+                                className="opacity-70 hover:opacity-100 p-2 hover:bg-red-500/10 rounded-xl text-red-400 mt-1 sm:mt-0"
                               >
                                 <Trash2 size={20} />
                               </button>
@@ -276,26 +266,25 @@ const WeeklyAvailability: React.FC = () => {
                           </div>
                         ))}
 
-                        <div className="flex flex-wrap gap-3 pt-2">
+                        {/* Action Buttons */}
+                        <div className="flex flex-wrap gap-3 pt-3">
                           <button
                             onClick={() => addSlot(day)}
-                            className="flex sm:flex-none items-center justify-center gap-2 px-6 py-3 bg-[#3B82F633] border-none text-blue-400 hover:text-blue-300 border border-gray-600 hover:border-blue-500 rounded-2xl transition-all text-sm"
+                            className="flex items-center gap-2 px-5 py-3 bg-[#3B82F633] text-blue-400 rounded-2xl text-sm hover:bg-blue-600/20 transition-colors"
                           >
-                            <Plus size={18} />
-                            Add time
+                            <Plus size={18} /> Add time slot
                           </button>
-
                           <button
                             onClick={() => copyToAll(dayData.slots, day)}
-                            className="flex-1 sm:flex-none items-center justify-center bg-[#3B82F633] border-none gap-2 px-6 py-3 text-purple-400 hover:text-purple-300 border border-gray-600 hover:border-purple-500 rounded-2xl transition-all text-sm"
+                            className="flex items-center gap-2 px-5 py-3 bg-[#3B82F633] text-purple-400 rounded-2xl text-sm hover:bg-purple-600/20 transition-colors"
                           >
-                            Copy to all
+                            Copy to all days
                           </button>
                         </div>
                       </div>
                     ) : (
-                      <div className="h-12 flex items-center text-gray-400 italic">
-                        Unavailable
+                      <div className="h-12 flex items-center text-gray-400 italic text-sm">
+                        This day is unavailable
                       </div>
                     )}
                   </div>
@@ -306,11 +295,11 @@ const WeeklyAvailability: React.FC = () => {
         </div>
 
         {/* Bottom Buttons */}
-        <div className="flex flex-col sm:flex-row justify-end gap-4 mt-10">
-          <button className="w-full sm:w-auto px-10 py-4 text-gray-400 hover:bg-gray-800 rounded-2xl font-medium transition-all">
+        <div className="flex flex-col sm:flex-row justify-end gap-4 mt-12">
+          <button className="w-full sm:w-auto px-10 py-4 text-gray-400 hover:bg-gray-800 rounded-2xl font-medium transition-colors">
             Cancel
           </button>
-          <button className="w-full sm:w-auto px-10 py-4 bg-blue-600 hover:bg-blue-700 rounded-2xl font-semibold transition-all">
+          <button className="w-full sm:w-auto px-10 py-4 bg-blue-600 hover:bg-blue-700 rounded-2xl font-semibold transition-colors">
             Save Availability
           </button>
         </div>
