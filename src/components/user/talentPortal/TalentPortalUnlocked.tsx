@@ -1,22 +1,19 @@
 // /home/workdir/artifacts/TalentPortalUnlocked.tsx
 "use client";
 
-import React from "react";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   ArrowRight,
-  FileText,
-  Edit3,
-  MapPin,
   Briefcase,
-  CheckCircle2,
-  DollarSign,
-  Clock,
-  ChevronRight,
   Building2,
-  MagnetIcon,
+  CheckCircle2,
+  ChevronRight,
+  Clock,
+  DollarSign,
+  FileText,
+  MapPin,
   Sparkles,
 } from "lucide-react";
 
