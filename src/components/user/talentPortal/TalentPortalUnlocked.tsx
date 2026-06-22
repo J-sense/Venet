@@ -5,7 +5,20 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { ArrowRight, FileText, Edit3, MapPin, Briefcase } from "lucide-react";
+import {
+  ArrowRight,
+  FileText,
+  Edit3,
+  MapPin,
+  Briefcase,
+  CheckCircle2,
+  DollarSign,
+  Clock,
+  ChevronRight,
+  Building2,
+  MagnetIcon,
+  Sparkles,
+} from "lucide-react";
 
 export default function TalentPortalUnlocked() {
   return (
@@ -80,136 +93,158 @@ export default function TalentPortalUnlocked() {
             </Card>
 
             {/* Recommended Jobs */}
-            <Card className="bg-zinc-900 border-zinc-700">
-              <CardContent className="p-8">
-                <div className="flex justify-between items-center mb-6">
-                  <h2 className="text-2xl font-semibold">Recommended Jobs</h2>
-                  <Button
-                    variant="link"
-                    className="text-blue-400 hover:text-blue-300"
-                  >
-                    View All <ArrowRight className="ml-1 w-4 h-4" />
-                  </Button>
-                </div>
 
-                <div className="space-y-4">
-                  {[
-                    {
-                      title: "Senior Software Engineer",
-                      company: "Tech Corp",
-                      salary: "$120k - $150k",
-                      match: "95%",
-                    },
-                    {
-                      title: "Product Designer",
-                      company: "Innovate Labs",
-                      salary: "$95k - $115k",
-                      match: "87%",
-                    },
-                    {
-                      title: "UX Researcher",
-                      company: "HealthFlow",
-                      salary: "$85k - $105k",
-                      match: "82%",
-                    },
-                  ].map((job, i) => (
-                    <div
-                      key={i}
-                      className="bg-zinc-800 border border-zinc-700 rounded-2xl p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:border-blue-500/50 transition-colors"
-                    >
-                      <div>
-                        <p className="font-semibold text-lg">{job.title}</p>
-                        <p className="text-zinc-400">{job.company}</p>
-                        <p className="text-emerald-400 text-sm mt-1">
-                          {job.salary}
-                        </p>
-                      </div>
-                      <div className="flex flex-col md:items-end gap-3">
-                        <div className="text-emerald-400 font-bold text-lg">
-                          {job.match} Match
+            <CardContent className="">
+              <div className="flex justify-between items-center mb-6 w-full ">
+                <h2 className="text-2xl font-semibold">Recommended Jobs</h2>
+                <Button
+                  variant="link"
+                  className="text-blue-400 hover:text-blue-300"
+                >
+                  View All <ArrowRight className="ml-1 w-4 h-4" />
+                </Button>
+              </div>
+
+              <div className="space-y-4">
+                {[
+                  {
+                    title: "Senior Software Engineer",
+                    company: "Tech Corp",
+                    salary: "$120k - $150k",
+                    match: "95%",
+                    type: "Full-time",
+                    time: "2d ago",
+                    location: "Remote",
+                  },
+                  {
+                    title: "Senior Software Engineer",
+                    company: "Tech Corp",
+                    salary: "$120k - $150k",
+                    match: "95%",
+                    type: "Full-time",
+                    time: "2d ago",
+                    location: "Remote",
+                  },
+                  {
+                    title: "Senior Software Engineer",
+                    company: "Tech Corp",
+                    salary: "$120k - $150k",
+                    match: "95%",
+                    type: "Full-time",
+                    time: "2d ago",
+                    location: "Remote",
+                  },
+                ].map((job, i) => (
+                  <div
+                    key={i}
+                    className="bg-[#0D1526] border border-[#FFFFFF0F] rounded-2xl p-5 flex flex-col gap-4"
+                  >
+                    <div className="flex items-start justify-between">
+                      <div className="flex gap-4">
+                        {/* Avatar Placeholder */}
+                        <div className="w-12 h-12 bg-[#0F1C2E] rounded-lg flex items-center justify-center font-bold text-emerald-400 border border-[#1E293B]">
+                          TC
                         </div>
-                        <Button>Apply Now</Button>
+                        <div>
+                          <h3 className="text-white font-semibold text-lg">
+                            {job.title}
+                          </h3>
+                          <p className="text-[#90A1B9] text-sm">
+                            {job.company}
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Match Pill */}
+                      <div className="flex items-center gap-1.5 px-3 py-1 rounded-full border border-[#1E293B] text-emerald-400 text-xs font-medium">
+                        <CheckCircle2 className="w-3.5 h-3.5" />
+                        {job.match} match
                       </div>
                     </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
+
+                    {/* Metadata Row */}
+                    <div className="flex items-center gap-6 text-[#90A1B9] text-sm">
+                      <div className="flex items-center gap-1.5">
+                        <MapPin className="w-4 h-4" /> {job.location}
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <DollarSign className="w-4 h-4" /> {job.salary}
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <Clock className="w-4 h-4" /> {job.time}
+                      </div>
+                      <span className="px-3 py-1 bg-[#1E293B] rounded-full text-xs text-white/80">
+                        {job.type}
+                      </span>
+                    </div>
+
+                    {/* Action Button */}
+                    <Button className="bg-[#1E3A8A] hover:bg-[#1E3A8A]/90 text-white w-fit px-6 flex items-center gap-2">
+                      Apply Now <ChevronRight className="w-4 h-4" />
+                    </Button>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
           </div>
 
           {/* RIGHT SIDE - 30% */}
           <div className="xl:col-span-4 space-y-6">
             {/* Resume Builder */}
-            <Card className="bg-zinc-900 border-zinc-700">
-              <CardContent className="p-6">
-                <div className="flex items-center gap-4 mb-4">
-                  <div className="w-12 h-12 bg-blue-600/10 rounded-xl flex items-center justify-center">
-                    <FileText className="w-6 h-6 text-blue-400" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold">Resume Builder</h3>
-                    <p className="text-sm text-zinc-400">
-                      Create a professional resume showcasing your vNET
-                      certifications and achievements.
-                    </p>
-                  </div>
+            <Card className="bg-[#0D1526] border-[#FFFFFF0F] p-5">
+              <CardContent className="p-0">
+                {/* Icon at the top */}
+                <div className="w-12 h-12 bg-[#0A1A14] border border-[#10B981]/20 rounded-xl flex items-center justify-center mb-4">
+                  <FileText className="w-6 h-6 text-[#10B981]" />
                 </div>
-                <Button className="w-full bg-blue-600 hover:bg-blue-700">
+
+                {/* Text content */}
+                <div className="mb-6">
+                  <h3 className="font-semibold text-white text-lg">
+                    Resume Builder
+                  </h3>
+                  <p className="text-sm text-[#90A1B9] mt-1 leading-relaxed">
+                    Create a professional resume showcasing your vNET
+                    certifications and achievements.
+                  </p>
+                </div>
+
+                {/* Button */}
+                <Button className="w-full rounded-full py-6 bg-[#194BFB] hover:bg-[#1D4ED8] text-white font-medium flex items-center justify-center gap-2">
+                  <Building2 className="w-4 h-4" />
                   Build Resume
                 </Button>
               </CardContent>
             </Card>
 
             {/* Cover Letter Generator */}
-            <Card className="bg-zinc-900 border-zinc-700">
-              <CardContent className="p-6">
-                <div className="flex items-center gap-4 mb-4">
-                  <div className="w-12 h-12 bg-purple-600/10 rounded-xl flex items-center justify-center">
-                    <Edit3 className="w-6 h-6 text-purple-400" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold">Cover Letter Generator</h3>
-                    <p className="text-sm text-zinc-400">
-                      Generate tailored cover letters in minutes for any job
-                      application.
-                    </p>
-                  </div>
+            <Card className="bg-[#0D1526] border-[#FFFFFF0F] p-5">
+              <CardContent className="p-0">
+                {/* Icon at the top */}
+                <div className="w-12 h-12 bg-[#8E51FF1A]  border border-[#8E51FF33]/20 rounded-xl flex items-center justify-center mb-4">
+                  <Sparkles className="w-6 h-6 text-[#A684FF] " />
                 </div>
-                <Button className="w-full bg-purple-600 hover:bg-purple-700">
-                  Generate Cover Letter
+
+                {/* Text content */}
+                <div className="mb-6">
+                  <h3 className="font-semibold text-white text-lg">
+                    Resume Builder
+                  </h3>
+                  <p className="text-sm text-[#90A1B9] mt-1 leading-relaxed">
+                    Create a professional resume showcasing your vNET
+                    certifications and achievements.
+                  </p>
+                </div>
+
+                {/* Button */}
+                <Button className="w-full rounded-full py-6 bg-[#194BFB] hover:bg-[#1D4ED8] text-white font-medium flex items-center justify-center gap-2">
+                  <Sparkles className="w-4 h-4" />
+                  Generate Letter
                 </Button>
               </CardContent>
             </Card>
 
             {/* Activity This Week */}
-            <Card className="bg-zinc-900 border-zinc-700">
-              <CardContent className="p-6">
-                <h3 className="font-semibold mb-5">Activity This Week</h3>
-                <div className="space-y-5">
-                  <div className="flex justify-between items-center">
-                    <div>
-                      <p className="text-sm">Profile Views</p>
-                      <p className="text-2xl font-bold text-white">24</p>
-                    </div>
-                    <span className="text-emerald-400 text-sm">↑12%</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <div>
-                      <p className="text-sm">Job Applications</p>
-                      <p className="text-2xl font-bold text-white">4</p>
-                    </div>
-                    <span className="text-emerald-400 text-sm">↑2</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <div>
-                      <p className="text-sm">Messages</p>
-                      <p className="text-2xl font-bold text-white">7</p>
-                    </div>
-                    <span className="text-emerald-400 text-sm">↑3</span>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
           </div>
         </div>
       </div>
