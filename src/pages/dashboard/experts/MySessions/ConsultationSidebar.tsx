@@ -1,6 +1,6 @@
 // src/pages/experts/ConsultationSidebar.tsx
 import { useNavigate, useParams } from "react-router";
-import { X } from "lucide-react";
+import { X, Search } from "lucide-react";
 
 const MOCK_HISTORY_LIST = [
   { id: "1", name: "Henry Dholi" },
@@ -52,10 +52,19 @@ export const ConsultationSidebar = ({ onClose }: ConsultationSidebarProps) => {
         </div>
 
         {/* Content */}
-        <div className="flex-1 overflow-y-auto">
+        <div className="flex-1 overflow-y-auto flex flex-col">
           {activeSection === "previous" ? (
-            <div className="space-y-2">
-              {MOCK_HISTORY_LIST.map((item) => (
+            <div className="flex-1 flex flex-col min-h-0">
+              <div className="mb-4 relative shrink-0">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400" />
+                <input 
+                  type="text" 
+                  placeholder="Search history..." 
+                  className="w-full bg-[#131926] border border-white/10 rounded-xl py-2 pl-10 pr-4 text-sm text-white focus:outline-none focus:border-blue-500 transition-colors placeholder:text-zinc-500" 
+                />
+              </div>
+              <div className="space-y-2 overflow-y-auto flex-1">
+                {MOCK_HISTORY_LIST.map((item) => (
                 <div
                   key={item.id}
                   onClick={() => {
@@ -71,6 +80,7 @@ export const ConsultationSidebar = ({ onClose }: ConsultationSidebarProps) => {
                   <div className="font-semibold text-white">{item.name}</div>
                 </div>
               ))}
+              </div>
             </div>
           ) : (
             <div className="text-gray-500 text-sm italic text-center mt-10">

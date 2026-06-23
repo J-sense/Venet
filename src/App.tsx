@@ -36,10 +36,12 @@ import UserAccountMain from "./pages/dashboard/user/Settings/Account/UserAccount
 import UserSecurityMain from "./pages/dashboard/user/Settings/UserSecurityMain";
 import UserBillingMain from "./pages/dashboard/user/Settings/UserBillingMain";
 import UserNotifications from "./pages/dashboard/user/Settings/UserNotifications";
+import AgoraVideoCallPage from "./pages/video/AgoraVideoCallPage";
 
 export const App = () => {
   return (
     <Routes>
+      <Route path="/video-call/:channel" element={<AgoraVideoCallPage />} />
       <Route path="/" element={<CommonLayout />}>
         <Route index element={<HomeMain />} />
         <Route path="/programs" element={<ProgrameMain />} />

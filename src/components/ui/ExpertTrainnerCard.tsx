@@ -27,7 +27,7 @@ export function ExpertTrainerCard({
       {/* Header section with image and name */}
       <div className="flex items-start gap-4 mb-4">
         <img
-          src="/placeholder-avatar.jpg"
+          src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=150"
           alt={name}
           className="w-16 h-16 rounded-full object-cover"
         />
