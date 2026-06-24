@@ -16,8 +16,11 @@ import {
   MapPin,
   Sparkles,
 } from "lucide-react";
+import { useState } from "react";
+import UpdateResumeAIModal from "./UpdateResumeAIModal";
 
 export default function TalentPortalUnlocked() {
+  const [isOpenAiModal, setIsOpenAiModal] = useState(false);
   return (
     <div className="min-h-screen bg-zinc-950 text-white p-6">
       <div className="max-w-7xl mx-auto">
@@ -207,10 +210,19 @@ export default function TalentPortalUnlocked() {
                 </div>
 
                 {/* Button */}
-                <Button className="w-full rounded-full py-6 bg-[#194BFB] hover:bg-[#1D4ED8] text-white font-medium flex items-center justify-center gap-2">
+                <Button
+                  onClick={() => setIsOpenAiModal(true)}
+                  className="w-full rounded-full py-6 bg-[#194BFB] hover:bg-[#1D4ED8] text-white font-medium flex items-center justify-center gap-2"
+                >
                   <Building2 className="w-4 h-4" />
                   Build Resume
                 </Button>
+                {isOpenAiModal && (
+                  <UpdateResumeAIModal
+                    isOpen={isOpenAiModal}
+                    onClose={() => setIsOpenAiModal(false)}
+                  />
+                )}
               </CardContent>
             </Card>
 
