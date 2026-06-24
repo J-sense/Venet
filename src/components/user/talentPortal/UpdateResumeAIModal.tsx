@@ -42,7 +42,7 @@ export default function UpdateResumeAIModal({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="bg-[#1F2937] border border-blue-500/50 text-white max-w-[420px] p-0 rounded-2xl overflow-hidden font-['Inter']">
+      <DialogContent className="bg-[#242B2D] border border-[#0E141680] text-white max-w-[420px] p-0 rounded-2xl overflow-hidden font-['Inter']">
         <div className="relative">
           {/* Close Button */}
           <button
@@ -69,7 +69,7 @@ export default function UpdateResumeAIModal({
               onDragLeave={handleDragLeave}
               onDrop={handleDrop}
               onClick={() => document.getElementById("resume-upload")?.click()}
-              className={`border-2 border-dashed rounded-2xl p-10 text-center cursor-pointer transition-all duration-200
+              className={`border-2 border-dashed rounded-2xl p-10 bg-[#0E141680] text-center cursor-pointer transition-all duration-200
                 ${
                   isDragging
                     ? "border-blue-500 bg-blue-500/10"
