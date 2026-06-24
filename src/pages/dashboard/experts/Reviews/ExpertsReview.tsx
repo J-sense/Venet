@@ -1,4 +1,3 @@
-import React from "react";
 import { StarRating } from "@/components/ui/StarRating";
 
 export const ExpertsReview = () => {
@@ -99,7 +98,7 @@ export const ExpertsReview = () => {
               <div className="flex justify-between items-start mb-4">
                 <div>
                   <div className="font-semibold text-white">{review.name}</div>
-                  <StarRating rating={review.rating}/>
+                  <StarRating rating={review.rating} />
                 </div>
                 <span className="text-xs text-gray-500 whitespace-nowrap">
                   {review.time}

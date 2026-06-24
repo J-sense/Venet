@@ -5,7 +5,6 @@ import { FormInput } from "@/components/ui/FormInput";
 import { FormSelect } from "@/components/ui/FormSelect";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router";
 import * as z from "zod";
 
 const expertSchema = z
@@ -38,7 +37,7 @@ const specialties = [
 ];
 
 export default function ExpertsRegister() {
-//   const navigate = useNavigate();
+  //   const navigate = useNavigate();
 
   const form = useForm<ExpertForm>({
     resolver: zodResolver(expertSchema),

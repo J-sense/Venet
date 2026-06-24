@@ -1,4 +1,3 @@
-import React from "react";
 import WeeklyAvailability from "./WeeklyAvailability";
 
 export default function ExpertesAvailability() {

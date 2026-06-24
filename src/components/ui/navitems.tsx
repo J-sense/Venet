@@ -38,6 +38,11 @@ export const navItemsForUser: MenuItemsType[] = [
     href: "/dashboard/user/settings", // Updated to reflect nesting
     icon: Settings,
   },
+  {
+    label: "My Sessions",
+    href: "/dashboard/user/consultation",
+    icon: VideoIcon,
+  },
 ];
 export const navItemsForExperts: MenuItemsType[] = [
   {

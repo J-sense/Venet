@@ -22,7 +22,7 @@ export default function EXpertsMySession() {
       {/* Sidebar */}
       <div
         className={`fixed lg:relative inset-y-0 left-0 z-50 lg:z-auto 
-          w-[300px] sm:w-[320px] lg:w-[360px] xl:w-[380px]
+          w-[260px] sm:w-[280px] lg:w-[300px] xl:w-[320px]
           transform transition-transform duration-300 ease-in-out
           ${isSidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
           border-r border-white/10 bg-[#0F172A] flex-shrink-0

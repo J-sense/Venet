@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/dialog";
 import { Upload, X } from "lucide-react";
 import { useState } from "react";
+import { Link } from "react-router";
 
 interface UpdateProfileAIModalProps {
   isOpen: boolean;
@@ -102,13 +103,15 @@ export default function UpdateResumeAIModal({
             </div>
 
             {/* Manual Input Button */}
-            <Button
-              variant="ghost"
-              className="w-full text-blue-400 hover:text-blue-300 hover:bg-blue-500/10 py-6 text-base font-medium"
-              onClick={onClose}
-            >
-              Input data manually
-            </Button>
+            <Link to={"/dashboard/user/manual-input"}>
+              <Button
+                variant="ghost"
+                className="w-full text-blue-400 hover:text-blue-300 hover:bg-blue-500/10 py-6 text-base font-medium"
+                onClick={onClose}
+              >
+                Input data manually
+              </Button>
+            </Link>
           </div>
         </div>
       </DialogContent>

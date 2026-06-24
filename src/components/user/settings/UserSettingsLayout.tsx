@@ -24,7 +24,7 @@ export const UserSettingsLayout = () => {
       >
         <div className="bg-[#0F172A] p-4 rounded-2xl flex flex-col gap-2">
           <SidebarItem
-            label="Security"
+            label="Account"
             path="/dashboard/user/settings/account"
             icon={User}
           />

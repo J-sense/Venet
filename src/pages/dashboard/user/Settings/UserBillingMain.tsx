@@ -1,11 +1,10 @@
 // /home/workdir/artifacts/UserBillingMain.tsx
 "use client";
 
-import React from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Download, Plus, CreditCard, Trash2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { CreditCard, Download, Plus, Trash2 } from "lucide-react";
 
 const subscriptions = [
   {

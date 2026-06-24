@@ -40,6 +40,7 @@ import UserSecurityMain from "./pages/dashboard/user/Settings/UserSecurityMain";
 import UserBillingMain from "./pages/dashboard/user/Settings/UserBillingMain";
 import UserNotifications from "./pages/dashboard/user/Settings/UserNotifications";
 import AgoraVideoCallPage from "./pages/video/AgoraVideoCallPage";
+import ResumeBuildForm from "./components/user/talentPortal/ResumeBuildForm";
 
 export const App = () => {
   return (
@@ -67,6 +68,12 @@ export const App = () => {
         <Route path="program/:id/roadmap" element={<ProgramRoadmap />} />
         <Route path="certificates" element={<UserCertificates />} />
         <Route path="talent-portal" element={<TalentPortal />} />
+        <Route path="manual-input" element={<ResumeBuildForm />} />
+        <Route path="consultation" element={<EXpertsMySession />}>
+          {/* Remove the hardcoded div and point to ChatWindow */}
+          <Route path=":section" element={<ChatWindow />} />
+          <Route path=":section/:id" element={<ChatWindow />} />
+        </Route>
         <Route path="settings" element={<UserSettingsMain />}>
           <Route index element={<Navigate to="account" replace />} />
           <Route path="account" element={<UserAccountMain />} />

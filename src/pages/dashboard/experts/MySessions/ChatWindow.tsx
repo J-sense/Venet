@@ -1,15 +1,14 @@
 // src/components/consultation/ChatWindow.tsx
-import { useParams, useNavigate } from "react-router";
-import { ConsultationReview } from "./ConsultationReview";
 import {
   Calendar,
   Clock,
-  Users,
   Hourglass,
-  Video,
-  Info,
   Search,
+  Users,
+  Video
 } from "lucide-react";
+import { useNavigate, useParams } from "react-router";
+import { ConsultationReview } from "./ConsultationReview";
 
 const UPCOMING_SESSIONS = [
   {
@@ -71,16 +70,16 @@ export const ChatWindow = () => {
         </div>
 
         {/* Sessions List */}
-        <div className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 space-y-5 w-auto">
+        <div className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 space-y-5 w-full">
           {UPCOMING_SESSIONS.map((session) => (
             <div
               key={session.id}
-              className="group !w-full bg-[#111723] border border-white/5 rounded-3xl p-5 sm:p-6 lg:p-8 hover:bg-[#131a29] hover:border-white/10 hover:-translate-y-1 transition-all duration-300 shadow-xl"
+              className="group w-full bg-[#111723] border border-white/5 rounded-3xl p-5 sm:p-6 lg:p-8 hover:bg-[#131a29] hover:border-white/10 hover:-translate-y-1 transition-all duration-300 shadow-xl"
             >
-              <div className="flex bg-[#111723]  flex-col xl:flex-row xl:items-center gap-6 lg:gap-8 w-full">
+              <div className="flex flex-col 2xl:flex-row 2xl:items-center gap-6 lg:gap-8 w-full">
                 {/* 1. Left side: Profile */}
-                <div className="flex items-center gap-5 flex-shrink-0 xl:min-w-[240px]">
-                  <div className="relative">
+                <div className="flex items-center gap-4 sm:gap-5 flex-shrink-0 2xl:w-[260px]">
+                  <div className="relative shrink-0">
                     <img
                       src={session.avatar}
                       alt={session.name}
@@ -88,31 +87,31 @@ export const ChatWindow = () => {
                     />
                     <div className="absolute bottom-0 right-0 w-4 h-4 sm:w-5 sm:h-5 bg-emerald-500 rounded-full border-[3px] border-[#111723]"></div>
                   </div>
-                  <div>
-                    <h3 className="font-bold text-white text-lg sm:text-xl tracking-tight group-hover:text-blue-400 transition-colors">
+                  <div className="min-w-0">
+                    <h3 className="font-bold text-white text-lg sm:text-xl tracking-tight group-hover:text-blue-400 transition-colors truncate">
                       {session.name}
                     </h3>
-                    <p className="text-blue-400/80 text-sm font-medium mt-1">
+                    <p className="text-blue-400/80 text-sm font-medium mt-1 truncate">
                       {session.role}
                     </p>
                   </div>
                 </div>
 
                 {/* 2. Middle: Details Block */}
-                <div className="flex-1   bg-[#0A0F1C]/60 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row sm:flex-wrap md:flex-nowrap items-start sm:justify-around xl:justify-between gap-5 sm:gap-6 border border-white/5">
+                <div className="flex-1 bg-[#0A0F1C]/60 rounded-2xl p-4 sm:p-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 border border-white/5">
                   {/* Date */}
                   <div className="flex items-center gap-3.5">
                     <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-blue-500/10 flex items-center justify-center text-blue-400 flex-shrink-0">
                       <Calendar className="w-5 h-5" />
                     </div>
-                    <div>
+                    <div className="min-w-0">
                       <span className="text-zinc-500 text-[11px] sm:text-xs font-bold tracking-wider uppercase block mb-0.5">
                         Date
                       </span>
-                      <div className="text-white text-sm sm:text-base font-semibold flex items-center gap-2">
-                        {session.date}
+                      <div className="text-white text-sm sm:text-base font-semibold flex flex-wrap items-center gap-2">
+                        <span className="truncate">{session.date}</span>
                         {session.buttonType === "join" && (
-                          <span className="bg-red-500/10 text-red-400 text-[10px] uppercase font-bold px-2 py-0.5 rounded-full flex items-center gap-1.5 ml-1">
+                          <span className="bg-red-500/10 text-red-400 text-[10px] uppercase font-bold px-2 py-0.5 rounded-full flex items-center gap-1.5 whitespace-nowrap">
                             <span className="w-1.5 h-1.5 bg-red-400 rounded-full animate-pulse"></span>
                             Live
                           </span>
@@ -126,11 +125,11 @@ export const ChatWindow = () => {
                     <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-purple-500/10 flex items-center justify-center text-purple-400 flex-shrink-0">
                       <Clock className="w-5 h-5" />
                     </div>
-                    <div>
+                    <div className="min-w-0">
                       <span className="text-zinc-500 text-[11px] sm:text-xs font-bold tracking-wider uppercase block mb-0.5">
                         Local Time
                       </span>
-                      <div className="text-white text-sm sm:text-base font-semibold">
+                      <div className="text-white text-sm sm:text-base font-semibold truncate">
                         {session.time}
                       </div>
                     </div>
@@ -141,11 +140,11 @@ export const ChatWindow = () => {
                     <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-emerald-500/10 flex items-center justify-center text-emerald-400 flex-shrink-0">
                       <Hourglass className="w-5 h-5" />
                     </div>
-                    <div>
+                    <div className="min-w-0">
                       <span className="text-zinc-500 text-[11px] sm:text-xs font-bold tracking-wider uppercase block mb-0.5">
                         Duration
                       </span>
-                      <div className="text-white text-sm sm:text-base font-semibold">
+                      <div className="text-white text-sm sm:text-base font-semibold truncate">
                         {session.duration}
                       </div>
                     </div>
@@ -153,7 +152,7 @@ export const ChatWindow = () => {
                 </div>
 
                 {/* 3. Right side: Action Button */}
-                <div className="flex-shrink-0 w-full sm:w-auto xl:w-56 pt-3 xl:pt-0">
+                <div className="flex-shrink-0 w-full sm:w-auto pt-2 2xl:pt-0">
                   {session.buttonType === "join" ? (
                     <button
                       onClick={() =>
@@ -163,18 +162,18 @@ export const ChatWindow = () => {
                           )}&localName=${encodeURIComponent("Alice Wong")}`,
                         )
                       }
-                      className="w-full bg-[#0066fe] hover:bg-[#0057d9] text-white font-bold py-4 px-8 rounded-2xl flex items-center justify-center gap-2.5 transition-all active:scale-[0.985] shadow-xl shadow-blue-600/25 ring-1 ring-blue-500/50"
+                      className="w-full bg-[#0066fe] hover:bg-[#0057d9] text-white font-bold py-3.5 sm:py-4 px-6 sm:px-8 rounded-2xl flex items-center justify-center gap-2.5 transition-all active:scale-[0.985] shadow-xl shadow-blue-600/25 ring-1 ring-blue-500/50"
                     >
                       <Video size={18} />
-                      {session.buttonText}
+                      <span className="whitespace-nowrap">{session.buttonText}</span>
                     </button>
                   ) : (
                     <button
                       disabled
-                      className="w-full bg-white/5 text-zinc-400 font-bold py-4 px-8 rounded-2xl flex items-center justify-center gap-2.5 border border-white/10 cursor-not-allowed"
+                      className="w-full bg-white/5 text-zinc-400 font-bold py-3.5 sm:py-4 px-6 sm:px-8 rounded-2xl flex items-center justify-center gap-2.5 border border-white/10 cursor-not-allowed"
                     >
                       <Clock size={18} />
-                      {session.buttonText}
+                      <span className="whitespace-nowrap">{session.buttonText}</span>
                     </button>
                   )}
                 </div>

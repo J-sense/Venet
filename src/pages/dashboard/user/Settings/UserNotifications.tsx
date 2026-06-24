@@ -1,13 +1,13 @@
 // /home/workdir/artifacts/UserSecurityMain.tsx
 "use client";
 
-import React, { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
 import { Shield } from "lucide-react";
+import { useState } from "react";
 
 export default function UserNotifications() {
-  const [twoFactor, setTwoFactor] = useState(false);
+  const [_twoFactor, _setTwoFactor] = useState(false);
   const [loginAlerts, setLoginAlerts] = useState(true);
   const [sessionTimeout, setSessionTimeout] = useState(true);
 

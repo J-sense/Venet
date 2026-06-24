@@ -1,8 +1,8 @@
 import { Button } from "@/components/ui/button";
-import { ChevronDown, ChevronUp, Zap, Trophy } from "lucide-react";
-import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router";
 import AssessmentCompleteModal from "@/pages/dashboard/user/AssessmentComplete";
+import { ChevronDown, ChevronUp, Trophy, Zap } from "lucide-react";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router";
 
 const programTitles: Record<string, string> = {
   "mental-health": "Mental Health",
@@ -58,7 +58,7 @@ const roadmapData = [
 
 export default function ProgramRoadmap() {
   const { id } = useParams();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const title = programTitles[id || ""] || "Program";
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -313,7 +313,7 @@ export default function ProgramRoadmap() {
           <p className="text-[#90A1B9] mb-8 max-w-md mx-auto">
             You've completed all tasks. Your certificate is ready.
           </p>
-          <Button 
+          <Button
             onClick={() => setIsModalOpen(true)}
             className="bg-[#155DFC] hover:bg-blue-700 text-white px-10 py-6 rounded-2xl font-normal text-lg "
           >
@@ -330,9 +330,9 @@ export default function ProgramRoadmap() {
       )}
 
       {/* Assessment Complete Modal */}
-      <AssessmentCompleteModal 
-        isOpen={isModalOpen} 
-        onClose={() => setIsModalOpen(false)} 
+      <AssessmentCompleteModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
       />
     </div>
   );

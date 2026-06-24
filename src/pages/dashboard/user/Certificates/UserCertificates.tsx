@@ -1,6 +1,5 @@
-import React from "react";
-import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import { Download } from "lucide-react";
 
 interface Certificate {
@@ -64,7 +63,7 @@ export default function UserCertificates() {
                   src={cert.image}
                   alt={cert.program}
                   className="w-full h-full object-cover"
-                  // Fallback if image doesn't exist
+                // Fallback if image doesn't exist
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
 

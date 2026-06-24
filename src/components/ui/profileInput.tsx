@@ -67,7 +67,7 @@ const EyeClosedIcon = () => (
 // ── Props ──────────────────────────────────────────────────────────────────────
 interface ProfileInputProps {
   name: string;
-  label: string;
+  label?: string;
   placeholder?: string;
   type?: "text" | "email" | "password" | "tel" | "number";
   as?: "input" | "textarea";
