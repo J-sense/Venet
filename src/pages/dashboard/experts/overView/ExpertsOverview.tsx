@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ExpertTrainerCard } from "@/components/ui/ExpertTrainnerCard";
-import { ProgramCard } from "@/components/ui/ProgramCard";
+import { STartProgramCard } from "@/components/ui/ProgramCard";
 import { StatCard } from "@/components/ui/StatCard";
 import { TaskItem } from "@/components/ui/TaskItem";
 import { CertificateSection } from "@/components/user/Overview/CertificateSection";
@@ -87,13 +87,13 @@ export default function ExpertsOverview() {
                 My Programs
               </h2>
               <div className="space-y-4">
-                <ProgramCard
+                <STartProgramCard
                   title="Health & Fitness"
                   status="Not Started"
                   progress={60}
                   icon={<Heart className="w-6 h-6 text-rose-500" />} // Use the string literal
                 />
-                <ProgramCard
+                <STartProgramCard
                   title="Mental Health"
                   status="Not Started"
                   progress={60}

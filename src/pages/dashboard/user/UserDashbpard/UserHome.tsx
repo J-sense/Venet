@@ -1,11 +1,13 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ExpertTrainerCard } from "@/components/ui/ExpertTrainnerCard";
-import { ProgramCard } from "@/components/ui/ProgramCard";
+import { STartProgramCard } from "@/components/ui/ProgramCard";
 import { StatCard } from "@/components/ui/StatCard";
 import { TaskItem } from "@/components/ui/TaskItem";
 import { CertificateSection } from "@/components/user/Overview/CertificateSection";
 import { Award, CheckCircle2, Heart, TrendingUp } from "lucide-react";
+import { useNavigate } from "react-router";
+
 const upcomingTasks = [
   {
     title: "Complete Health Assessment",
@@ -62,7 +64,30 @@ const trainers = [
     category: "Career Preparation",
   },
 ];
+
+const myPrograms = [
+  {
+    title: "Health & Fitness",
+    status: "Not Started",
+    progress: 60,
+    icon: <Heart className="w-6 h-6 text-rose-500" />,
+  },
+  {
+    title: "Mental Health",
+    status: "Not Started",
+    progress: 60,
+    icon: <Heart className="w-6 h-6 text-rose-500" />,
+  },
+];
+
 export default function UserHome() {
+  const navigate = useNavigate();
+
+  const handleStartProgram = (title: string) => {
+    const slug = title.toLowerCase().replace(/\s+/g, '-');
+    navigate(`/dashboard/user/program/${slug}`);
+  };
+
   return (
     <div className="min-h-screen bg-black text-white p-4">
       {/* Header */}
@@ -87,19 +112,25 @@ export default function UserHome() {
                 My Programs
               </h2>
               <div className="space-y-4">
-                <ProgramCard
-                  title="Health & Fitness"
-                  status="Not Started"
-                  progress={60}
-                  icon={<Heart className="w-6 h-6 text-rose-500" />} // Use the string literal
-                />
-                <ProgramCard
-                  title="Mental Health"
-                  status="Not Started"
-                  progress={60}
-                  icon={<Heart className="w-6 h-6 text-rose-500" />} // Use the string literal
-                />
-                {/* <ProgramCard title="Mental Health" status="Not Started" /> */}
+                {!myPrograms || myPrograms.length === 0 ? (
+                  <div className="text-center py-6 text-zinc-400 bg-black/20 rounded-lg">
+                    <p className="mb-2">You don't have any programs yet.</p>
+                    <p className="text-sm">
+                      Please explore and purchase a program to get started!
+                    </p>
+                  </div>
+                ) : (
+                  myPrograms.map((program, index) => (
+                    <div key={index} onClick={() => handleStartProgram(program.title)} className="cursor-pointer">
+                      <STartProgramCard
+                        title={program.title}
+                        status={program.status}
+                        progress={program.progress}
+                        icon={program.icon}
+                      />
+                    </div>
+                  ))
+                )}
               </div>
             </Card>
           </section>

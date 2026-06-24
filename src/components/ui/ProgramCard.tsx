@@ -10,7 +10,7 @@ interface ProgramCardProps {
   icon: React.ReactNode; // Pass the icon directly
 }
 
-export function ProgramCard({
+export function STartProgramCard({
   title,
   status,
   progress,

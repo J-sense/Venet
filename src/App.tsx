@@ -12,6 +12,9 @@ import { navItemsForExperts, navItemsForUser } from "./components/ui/navitems";
 import UserLayout from "./components/ui/layouts/UserLayout/UserLayout";
 import ExpertsLayout from "./components/ui/layouts/expertsLayout/ExpertsLayout";
 import UserHome from "./pages/dashboard/user/UserDashbpard/UserHome";
+import ProgramDetails from "./pages/dashboard/user/ProgramDetails";
+import ProgramAssessment from "./pages/dashboard/user/ProgramAssessment";
+import ProgramRoadmap from "./pages/dashboard/user/ProgramRoadmap";
 import UserCertificates from "./pages/dashboard/user/Certificates/UserCertificates";
 import TalentPortal from "./pages/dashboard/user/TalentPortal/TalentPortal";
 import { Login } from "./pages/authPages/Login";
@@ -59,6 +62,9 @@ export const App = () => {
         element={<UserLayout navItems={navItemsForUser} />}
       >
         <Route index element={<UserHome />} />
+        <Route path="program/:id" element={<ProgramDetails />} />
+        <Route path="program/:id/assessment" element={<ProgramAssessment />} />
+        <Route path="program/:id/roadmap" element={<ProgramRoadmap />} />
         <Route path="certificates" element={<UserCertificates />} />
         <Route path="talent-portal" element={<TalentPortal />} />
         <Route path="settings" element={<UserSettingsMain />}>
