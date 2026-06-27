@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ChevronDown } from "lucide-react";
 import { AssessmentModal } from "@/components/assessment/AssessmentModal";
 
 export const CommonNavbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [isAssessmentOpen, setIsAssessmentOpen] = useState(false);
+  const [programsOpen, setProgramsOpen] = useState(false); // Desktop hover
+  const [mobileProgramsOpen, setMobileProgramsOpen] = useState(false); // Mobile accordion
+
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -29,11 +32,11 @@ export const CommonNavbar = () => {
     >
       <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 h-full">
         <div className="flex items-center justify-between h-full gap-8">
-          <Link to="/" className="flex items-center flex-shrink-0">
+          <Link to="/" className="flex items-center flex-shrink-0 ">
             <img
               src="/VNetLogo.png"
               alt="VNET Logo"
-              className="w-48 h-12 md:w-60 md:h-16 object-contain rounded-full border border-zinc-800"
+              className="w-32 h-9 sm:w-40 sm:h-11 md:w-60 md:h-16 object-cover rounded-full border border-zinc-800 transition-all duration-300"
             />
           </Link>
 
@@ -41,9 +44,51 @@ export const CommonNavbar = () => {
             <NavLink to="/" className={navLinkStyles}>
               Home
             </NavLink>
-            <NavLink to="/programs" className={navLinkStyles}>
-              Programs
-            </NavLink>
+
+            {/* Programs Dropdown */}
+            <div
+              className="relative group"
+              onMouseEnter={() => setProgramsOpen(true)}
+              onMouseLeave={() => setProgramsOpen(false)}
+            >
+              <button className="flex items-center gap-1 font-inter text-base font-medium leading-6 text-gray-300 hover:text-white transition-colors">
+                Programs
+                <ChevronDown
+                  className={`w-4 h-4 transition-transform duration-200 ${programsOpen ? "rotate-180" : ""}`}
+                />
+              </button>
+
+              {/* Dropdown Menu */}
+              <div className="absolute left-0 top-full pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                <div className="bg-[#0B0F19] border border-white/10 rounded-xl py-3 px-2 shadow-xl w-64">
+                  <Link
+                    to="/programs/health-fitness"
+                    className="block px-4 py-2.5 hover:bg-white/5 rounded-lg text-gray-300 hover:text-white transition-colors"
+                  >
+                    Health & Fitness
+                  </Link>
+                  <Link
+                    to="/programs/mental-health"
+                    className="block px-4 py-2.5 hover:bg-white/5 rounded-lg text-gray-300 hover:text-white transition-colors"
+                  >
+                    Mental Health
+                  </Link>
+                  <Link
+                    to="/programs/education-service"
+                    className="block px-4 py-2.5 hover:bg-white/5 rounded-lg text-gray-300 hover:text-white transition-colors"
+                  >
+                    Education Service
+                  </Link>
+                  <Link
+                    to="/programs/career"
+                    className="block px-4 py-2.5 hover:bg-white/5 rounded-lg text-gray-300 hover:text-white transition-colors"
+                  >
+                    Career
+                  </Link>
+                </div>
+              </div>
+            </div>
+
             <NavLink to="/experts" className={navLinkStyles}>
               Experts
             </NavLink>
@@ -67,12 +112,11 @@ export const CommonNavbar = () => {
                 Start Free Assessment
               </button>
             </div>
-            {
-              <AssessmentModal
-                isOpen={isAssessmentOpen}
-                onClose={() => setIsAssessmentOpen(false)}
-              />
-            }
+
+            <AssessmentModal
+              isOpen={isAssessmentOpen}
+              onClose={() => setIsAssessmentOpen(false)}
+            />
 
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -88,7 +132,7 @@ export const CommonNavbar = () => {
         </div>
       </div>
 
-      {/* MOBILE DRAWER: Added for small devices */}
+      {/* MOBILE DRAWER */}
       {mobileMenuOpen && (
         <div
           className="md:hidden absolute top-20 left-0 w-full border-b border-white/10 shadow-2xl px-6 py-8 flex flex-col gap-6"
@@ -104,13 +148,52 @@ export const CommonNavbar = () => {
           >
             Home
           </NavLink>
-          <NavLink
-            to="/programs"
-            onClick={() => setMobileMenuOpen(false)}
-            className={navLinkStyles}
-          >
-            Programs
-          </NavLink>
+
+          {/* Mobile Programs Accordion */}
+          <div>
+            <button
+              onClick={() => setMobileProgramsOpen(!mobileProgramsOpen)}
+              className="flex items-center justify-between w-full text-left font-inter text-base font-medium text-gray-300 hover:text-white transition-colors"
+            >
+              Programs
+              <ChevronDown
+                className={`w-4 h-4 transition-transform ${mobileProgramsOpen ? "rotate-180" : ""}`}
+              />
+            </button>
+            {mobileProgramsOpen && (
+              <div className="pl-4 mt-3 flex flex-col gap-3 text-gray-400">
+                <Link
+                  to="/programs/health-fitness"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="hover:text-white"
+                >
+                  Health & Fitness
+                </Link>
+                <Link
+                  to="/programs/mental-health"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="hover:text-white"
+                >
+                  Mental Health
+                </Link>
+                <Link
+                  to="/programs/education-service"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="hover:text-white"
+                >
+                  Education Service
+                </Link>
+                <Link
+                  to="/programs/career"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="hover:text-white"
+                >
+                  Career
+                </Link>
+              </div>
+            )}
+          </div>
+
           <NavLink
             to="/experts"
             onClick={() => setMobileMenuOpen(false)}

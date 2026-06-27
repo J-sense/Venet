@@ -42,6 +42,11 @@ import UserNotifications from "./pages/dashboard/user/Settings/UserNotifications
 import AgoraVideoCallPage from "./pages/video/AgoraVideoCallPage";
 import ResumeBuildForm from "./components/user/talentPortal/ResumeBuildForm";
 
+import HealthFitnessPage from "./pages/program/health-fitness/HealthFitnessPage";
+import MentalHealthPage from "./pages/program/mental-health/MentalHealthPage";
+import EducationServicePage from "./pages/program/education-service/EducationServicePage";
+import CareerPage from "./pages/program/career/CareerPage";
+
 export const App = () => {
   return (
     <Routes>
@@ -49,6 +54,10 @@ export const App = () => {
       <Route path="/" element={<CommonLayout />}>
         <Route index element={<HomeMain />} />
         <Route path="/programs" element={<ProgrameMain />} />
+        <Route path="/programs/health-fitness" element={<HealthFitnessPage />} />
+        <Route path="/programs/mental-health" element={<MentalHealthPage />} />
+        <Route path="/programs/education-service" element={<EducationServicePage />} />
+        <Route path="/programs/career" element={<CareerPage />} />
         <Route path="/experts" element={<ExpertsMain />} />
         <Route path="/about" element={<AboutUsMain />} />
         <Route path="/experts/:id" element={<ExpertsDetails />} />
