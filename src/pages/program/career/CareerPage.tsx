@@ -1,4 +1,3 @@
-import React from "react";
 import ProgrameMain from "../../program/ProgrameMain";
 
 export default function CareerPage() {
