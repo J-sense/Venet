@@ -93,20 +93,23 @@ export default function ExpertsRegister() {
               </div>
 
               {/* Email */}
-              <FormInput
-                label="Email Address"
-                name="email"
-                placeholder="Email"
-                type="email"
-              />
+              <div className="flex md:block">
 
-              {/* Specialty */}
-              <FormSelect
-                label="Specialty"
-                name="specialty"
-                placeholder="Select specialty..."
-                options={specialties}
-              />
+                <FormInput
+                  label="Email Address"
+                  name="email"
+                  placeholder="Email"
+                  type="email"
+                />
+
+                {/* Specialty */}
+                <FormSelect
+                  label="Specialty"
+                  name="specialty"
+                  placeholder="Select specialty..."
+                  options={specialties}
+                />
+              </div>
 
               {/* Experience + Rate */}
               <div className="grid grid-cols-2 gap-3">
