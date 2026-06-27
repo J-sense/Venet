@@ -1,6 +1,4 @@
-import React from "react";
 import ProgrameMain from "../../program/ProgrameMain";
-import { Check } from "lucide-react";
 
 export default function MentalHealthPage() {
   return (
