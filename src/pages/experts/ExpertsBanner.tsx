@@ -24,13 +24,11 @@ export default function ExpertsBanner() {
         <div className="flex flex-col gap-6 max-w-[400px] mt-24">
           <h2 className="text-[56px] lg:text-[46px] font-bold leading-[1.1] text-white">
             Find Your <span className="text-[#007AFF]">Perfect Expert</span>{" "}
-            Coach
+            Coachs
           </h2>
           <p className="text-[#99A1AF] text-xl font-normal leading-7 max-w-[400px]">
             Connect with certified professionals who specialize in your goals.
           </p>
-
-
         </div>
       </div>
     </section>
