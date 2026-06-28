@@ -46,6 +46,7 @@ import HealthFitnessPage from "./pages/program/health-fitness/HealthFitnessPage"
 import MentalHealthPage from "./pages/program/mental-health/MentalHealthPage";
 import EducationServicePage from "./pages/program/education-service/EducationServicePage";
 import CareerPage from "./pages/program/career/CareerPage";
+import NotFoundPage from "./pages/NotFoundPage";
 
 export const App = () => {
   return (
@@ -123,6 +124,9 @@ export const App = () => {
           <Route path=":section/:id" element={<ChatWindow />} />
         </Route>
       </Route>
+
+      {/* Catch-all Not Found Route */}
+      <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
 };
