@@ -1,6 +1,37 @@
-import ProgrameMain from "../../program/ProgrameMain";
+import HowItWorks from "@/components/ui/ProgrammeHowItWorksSection";
 
 export default function MentalHealthPage() {
+  const mentalHealthSteps = [
+    {
+      number: 1,
+      title: "Mental Wellness Assessment",
+      description:
+        "Evaluate your current mental health and identify areas for growth",
+    },
+    {
+      number: 2,
+      title: "Personalized Care Plan",
+      description:
+        "Get a customized mental wellness roadmap with daily practices",
+    },
+    {
+      number: 3,
+      title: "Daily Mindfulness Tasks",
+      description:
+        "Practice meditation, journaling, and stress management techniques",
+    },
+    {
+      number: 4,
+      title: "Expert Support",
+      description: "Access licensed therapists and mental health professionals",
+    },
+    {
+      number: 5,
+      title: "Certification",
+      description:
+        "Complete the program and receive your mental wellness certificate",
+    },
+  ];
   return (
     <div className="bg-[#0A0A0A] text-white pt-20 bg-black">
       {/* Full Screen Hero Section */}
@@ -21,13 +52,16 @@ export default function MentalHealthPage() {
         {/* Top Floating Text */}
 
         <div className="absolute top-8 right-8 md:top-12 md:right-24 z-20 text-right">
-          <h3 className="text-gray-300 font-semibold tracking-widest text-sm md:text-base">RECOVERY IS POSSIBLE</h3>
-          <p className="text-gray-500 text-xs tracking-widest mt-1">HEALING. PURPOSE. FREEDOM. LIFE.</p>
+          <h3 className="text-gray-300 font-semibold tracking-widest text-sm md:text-base">
+            RECOVERY IS POSSIBLE
+          </h3>
+          <p className="text-gray-500 text-xs tracking-widest mt-1">
+            HEALING. PURPOSE. FREEDOM. LIFE.
+          </p>
         </div>
 
         {/* Main Content */}
         <div className="relative z-10 w-full max-w-[1600px] mx-auto px-6  flex justify-between items-center mt-12">
-
           {/* Left Side Copy */}
           <div className="max-w-xl">
             {/* Badge */}
@@ -44,9 +78,9 @@ export default function MentalHealthPage() {
             </h1>
 
             <p className="text-base md:text-lg text-white/70 max-w-lg mb-10 font-['Inter'] leading-relaxed">
-              Mental health. Substance abuse. Hope lost. Whatever you're carrying
-              — change is possible. Transformation is real. VNET is where your
-              comeback begins.
+              Mental health. Substance abuse. Hope lost. Whatever you're
+              carrying — change is possible. Transformation is real. VNET is
+              where your comeback begins.
             </p>
 
             {/* CTA Buttons */}
@@ -64,36 +98,37 @@ export default function MentalHealthPage() {
             <div className="flex gap-10 md:gap-14 text-left">
               <div>
                 <div className="text-2xl md:text-3xl font-bold ">10K+</div>
-                <div className="text-white/50 text-xs mt-1 font-['Inter']">Active Members</div>
+                <div className="text-white/50 text-xs mt-1 font-['Inter']">
+                  Active Members
+                </div>
               </div>
               <div>
                 <div className="text-2xl md:text-3xl font-bold ">500+</div>
-                <div className="text-white/50 text-xs mt-1 font-['Inter']">Expert Trainers</div>
+                <div className="text-white/50 text-xs mt-1 font-['Inter']">
+                  Expert Trainers
+                </div>
               </div>
               <div>
                 <div className="text-2xl md:text-3xl font-bold ">95%</div>
-                <div className="text-white/50 text-xs mt-1 font-['Inter']">Success Rate</div>
+                <div className="text-white/50 text-xs mt-1 font-['Inter']">
+                  Success Rate
+                </div>
               </div>
             </div>
           </div>
 
-          {/* Glowing Arrow (Center) */}
-          <div className="hidden lg:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-80 pointer-events-none">
-            <div className="w-32 h-16 bg-gradient-to-r from-red-500/0 via-red-500/20 to-blue-500/80 blur-xl absolute" />
-            <span className="text-blue-400 text-8xl font-thin drop-shadow-[0_0_15px_rgba(59,130,246,0.8)] relative z-10">→</span>
-          </div>
-
           {/* Right Side Visual Elements */}
-
-
         </div>
 
         {/* Bottom Banner Text */}
-
       </div>
-
       {/* Rest of Page Content */}
-      <ProgrameMain />
+      <HowItWorks
+        steps={mentalHealthSteps}
+        subtitle="Your journey from assessment to mental wellness in 5 simple steps"
+        buttonText="Join Now"
+      />
+      s
     </div>
   );
 }

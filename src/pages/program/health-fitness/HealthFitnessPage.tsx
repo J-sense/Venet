@@ -1,7 +1,39 @@
 import { ActionButton } from "@/components/ui/ActionButton";
-import ProgrameMain from "../../program/ProgrameMain";
+import HowItWorks from "@/components/ui/ProgrammeHowItWorksSection";
 
 export default function HealthFitnessPage() {
+  const fitnessSteps = [
+    {
+      number: 1,
+      title: "Initial Fitness Assessment",
+      description:
+        "Evaluate your current fitness level, body composition, and health markers",
+    },
+    {
+      number: 2,
+      title: "Personalized AI Roadmap",
+      description:
+        "Get a custom workout plan, nutrition strategy, and progress timeline",
+    },
+    {
+      number: 3,
+      title: "Daily Training Execution",
+      description:
+        "Follow guided workouts, track nutrition, and build consistent habits",
+    },
+    {
+      number: 4,
+      title: "Progress Tracking & Coaching",
+      description:
+        "Weekly check-ins, form analysis, and adjustments with expert trainers",
+    },
+    {
+      number: 5,
+      title: "Goal Achievement & Transformation",
+      description:
+        "Reach your fitness goals and receive your transformation certificate",
+    },
+  ];
   return (
     <div className="bg-[#0A0A0A] text-white ">
       {/* Full Screen Hero Section */}
@@ -98,7 +130,11 @@ export default function HealthFitnessPage() {
       </div>
 
       {/* Program Content Below */}
-      <ProgrameMain />
+      <HowItWorks
+        steps={fitnessSteps}
+        subtitle="Your journey from assessment to fitness transformation in 5 simple steps"
+        buttonText="Start Your Fitness Journey"
+      />
     </div>
   );
 }

@@ -1,7 +1,39 @@
 import { ActionButton } from "@/components/ui/ActionButton";
-import ProgrameMain from "../../program/ProgrameMain";
+import HowItWorks from "@/components/ui/ProgrammeHowItWorksSection";
 
 export default function EducationServicePage() {
+  const educationSteps = [
+    {
+      number: 1,
+      title: "Skills Assessment",
+      description:
+        "Evaluate your current knowledge, strengths, and learning goals",
+    },
+    {
+      number: 2,
+      title: "Personalized Learning Plan",
+      description:
+        "Receive a customized curriculum and learning roadmap tailored to your goals",
+    },
+    {
+      number: 3,
+      title: "Interactive Coursework",
+      description:
+        "Engage with high-quality video lessons, assignments, and practical projects",
+    },
+    {
+      number: 4,
+      title: "Mentorship & Support",
+      description:
+        "Get guidance from industry experts and real-time academic support",
+    },
+    {
+      number: 5,
+      title: "Certification & Career Readiness",
+      description:
+        "Complete the program and earn recognized certificates for your career",
+    },
+  ];
   return (
     <div
       className="bg-[#0A0A0A] text-white pt-
@@ -79,7 +111,11 @@ export default function EducationServicePage() {
       </div>
 
       {/* Additional Content */}
-      <ProgrameMain />
+      <HowItWorks
+        steps={educationSteps}
+        subtitle="Your journey from assessment to career success in 5 simple steps"
+        buttonText="Start Learning Now"
+      />
     </div>
   );
 }

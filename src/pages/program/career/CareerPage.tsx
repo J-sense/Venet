@@ -1,6 +1,38 @@
-import ProgrameMain from "../../program/ProgrameMain";
+import HowItWorks from "@/components/ui/ProgrammeHowItWorksSection";
 
 export default function CareerPage() {
+  const careerSteps = [
+    {
+      number: 1,
+      title: "Career Assessment",
+      description:
+        "Identify your strengths, skills, and ideal career path through comprehensive evaluation",
+    },
+    {
+      number: 2,
+      title: "AI Roadmap Building",
+      description:
+        "Get a personalized career development plan with clear milestones and timelines",
+    },
+    {
+      number: 3,
+      title: "Skill Development",
+      description:
+        "Master in-demand skills through structured courses and hands-on projects",
+    },
+    {
+      number: 4,
+      title: "Interview & Job Preparation",
+      description:
+        "Receive resume optimization, interview coaching, and job placement support",
+    },
+    {
+      number: 5,
+      title: "Career Launch",
+      description:
+        "Secure your dream role and get ongoing career growth support",
+    },
+  ];
   return (
     <div className="bg-[#0A0A0A] text-white">
       {/* Full Screen Hero */}
@@ -31,13 +63,15 @@ export default function CareerPage() {
 
               {/* Main Heading */}
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold  mb-6 ">
-                We see Potential,<br />
+                We see Potential,
+                <br />
                 We <span className="text-[#3B82F6]">Unlock Careers</span>
               </h1>
 
               <p className="text-base md:text-lg text-white/80 max-w-lg mb-10 font-['Inter'] leading-relaxed">
-                Online courses, 1-on-1 mentorship, career training, and job placement — all in
-                one network built for people who are ready to change their lives.
+                Online courses, 1-on-1 mentorship, career training, and job
+                placement — all in one network built for people who are ready to
+                change their lives.
               </p>
 
               {/* CTA Buttons */}
@@ -55,15 +89,21 @@ export default function CareerPage() {
               <div className="flex gap-8 md:gap-10 text-left">
                 <div>
                   <div className="text-2xl md:text-3xl font-bold ">10K+</div>
-                  <div className="text-white/50 text-xs mt-1 font-['Inter']">Active Members</div>
+                  <div className="text-white/50 text-xs mt-1 font-['Inter']">
+                    Active Members
+                  </div>
                 </div>
                 <div>
                   <div className="text-2xl md:text-3xl font-bold ">500+</div>
-                  <div className="text-white/50 text-xs mt-1 font-['Inter']">Expert Trainers</div>
+                  <div className="text-white/50 text-xs mt-1 font-['Inter']">
+                    Expert Trainers
+                  </div>
                 </div>
                 <div>
                   <div className="text-2xl md:text-3xl font-bold ">95%</div>
-                  <div className="text-white/50 text-xs mt-1 font-['Inter']">Success Rate</div>
+                  <div className="text-white/50 text-xs mt-1 font-['Inter']">
+                    Success Rate
+                  </div>
                 </div>
               </div>
             </div>
@@ -74,7 +114,11 @@ export default function CareerPage() {
         </div>
       </div>
 
-      <ProgrameMain />
+      <HowItWorks
+        steps={careerSteps}
+        subtitle="Your journey from assessment to career success in 5 simple steps"
+        buttonText="Start Your Career Journey"
+      />
     </div>
   );
 }
