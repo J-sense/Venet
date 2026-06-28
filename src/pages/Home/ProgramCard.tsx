@@ -1,3 +1,4 @@
+import { SectionHeader } from "@/components/ui/TItleWithSubtitle";
 import React from "react";
 import { Link } from "react-router";
 
@@ -63,60 +64,14 @@ export const ProgramsSection: React.FC<ProgramsSectionProps> = ({
   return (
     <section className="relative w-full bg-[#000000] py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
       {/* BLOB A — Top-right atmospheric flare */}
-      <div
-        className="absolute pointer-events-none z-0"
-        style={{
-          width: 580,
-          height: 580,
-          top: -160,
-          right: -140,
-          borderRadius: "50%",
-          background: "#185CA6",
-          filter: "blur(190px)",
-          opacity: 0.2,
-        }}
-      />
 
-      {/* BLOB B — Bottom-left counter-balance */}
-      <div
-        className="absolute pointer-events-none z-0"
-        style={{
-          width: 480,
-          height: 480,
-          bottom: -80,
-          left: -100,
-          borderRadius: "50%",
-          background: "rgba(0, 122, 255, 0.18)",
-          filter: "blur(160px)",
-        }}
-      />
 
       {/* ── MAIN CONTENT ─────────────────────────────────────────────── */}
       <div className="relative z-10 max-w-[1440px] mx-auto flex flex-col items-center gap-[60px]">
         {/* Section Header */}
         <div className="flex flex-col items-center gap-5 text-center">
-          <h2
-            className="flex items-center justify-center flex-wrap gap-4 leading-none tracking-tight"
-            style={{
-              fontSize: "clamp(36px, 5vw, 60px)",
-              fontFamily: "'Sora', sans-serif",
-              fontWeight: 800,
-            }}
-          >
-            <span className="text-white">Our</span>
-            <span style={{ color: "#0B60BD" }}>Programs</span>
-          </h2>
-          <p
-            className="text-white/70 max-w-2xl leading-relaxed"
-            style={{
-              fontSize: "clamp(16px, 2vw, 24px)",
-              fontFamily: "'Inter', sans-serif",
-              fontWeight: 500,
-              lineHeight: "1.4",
-            }}
-          >
-            Choose from our scientifically designed programs to match your goals
-          </p>
+          <SectionHeader titlePrimary="Our" titleAccent="Programs" subtitle="Choose from our scientifically designed programs to match your goals" />
+
         </div>
 
         {/* Card Grid Wrapper */}
@@ -191,155 +146,42 @@ const ProgramCard: React.FC<{ program: ProgramItem }> = ({ program }) => {
   return (
     <Link
       to={program.to}
-      className="group flex flex-col overflow-hidden no-underline"
-      style={{
-        background:
-          "linear-gradient(135deg, #1D1D1D 0%, #131313 50%, #0A0A0A 100%)",
-        borderRadius: 28.81,
-        boxShadow: "inset 0 0 0 1.2px rgba(26, 107, 239, 0.30)",
-        transition: "box-shadow 0.3s ease, transform 0.3s ease",
-      }}
-      onMouseEnter={(e) => {
-        (e.currentTarget as HTMLElement).style.boxShadow =
-          "inset 0 0 0 1.2px rgba(26,107,239,0.65), 0 0 40px rgba(11,96,189,0.28)";
-        (e.currentTarget as HTMLElement).style.transform = "translateY(-4px)";
-      }}
-      onMouseLeave={(e) => {
-        (e.currentTarget as HTMLElement).style.boxShadow =
-          "inset 0 0 0 1.2px rgba(26, 107, 239, 0.30)";
-        (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
-      }}
+      className="group flex flex-col overflow-hidden no-underline bg-gradient-to-br from-[#1D1D1D] via-[#131313] to-[#0A0A0A] rounded-[28.81px] shadow-[inset_0_0_0_1.2px_rgba(26,107,239,0.30)] transition-all duration-300 ease-in-out hover:shadow-[inset_0_0_0_1.2px_rgba(26,107,239,0.65),0_0_40px_rgba(11,96,189,0.28)] hover:-translate-y-1"
     >
       {/* Card Image Wrapper */}
-      <div
-        className="relative w-full overflow-hidden"
-        style={{
-          aspectRatio: "362 / 268",
-          borderRadius: 16,
-          background: "#161616",
-        }}
-      >
+      <div className="relative w-full overflow-hidden aspect-[362/268] rounded-[16px] bg-[#161616]">
         <img
           src={program.imageSrc}
           alt={program.title}
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-          style={{ display: "block" }}
+          className="block w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
           onError={(e) => {
             (e.currentTarget as HTMLImageElement).src =
               `https://placehold.co/362x268/161616/333333?text=${encodeURIComponent(program.title)}`;
           }}
         />
         {/* Image bottom dissolve mask */}
-        <div
-          className="absolute inset-x-0 bottom-0 h-20 pointer-events-none"
-          style={{
-            background:
-              "linear-gradient(to top, rgba(13,13,13,1) 0%, rgba(13,13,13,0) 100%)",
-          }}
-        />
+        <div className="absolute inset-x-0 bottom-0 h-20 pointer-events-none bg-gradient-to-t from-[#0D0D0D] to-transparent" />
       </div>
 
       {/* Card Body Wrapper */}
-      <div className="flex-1 flex flex-col" style={{ padding: 28.81 }}>
+      <div className="flex-1 flex flex-col p-[28.81px]">
         {/* BRAND IDENTITY ICON BADGE LAYER */}
-        <div
-          className={`w-9 h-9 mb-4 flex items-center justify-center rounded-[10px] ${program.iconBg} text-white shadow-md`}
-        >
-          <svg
-            className="w-4 h-4"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth={2.2}
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d={program.iconPath}
-            />
-          </svg>
-        </div>
+
+
 
         {/* Title */}
-        <div
-          className="text-white transition-colors duration-300 group-hover:text-blue-400"
-          style={{
-            fontFamily: "'Inter', sans-serif",
-            fontWeight: 700,
-            fontSize: 24.8, // Slightly adjusted text layout to balance icon inclusion padding
-            lineHeight: "34px",
-          }}
-        >
+        <div className="text-white transition-colors duration-300 group-hover:text-blue-400 font-['Inter'] font-bold text-[24.8px] leading-[34px]">
           {program.title}
         </div>
 
         {/* Description */}
-        <div
-          style={{
-            paddingTop: 12,
-            fontFamily: "'Inter', sans-serif",
-            fontWeight: 400,
-            fontSize: 15,
-            lineHeight: "24px",
-            color: "rgba(255,255,255,0.70)",
-            maxWidth: 302.48,
-            flex: 1,
-          }}
-        >
+        <div className="pt-[12px] font-['Inter'] font-normal text-[15px] leading-[24px] text-white/70 max-w-[302.48px] flex-1">
           {program.description}
         </div>
 
         {/* GLASSMORPHISM "LEARN MORE" BUTTON */}
-        <div
-          className="w-full flex items-center justify-center mt-7 cursor-pointer select-none"
-          style={{
-            height: 62,
-            borderRadius: 9999,
-            position: "relative",
-            overflow: "hidden",
-            backdropFilter: "blur(12px) saturate(1.6)",
-            WebkitBackdropFilter: "blur(12px) saturate(1.6)",
-            background:
-              "linear-gradient(180deg, rgba(255,255,255,0.11) 0%, rgba(255,255,255,0.04) 100%)",
-            boxShadow:
-              "inset 0 1px 0 rgba(255,255,255,0.14), inset 0 -1px 0 rgba(255,255,255,0.04), 0 2px 8px rgba(0,0,0,0.30)",
-            transition: "all 0.3s ease",
-          }}
-          onMouseEnter={(e) => {
-            const el = e.currentTarget as HTMLElement;
-            el.style.backdropFilter = "blur(16px) saturate(1.8)";
-            el.style.setProperty("-webkit-backdrop-filter", "blur(16px) saturate(1.8)");
-            el.style.background =
-              "linear-gradient(180deg, rgba(59,130,246,0.22) 0%, rgba(59,130,246,0.10) 100%)";
-            el.style.boxShadow =
-              "inset 0 1px 0 rgba(59,130,246,0.40), inset 0 -1px 0 rgba(59,130,246,0.10), 0 4px 16px rgba(59,130,246,0.18)";
-            const text = el.querySelector("span") as HTMLElement;
-            if (text) text.style.color = "#ffffff";
-          }}
-          onMouseLeave={(e) => {
-            const el = e.currentTarget as HTMLElement;
-            el.style.backdropFilter = "blur(12px) saturate(1.6)";
-            el.style.setProperty("-webkit-backdrop-filter", "blur(12px) saturate(1.6)");
-            el.style.background =
-              "linear-gradient(180deg, rgba(255,255,255,0.11) 0%, rgba(255,255,255,0.04) 100%)";
-            el.style.boxShadow =
-              "inset 0 1px 0 rgba(255,255,255,0.14), inset 0 -1px 0 rgba(255,255,255,0.04), 0 2px 8px rgba(0,0,0,0.30)";
-            const text = el.querySelector("span") as HTMLElement;
-            if (text) text.style.color = "#3B82F6";
-          }}
-        >
-          <span
-            style={{
-              fontFamily: "'Inter', sans-serif",
-              fontWeight: 600,
-              fontSize: 17.5,
-              lineHeight: "26px",
-              color: "#3B82F6",
-              transition: "color 0.3s ease",
-              position: "relative",
-              zIndex: 1,
-            }}
-          >
+        <div className="w-full h-[62px] rounded-full relative overflow-hidden backdrop-blur-[12px] backdrop-saturate-[1.6] bg-gradient-to-b from-white/[0.11] to-white/[0.04] shadow-[inset_0_1px_0_rgba(255,255,255,0.14),inset_0_-1px_0_rgba(255,255,255,0.04),0_2px_8px_rgba(0,0,0,0.30)] transition-all duration-300 ease-in-out flex items-center justify-center mt-7 cursor-pointer select-none hover:backdrop-blur-[16px] hover:backdrop-saturate-[1.8] hover:from-blue-500/[0.22] hover:to-blue-500/[0.10] hover:shadow-[inset_0_1px_0_rgba(59,130,246,0.40),inset_0_-1px_0_rgba(59,130,246,0.10),0_4px_16px_rgba(59,130,246,0.18)] group/btn">
+          <span className="font-['Inter'] font-semibold text-[17.5px] leading-[26px] text-[#3B82F6] transition-colors duration-300 ease-in-out relative z-10 group-hover/btn:text-white">
             Learn More
           </span>
         </div>
@@ -347,3 +189,4 @@ const ProgramCard: React.FC<{ program: ProgramItem }> = ({ program }) => {
     </Link>
   );
 };
+
