@@ -16,7 +16,7 @@ const defaultPrograms: ProgramItem[] = [
     title: "Health & Fitness",
     description:
       "Personalized workout plans, nutrition guidance, and wellness tracking.",
-    imageSrc: "/PrgrameImg.png",
+    imageSrc: "/pr1.png",
     to: "/programs/fitness",
     iconBg: "bg-[#1B73E8]",
     iconPath:
@@ -26,7 +26,7 @@ const defaultPrograms: ProgramItem[] = [
     title: "Mental Health",
     description:
       "Mindfulness practices, stress management, and emotional well-being support.",
-    imageSrc: "/PrgrameImg.png",
+    imageSrc: "/pr2.png",
     to: "/programs/mental",
     iconBg: "bg-[#D017A0]",
     iconPath:
@@ -36,7 +36,7 @@ const defaultPrograms: ProgramItem[] = [
     title: "Educational Services",
     description:
       "Skill development, certifications, and lifelong learning opportunities.",
-    imageSrc: "/PrgrameImg.png",
+    imageSrc: "/pr3.png",
     to: "/programs/education",
     iconBg: "bg-[#00C48C]",
     iconPath:
@@ -46,7 +46,7 @@ const defaultPrograms: ProgramItem[] = [
     title: "Career Preparation",
     description:
       "Job readiness, interview prep, and professional development programs.",
-    imageSrc: "/PrgrameImg.png",
+    imageSrc: "/pr4.png",
     to: "/programs/career",
     iconBg: "bg-[#FF4A22]",
     iconPath:
@@ -65,13 +65,15 @@ export const ProgramsSection: React.FC<ProgramsSectionProps> = ({
     <section className="relative w-full bg-[#000000] py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
       {/* BLOB A — Top-right atmospheric flare */}
 
-
       {/* ── MAIN CONTENT ─────────────────────────────────────────────── */}
       <div className="relative z-10 max-w-[1440px] mx-auto flex flex-col items-center gap-[60px]">
         {/* Section Header */}
         <div className="flex flex-col items-center gap-5 text-center">
-          <SectionHeader titlePrimary="Our" titleAccent="Programs" subtitle="Choose from our scientifically designed programs to match your goals" />
-
+          <SectionHeader
+            titlePrimary="Our"
+            titleAccent="Programs"
+            subtitle="Choose from our scientifically designed programs to match your goals"
+          />
         </div>
 
         {/* Card Grid Wrapper */}
@@ -80,15 +82,15 @@ export const ProgramsSection: React.FC<ProgramsSectionProps> = ({
           <div
             className="absolute inset-x-0 pointer-events-none z-0"
             style={{
-              top: "50%",
+              top: "-10%",
               left: "50%",
               transform: "translate(-50%, -50%)",
-              width: "130%",
+              width: "80%",
               maxWidth: 1500,
               height: 500,
               borderRadius: "50%",
               background:
-                "radial-gradient(ellipse at center, rgba(24,92,166,0.38) 0%, rgba(11,60,140,0.12) 55%, rgba(0,0,0,0) 75%)",
+                "radial-gradient(ellipse at center, rgba(24,92,166,0.38) 0%, rgba(21, 60, 124, 0.12) 55%, rgba(0,0,0,0) 25%)",
               filter: "blur(60px)",
             }}
           />
@@ -97,15 +99,15 @@ export const ProgramsSection: React.FC<ProgramsSectionProps> = ({
           <div
             className="absolute pointer-events-none z-0"
             style={{
-              top: "50%",
+              top: "10%",
               left: "50%",
               transform: "translate(-50%, -50%)",
-              width: "90%",
+              width: "30%",
               maxWidth: 1100,
               height: 380,
               borderRadius: "50%",
               background:
-                "radial-gradient(ellipse at center, rgba(24,92,166,0.55) 0%, rgba(11,96,189,0.20) 50%, rgba(0,0,0,0) 72%)",
+                "radial-gradient(ellipse at center, rgba(15, 34, 54, 0.55) 0%, rgba(25, 41, 59, 0.62) 50%, rgba(90, 83, 83, 0) 72%)",
               filter: "blur(40px)",
             }}
           />
@@ -167,8 +169,6 @@ const ProgramCard: React.FC<{ program: ProgramItem }> = ({ program }) => {
       <div className="flex-1 flex flex-col p-[28.81px]">
         {/* BRAND IDENTITY ICON BADGE LAYER */}
 
-
-
         {/* Title */}
         <div className="text-white transition-colors duration-300 group-hover:text-blue-400 font-['Inter'] font-bold text-[24.8px] leading-[34px]">
           {program.title}
@@ -189,4 +189,3 @@ const ProgramCard: React.FC<{ program: ProgramItem }> = ({ program }) => {
     </Link>
   );
 };
-

@@ -38,7 +38,7 @@ export const CustomerFeedback: React.FC = () => {
   ];
 
   return (
-    <section className="relative w-full bg-[#030303] py-24 overflow-hidden select-none">
+    <section className="relative w-full bg-[#030303]  overflow-hidden select-none">
       {/* ── CUSTOM REVERSE INFINITE GLIDE ANIMATION STYLES ── */}
       <style
         dangerouslySetInnerHTML={{

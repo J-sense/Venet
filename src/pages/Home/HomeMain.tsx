@@ -1,4 +1,3 @@
-import { Banner } from "./Banner";
 import BannerV2 from "./BannerV2";
 import { CTASection } from "./CTASection";
 import { CustomerFeedback } from "./CustomerFeedback";
@@ -16,11 +15,11 @@ export default function HomeMain() {
       {/* <Banner /> */}
       <BannerV2 />
       <ProgramsSection />
-      <MissionSection />
       <HowItWorksSection />
-      <SubscriptionSection />
+      <MissionSection />
       <OurTrainersSection />
       <CustomerFeedback />
+      <SubscriptionSection />
       <FAQSection />
       <CTASection />
     </div>

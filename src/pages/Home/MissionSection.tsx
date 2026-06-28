@@ -7,14 +7,14 @@ export const MissionSection: React.FC = () => {
       value: "10K+",
       label: "Active Users",
       textColor: "text-[#2B7FFF]",
-      gradient: "from-[#2B7FFF] to-[#00B8DB]",
+      iconBg: "bg-[#2B7FFF]",
       icon: (
         <svg
-          className="w-6 h-6 text-white"
+          className="w-4 h-4 text-white"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
-          strokeWidth={2}
+          strokeWidth={2.5}
         >
           <path
             strokeLinecap="round"
@@ -27,36 +27,36 @@ export const MissionSection: React.FC = () => {
     {
       value: "5K+",
       label: "Certificates Issued",
-      textColor: "text-[#AD46FF]",
-      gradient: "from-[#AD46FF] to-[#F6339A]",
+      textColor: "text-[#D017A0]",
+      iconBg: "bg-[#D017A0]",
       icon: (
         <svg
-          className="w-6 h-6 text-white"
+          className="w-4 h-4 text-white"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
-          strokeWidth={2}
+          strokeWidth={2.5}
         >
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
-            d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138z"
+            d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"
           />
         </svg>
       ),
     },
     {
       value: "500+",
-      label: "Expert Mentors",
+      label: "Expert Members",
       textColor: "text-[#00C950]",
-      gradient: "from-[#00C950] to-[#00BC7D]",
+      iconBg: "bg-[#00C950]",
       icon: (
         <svg
-          className="w-6 h-6 text-white"
+          className="w-4 h-4 text-white"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
-          strokeWidth={2}
+          strokeWidth={2.5}
         >
           <path
             strokeLinecap="round"
@@ -69,15 +69,15 @@ export const MissionSection: React.FC = () => {
     {
       value: "95%",
       label: "Completion Rate",
-      textColor: "text-[#FF6900]",
-      gradient: "from-[#FF6900] to-[#FB2C36]",
+      textColor: "text-[#FF4A22]",
+      iconBg: "bg-[#FF4A22]",
       icon: (
         <svg
-          className="w-6 h-6 text-white"
+          className="w-4 h-4 text-white"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
-          strokeWidth={2}
+          strokeWidth={2.5}
         >
           <path
             strokeLinecap="round"
@@ -90,44 +90,40 @@ export const MissionSection: React.FC = () => {
   ];
 
   return (
-    <section className="relative w-full bg-[#030303] py-24 px-4 sm:px-6 lg:px-8 overflow-hidden select-none">
-      {/* ── HIGH-INTENSITY LINEAR BACKGROUND SYSTEM (Using your specified colors) ── */}
-      {/* Primary Ambient Backlight Track */}
+    <section className="relative w-full bg-[#030303] py-20 px-4 sm:px-6 lg:px-8 overflow-hidden select-none">
+      {/* Center Middle Blue Gradient Glow */}
       <div
-        className="absolute left-[-15%] top-[20%] w-[130%] h-[480px] pointer-events-none z-0 transform -rotate-[12deg] opacity-90 filter blur-[100px] mix-blend-initial"
+        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none z-0"
         style={{
-          background:
-            "linear-gradient(90deg, rgba(0, 0, 0, 1) 0%, rgba(16, 24, 40, 1) 35%, rgba(16, 24, 40, 1) 65%, rgba(0, 0, 0, 1) 100%)",
+          width: "800px",
+          height: "600px",
+          // Increased opacity from 15 (0F) to 30 (4D)
+          background: "#0B60BD4D",
+          borderRadius: "50%",
+          // Slightly reduced blur makes the color "pop" more
+          filter: "blur(120px)",
         }}
       />
 
-      {/* Layer 2: Vivid Light Leak Core to give your specific colors an ultra-glowing presence */}
-      <div
-        className="absolute left-[-5%] top-[30%] w-[110%] h-[180px] pointer-events-none z-0 transform -rotate-[12deg] opacity-100 filter blur-[60px] mix-blend-plus-lighter"
-        style={{
-          background:
-            "linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(16, 24, 40, 1) 40%, rgba(16, 24, 40, 1) 60%, rgba(0,0,0,0) 100%)",
-        }}
-      />
+      {/* Main Content */}
+      <div className="relative z-10 w-full max-w-[1580px] mx-auto flex flex-col items-center gap-16">
+        {/* Header Block */}
+        <div className="flex flex-col items-center gap-3 text-center w-full">
+          <SectionHeader
+            titlePrimary="Our"
+            titleAccent="Mission"
+            subtitle="Turning Our Mission Into Your Growth"
+          />
+        </div>
 
-      {/* ── MAIN CONTENT CONTAINER ── */}
-
-      {/* Header Block */}
-      <div className="flex flex-col items-center gap-5 text-center w-full">
-        <SectionHeader
-          titlePrimary="Our"
-          titleAccent="Mission"
-          subtitle="Turning our mission into your growth"
-        />
-
-        {/* Two-Column Master Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-          {/* Left Container: Text Descriptions & Stats Deck */}
-          <div className="lg:col-span-6 flex flex-col gap-10">
-            {/* Paragraph Text */}
-            <div className="space-y-6 text-base sm:text-lg lg:text-[21.6px] font-normal leading-[1.65] font-inter">
-              <p className="text-[#D1D5DC]">
-                At vNET, we believe everyone deserves access to high-quality
+        {/* Two-Column Grid */}
+        <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+          {/* Left Column: Text & Stats */}
+          <div className="flex flex-col gap-10">
+            {/* Paragraphs */}
+            <div className="space-y-6 text-[#D1D5DC] text-[19px] font-normal">
+              <p>
+                At VNET, we believe everyone deserves access to high-quality
                 programs that can transform their health, mind, skills, and
                 career. Our AI-powered platform creates personalized roadmaps
                 that adapt to your unique journey.
@@ -139,27 +135,29 @@ export const MissionSection: React.FC = () => {
               </p>
             </div>
 
-            {/* Quad Stats Matrix Container */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 w-full">
+            {/* 2x2 Stats Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {stats.map((stat, index) => (
                 <div
                   key={index}
-                  className="flex flex-col gap-4 p-7 bg-gradient-to-br from-[#101828]/80 to-black/90 backdrop-blur-sm rounded-[19.2px] border border-[#1E2939]/80 shadow-[0_4px_30px_rgba(0,0,0,0.4)]"
+                  className="flex flex-col gap-5 p-6 rounded-2xl border border-[#1E2939] shadow-sm"
+                  style={{
+                    background:
+                      "linear-gradient(180deg, #101828 0%, #000000 100%)",
+                  }}
                 >
-                  {/* Icon Frame */}
                   <div
-                    className={`w-11 h-11 p-2 flex items-center justify-center bg-gradient-to-br ${stat.gradient} rounded-[12px]`}
+                    className={`w-10 h-10 flex items-center justify-center rounded-[10px] ${stat.iconBg}`}
                   >
                     {stat.icon}
                   </div>
-                  {/* Values */}
                   <div className="space-y-1">
                     <div
-                      className={`text-4xl lg:text-[43.2px] font-bold tracking-tight ${stat.textColor} font-inter`}
+                      className={`text-[28px] font-bold leading-none tracking-tight ${stat.textColor}`}
                     >
                       {stat.value}
                     </div>
-                    <div className="text-sm lg:text-[16.8px] font-normal text-[#99A1AF] font-inter">
+                    <div className="text-[13px] font-medium text-[#717680]">
                       {stat.label}
                     </div>
                   </div>
@@ -168,25 +166,21 @@ export const MissionSection: React.FC = () => {
             </div>
           </div>
 
-          {/* Right Container: Heavy Graphic Frame + Floating Indicator Dots */}
-          <div className="lg:col-span-6 relative w-full aspect-[728/720] max-w-[728px] mx-auto">
-            {/* Ambient image background backlight flare */}
-            <div className="absolute inset-0 opacity-50 bg-gradient-to-r from-[#2B7FFF]/40 to-[#AD46FF]/40 blur-[76.8px] rounded-[28.8px] pointer-events-none" />
-
-            {/* Primary Gym Graphic Container */}
-            <div className="relative w-full h-full bg-gradient-to-br from-[#101828]/80 to-black rounded-[28.8px] border border-[#1E2939]/70 overflow-hidden group backdrop-blur-sm">
+          {/* Right Column: Image & Growth Badge */}
+          <div className="relative w-full aspect-square max-w-[600px] mx-auto lg:mx-0">
+            {/* Main Image */}
+            <div className="relative w-full h-full rounded-3xl overflow-hidden border border-white/5">
               <img
                 src="/missionImg.png"
-                alt="vNET Training Environment"
-                className="w-full h-full object-cover rounded-[28.8px] transition-transform duration-700 group-hover:scale-102"
+                alt="VNET Gym Environment"
+                className="w-full h-full object-cover"
               />
+              {/* Bottom shadow gradient */}
+              <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/80 to-transparent pointer-events-none" />
 
-              {/* Bottom Heavy Cinematic Shadow Layer overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent" />
-
-              {/* Bottom Left Floating Badge Component */}
-              <div className="absolute bottom-10 left-10 right-10 sm:right-auto flex items-center gap-5 p-[19.2px] bg-black/75 rounded-[19.2px] border border-[#364153] backdrop-blur-md">
-                <div className="w-12 h-12 flex items-center justify-center bg-gradient-to-br from-[#00C950] to-[#009966] rounded-[16.8px]">
+              {/* Growth Badge */}
+              <div className="absolute bottom-6 left-6 flex items-center gap-4 px-5 py-4 bg-[#0A0C10]/95 backdrop-blur-md rounded-2xl border border-white/10">
+                <div className="w-11 h-11 flex items-center justify-center bg-[#00C950] rounded-xl">
                   <svg
                     className="w-6 h-6 text-white"
                     fill="none"
@@ -201,21 +195,20 @@ export const MissionSection: React.FC = () => {
                     />
                   </svg>
                 </div>
-                <div className="flex flex-col font-inter">
-                  <span className="text-white text-xl lg:text-[28.8px] font-bold leading-none">
+                <div className="flex flex-col">
+                  <span className="text-white text-lg font-bold leading-tight">
                     Growth
                   </span>
-                  <span className="text-[#99A1AF] text-xs lg:text-[16.8px] mt-1 font-normal">
+                  <span className="text-[#888D96] text-[11px] font-medium mt-0.5">
                     Continuous Improvement
                   </span>
                 </div>
               </div>
-            </div>
 
-            {/* Design Element Floating Dots */}
-            <div className="absolute top-[5.5%] right-[7%] w-3.5 h-3.5 bg-[#2B7FFF] rounded-full opacity-90 shadow-[0_0_15px_#2B7FFF] animate-pulse" />
-            <div className="absolute top-[16%] left-[5.5%] w-2.5 h-2.5 bg-[#AD46FF] rounded-full opacity-60 shadow-[0_0_10px_#AD46FF]" />
-            <div className="absolute top-[50%] right-[9%] w-2.5 h-2.5 bg-[#00B8DB] rounded-full opacity-80 shadow-[0_0_12px_#00B8DB]" />
+              {/* Floating dots (optional, to match original flair slightly) */}
+              <div className="absolute top-[10%] right-[10%] w-2 h-2 bg-[#2B7FFF] rounded-full shadow-[0_0_8px_#2B7FFF]" />
+              <div className="absolute top-[30%] left-[8%] w-1.5 h-1.5 bg-[#D017A0] rounded-full opacity-70" />
+            </div>
           </div>
         </div>
       </div>

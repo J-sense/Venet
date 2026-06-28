@@ -17,11 +17,11 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({
 }) => {
   return (
     <div className="w-full flex flex-col items-center justify-center text-center">
-      <h2 className="font-sora text-[60px] font-extrabold leading-[84px] tracking-[2.4px] text-white">
+      <h2 className="font-sora text-[clamp(36px,5vw,60px)] font-extrabold leading-[1.2] lg:leading-[84px] tracking-tight lg:tracking-[2.4px] text-white px-4 lg:px-0">
         {titlePrimary} <span className="text-[#0B60BD]">{titleAccent}</span>
       </h2>
 
-      <p className="mt-4 font-inter text-[21.61px] font-medium text-white/70 capitalize leading-[33.61px] max-w-2xl">
+      <p className="mt-3 lg:mt-4 font-inter text-[clamp(15px,2vw,21.61px)] font-medium text-white/70 capitalize leading-relaxed lg:leading-[33.61px] max-w-2xl px-4 lg:px-0">
         {subtitle}
       </p>
     </div>
