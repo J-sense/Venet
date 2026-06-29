@@ -144,25 +144,25 @@ export const Footer: React.FC = () => {
             </h4>
             <ul className="flex flex-col gap-4 text-[#CBD5E1] text-[14px] font-normal">
               <li>
-                <a
-                  href="#privacy"
+                <Link
+                  to="/privacy"
                   className="hover:text-white transition-colors"
                 >
                   Privacy Policy
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#terms" className="hover:text-white transition-colors">
+                <Link to="/terms" className="hover:text-white transition-colors">
                   Terms & Conditions
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#disclaimer"
+                <Link
+                  to="/disclaimer"
                   className="hover:text-white transition-colors"
                 >
                   Disclaimer
-                </a>
+                </Link>
               </li>
             </ul>
           </div>

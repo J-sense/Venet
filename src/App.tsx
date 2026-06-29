@@ -47,6 +47,9 @@ import MentalHealthPage from "./pages/program/mental-health/MentalHealthPage";
 import EducationServicePage from "./pages/program/education-service/EducationServicePage";
 import CareerPage from "./pages/program/career/CareerPage";
 import NotFoundPage from "./pages/NotFoundPage";
+import DisclaimerMain from "./pages/Disclaimer/DisclaimerMain";
+import PrivacyMain from "./pages/privacyPolicy/PrivacyMain";
+import TermsMain from "./pages/termsCondition/TermsMain";
 
 export const App = () => {
   return (
@@ -55,14 +58,23 @@ export const App = () => {
       <Route path="/" element={<CommonLayout />}>
         <Route index element={<HomeMain />} />
         <Route path="/programs" element={<ProgrameMain />} />
-        <Route path="/programs/health-fitness" element={<HealthFitnessPage />} />
+        <Route
+          path="/programs/health-fitness"
+          element={<HealthFitnessPage />}
+        />
         <Route path="/programs/mental-health" element={<MentalHealthPage />} />
-        <Route path="/programs/education-service" element={<EducationServicePage />} />
+        <Route
+          path="/programs/education-service"
+          element={<EducationServicePage />}
+        />
         <Route path="/programs/career" element={<CareerPage />} />
         <Route path="/experts" element={<ExpertsMain />} />
         <Route path="/about" element={<AboutUsMain />} />
         <Route path="/experts/:id" element={<ExpertsDetails />} />
         <Route path="/shopping-cart" element={<ShoppingCartPage />} />
+        <Route path="/disclaimer" element={<DisclaimerMain />} />
+        <Route path="/privacy" element={<PrivacyMain />} />
+        <Route path="/terms" element={<TermsMain />} />
         <Route
           path="/subscription-suggestions"
           element={<SubscriptionSuggestionMain />}
