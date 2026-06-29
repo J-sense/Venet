@@ -44,15 +44,13 @@ export default function CareerPage() {
             alt="Career Programs Background"
             className="w-full h-full object-cover"
           />
-          {/* Only very subtle dark overlay for text readability */}
-          <div className="absolute inset-0 bg-black/40" />
         </div>
 
         {/* Main Content */}
-        <div className="relative z-10 w-full max-w-[1600px] mx-auto px-6 md:px-12 lg:px-24 py-20">
+        <div className="relative z-10 w-full max-w-[1600px] mx-auto px-6 md:px-12  py-20">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
             {/* Left Side Copy */}
-            <div className="max-w-5xl">
+            <div className="max-w-7xl">
               {/* Badge */}
               <div className="inline-flex items-center gap-2 bg-blue-900/40 border border-blue-500/30 px-4 py-1.5 rounded-full mb-6">
                 <div className="w-1.5 h-1.5 bg-blue-400 rounded-full animate-pulse" />

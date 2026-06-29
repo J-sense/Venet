@@ -179,7 +179,7 @@ export const HowItWorksSection: React.FC = () => {
 
                     {/* Number badge */}
                     <div
-                      className="absolute -top-1.5 -right-1.5 w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-bold border-[3px] border-[#000000]"
+                      className="absolute -top-1.5 -right-1.5 w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-bold "
                       style={{
                         background: `linear-gradient(135deg, ${step.color}, #a855f7)`,
                       }}

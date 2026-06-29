@@ -101,15 +101,15 @@ export const CommonNavbar = () => {
             <div className="hidden sm:flex items-center gap-3">
               <Link
                 to="/login"
-                className="px-5 py-2 rounded-full text-sm font-medium text-white border border-gray-700/60 bg-transparent hover:bg-white/5 transition-colors"
+                className="px-[32px] py-[12px] rounded-full text-sm font-medium text-[#0A66C2] border border-[#0A66C2] bg-transparent hover:bg-white/5 transition-colors"
               >
                 Log In
               </Link>
               <button
                 onClick={() => setIsAssessmentOpen(true)}
-                className="bg-[#007AFF] text-white px-8 py-4 rounded-full font-bold"
+                className="bg-[#007AFF] text-white px-[32px] py-[12px] rounded-full font-bold"
               >
-                Start Free Assessment
+                Start Free
               </button>
             </div>
 
@@ -133,99 +133,107 @@ export const CommonNavbar = () => {
       </div>
 
       {/* MOBILE DRAWER */}
-      {mobileMenuOpen && (
-        <div
-          className="md:hidden absolute top-20 left-0 w-full border-b border-white/10 shadow-2xl px-6 py-8 flex flex-col gap-6"
-          style={{
-            background: "rgba(11, 15, 25, 0.98)",
-            backdropFilter: "blur(20px)",
-          }}
-        >
+      <div
+        className={`md:hidden absolute top-20 left-0 w-full h-[calc(100vh-80px)] overflow-y-auto px-6 py-10 flex flex-col justify-between transition-all duration-400 ease-[cubic-bezier(0.4,0,0.2,1)] origin-top ${
+          mobileMenuOpen ? "opacity-100 scale-y-100 visible" : "opacity-0 scale-y-95 invisible pointer-events-none"
+        }`}
+        style={{
+          background: "linear-gradient(180deg, rgba(11,15,25,0.98) 0%, rgba(3,3,3,0.98) 100%)",
+          backdropFilter: "blur(24px)",
+        }}
+      >
+        <div className="flex flex-col gap-8 mt-4">
           <NavLink
             to="/"
             onClick={() => setMobileMenuOpen(false)}
-            className={navLinkStyles}
+            className={({ isActive }) => `text-3xl font-extrabold tracking-tight transition-all duration-300 ${isActive ? "text-[#007AFF] pl-2 border-l-4 border-[#007AFF]" : "text-gray-200 hover:text-white"}`}
           >
             Home
           </NavLink>
 
           {/* Mobile Programs Accordion */}
-          <div>
+          <div className="flex flex-col">
             <button
               onClick={() => setMobileProgramsOpen(!mobileProgramsOpen)}
-              className="flex items-center justify-between w-full text-left font-inter text-base font-medium text-gray-300 hover:text-white transition-colors"
+              className={`flex items-center justify-between w-full text-left text-3xl font-extrabold tracking-tight transition-all duration-300 ${mobileProgramsOpen ? "text-white" : "text-gray-200 hover:text-white"}`}
             >
               Programs
               <ChevronDown
-                className={`w-4 h-4 transition-transform ${mobileProgramsOpen ? "rotate-180" : ""}`}
+                className={`w-8 h-8 transition-transform duration-300 ${mobileProgramsOpen ? "rotate-180 text-[#007AFF]" : ""}`}
               />
             </button>
-            {mobileProgramsOpen && (
-              <div className="pl-4 mt-3 flex flex-col gap-3 text-gray-400">
-                <Link
-                  to="/programs/health-fitness"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="hover:text-white"
-                >
-                  Health & Fitness
-                </Link>
-                <Link
-                  to="/programs/mental-health"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="hover:text-white"
-                >
-                  Mental Health
-                </Link>
-                <Link
-                  to="/programs/education-service"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="hover:text-white"
-                >
-                  Education Service
-                </Link>
-                <Link
-                  to="/programs/career"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="hover:text-white"
-                >
-                  Career
-                </Link>
-              </div>
-            )}
+            <div
+              className={`flex flex-col gap-5 overflow-hidden transition-all duration-500 ease-in-out ${
+                mobileProgramsOpen ? "max-h-[400px] mt-6 opacity-100" : "max-h-0 mt-0 opacity-0"
+              }`}
+            >
+              <Link
+                to="/programs/health-fitness"
+                onClick={() => setMobileMenuOpen(false)}
+                className="pl-4 text-xl text-gray-400 font-medium hover:text-[#007AFF] hover:translate-x-2 transition-all duration-300"
+              >
+                Health & Fitness
+              </Link>
+              <Link
+                to="/programs/mental-health"
+                onClick={() => setMobileMenuOpen(false)}
+                className="pl-4 text-xl text-gray-400 font-medium hover:text-[#007AFF] hover:translate-x-2 transition-all duration-300"
+              >
+                Mental Health
+              </Link>
+              <Link
+                to="/programs/education-service"
+                onClick={() => setMobileMenuOpen(false)}
+                className="pl-4 text-xl text-gray-400 font-medium hover:text-[#007AFF] hover:translate-x-2 transition-all duration-300"
+              >
+                Education Service
+              </Link>
+              <Link
+                to="/programs/career"
+                onClick={() => setMobileMenuOpen(false)}
+                className="pl-4 text-xl text-gray-400 font-medium hover:text-[#007AFF] hover:translate-x-2 transition-all duration-300"
+              >
+                Career
+              </Link>
+            </div>
           </div>
 
           <NavLink
             to="/experts"
             onClick={() => setMobileMenuOpen(false)}
-            className={navLinkStyles}
+            className={({ isActive }) => `text-3xl font-extrabold tracking-tight transition-all duration-300 ${isActive ? "text-[#007AFF] pl-2 border-l-4 border-[#007AFF]" : "text-gray-200 hover:text-white"}`}
           >
             Experts
           </NavLink>
           <NavLink
             to="/about"
             onClick={() => setMobileMenuOpen(false)}
-            className={navLinkStyles}
+            className={({ isActive }) => `text-3xl font-extrabold tracking-tight transition-all duration-300 ${isActive ? "text-[#007AFF] pl-2 border-l-4 border-[#007AFF]" : "text-gray-200 hover:text-white"}`}
           >
             About us
           </NavLink>
-
-          <div className="flex flex-col gap-3 pt-4 border-t border-white/10">
-            <Link
-              to="/login"
-              onClick={() => setMobileMenuOpen(false)}
-              className="w-full text-center py-3 rounded-xl border border-gray-700 text-sm font-medium text-gray-300"
-            >
-              Log In
-            </Link>
-            <button
-              onClick={() => setIsAssessmentOpen(true)}
-              className="bg-[#007AFF] text-white px-8 py-4 rounded-full font-bold"
-            >
-              Start Free Assessment
-            </button>
-          </div>
         </div>
-      )}
+
+        {/* Mobile Call to Actions */}
+        <div className="flex flex-col gap-4 mt-12 pb-10">
+          <Link
+            to="/login"
+            onClick={() => setMobileMenuOpen(false)}
+            className="w-full text-center px-8 py-4 rounded-full text-lg font-bold text-[#007AFF] border-2 border-[#007AFF] bg-transparent hover:bg-[#007AFF]/10 active:scale-95 transition-all duration-300"
+          >
+            Log In
+          </Link>
+          <button
+            onClick={() => {
+              setIsAssessmentOpen(true);
+              setMobileMenuOpen(false);
+            }}
+            className="w-full text-center px-8 py-4 rounded-full text-lg font-bold text-white bg-[#007AFF] hover:bg-[#0066FF] shadow-[0_0_20px_rgba(0,122,255,0.4)] active:scale-95 transition-all duration-300"
+          >
+            Start Free
+          </button>
+        </div>
+      </div>
     </header>
   );
 };

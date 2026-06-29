@@ -15,7 +15,7 @@ export default function ExpertsBanner() {
         <img
           src="/ExpertDirectoryImg.png"
           alt="Expert Coaches"
-          className="h-full w-full object-contain object-right-bottom"
+          className="h-full w-full object-contain object-bottom-right"
         />
       </div>
 

@@ -1,4 +1,7 @@
+import { Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
 import React from "react";
+import { Link } from "react-router";
+import { Separator } from "../separator";
 
 export const Footer: React.FC = () => {
   return (
@@ -9,58 +12,66 @@ export const Footer: React.FC = () => {
           {/* Column 1: Brand Logo, Description & Socials */}
           <div className="lg:col-span-4 flex flex-col gap-5 max-w-sm">
             <div className="w-[160px] h-auto">
-              <img
-                src="/vnet-logo.png" // Replace with your exact logo asset path
-                alt="VNET Logo"
-                className="w-full h-full object-contain"
-                onError={(e) => {
-                  // Text fallback if image isn't loaded
-                  e.currentTarget.style.display = "none";
-                  const fallback = document.getElementById(
-                    "brand-text-fallback",
-                  );
-                  if (fallback) fallback.style.display = "block";
-                }}
-              />
-              <div
-                id="brand-text-fallback"
-                className="hidden text-xl font-black font-sora tracking-tight"
-              >
-                V<span className="text-[#2B7FFF]">NET</span>
-              </div>
+              <Link to="/" className="flex items-center flex-shrink-0 ">
+                <img
+                  src="/VNetLogo.png"
+                  alt="VNET Logo"
+                  className="w-32 h-9 sm:w-40 sm:h-11 md:w-60 md:h-16 object-cover rounded-full border border-zinc-800 transition-all duration-300"
+                />
+              </Link>
             </div>
-
-            <p className="text-[#99A1AF] leading-[1.7] text-[11px] font-normal">
+            <p className="text-[#CBD5E1] leading-7 text-[14px] font-normal">
               Your journey to wellness, mental health, and career growth. Nullam
               dictum aliquet accumsan porta lectus ridiculus in mattis. Your
               journey to wellness, mental health.
             </p>
-
             {/* Social Media Circular Links */}
-            <div className="flex items-center gap-2.5 mt-2">
-              {["facebook", "twitter", "instagram", "linkedin"].map(
-                (platform, i) => (
-                  <a
-                    key={i}
-                    href={`#${platform}`}
-                    className="w-7 h-7 flex items-center justify-center rounded-full bg-[#2B7FFF] text-white hover:bg-[#0066FF] transition-colors duration-200"
-                  >
-                    {/* Inline platform font/SVG placeholders matching image_53eea4.png */}
-                    <span className="text-[10px] uppercase font-bold scale-90">
-                      {platform[0]}
-                    </span>
-                  </a>
-                ),
-              )}
+
+            <div className="flex items-center gap-3 mt-4">
+              {/* Facebook */}
+              <Link
+                to="#"
+                className="w-9 h-9 flex items-center justify-center rounded-full bg-[#2B7FFF] hover:bg-[#1a5ed9] transition-all duration-200"
+                aria-label="Facebook"
+              >
+                <Facebook className="w-5 h-5 text-white" />
+              </Link>
+
+              {/* Twitter / X */}
+              <Link
+                to="#"
+                className="w-9 h-9 flex items-center justify-center rounded-full bg-[#2B7FFF] hover:bg-[#1a5ed9] transition-all duration-200"
+                aria-label="Twitter"
+              >
+                <Twitter className="w-5 h-5 text-white" />
+              </Link>
+
+              {/* Instagram */}
+              <Link
+                to="#"
+                className="w-9 h-9 flex items-center justify-center rounded-full bg-[#2B7FFF] hover:bg-[#1a5ed9] transition-all duration-200"
+                aria-label="Instagram"
+              >
+                <Instagram className="w-5 h-5 text-white" />
+              </Link>
+
+              {/* LinkedIn */}
+              <Link
+                to="#"
+                className="w-9 h-9 flex items-center justify-center rounded-full bg-[#2B7FFF] hover:bg-[#1a5ed9] transition-all duration-200"
+                aria-label="LinkedIn"
+              >
+                <Linkedin className="w-5 h-5 text-white" />
+              </Link>
             </div>
           </div>
 
           {/* Column 2: Programs */}
-          <div className="lg:col-span-2 flex flex-col gap-4">
-            <h4 className="text-[#2B7FFF] font-bold tracking-widest text-[10px] uppercase font-sora">
+          <div className="lg:col-span-2 flex flex-col gap-7">
+            <h4 className="text-[#0A66C2] font-semibold tracking-widest text-[13px] uppercase">
               Programs
             </h4>
-            <ul className="flex flex-col gap-3 text-[#99A1AF]">
+            <ul className="flex flex-col gap-4 text-[#CBD5E1] text-[14px] font-normal">
               <li>
                 <a
                   href="#health-fitness"
@@ -97,11 +108,11 @@ export const Footer: React.FC = () => {
           </div>
 
           {/* Column 3: Company */}
-          <div className="lg:col-span-2 flex flex-col gap-4">
-            <h4 className="text-[#2B7FFF] font-bold tracking-widest text-[10px] uppercase font-sora">
+          <div className="lg:col-span-2 flex flex-col gap-7">
+            <h4 className="text-[#0A66C2] font-semibold tracking-widest text-[13px] uppercase">
               Company
             </h4>
-            <ul className="flex flex-col gap-3 text-[#99A1AF]">
+            <ul className="flex flex-col gap-3 text-[#CBD5E1] text-[14px] font-normal">
               <li>
                 <a href="#about" className="hover:text-white transition-colors">
                   About Us
@@ -127,11 +138,11 @@ export const Footer: React.FC = () => {
           </div>
 
           {/* Column 4: Legal */}
-          <div className="lg:col-span-2 flex flex-col gap-4">
-            <h4 className="text-[#2B7FFF] font-bold tracking-widest text-[10px] uppercase font-sora">
+          <div className="lg:col-span-2 flex flex-col gap-7">
+            <h4 className="text-[#0A66C2] font-semibold tracking-widest text-[13px] uppercase">
               Legal
             </h4>
-            <ul className="flex flex-col gap-3 text-[#99A1AF]">
+            <ul className="flex flex-col gap-4 text-[#CBD5E1] text-[14px] font-normal">
               <li>
                 <a
                   href="#privacy"
@@ -157,11 +168,11 @@ export const Footer: React.FC = () => {
           </div>
 
           {/* Column 5: Contact Metadata */}
-          <div className="lg:col-span-2 flex flex-col gap-4">
-            <h4 className="text-[#2B7FFF] font-bold tracking-widest text-[10px] uppercase font-sora">
+          <div className="lg:col-span-2 flex flex-col gap-7">
+            <h4 className="text-[#0A66C2] font-semibold tracking-widest text-[13px] uppercase">
               Contact
             </h4>
-            <ul className="flex flex-col gap-3 text-[#99A1AF]">
+            <ul className="flex flex-col gap-4 text-[#CBD5E1] text-[14px] font-normal">
               <li className="flex items-center gap-2.5">
                 <svg
                   className="w-4 h-4 text-[#2B7FFF] shrink-0"
@@ -231,9 +242,12 @@ export const Footer: React.FC = () => {
           </div>
         </div>
 
+        <div className="">
+          <Separator className="bg-[#334155]" />
+        </div>
         {/* ── HORIZONTAL DIVIDER & BOTTOM RIGHTS ROW ── */}
-        <div className="w-full border-t border-[#1E2939]/30 pt-8 flex items-center justify-center">
-          <p className="text-[#99A1AF]/60 text-[11px] font-normal">
+        <div className="w-full border-t border-[#1E2939]/30  flex items-center justify-center">
+          <p className="text-[#717182] text-[14px] font-normal">
             &copy; 2026 VNET. All rights reserved.
           </p>
         </div>
