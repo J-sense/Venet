@@ -31,11 +31,12 @@ export const ShoppingCartPage = () => {
   return (
     // 'relative' is required here so the absolute gradient stays anchored to this div
     <div className="bg-[#030303] min-h-screen text-white py-30 relative overflow-hidden">
-      {/* Blue Gradient Corner Effect */}
-      <div className="absolute -left-4 -top-10 w-[600px] h-[600px] bg-blue-900 blur-[120px] rounded-full pointer-events-none" />
-
       <div className="relative z-10 p-8 md:p-12 max-w-[1600px] mx-auto">
-        <h1 className="text-3xl font-bold mb-8">Shopping Cart</h1>
+        {/* Blue Gradient Corner Effect */}
+        <div
+          className="absolute top-60 left-0 w-[500px] h-[500px] blur-[100px] rounded-full pointer-events-none -translate-x-1/2 -translate-y-1/2 bg-gradient-to-br from-[#0B60BD]/70 to-transparent -z-10"
+        />
+        <h1 className="text-3xl font-bold mb-8 relative z-10">Shopping Cart</h1>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Left Column: Cart Items & Benefits */}

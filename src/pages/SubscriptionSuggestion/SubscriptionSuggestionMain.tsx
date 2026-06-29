@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Check, ShoppingCart } from "lucide-react";
 import { programs } from "../program/ProgramCards";
+import { Link } from "react-router";
 
 export const SubscriptionSuggestionMain = () => {
   // Track IDs of programs added to the cart
@@ -13,22 +14,27 @@ export const SubscriptionSuggestionMain = () => {
   };
 
   return (
-    <div className="w-full bg-[#030303] py-20 px-6 relative overflow-hidden">
-      <div className="absolute -left-64 -top-64 w-[600px] h-[600px] bg-blue-600/10 blur-[120px] rounded-full pointer-events-none" />
+    <div className="w-full bg-black py-20 px-6 relative overflow-hidden">
+      {/* Top-Left Page Gradient */}
 
-      <div className="max-w-[1200px] mx-auto relative z-10">
+      <div className="max-w-[1000px] mx-auto relative z-10">
+        <div
+          className="absolute top-60 left-0 w-[500px] h-[500px] blur-[100px] rounded-full pointer-events-none -translate-x-1/2 -translate-y-1/2 bg-gradient-to-br from-[#0B60BD]/50 to-transparent -z-10"
+        />
         {/* Cart Notification Bar - Appears when items are in cart */}
         {cart.length > 0 && (
-          <div className="mb-8 p-4 bg-[#0B1120] border border-blue-900/50 rounded-xl flex items-center justify-between">
+          <div className="mb-8 p-4 bg-[#0F172A] border border-blue-900/50 rounded-xl flex items-center justify-between">
             <div className="flex items-center gap-3 text-white">
               <ShoppingCart className="size-5 text-blue-500" />
               <span className="font-medium">
                 {cart.length} programs in cart
               </span>
             </div>
-            <button className="px-6 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg text-white text-sm font-semibold transition-all">
-              View Cart
-            </button>
+            <Link to={"/shopping-cart"}>
+              <button className="px-6 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg text-white text-sm font-semibold transition-all">
+                View Cart
+              </button>
+            </Link>
           </div>
         )}
 
@@ -49,9 +55,17 @@ export const SubscriptionSuggestionMain = () => {
             return (
               <div
                 key={idx}
-                className="relative p-8 bg-[#18181B] rounded-2xl border border-[#155DFC] flex flex-col"
+                className="relative p-8 bg-[#0F172A] rounded-2xl border border-[#155DFC] flex flex-col z-0"
               >
-                <div className="absolute -top-3 left-6 bg-blue-600 px-3 py-1 rounded-full text-[10px] font-bold text-white uppercase tracking-wider">
+                {/* Top-Left Corner Gradient */}
+                <div className="absolute inset-0 overflow-hidden rounded-2xl -z-10 pointer-events-none">
+                  <div
+                    className="absolute -top-[100px] -left-[100px] w-[300px] h-[300px] rounded-full blur-[80px]"
+                    style={{ backgroundColor: "#185CA633" }}
+                  />
+                </div>
+
+                <div className="absolute -top-3 left-6 bg-blue-600 px-3 py-1 rounded-full text-[10px] font-bold text-white uppercase tracking-wider z-10">
                   Recommended for You
                 </div>
 
@@ -104,11 +118,10 @@ export const SubscriptionSuggestionMain = () => {
                   </div>
                   <button
                     onClick={() => toggleCart(program.title)}
-                    className={`w-full py-3 rounded-xl text-sm font-semibold transition-all ${
-                      isAdded
-                        ? "bg-slate-800 text-white hover:bg-slate-700"
-                        : "bg-blue-600 hover:bg-blue-700 text-white"
-                    }`}
+                    className={`w-full py-3 rounded-xl text-sm font-semibold transition-all ${isAdded
+                      ? "bg-slate-800 text-white hover:bg-slate-700"
+                      : "bg-blue-600 hover:bg-blue-700 text-white"
+                      }`}
                   >
                     {isAdded ? "Remove from cart" : "Add to Cart"}
                   </button>
