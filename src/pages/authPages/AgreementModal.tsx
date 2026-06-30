@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 import { Button } from "@/components/ui/button";
 import { Briefcase, Check, FileText, ShieldCheck, X } from "lucide-react";
 import { useEffect, useState } from "react";

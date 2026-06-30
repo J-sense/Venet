@@ -1,4 +1,5 @@
-import { CustomerFeedback } from "../Home/CustomerFeedback";
+
+import { CustomerFeedback } from "../Home/components/CustomerFeedback";
 import { ProgramBanner } from "./ProgramBanner";
 import { ProgramGrid } from "./ProgramCards";
 

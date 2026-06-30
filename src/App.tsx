@@ -1,12 +1,12 @@
 import { Navigate, Route, Routes } from "react-router";
 import CommonLayout from "./components/ui/layouts/CommonLayout";
-import HomeMain from "./pages/Home/HomeMain";
+import { HomeMain } from "./pages/Home";
 import ProgrameMain from "./pages/program/ProgrameMain";
 import ExpertsMain from "./pages/experts/ExpertsMain";
 import ExpertsDetails from "./pages/experts/ExpertsDetails";
 import { SubscriptionSuggestionMain } from "./pages/SubscriptionSuggestion/SubscriptionSuggestionMain";
 import { ShoppingCartPage } from "./pages/SubscriptionSuggestion/ShoppingCart";
-import AboutUsMain from "./pages/About-us/AboutUsMain";
+import { AboutUsMain } from "./pages/About-us";
 
 import { navItemsForExperts, navItemsForUser } from "./components/ui/navitems";
 import UserLayout from "./components/ui/layouts/UserLayout/UserLayout";

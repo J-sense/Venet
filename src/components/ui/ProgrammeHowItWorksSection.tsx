@@ -1,4 +1,4 @@
-import { CustomerFeedback } from "@/pages/Home/CustomerFeedback";
+import { CustomerFeedback } from "@/pages/Home/components/CustomerFeedback";
 
 interface Step {
   number: number;

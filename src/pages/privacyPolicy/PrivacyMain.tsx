@@ -1,5 +1,5 @@
 import LegalHeader from "@/components/ui/legalHeeader";
-import { AboutUsCTA } from "../About-us/AboutUsCTA";
+import { AboutUsCTA } from "../About-us/components/AboutUsCTA";
 
 export default function PrivacyMain() {
   return (

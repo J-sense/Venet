@@ -1,42 +1,9 @@
 import { SectionHeader } from "@/components/ui/TItleWithSubtitle";
 import React from "react";
 
-interface FeedbackItem {
-  quote: string;
-  rating: number;
-  author: string;
-  image: string;
-}
+import { customerReviews as reviews } from "../data/homeData";
 
 export const CustomerFeedback: React.FC = () => {
-  const reviews: FeedbackItem[] = [
-    {
-      quote:
-        "Before joining FitFlex, I was stuck in a fitness rut. But the trainers here are amazing, and the community is so supportive! It's like a second home to me now.",
-      rating: 5,
-      author: "Joanne",
-      // Using generic high-quality fitness portraits matching the reference layout theme
-      image:
-        "https://images.unsplash.com/photo-1548690312-e3b507d8c110?q=80&w=500&auto=format&fit=crop",
-    },
-    {
-      quote:
-        "I used to dread going to the gym, but FitFlex changed that for me. This variety of classes ensures I never get bored, and I genuinely look forward to each workout session!",
-      rating: 5,
-      author: "Caleb",
-      image:
-        "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=500&auto=format&fit=crop",
-    },
-    {
-      quote:
-        "Not only have I seen incredible physical results, but I've also gained a newfound confidence and sense of accomplishment. FitFlex Gym isn't just a place to work out!",
-      rating: 5,
-      author: "Donna",
-      image:
-        "https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=500&auto=format&fit=crop",
-    },
-  ];
-
   return (
     <section className="relative w-full bg-[#030303]  overflow-hidden select-none">
       {/* ── CUSTOM REVERSE INFINITE GLIDE ANIMATION STYLES ── */}

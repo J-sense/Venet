@@ -1,50 +1,7 @@
 import { ActionButton } from "@/components/ui/ActionButton";
-import React, { useState, useEffect, useCallback, useRef } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 
-interface TrainerItem {
-  id: number;
-  name: string;
-  role: string;
-  image: string;
-}
-
-const trainers: TrainerItem[] = [
-  {
-    id: 1,
-    name: "Jack Drake",
-    role: "Strength & Conditioning",
-    image:
-      "https://images.unsplash.com/photo-1567013127542-490d757e51fc?q=80&w=600&auto=format&fit=crop",
-  },
-  {
-    id: 2,
-    name: "Nathaniel",
-    role: "HIIT & Cardio",
-    image:
-      "https://images.unsplash.com/photo-1548690312-e3b507d8c110?q=80&w=600&auto=format&fit=crop",
-  },
-  {
-    id: 3,
-    name: "Marcus Vance",
-    role: "CrossFit Coach",
-    image:
-      "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=600&auto=format&fit=crop",
-  },
-  {
-    id: 4,
-    name: "Sofia Reyes",
-    role: "Yoga & Mobility",
-    image:
-      "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?q=80&w=600&auto=format&fit=crop",
-  },
-  {
-    id: 5,
-    name: "Ryan Torres",
-    role: "Nutrition & Wellness",
-    image:
-      "https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?q=80&w=600&auto=format&fit=crop",
-  },
-];
+import { trainersData as trainers } from "../data/homeData";
 
 export const OurTrainersSection: React.FC = () => {
   const [activeIndex, setActiveIndex] = useState(0);

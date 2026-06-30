@@ -1,41 +1,10 @@
 import { SectionHeader } from "@/components/ui/TItleWithSubtitle";
 import React, { useState } from "react";
 
-interface FAQItem {
-  question: string;
-  answer: string;
-}
+import { faqsData as faqs } from "../data/homeData";
 
 export const FAQSection: React.FC = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(0); // First item active by default
-
-  const faqs: FAQItem[] = [
-    {
-      question: "What Is vNET And How Can It Help Me Reach My Fitness Goals?",
-      answer:
-        "vNET is an online fitness platform that offers personalized workout plans, expert coaching, and comprehensive nutritional guidance. Whether you're looking to lose weight, build muscle, or simply stay fit, our tailored programs and community support will help you achieve your fitness goals.",
-    },
-    {
-      question: "How Do I Get Started With A Workout Plan On vNET?",
-      answer:
-        "Getting started is simple. Select a subscription tier that matches your preference, complete your physical evaluation profile, and our AI pipeline will map out your baseline routine instantly.",
-    },
-    {
-      question: "What Is Included In The Custom Plan?",
-      answer:
-        "Custom packages bundle dedicated 1-on-1 messaging access with certified advisors, dynamically adjusting milestone target curves, and custom dietary allergen macro profiles.",
-    },
-    {
-      question: "Can I Change My Plan After Signing Up?",
-      answer:
-        "Yes, you can upgrade, downgrade, or update structural baseline components of your membership instantly from your secure billing profile dash settings.",
-    },
-    {
-      question: "What Kind Of Support Can I Expect From My Trainer?",
-      answer:
-        "Expect weekly interactive metrics adjustments, comprehensive video posture assessments review files, and persistent accountability checkins.",
-    },
-  ];
 
   const toggleFAQ = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
@@ -92,25 +61,22 @@ export const FAQSection: React.FC = () => {
                   {/* Plus/Minus Sign Toggle Component */}
                   <div className="relative flex items-center justify-center w-6 h-6 shrink-0 text-white/60">
                     <span
-                      className={`absolute w-4 h-[2px] bg-white rounded-full transition-transform duration-300 ${
-                        isOpen ? "rotate-180" : ""
-                      }`}
+                      className={`absolute w-4 h-[2px] bg-white rounded-full transition-transform duration-300 ${isOpen ? "rotate-180" : ""
+                        }`}
                     />
                     <span
-                      className={`absolute h-4 w-[2px] bg-white rounded-full transition-transform duration-300 ${
-                        isOpen ? "rotate-90 opacity-0" : ""
-                      }`}
+                      className={`absolute h-4 w-[2px] bg-white rounded-full transition-transform duration-300 ${isOpen ? "rotate-90 opacity-0" : ""
+                        }`}
                     />
                   </div>
                 </button>
 
                 {/* Collapsible Panel Frame */}
                 <div
-                  className={`grid transition-all duration-300 ease-in-out border-t border-transparent ${
-                    isOpen
-                      ? "grid-rows-[1fr] opacity-100 !border-[#1E2939]/50"
-                      : "grid-rows-[0fr] opacity-0"
-                  }`}
+                  className={`grid transition-all duration-300 ease-in-out border-t border-transparent ${isOpen
+                    ? "grid-rows-[1fr] opacity-100 !border-[#1E2939]/50"
+                    : "grid-rows-[0fr] opacity-0"
+                    }`}
                 >
                   <div className="overflow-hidden">
                     <p className="p-6 sm:px-8 pt-2 pb-7 text-sm sm:text-base font-normal font-inter text-[#99A1AF] leading-[1.65]">
