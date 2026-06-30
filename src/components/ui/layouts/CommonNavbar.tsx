@@ -100,7 +100,7 @@ export const CommonNavbar = () => {
           <div className="flex items-center gap-4">
             <div className="hidden sm:flex items-center gap-3">
               <Link
-                to="/login"
+                to="/auth/login"
                 className="px-[32px] py-[12px] rounded-full text-sm font-medium text-[#0A66C2] border border-[#0A66C2] bg-transparent hover:bg-white/5 transition-colors"
               >
                 Log In
@@ -135,10 +135,13 @@ export const CommonNavbar = () => {
       {/* MOBILE DRAWER */}
       <div
         className={`md:hidden absolute top-20 left-0 w-full h-[calc(100vh-80px)] overflow-y-auto px-6 py-10 flex flex-col justify-between transition-all duration-400 ease-[cubic-bezier(0.4,0,0.2,1)] origin-top ${
-          mobileMenuOpen ? "opacity-100 scale-y-100 visible" : "opacity-0 scale-y-95 invisible pointer-events-none"
+          mobileMenuOpen
+            ? "opacity-100 scale-y-100 visible"
+            : "opacity-0 scale-y-95 invisible pointer-events-none"
         }`}
         style={{
-          background: "linear-gradient(180deg, rgba(11,15,25,0.98) 0%, rgba(3,3,3,0.98) 100%)",
+          background:
+            "linear-gradient(180deg, rgba(11,15,25,0.98) 0%, rgba(3,3,3,0.98) 100%)",
           backdropFilter: "blur(24px)",
         }}
       >
@@ -146,7 +149,9 @@ export const CommonNavbar = () => {
           <NavLink
             to="/"
             onClick={() => setMobileMenuOpen(false)}
-            className={({ isActive }) => `text-3xl font-extrabold tracking-tight transition-all duration-300 ${isActive ? "text-[#007AFF] pl-2 border-l-4 border-[#007AFF]" : "text-gray-200 hover:text-white"}`}
+            className={({ isActive }) =>
+              `text-3xl font-extrabold tracking-tight transition-all duration-300 ${isActive ? "text-[#007AFF] pl-2 border-l-4 border-[#007AFF]" : "text-gray-200 hover:text-white"}`
+            }
           >
             Home
           </NavLink>
@@ -164,7 +169,9 @@ export const CommonNavbar = () => {
             </button>
             <div
               className={`flex flex-col gap-5 overflow-hidden transition-all duration-500 ease-in-out ${
-                mobileProgramsOpen ? "max-h-[400px] mt-6 opacity-100" : "max-h-0 mt-0 opacity-0"
+                mobileProgramsOpen
+                  ? "max-h-[400px] mt-6 opacity-100"
+                  : "max-h-0 mt-0 opacity-0"
               }`}
             >
               <Link
@@ -201,14 +208,18 @@ export const CommonNavbar = () => {
           <NavLink
             to="/experts"
             onClick={() => setMobileMenuOpen(false)}
-            className={({ isActive }) => `text-3xl font-extrabold tracking-tight transition-all duration-300 ${isActive ? "text-[#007AFF] pl-2 border-l-4 border-[#007AFF]" : "text-gray-200 hover:text-white"}`}
+            className={({ isActive }) =>
+              `text-3xl font-extrabold tracking-tight transition-all duration-300 ${isActive ? "text-[#007AFF] pl-2 border-l-4 border-[#007AFF]" : "text-gray-200 hover:text-white"}`
+            }
           >
             Experts
           </NavLink>
           <NavLink
             to="/about"
             onClick={() => setMobileMenuOpen(false)}
-            className={({ isActive }) => `text-3xl font-extrabold tracking-tight transition-all duration-300 ${isActive ? "text-[#007AFF] pl-2 border-l-4 border-[#007AFF]" : "text-gray-200 hover:text-white"}`}
+            className={({ isActive }) =>
+              `text-3xl font-extrabold tracking-tight transition-all duration-300 ${isActive ? "text-[#007AFF] pl-2 border-l-4 border-[#007AFF]" : "text-gray-200 hover:text-white"}`
+            }
           >
             About us
           </NavLink>
@@ -217,7 +228,7 @@ export const CommonNavbar = () => {
         {/* Mobile Call to Actions */}
         <div className="flex flex-col gap-4 mt-12 pb-10">
           <Link
-            to="/login"
+            to="/auth/login"
             onClick={() => setMobileMenuOpen(false)}
             className="w-full text-center px-8 py-4 rounded-full text-lg font-bold text-[#007AFF] border-2 border-[#007AFF] bg-transparent hover:bg-[#007AFF]/10 active:scale-95 transition-all duration-300"
           >

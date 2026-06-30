@@ -2,7 +2,7 @@ import { ActionButton } from "@/components/ui/ActionButton";
 
 export const AboutUsCTA = () => {
   return (
-    <section className="relative bg-[#1E3A8A] py-16 md:py-24 overflow-hidden min-h-[600px] flex items-center">
+    <section className="relative bg-[#1E3A8A] py-16 md:py-24 overflow-hidden min-h-[500px] flex items-center">
       {/* Bottom Curve */}
       <div className="absolute bottom-0 left-0 w-full text-[#191C2B] z-0">
         <svg

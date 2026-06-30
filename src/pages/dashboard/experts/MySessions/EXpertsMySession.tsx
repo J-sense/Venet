@@ -22,7 +22,7 @@ export default function EXpertsMySession() {
       {/* Sidebar */}
       <div
         className={`fixed lg:relative inset-y-0 left-0 z-50 lg:z-auto 
-          w-[260px] sm:w-[280px] lg:w-[300px] xl:w-[320px]
+          w-[260px] sm:w-[280px] lg:w-[300px] xl:w-[320px] m-6 rounded-2xl
           transform transition-transform duration-300 ease-in-out
           ${isSidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
           border-r border-white/10 bg-[#0F172A] flex-shrink-0
@@ -32,7 +32,7 @@ export default function EXpertsMySession() {
       </div>
 
       {/* Main Content Area */}
-      <main className="flex-1 flex flex-col min-w-0 bg-[#0F172A]/30 h-full overflow-hidden">
+      <main className="flex-1 flex flex-col min-w-0 bg-[#0F172A]/30 h-full overflow-hidden mt-6 rounded-2xl">
         {/* Mobile Header */}
         <div className="lg:hidden flex items-center justify-between px-4 sm:px-6 py-4 border-b border-white/10 bg-[#0A0F1C] shrink-0">
           <span className="text-white font-semibold text-lg">

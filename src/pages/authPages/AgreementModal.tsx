@@ -89,7 +89,7 @@ export const AgreementModal = ({
       />
 
       {/* Modal — the image lives only inside this */}
-      <div className="fixed inset-0 z-[999] flex items-center justify-center p-4 pointer-events-none">
+      <div className="fixed inset-0 z-[999] flex items-center justify-center p-4 pointer-events-none max-w-full ">
         <div
           className="relative w-full max-w-[540px] rounded-[20px] overflow-hidden shadow-2xl pointer-events-auto"
           onClick={(e) => e.stopPropagation()}
@@ -201,7 +201,6 @@ export const AgreementModal = ({
               }`}
               disabled={!allAccepted}
               onClick={onAccept}
-            
             >
               Accept &amp; Continue
             </Button>

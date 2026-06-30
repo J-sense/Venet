@@ -132,6 +132,7 @@ export const App = () => {
         {/* <Route path="my-sessions" element={<EXpertsMySession />} /> */}
         <Route path="consultation" element={<EXpertsMySession />}>
           {/* Remove the hardcoded div and point to ChatWindow */}
+          <Route index element={<Navigate to="upcoming" replace />} />
           <Route path=":section" element={<ChatWindow />} />
           <Route path=":section/:id" element={<ChatWindow />} />
         </Route>

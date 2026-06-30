@@ -1,163 +1,160 @@
+// src/components/expert/ExpertOverview.tsx
+"use client";
+
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { ExpertTrainerCard } from "@/components/ui/ExpertTrainnerCard";
-import { STartProgramCard } from "@/components/ui/ProgramCard";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { StatCard } from "@/components/ui/StatCard";
-import { TaskItem } from "@/components/ui/TaskItem";
-import { CertificateSection } from "@/components/user/Overview/CertificateSection";
-import { Award, CheckCircle2, Heart, TrendingUp } from "lucide-react";
-const upcomingTasks = [
-  {
-    title: "Complete Health Assessment",
-    category: "Health & Fitness",
-    date: "Today",
-  },
-  {
-    title: "Watch Introduction Video",
-    category: "Career Preparation",
-    date: "Tomorrow",
-  },
-  {
-    title: "Set Weekly Goals",
-    category: "Mental Health",
-    date: "Jun 23", // Updated to reflect current timeline (2026-06-22)
-  },
-  {
-    title: "Initial Consultation Call",
-    category: "Health & Fitness",
-    date: "Jun 25",
-  },
-  {
-    title: "Update Skill Portfolio",
-    category: "Career Preparation",
-    date: "Jun 27",
-  },
-];
-const trainers = [
-  {
-    name: "Mike Chen",
-    title: "Certified Trainer & Nutritionist",
-    rating: 4.8,
-    reviews: 127,
-    price: "$120",
-    specialties: ["HIIT Training", "Strength Training"],
-    category: "Health & Fitness",
-  },
-  {
-    name: "Sarah Jenkins",
-    title: "Yoga & Mindfulness Coach",
-    rating: 4.9,
-    reviews: 89,
-    price: "$95",
-    specialties: ["Vinyasa Yoga", "Meditation"],
-    category: "Mental Health",
-  },
-  {
-    name: "David Ross",
-    title: "Career Strategy Mentor",
-    rating: 4.7,
-    reviews: 156,
-    price: "$150",
-    specialties: ["Resume Building", "Interview Prep"],
-    category: "Career Preparation",
-  },
-];
-export default function ExpertsOverview() {
+import { Calendar, DollarSign, Star, Users } from "lucide-react";
+
+export default function ExpertOverview() {
+  const stats = [
+    {
+      title: "Total Earnings",
+      value: "$12,450",
+      subtitle: "All time",
+      icon: <DollarSign className="w-6 h-6" />,
+      trend: "+18% this month",
+    },
+    {
+      title: "Total Clients",
+      value: "127",
+      subtitle: "All time",
+      icon: <Users className="w-6 h-6" />,
+    },
+    {
+      title: "Rating",
+      value: "4.9",
+      subtitle: "Based on 127 reviews",
+      icon: <Star className="w-6 h-6" />,
+    },
+    {
+      title: "This Week",
+      value: "9",
+      subtitle: "Consultations",
+      icon: <Calendar className="w-6 h-6" />,
+    },
+  ];
   return (
-    <div className="min-h-screen bg-black text-white p-4">
-      {/* Header */}
-      <h1 className="text-2xl font-bold mb-1">Welcome back, John!</h1>
-      <p className="text-zinc-400 mb-6">Here's your progress overview</p>
-      <section className="my-4">
-        <div className="grid grid-cols-3 gap-4">
-          <StatCard title="Active Programs" value="2" icon={<TrendingUp />} />
-          <StatCard title="Tasks Completed" value="0" icon={<CheckCircle2 />} />
-          <StatCard title="Certificates" value="0" icon={<Award />} />
-        </div>
-      </section>
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        {/* LEFT COLUMN (8 cols) */}
-        <div className="lg:col-span-8 space-y-6">
-          {/* Stats Cards */}
-
-          {/* My Programs */}
-          <section>
-            <Card className="bg-[#0F172A] p-4 border-none">
-              <h2 className="text-[24px] font-semibold mb-4 text-[#FFFFFF]">
-                My Programs
-              </h2>
-              <div className="space-y-4">
-                <STartProgramCard
-                  title="Health & Fitness"
-                  status="Not Started"
-                  progress={60}
-                  icon={<Heart className="w-6 h-6 text-rose-500" />} // Use the string literal
-                />
-                <STartProgramCard
-                  title="Mental Health"
-                  status="Not Started"
-                  progress={60}
-                  icon={<Heart className="w-6 h-6 text-rose-500" />} // Use the string literal
-                />
-                {/* <ProgramCard title="Mental Health" status="Not Started" /> */}
+    <>
+      <div className="min-h-screen bg-zinc-950 text-white p-6">
+        <div className="max-w-full  space-y-8">
+          {/* Header */}
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-[#0F172A] p-6 rounded-2xl">
+            <div>
+              <div className="flex  flex-col items-start gap-3">
+                <Badge className="bg-emerald-500 hover:bg-emerald-600 text-white px-3 py-1">
+                  LIVE
+                </Badge>
+                <h1 className="text-3xl font-bold">Stripe Connected</h1>
               </div>
-            </Card>
-          </section>
-
-          {/* Upcoming Tasks */}
-          <section>
-            <Card className="bg-[#0F172A] p-4 border-none">
-              <h2 className="text-[24px] font-semibold mb-4 text-[#FFFFFF]">
-                Upcoming Tasks
-              </h2>
-              <div className="space-y-3">
-                {upcomingTasks.map((task, index) => (
-                  <TaskItem
-                    key={index}
-                    title={task.title}
-                    category={task.category}
-                    date={task.date}
-                  />
-                ))}
-              </div>
-            </Card>
-          </section>
-        </div>
-
-        {/* RIGHT COLUMN (4 cols) */}
-        <div className="lg:col-span-4 space-y-6 ">
-          {/* <RecommendedExperts />
-          
-          <CertificatePlaceholder />
-          <UnlockPortalCard /> */}
-          <section className="space-y-4">
-            <div className="flex justify-between items-center">
-              <h3 className="font-semibold text-white">Recommended Experts</h3>
-              <button className="text-blue-500 text-sm">View All</button>
-            </div>
-
-            <div className="space-y-4">
-              {trainers.map((trainer, index) => (
-                <ExpertTrainerCard key={index} {...trainer} />
-              ))}
-            </div>
-          </section>
-          <CertificateSection />
-          <Card className="bg-gradient-to-br from-blue-600 to-blue-700 border-none shadow-lg">
-            <CardContent className="p-6">
-              <h3 className="text-white font-semibold text-lg mb-2">
-                Unlock Talent Portal
-              </h3>
-              <p className="text-blue-50 text-sm mb-6 opacity-90">
-                Complete a program to access career opportunities
+              <p className="text-zinc-400 mt-1">
+                Payouts active for john@example.com
               </p>
-              <Button className="w-full bg-white text-blue-700 hover:bg-gray-100 font-medium">
-                Learn More
-              </Button>
-            </CardContent>
-          </Card>
+            </div>
+            <Button
+              variant="outline"
+              className="border-white/20 hover:bg-white/5 bg-[#62FF9CC2]"
+            >
+              Manage Account →
+            </Button>
+          </div>
+
+          {/* Stats Grid */}
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+            {stats.map((stat, index) => (
+              <StatCard
+                key={index}
+                title={stat.title}
+                value={stat.value}
+                subtitle={stat.subtitle}
+                icon={stat.icon}
+                trend={stat.trend}
+              />
+            ))}
+          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {/* Upcoming Consultations */}
+            <Card className="bg-[#0F172A] border-zinc-800">
+              <CardHeader>
+                <CardTitle className="text-[#FFFFFF] text-[24px] font-medium">
+                  Upcoming Consultations
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                {[
+                  {
+                    name: "Sarah J.",
+                    topic: "Fitness Goals",
+                    time: "Today • 2:30 PM",
+                  },
+                  {
+                    name: "Michael R.",
+                    topic: "Fitness Goals",
+                    time: "Tomorrow • 10:30 AM",
+                  },
+                  {
+                    name: "Emily K.",
+                    topic: "Mental Health",
+                    time: "Jun 10 • 2:00 PM",
+                  },
+                ].map((item, i) => (
+                  <div
+                    key={i}
+                    className="flex justify-between items-center bg-[#334155] p-4 rounded-2xl"
+                  >
+                    <div>
+                      <p className="font-medium text-[#FFFFFF] text-[18px]">
+                        {item.name}
+                      </p>
+                      <p className="text-sm text-[#9F9FA9] text-[14px] font-normal">
+                        {item.topic}
+                      </p>
+                    </div>
+                    <div className="text-right text-sm text-zinc-400">
+                      {item.time}
+                    </div>
+                  </div>
+                ))}
+              </CardContent>
+            </Card>
+
+            {/* Recent Earnings */}
+            <Card className="bg-[#0F172A] border-zinc-800">
+              <CardHeader>
+                <CardTitle className="text-[#FFFFFF] text-[24px] font-medium">
+                  Recent Earnings
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                {[
+                  { name: "Sarah J.", amount: "$90", time: "Jun 8 • 45 min" },
+                  { name: "Michael R.", amount: "$90", time: "Jun 7 • 50 min" },
+                  { name: "Emily K.", amount: "$90", time: "Jun 6 • 30 min" },
+                ].map((item, i) => (
+                  <div
+                    key={i}
+                    className="flex justify-between items-center bg-[#334155] p-4 rounded-2xl"
+                  >
+                    <div>
+                      <p className="font-medium text-[#FFFFFF] text-[18px]">
+                        {item.name}
+                      </p>
+                      <p className="text-sm text-[#9F9FA9] text-[14px] font-normal">
+                        {item.time}
+                      </p>
+                    </div>
+                    <div className="font-semibold text-emerald-400">
+                      {item.amount}
+                    </div>
+                  </div>
+                ))}
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

@@ -1,22 +1,22 @@
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 import * as z from "zod";
 
 import { AuthLayout } from "@/components/auth/AuthLayout";
-import {
-  Form,
-  FormField,
-  FormItem,
-  FormControl,
-  FormMessage,
-} from "@/components/ui/form";
-import { Button } from "@/components/ui/button";
 import { FormCard } from "@/components/auth/FormCard";
 import { FormInput } from "@/components/ui/FormInput";
+import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "@/components/ui/form";
 import { useState } from "react";
-import { AgreementModal } from "./AgreementModal";
 import { useNavigate } from "react-router";
+import { AgreementModal } from "./AgreementModal";
 
 // Schema
 const registerSchema = z
@@ -116,11 +116,34 @@ export const Register = () => {
                   </FormControl>
                   <label
                     htmlFor="terms"
-                    className="text-xs text-gray-500 leading-tight cursor-pointer"
+                    className="text-xs text-gray-500 leading-tight"
                   >
-                    I agree to the Terms & Conditions, Privacy Policy, and
-                    Disclaimer. I understand that this platform does not provide
-                    medical diagnosis.
+                    I agree to the{" "}
+                    <button
+                      type="button"
+                      className="text-[#0A66C2] cursor-pointer hover:underline"
+                      onClick={() => navigate("/terms")}
+                    >
+                      Terms & Conditions
+                    </button>
+                    ,{" "}
+                    <button
+                      type="button"
+                      className="text-[#0A66C2] cursor-pointer hover:underline"
+                      onClick={() => navigate("/privacy")}
+                    >
+                      Privacy Policy
+                    </button>
+                    , and{" "}
+                    <button
+                      type="button"
+                      className="text-[#0A66C2] cursor-pointer hover:underline"
+                      onClick={() => navigate("/disclaimer")}
+                    >
+                      Disclaimer
+                    </button>
+                    . I understand that this platform does not provide medical
+                    diagnosis.
                   </label>
                   <FormMessage className="text-[10px]" />
                 </FormItem>

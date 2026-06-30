@@ -3,11 +3,21 @@ import { useNavigate, useParams } from "react-router";
 import { X, Search } from "lucide-react";
 
 const MOCK_HISTORY_LIST = [
-  { id: "1", name: "Henry Dholi" },
-  { id: "2", name: "Mariya Desoja" },
-  { id: "3", name: "Robert Jhon" },
+  {
+    id: "1",
+    name: "Henry Dholi",
+    avatar:
+      "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=150",
+    message: "I came across your profile and...",
+  },
+  {
+    id: "2",
+    name: "Mariya Desoja",
+    avatar:
+      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150",
+    message: "I like your confidence 💪",
+  },
 ];
-
 interface ConsultationSidebarProps {
   onClose?: () => void;
 }
@@ -18,7 +28,7 @@ export const ConsultationSidebar = ({ onClose }: ConsultationSidebarProps) => {
   const activeSection = section || "upcoming";
 
   return (
-    <div className="h-full flex flex-col">
+    <div className="h-full flex flex-col rounded-2xl px-1 py-6">
       {/* Mobile Close Button */}
       <div className="lg:hidden flex justify-end p-4 border-b border-white/10">
         <button onClick={onClose} className="text-white">
@@ -57,29 +67,42 @@ export const ConsultationSidebar = ({ onClose }: ConsultationSidebarProps) => {
             <div className="flex-1 flex flex-col min-h-0">
               <div className="mb-4 relative shrink-0">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400" />
-                <input 
-                  type="text" 
-                  placeholder="Search history..." 
-                  className="w-full bg-[#131926] border border-white/10 rounded-xl py-2 pl-10 pr-4 text-sm text-white focus:outline-none focus:border-blue-500 transition-colors placeholder:text-zinc-500" 
+                <input
+                  type="text"
+                  placeholder="Search history..."
+                  className="w-full bg-[#131926] border border-white/10 rounded-xl py-2 pl-10 pr-4 text-sm text-white focus:outline-none focus:border-blue-500 transition-colors placeholder:text-zinc-500"
                 />
               </div>
-              <div className="space-y-2 overflow-y-auto flex-1">
+              <div className="flex-1 overflow-y-auto space-y-3 px-2">
                 {MOCK_HISTORY_LIST.map((item) => (
-                <div
-                  key={item.id}
-                  onClick={() => {
-                    navigate(
-                      `/dashboard/experts/consultation/previous/${item.id}`,
-                    );
-                    onClose?.();
-                  }}
-                  className={`p-4 rounded-2xl cursor-pointer transition-all ${
-                    id === item.id ? "bg-[#1E2937]" : "hover:bg-[#1E2937]/50"
-                  }`}
-                >
-                  <div className="font-semibold text-white">{item.name}</div>
-                </div>
-              ))}
+                  <div
+                    key={item.id}
+                    onClick={() => {
+                      navigate(
+                        `/dashboard/experts/consultation/previous/${item.id}`,
+                      );
+                      onClose?.();
+                    }}
+                    className={`flex gap-3 p-3 rounded-3xl cursor-pointer transition-all hover:bg-white/5 ${
+                      id === item.id ? "bg-white/10" : ""
+                    }`}
+                  >
+                    <img
+                      src={item.avatar}
+                      alt={item.name}
+                      className="w-12 h-12 rounded-2xl object-cover flex-shrink-0"
+                    />
+
+                    <div className="flex-1 min-w-0">
+                      <div className="font-semibold text-white">
+                        {item.name}
+                      </div>
+                      <p className="text-sm text-zinc-400 line-clamp-1 mt-0.5">
+                        {item.message}
+                      </p>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           ) : (
