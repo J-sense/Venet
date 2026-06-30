@@ -17,13 +17,15 @@ import ProgramAssessment from "./pages/dashboard/user/ProgramAssessment";
 import ProgramRoadmap from "./pages/dashboard/user/ProgramRoadmap";
 import UserCertificates from "./pages/dashboard/user/Certificates/UserCertificates";
 import TalentPortal from "./pages/dashboard/user/TalentPortal/TalentPortal";
-import { Login } from "./pages/authPages/Login";
-import { Register } from "./pages/authPages/Register";
-import { ForgotPassword } from "./pages/authPages/ForgotPassword";
-import { VerifyIdentity } from "./pages/authPages/VerifyIdentity";
-import ExpertsRegister from "./pages/authPages/ExpertsRegister";
-import ExpertsLogin from "./pages/authPages/ExpertsLogin";
-import ExpertsForgotPassword from "./pages/authPages/ExpertsForgotPassword";
+import { 
+  Login, 
+  Register, 
+  ForgotPassword, 
+  VerifyIdentity, 
+  ExpertsRegister, 
+  ExpertsLogin, 
+  ExpertsForgotPassword 
+} from "./pages/Auth";
 import ExpertsOverview from "./pages/dashboard/experts/overView/ExpertsOverview";
 import ExpertesAvailability from "./pages/dashboard/experts/Availability/ExpertesAvailability";
 import ExpertsProfile from "./pages/dashboard/experts/profile/ExpertsProfile";

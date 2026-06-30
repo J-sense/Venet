@@ -1,5 +1,5 @@
-import { ExpartFormCard } from "@/components/auth/ExpartFormCard";
-import { ExpertsAuthLayout } from "@/components/auth/ExpertsAuthLayout";
+import { ExpartFormCard } from "@/pages/Auth/components/ExpartFormCard";
+import { ExpertsAuthLayout } from "@/pages/Auth/components/ExpertsAuthLayout";
 import { Form } from "@/components/ui/form";
 import { FormInput } from "@/components/ui/FormInput";
 import { FormSelect } from "@/components/ui/FormSelect";

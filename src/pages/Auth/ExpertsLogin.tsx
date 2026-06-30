@@ -3,8 +3,8 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { ExpertsAuthLayout } from "@/components/auth/ExpertsAuthLayout";
-import { ExpartFormCard } from "@/components/auth/ExpartFormCard";
+import { ExpertsAuthLayout } from "@/pages/Auth/components/ExpertsAuthLayout";
+import { ExpartFormCard } from "@/pages/Auth/components/ExpartFormCard";
 import { Form } from "@/components/ui/form";
 import { FormInput } from "@/components/ui/FormInput";
 import { Button } from "@/components/ui/button";

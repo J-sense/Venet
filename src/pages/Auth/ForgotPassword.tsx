@@ -2,8 +2,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 
-import { AuthLayout } from "@/components/auth/AuthLayout";
-import { FormCard } from "@/components/auth/FormCard";
+import { AuthLayout } from "@/pages/Auth/components/AuthLayout";
+import { FormCard } from "@/pages/Auth/components/FormCard";
 import { Form } from "@/components/ui/form";
 import { FormInput } from "@/components/ui/FormInput";
 import { Button } from "@/components/ui/button";

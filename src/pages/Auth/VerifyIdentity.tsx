@@ -1,6 +1,6 @@
-import { AuthLayout } from "@/components/auth/AuthLayout";
-import { FormCard } from "@/components/auth/FormCard";
-import { VerificationForm } from "./VerificationForm"; // Adjust path as needed
+import { AuthLayout } from "@/pages/Auth/components/AuthLayout";
+import { FormCard } from "@/pages/Auth/components/FormCard";
+import { VerificationForm } from "./components/VerificationForm";
 
 export const VerifyIdentity = () => {
   const handleVerify = (code: string) => {
