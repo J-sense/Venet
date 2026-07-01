@@ -34,11 +34,10 @@ import ExpertsOverview from "./pages/dashboard/experts/overView/ExpertsOverview"
 import ExpertesAvailability from "./pages/dashboard/experts/Availability/ExpertesAvailability";
 import ExpertsProfile from "./pages/dashboard/experts/profile/ExpertsProfile";
 
-import { ExpertSettings, ExpertsNotificationsPage } from "./pages/dashboard/experts/Setting";
+import { ExpertSettings, ExpertsNotificationsPage, ExpertsSecurityPage } from "./pages/dashboard/experts/Setting";
 import EXpertsMySession from "./pages/dashboard/experts/MySessions/EXpertsMySession";
-import { ExpertsReview } from "./pages/dashboard/experts/Reviews/ExpertsReview";
+import { ExpertsReview } from "./pages/dashboard/experts/Reviews";
 import { ChatWindow } from "./pages/dashboard/experts/MySessions/ChatWindow";
-import ExpertsSecurityPage from "./pages/dashboard/experts/Reviews/ExpertsSecurityPage";
 
 import UserSettingsMain from "./pages/dashboard/user/Settings/SettingsMain";
 import UserAccountMain from "./pages/dashboard/user/Settings/Account/UserAccountMain";
