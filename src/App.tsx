@@ -32,7 +32,7 @@ import {
 } from "./pages/Auth";
 import ExpertsOverview from "./pages/dashboard/experts/overView/ExpertsOverview";
 import ExpertesAvailability from "./pages/dashboard/experts/Availability/ExpertesAvailability";
-import ExpertsProfile from "./pages/dashboard/experts/profile/ExpertsProfile";
+import { ExpertsProfile } from "./pages/dashboard/experts/profile";
 
 import { ExpertSettings, ExpertsNotificationsPage, ExpertsSecurityPage } from "./pages/dashboard/experts/Setting";
 import EXpertsMySession from "./pages/dashboard/experts/MySessions/EXpertsMySession";
