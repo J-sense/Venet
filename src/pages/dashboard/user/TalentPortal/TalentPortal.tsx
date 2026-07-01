@@ -1,5 +1,5 @@
-import LockPortal from "@/components/user/talentPortal/LocakPortal";
-import TalentPortalUnlocked from "@/components/user/talentPortal/TalentPortalUnlocked";
+import LockPortal from "./components/LocakPortal";
+import TalentPortalUnlocked from "./components/TalentPortalUnlocked";
 
 export default function TalentPortal() {
   const isSubscribed = true;

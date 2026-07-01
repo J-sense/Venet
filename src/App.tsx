@@ -20,7 +20,7 @@ import ProgramDetails from "./pages/dashboard/user/ProgramDetails";
 import ProgramAssessment from "./pages/dashboard/user/ProgramAssessment";
 import ProgramRoadmap from "./pages/dashboard/user/ProgramRoadmap";
 import UserCertificates from "./pages/dashboard/user/Certificates/UserCertificates";
-import TalentPortal from "./pages/dashboard/user/TalentPortal/TalentPortal";
+import { TalentPortal } from "./pages/dashboard/user/TalentPortal";
 import {
   Login,
   Register,
@@ -41,7 +41,7 @@ import { ChatWindow } from "./pages/dashboard/experts/MySessions/ChatWindow";
 
 import { UserSettingsMain, UserAccountMain, UserSecurityMain, UserBillingMain, UserNotifications } from "./pages/dashboard/user/Settings";
 import AgoraVideoCallPage from "./pages/video/AgoraVideoCallPage";
-import ResumeBuildForm from "./components/user/talentPortal/ResumeBuildForm";
+import { ResumeBuildForm } from "./pages/dashboard/user/TalentPortal";
 
 import NotFoundPage from "./pages/NotFoundPage";
 import DisclaimerMain from "./pages/Disclaimer/DisclaimerMain";

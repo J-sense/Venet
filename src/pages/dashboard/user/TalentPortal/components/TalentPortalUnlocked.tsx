@@ -1,6 +1,8 @@
 // /home/workdir/artifacts/TalentPortalUnlocked.tsx
 "use client";
 
+import { recommendedJobs } from "../data/talentPortalData";
+
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -106,35 +108,7 @@ export default function TalentPortalUnlocked() {
               </div>
 
               <div className="space-y-4">
-                {[
-                  {
-                    title: "Senior Software Engineer",
-                    company: "Tech Corp",
-                    salary: "$120k - $150k",
-                    match: "95%",
-                    type: "Full-time",
-                    time: "2d ago",
-                    location: "Remote",
-                  },
-                  {
-                    title: "Senior Software Engineer",
-                    company: "Tech Corp",
-                    salary: "$120k - $150k",
-                    match: "95%",
-                    type: "Full-time",
-                    time: "2d ago",
-                    location: "Remote",
-                  },
-                  {
-                    title: "Senior Software Engineer",
-                    company: "Tech Corp",
-                    salary: "$120k - $150k",
-                    match: "95%",
-                    type: "Full-time",
-                    time: "2d ago",
-                    location: "Remote",
-                  },
-                ].map((job, i) => (
+                {recommendedJobs.map((job, i) => (
                   <div
                     key={i}
                     className="bg-[#0D1526] border border-[#FFFFFF0F] rounded-2xl p-5 flex flex-col gap-4"
