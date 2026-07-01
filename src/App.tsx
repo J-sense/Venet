@@ -8,8 +8,8 @@ import { ShoppingCartPage } from "./pages/SubscriptionSuggestion/ShoppingCart";
 import { AboutUsMain } from "./pages/About-us";
 
 import { navItemsForExperts, navItemsForUser } from "./components/ui/navitems";
-import UserLayout from "./components/ui/layouts/UserLayout/UserLayout";
-import ExpertsLayout from "./components/ui/layouts/expertsLayout/ExpertsLayout";
+import { UserLayout } from "./pages/dashboard/user/layout";
+import { ExpertsLayout } from "./pages/dashboard/experts/layout";
 import UserHome from "./pages/dashboard/user/UserDashbpard/UserHome";
 import ProgramDetails from "./pages/dashboard/user/ProgramDetails";
 import ProgramAssessment from "./pages/dashboard/user/ProgramAssessment";

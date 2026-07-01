@@ -1,5 +1,5 @@
-import { assessmentSteps } from "@/constents";
-import { useAssessment } from "@/utils/useAssessment";
+import { assessmentSteps } from "../data/assessmentData";
+import { useAssessment } from "../hooks/useAssessment";
 import { useNavigate } from "react-router";
 
 export default function AssessmentWizard({

@@ -1,7 +1,7 @@
 import { Link, useLocation } from "react-router";
 import { LogOut } from "lucide-react";
 
-import type { MenuItemsType } from "../../navitems";
+import type { MenuItemsType } from "@/components/ui/navitems";
 
 interface SidebarProps {
   isOpen: boolean;
@@ -9,7 +9,7 @@ interface SidebarProps {
   navItems: MenuItemsType[];
 }
 
-export function UserSidebar({ isOpen, onClose, navItems }: SidebarProps) {
+export function ExpertsSidebar({ isOpen, onClose, navItems }: SidebarProps) {
   const location = useLocation();
 
   const handleLogout = () => {
@@ -33,13 +33,15 @@ export function UserSidebar({ isOpen, onClose, navItems }: SidebarProps) {
       </Link>
       {/* Navigation */}
       <nav className="flex-1 px-4 mt-4">
-        <p className="text-[#FFFFFF] text-[10px] font-bold uppercase tracking-[2px] px-4 mb-4">
+        <p className="text-[#71717B] text-[12px] font-semibold uppercase tracking-[2px] px-4 mb-4">
           Main Menu
         </p>
 
         <div className="space-y-1">
           {navItems?.map((item) => {
-            const isActive = location.pathname === item.href;
+            const isActive =
+              location.pathname === item.href ||
+              location.pathname.startsWith(`${item.href}/`);
             const Icon = item.icon;
 
             return (
@@ -49,8 +51,8 @@ export function UserSidebar({ isOpen, onClose, navItems }: SidebarProps) {
                 onClick={onClose}
                 className={`flex items-center gap-3 px-3 py-2.5 rounded-[10px] transition-all duration-300 ${
                   isActive
-                    ? "bg-blue-500/10 outline outline-1 outline-blue-500/20"
-                    : "hover:bg-[#171717] hover:text-white"
+                    ? "bg-blue-500/10 outline outline-1 outline-blue-500/20 text-[16px]"
+                    : "hover:bg-[#171717] hover:text-white text-[16px] text-[#94A3B8]"
                 }`}
               >
                 {/* Icon/Active State Logic */}
@@ -64,13 +66,13 @@ export function UserSidebar({ isOpen, onClose, navItems }: SidebarProps) {
                     ))}
                   </div>
                 ) : (
-                  <Icon className="w-5 h-5 text-[#A3A3A3]" />
+                  <Icon className="w-5 h-5 text-[#94A3B8]" />
                 )}
 
                 {/* Label */}
                 <span
                   className={`text-base font-medium font-['Inter'] leading-6 ${
-                    isActive ? "text-blue-400" : "text-[#FFFFFF]"
+                    isActive ? "text-blue-400" : "text-[#94A3B8]"
                   }`}
                 >
                   {item.label}

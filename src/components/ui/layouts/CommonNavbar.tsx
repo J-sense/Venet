@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router";
 import { Menu, X, ChevronDown } from "lucide-react";
-import { AssessmentModal } from "@/components/assessment/AssessmentModal";
+import { AssessmentModal } from "@/components/assessment";
 
 export const CommonNavbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
