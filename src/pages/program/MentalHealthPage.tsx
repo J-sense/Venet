@@ -1,37 +1,8 @@
 import HowItWorks from "@/components/ui/ProgrammeHowItWorksSection";
 
+import { mentalHealthSteps } from "./data/programData";
+
 export default function MentalHealthPage() {
-  const mentalHealthSteps = [
-    {
-      number: 1,
-      title: "Mental Wellness Assessment",
-      description:
-        "Evaluate your current mental health and identify areas for growth",
-    },
-    {
-      number: 2,
-      title: "Personalized Care Plan",
-      description:
-        "Get a customized mental wellness roadmap with daily practices",
-    },
-    {
-      number: 3,
-      title: "Daily Mindfulness Tasks",
-      description:
-        "Practice meditation, journaling, and stress management techniques",
-    },
-    {
-      number: 4,
-      title: "Expert Support",
-      description: "Access licensed therapists and mental health professionals",
-    },
-    {
-      number: 5,
-      title: "Certification",
-      description:
-        "Complete the program and receive your mental wellness certificate",
-    },
-  ];
   return (
     <div className="bg-[#0A0A0A] text-white pt-20 bg-black min-h-screen">
       {/* Full Screen Hero Section */}

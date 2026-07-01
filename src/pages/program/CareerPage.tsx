@@ -1,38 +1,8 @@
 import HowItWorks from "@/components/ui/ProgrammeHowItWorksSection";
 
+import { careerSteps } from "./data/programData";
+
 export default function CareerPage() {
-  const careerSteps = [
-    {
-      number: 1,
-      title: "Career Assessment",
-      description:
-        "Identify your strengths, skills, and ideal career path through comprehensive evaluation",
-    },
-    {
-      number: 2,
-      title: "AI Roadmap Building",
-      description:
-        "Get a personalized career development plan with clear milestones and timelines",
-    },
-    {
-      number: 3,
-      title: "Skill Development",
-      description:
-        "Master in-demand skills through structured courses and hands-on projects",
-    },
-    {
-      number: 4,
-      title: "Interview & Job Preparation",
-      description:
-        "Receive resume optimization, interview coaching, and job placement support",
-    },
-    {
-      number: 5,
-      title: "Career Launch",
-      description:
-        "Secure your dream role and get ongoing career growth support",
-    },
-  ];
   return (
     <div className="bg-[#0A0A0A] text-white">
       {/* Full Screen Hero */}

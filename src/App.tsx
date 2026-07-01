@@ -1,7 +1,7 @@
 import { Navigate, Route, Routes } from "react-router";
 import CommonLayout from "./components/ui/layouts/CommonLayout";
 import { HomeMain } from "./pages/Home";
-import ProgrameMain from "./pages/program/ProgrameMain";
+import { ProgrameMain, HealthFitnessPage, MentalHealthPage, EducationServicePage, CareerPage } from "./pages/program";
 
 import { SubscriptionSuggestionMain } from "./pages/SubscriptionSuggestion/SubscriptionSuggestionMain";
 import { ShoppingCartPage } from "./pages/SubscriptionSuggestion/ShoppingCart";
@@ -43,10 +43,7 @@ import UserNotifications from "./pages/dashboard/user/Settings/UserNotifications
 import AgoraVideoCallPage from "./pages/video/AgoraVideoCallPage";
 import ResumeBuildForm from "./components/user/talentPortal/ResumeBuildForm";
 
-import HealthFitnessPage from "./pages/program/health-fitness/HealthFitnessPage";
-import MentalHealthPage from "./pages/program/mental-health/MentalHealthPage";
-import EducationServicePage from "./pages/program/education-service/EducationServicePage";
-import CareerPage from "./pages/program/career/CareerPage";
+
 import NotFoundPage from "./pages/NotFoundPage";
 import DisclaimerMain from "./pages/Disclaimer/DisclaimerMain";
 import PrivacyMain from "./pages/privacyPolicy/PrivacyMain";

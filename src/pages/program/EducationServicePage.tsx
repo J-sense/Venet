@@ -1,39 +1,9 @@
 import { ActionButton } from "@/components/ui/ActionButton";
 import HowItWorks from "@/components/ui/ProgrammeHowItWorksSection";
 
+import { educationSteps } from "./data/programData";
+
 export default function EducationServicePage() {
-  const educationSteps = [
-    {
-      number: 1,
-      title: "Skills Assessment",
-      description:
-        "Evaluate your current knowledge, strengths, and learning goals",
-    },
-    {
-      number: 2,
-      title: "Personalized Learning Plan",
-      description:
-        "Receive a customized curriculum and learning roadmap tailored to your goals",
-    },
-    {
-      number: 3,
-      title: "Interactive Coursework",
-      description:
-        "Engage with high-quality video lessons, assignments, and practical projects",
-    },
-    {
-      number: 4,
-      title: "Mentorship & Support",
-      description:
-        "Get guidance from industry experts and real-time academic support",
-    },
-    {
-      number: 5,
-      title: "Certification & Career Readiness",
-      description:
-        "Complete the program and earn recognized certificates for your career",
-    },
-  ];
   return (
     <div
       className="bg-[#0A0A0A] text-white pt-

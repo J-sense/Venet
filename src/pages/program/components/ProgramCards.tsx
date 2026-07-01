@@ -1,59 +1,6 @@
 import { BookOpen, Brain, Check, Heart } from "lucide-react";
 
-export const programs = [
-  {
-    title: "Health & Fitness Program",
-    desc: "Personalized fitness plans, nutrition guidance, and wellness tracking to help you achieve your health goals.",
-    icon: Heart,
-    iconColor: "text-red-500",
-    benefits: [
-      "AI-generated daily workout routines",
-      "Customized meal plans and nutrition tracking",
-      "Progress monitoring with detailed analytics",
-      "Access to fitness experts",
-      "Community support and challenges",
-    ],
-  },
-  {
-    title: "Mental Health Program",
-    desc: "Comprehensive mental wellness support with guided exercises, expert consultations, and daily practices.",
-    icon: Brain,
-    iconColor: "text-purple-500",
-    benefits: [
-      "Daily mindfulness and meditation exercises",
-      "Stress management techniques",
-      "Cognitive behavioral therapy worksheets",
-      "Access to licensed therapists",
-      "Private journaling and mood tracking",
-    ],
-  },
-  {
-    title: "Educational Services Program",
-    desc: "Structured learning paths with professional certifications to advance your knowledge and skills.",
-    icon: BookOpen,
-    iconColor: "text-blue-400",
-    benefits: [
-      "Curated course library across multiple subjects",
-      "Industry-recognized certifications",
-      "Interactive learning modules",
-      "Expert instructors and mentors",
-      "Skill assessments and progress tracking",
-    ],
-  },
-  {
-    title: "Career Preparation Program",
-    desc: "Complete career development package including resume building, interview prep, and job placement support.",
-    icon: Heart, // Placeholder - Replace with preferred icon
-    iconColor: "text-green-500",
-    benefits: [
-      "Professional resume and cover letter templates",
-      "Mock interview sessions with feedback",
-      "Career roadmap planning",
-      "LinkedIn optimization",
-      "Job matching and application support",
-    ],
-  },
-];
+import { programs } from "../data/programData";
 
 export const ProgramGrid = () => {
   return (

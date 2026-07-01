@@ -1,9 +1,9 @@
 
 import { CustomerFeedback } from "../Home/components/CustomerFeedback";
-import { ProgramBanner } from "./ProgramBanner";
-import { ProgramGrid } from "./ProgramCards";
+import { ProgramBanner } from "./components/ProgramBanner";
+import { ProgramGrid } from "./components/ProgramCards";
 
-import ProgrammeHowItWorks from "./ProgrameWorks";
+import ProgrammeHowItWorks from "./components/ProgrameWorks";
 
 export default function ProgrameMain() {
   return (
