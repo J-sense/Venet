@@ -1,4 +1,4 @@
-import { UserSettingsLayout } from "@/components/user/settings/UserSettingsLayout";
+import { UserSettingsLayout } from "./components/UserSettingsLayout";
 
 export default function UserSettingsMain() {
   return (

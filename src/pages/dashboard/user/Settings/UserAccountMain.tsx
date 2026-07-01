@@ -1,4 +1,4 @@
-import UserAccountForm from "@/components/user/settings/Account/UserAccountForm";
+import UserAccountForm from "./components/UserAccountForm";
 
 export default function UserAccountMain() {
   return (
