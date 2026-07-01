@@ -1,4 +1,4 @@
-import { SettingsLayout } from "@/components/experts/settings/SettingsLayout";
+import { SettingsLayout } from "./components/SettingsLayout";
 
 export default function ExpertSettings() {
   return (

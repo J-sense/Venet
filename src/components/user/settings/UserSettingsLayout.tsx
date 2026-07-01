@@ -1,4 +1,4 @@
-import { SidebarItem } from "@/components/experts/settings/ExpertsSideBarItem";
+import { SidebarItem } from "@/pages/dashboard/experts/Setting/components/ExpertsSideBarItem";
 import { Bell, Menu, ReceiptText, Shield, User, X } from "lucide-react";
 
 import { useState } from "react";
