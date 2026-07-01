@@ -1,7 +1,12 @@
 import { Navigate, Route, Routes } from "react-router";
 import CommonLayout from "./components/ui/layouts/CommonLayout";
 import { HomeMain } from "./pages/Home";
-import { ProgrameMain, HealthFitnessPage, MentalHealthPage, EducationServicePage, CareerPage } from "./pages/program";
+import {
+  HealthFitnessPage,
+  MentalHealthPage,
+  EducationServicePage,
+  CareerPage,
+} from "./pages/program";
 
 import { SubscriptionSuggestionMain } from "./pages/SubscriptionSuggestion/SubscriptionSuggestionMain";
 import { ShoppingCartPage } from "./pages/SubscriptionSuggestion/ShoppingCart";
@@ -23,7 +28,7 @@ import {
   VerifyIdentity,
   ExpertsRegister,
   ExpertsLogin,
-  ExpertsForgotPassword
+  ExpertsForgotPassword,
 } from "./pages/Auth";
 import ExpertsOverview from "./pages/dashboard/experts/overView/ExpertsOverview";
 import ExpertesAvailability from "./pages/dashboard/experts/Availability/ExpertesAvailability";
@@ -43,7 +48,6 @@ import UserNotifications from "./pages/dashboard/user/Settings/UserNotifications
 import AgoraVideoCallPage from "./pages/video/AgoraVideoCallPage";
 import ResumeBuildForm from "./components/user/talentPortal/ResumeBuildForm";
 
-
 import NotFoundPage from "./pages/NotFoundPage";
 import DisclaimerMain from "./pages/Disclaimer/DisclaimerMain";
 import PrivacyMain from "./pages/privacyPolicy/PrivacyMain";
@@ -56,7 +60,7 @@ export const App = () => {
       <Route path="/video-call/:channel" element={<AgoraVideoCallPage />} />
       <Route path="/" element={<CommonLayout />}>
         <Route index element={<HomeMain />} />
-        <Route path="/programs" element={<ProgrameMain />} />
+
         <Route
           path="/programs/health-fitness"
           element={<HealthFitnessPage />}
