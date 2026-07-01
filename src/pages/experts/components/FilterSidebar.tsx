@@ -1,5 +1,5 @@
 import { Search, RotateCcw, X, SlidersHorizontal } from "lucide-react";
-import type { FilterState } from "./types";
+import type { FilterState } from "../data/expertsData";
 
 interface FilterSidebarProps {
   filters: FilterState;

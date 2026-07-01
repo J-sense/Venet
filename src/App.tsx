@@ -2,8 +2,7 @@ import { Navigate, Route, Routes } from "react-router";
 import CommonLayout from "./components/ui/layouts/CommonLayout";
 import { HomeMain } from "./pages/Home";
 import ProgrameMain from "./pages/program/ProgrameMain";
-import ExpertsMain from "./pages/experts/ExpertsMain";
-import ExpertsDetails from "./pages/experts/ExpertsDetails";
+
 import { SubscriptionSuggestionMain } from "./pages/SubscriptionSuggestion/SubscriptionSuggestionMain";
 import { ShoppingCartPage } from "./pages/SubscriptionSuggestion/ShoppingCart";
 import { AboutUsMain } from "./pages/About-us";
@@ -17,14 +16,14 @@ import ProgramAssessment from "./pages/dashboard/user/ProgramAssessment";
 import ProgramRoadmap from "./pages/dashboard/user/ProgramRoadmap";
 import UserCertificates from "./pages/dashboard/user/Certificates/UserCertificates";
 import TalentPortal from "./pages/dashboard/user/TalentPortal/TalentPortal";
-import { 
-  Login, 
-  Register, 
-  ForgotPassword, 
-  VerifyIdentity, 
-  ExpertsRegister, 
-  ExpertsLogin, 
-  ExpertsForgotPassword 
+import {
+  Login,
+  Register,
+  ForgotPassword,
+  VerifyIdentity,
+  ExpertsRegister,
+  ExpertsLogin,
+  ExpertsForgotPassword
 } from "./pages/Auth";
 import ExpertsOverview from "./pages/dashboard/experts/overView/ExpertsOverview";
 import ExpertesAvailability from "./pages/dashboard/experts/Availability/ExpertesAvailability";
@@ -52,6 +51,7 @@ import NotFoundPage from "./pages/NotFoundPage";
 import DisclaimerMain from "./pages/Disclaimer/DisclaimerMain";
 import PrivacyMain from "./pages/privacyPolicy/PrivacyMain";
 import TermsMain from "./pages/termsCondition/TermsMain";
+import { ExpertsDetails, ExpertsMain } from "./pages/experts";
 
 export const App = () => {
   return (

@@ -7,7 +7,7 @@ import {
   ShieldCheck, 
   Info
 } from "lucide-react";
-import type { Expert } from "../types";
+import type { Expert } from "../../data/expertsData";
 import { Link } from "react-router";
 
 interface CustomBookingProps {

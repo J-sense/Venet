@@ -1,5 +1,5 @@
 import { ChevronDown, RefreshCw } from "lucide-react";
-import type { Expert } from "./types";
+import type { Expert } from "../data/expertsData";
 import ExpertCard from "./ExpertCard";
 
 interface ExpertListProps {

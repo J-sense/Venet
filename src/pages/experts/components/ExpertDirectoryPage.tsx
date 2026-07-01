@@ -1,7 +1,7 @@
 import { useState, useMemo } from "react";
 import { SlidersHorizontal } from "lucide-react";
-import { mockExperts } from "./types";
-import type { FilterState } from "./types";
+import { mockExperts } from "../data/expertsData";
+import type { FilterState } from "../data/expertsData";
 import FilterSidebar from "./FilterSidebar";
 import ExpertList from "./ExpertList";
 

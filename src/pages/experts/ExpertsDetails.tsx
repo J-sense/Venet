@@ -1,8 +1,8 @@
 import { useParams, Link } from "react-router";
 import { ChevronLeft } from "lucide-react";
-import { mockExperts } from "../../components/experts/types";
-import ExpertProfileDetails from "../../components/experts/profile/ExpertProfileDetails";
-import CustomBooking from "../../components/experts/booking/CustomBooking";
+import { mockExperts } from "./data/expertsData";
+import ExpertProfileDetails from "./components/profile/ExpertProfileDetails";
+import CustomBooking from "./components/booking/CustomBooking";
 
 export default function ExpertsDetails() {
   const { id } = useParams();

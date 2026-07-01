@@ -1,5 +1,5 @@
 import { Star, Award, GraduationCap, CheckCircle2, Heart, Shield } from "lucide-react";
-import type { Expert } from "../types";
+import type { Expert } from "../../data/expertsData";
 
 interface ExpertProfileDetailsProps {
   expert: Expert;

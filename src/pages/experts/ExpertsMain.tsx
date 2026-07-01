@@ -1,5 +1,5 @@
-import ExpertsBanner from "./ExpertsBanner";
-import ExpertDirectoryPage from "../../components/experts/ExpertDirectoryPage";
+import ExpertDirectoryPage from "./components/ExpertDirectoryPage";
+import ExpertsBanner from "./components/ExpertsBanner";
 
 export default function ExpertsMain() {
   return (
