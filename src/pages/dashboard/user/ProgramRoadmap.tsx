@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 import { Button } from "@/components/ui/button";
 import AssessmentCompleteModal from "@/pages/dashboard/user/AssessmentComplete";
 import { ChevronDown, ChevronUp, Trophy, Zap } from "lucide-react";

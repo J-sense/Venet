@@ -15,7 +15,7 @@ import { AboutUsMain } from "./pages/About-us";
 import { navItemsForExperts, navItemsForUser } from "./components/ui/navitems";
 import { UserLayout } from "./pages/dashboard/user/layout";
 import { ExpertsLayout } from "./pages/dashboard/experts/layout";
-import UserHome from "./pages/dashboard/user/UserDashbpard/UserHome";
+import { UserHome } from "./pages/dashboard/user/home";
 import ProgramDetails from "./pages/dashboard/user/ProgramDetails";
 import ProgramAssessment from "./pages/dashboard/user/ProgramAssessment";
 import ProgramRoadmap from "./pages/dashboard/user/ProgramRoadmap";
@@ -39,11 +39,7 @@ import EXpertsMySession from "./pages/dashboard/experts/MySessions/EXpertsMySess
 import { ExpertsReview } from "./pages/dashboard/experts/Reviews";
 import { ChatWindow } from "./pages/dashboard/experts/MySessions/ChatWindow";
 
-import UserSettingsMain from "./pages/dashboard/user/Settings/SettingsMain";
-import UserAccountMain from "./pages/dashboard/user/Settings/Account/UserAccountMain";
-import UserSecurityMain from "./pages/dashboard/user/Settings/UserSecurityMain";
-import UserBillingMain from "./pages/dashboard/user/Settings/UserBillingMain";
-import UserNotifications from "./pages/dashboard/user/Settings/UserNotifications";
+import { UserSettingsMain, UserAccountMain, UserSecurityMain, UserBillingMain, UserNotifications } from "./pages/dashboard/user/Settings";
 import AgoraVideoCallPage from "./pages/video/AgoraVideoCallPage";
 import ResumeBuildForm from "./components/user/talentPortal/ResumeBuildForm";
 
