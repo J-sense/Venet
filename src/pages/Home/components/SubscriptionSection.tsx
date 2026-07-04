@@ -1,5 +1,6 @@
 import { SectionHeader } from "@/components/ui/TItleWithSubtitle";
 import React from "react";
+import { Link } from "react-router";
 
 interface PlanFeature {
   text: string;
@@ -89,11 +90,10 @@ export const SubscriptionSection: React.FC = () => {
           {plans.map((plan, index) => (
             <div
               key={index}
-              className={`relative flex flex-col justify-between rounded-[24px] p-8 transition-all duration-300 ${
-                plan.isPopular
-                  ? "bg-[#0066FF] text-white shadow-[0_0_50px_rgba(0,102,255,0.25)] border-2 border-[#2B7FFF] md:-translate-y-4 z-20"
-                  : "bg-[#101828]/70 border border-[#1E2939]/80 text-white backdrop-blur-sm z-10 hover:border-white/20"
-              }`}
+              className={`relative flex flex-col justify-between rounded-[24px] p-8 transition-all duration-300 ${plan.isPopular
+                ? "bg-[#0066FF] text-white shadow-[0_0_50px_rgba(0,102,255,0.25)] border-2 border-[#2B7FFF] md:-translate-y-4 z-20"
+                : "bg-[#101828]/70 border border-[#1E2939]/80 text-white backdrop-blur-sm z-10 hover:border-white/20"
+                }`}
             >
               {/* Popular Badge */}
               {plan.isPopular && (
@@ -108,9 +108,8 @@ export const SubscriptionSection: React.FC = () => {
                   {plan.title}
                 </h3>
                 <p
-                  className={`text-xs font-inter mb-8 ${
-                    plan.isPopular ? "text-white/80" : "text-[#99A1AF]"
-                  }`}
+                  className={`text-xs font-inter mb-8 ${plan.isPopular ? "text-white/80" : "text-[#99A1AF]"
+                    }`}
                 >
                   {plan.subtitle}
                 </p>
@@ -121,9 +120,8 @@ export const SubscriptionSection: React.FC = () => {
                     {plan.price}
                   </span>
                   <span
-                    className={`text-sm ${
-                      plan.isPopular ? "text-white/70" : "text-[#99A1AF]"
-                    }`}
+                    className={`text-sm ${plan.isPopular ? "text-white/70" : "text-[#99A1AF]"
+                      }`}
                   >
                     /month
                   </span>
@@ -137,9 +135,8 @@ export const SubscriptionSection: React.FC = () => {
                       className="flex items-start gap-3 text-sm font-inter font-normal"
                     >
                       <svg
-                        className={`w-4 h-4 mt-0.5 shrink-0 ${
-                          plan.isPopular ? "text-white" : "text-[#00C950]"
-                        }`}
+                        className={`w-4 h-4 mt-0.5 shrink-0 ${plan.isPopular ? "text-white" : "text-[#00C950]"
+                          }`}
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -164,19 +161,21 @@ export const SubscriptionSection: React.FC = () => {
               </div>
 
               {/* Action Button */}
-              <button
-                className={`w-full py-3.5 rounded-full font-bold font-inter text-sm tracking-wide transition-all duration-200 active:scale-[0.98] ${
-                  plan.isPopular
+              <Link to="/shopping-cart">
+                < button
+                  className={`w-full py-3.5 rounded-full font-bold font-inter text-sm tracking-wide transition-all duration-200 active:scale-[0.98] ${plan.isPopular
                     ? "bg-white text-[#0066FF] hover:bg-neutral-50 shadow-lg shadow-black/10"
                     : "bg-[#0066FF] text-white hover:bg-[#0052D4]"
-                }`}
-              >
-                Get Started
-              </button>
+                    }`}
+                >
+                  Get Started
+                </button>
+              </Link>
             </div>
-          ))}
-        </div>
-      </div>
-    </section>
+          ))
+          }
+        </div >
+      </div >
+    </section >
   );
 };

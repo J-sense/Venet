@@ -1,7 +1,10 @@
 import { SectionHeader } from "@/components/ui/TItleWithSubtitle";
-import React from "react";
+import React, { useState } from "react";
+import { AssessmentModal } from "@/components/assessment";
 
 export const CTASection: React.FC = () => {
+  const [isAssessmentOpen, setIsAssessmentOpen] = useState(false);
+
   return (
     <section className="relative w-full min-h-[740px] flex items-center justify-center bg-[#030303] overflow-hidden select-none py-20">
       {/* ── CINEMATIC BACKGROUND IMAGE LAYER ── */}
@@ -22,7 +25,10 @@ export const CTASection: React.FC = () => {
           titleAccent="Journey?"
           titlePrimary="Ready to Start Your "
         />
-        <button className="mt-4 px-8 py-3.5 bg-[#2B7FFF] text-white font-bold font-inter text-sm rounded-full shadow-[0_4px_20px_rgba(43,127,255,0.3)] hover:bg-[#0066FF] hover:shadow-[0_4px_25px_rgba(43,127,255,0.45)] transition-all duration-200 active:scale-[0.98]">
+        <button 
+          onClick={() => setIsAssessmentOpen(true)}
+          className="mt-4 px-8 py-3.5 bg-[#2B7FFF] text-white font-bold font-inter text-sm rounded-full shadow-[0_4px_20px_rgba(43,127,255,0.3)] hover:bg-[#0066FF] hover:shadow-[0_4px_25px_rgba(43,127,255,0.45)] transition-all duration-200 active:scale-[0.98]"
+        >
           Start Free Assessment
         </button>
       </div>
@@ -41,6 +47,11 @@ export const CTASection: React.FC = () => {
           />
         </svg>
       </div>
+
+      <AssessmentModal
+        isOpen={isAssessmentOpen}
+        onClose={() => setIsAssessmentOpen(false)}
+      />
     </section>
   );
 };

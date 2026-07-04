@@ -5,10 +5,7 @@ import { educationSteps } from "./data/programData";
 
 export default function EducationServicePage() {
   return (
-    <div
-      className="bg-[#0A0A0A] text-white pt-
-    6"
-    >
+    <div className="bg-[#0A0A0A] text-white pt-6">
       {/* Full Screen Hero */}
       <div className="w-full min-h-[110vh] relative flex items-center justify-center overflow-hidden">
         {/* Background Image */}
@@ -25,9 +22,9 @@ export default function EducationServicePage() {
         <div className="relative z-10 w-full max-w-[1600px]  px-6">
           <div className="max-w-7xl mx-auto text-center">
             {/* Badge */}
-            <div className="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/30 px-6 py-2.5 rounded-full mb-8">
-              <span className="text-blue-400">★</span>
-              <span className="uppercase text-blue-300 text-sm font-medium tracking-widest">
+            <div className="inline-flex items-center gap-1.5 sm:gap-2 bg-blue-500/10 border border-blue-500/30 px-4 py-2 sm:px-6 sm:py-2.5 rounded-full mb-6 sm:mb-8 max-w-full">
+              <span className="text-blue-400 text-xs sm:text-base shrink-0">★</span>
+              <span className="uppercase text-blue-300 text-[10px] sm:text-sm font-medium tracking-wider sm:tracking-widest truncate sm:whitespace-normal">
                 EDUCATION . SERVICE . DIRECTION
               </span>
             </div>
@@ -60,7 +57,7 @@ export default function EducationServicePage() {
             </div>
 
             {/* Stats */}
-            <div className="grid grid-cols-3 sm:flex justify-center gap-2 sm:gap-12">
+            <div className="flex flex-wrap justify-center gap-6 sm:gap-12">
               <div className="text-center">
                 <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-blue-500">10K+</div>
                 <div className="text-white/60 text-[10px] sm:text-xs md:text-sm mt-1">

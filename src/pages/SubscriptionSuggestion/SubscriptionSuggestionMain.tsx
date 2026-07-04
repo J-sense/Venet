@@ -15,10 +15,10 @@ export const SubscriptionSuggestionMain = () => {
   };
 
   return (
-    <div className="w-full bg-black py-20 px-6 relative overflow-hidden">
+    <div className="w-full min-h-screen bg-black py-24 md:py-44 px-6 relative overflow-hidden flex items-center">
       {/* Top-Left Page Gradient */}
 
-      <div className="max-w-[1000px] mx-auto relative z-10">
+      <div className="max-w-[1000px] w-full mx-auto relative z-10">
         <div className="absolute top-60 left-0 w-[500px] h-[500px] blur-[100px] rounded-full pointer-events-none -translate-x-1/2 -translate-y-1/2 bg-gradient-to-br from-[#0B60BD]/50 to-transparent -z-10" />
         {/* Cart Notification Bar - Appears when items are in cart */}
         {cart.length > 0 && (
@@ -117,11 +117,10 @@ export const SubscriptionSuggestionMain = () => {
                   </div>
                   <button
                     onClick={() => toggleCart(program.title)}
-                    className={`w-full py-3 rounded-xl text-sm font-semibold transition-all ${
-                      isAdded
-                        ? "bg-slate-800 text-white hover:bg-slate-700"
-                        : "bg-blue-600 hover:bg-blue-700 text-white"
-                    }`}
+                    className={`w-full py-3 rounded-xl text-sm font-semibold transition-all ${isAdded
+                      ? "bg-slate-800 text-white hover:bg-slate-700"
+                      : "bg-blue-600 hover:bg-blue-700 text-white"
+                      }`}
                   >
                     {isAdded ? "Remove from cart" : "Add to Cart"}
                   </button>

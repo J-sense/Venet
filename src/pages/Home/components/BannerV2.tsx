@@ -1,6 +1,10 @@
+import { useState } from "react";
 import { Sparkles } from "lucide-react";
+import { Link } from "react-router";
+import { AssessmentModal } from "@/components/assessment";
 
 export default function BannerV2() {
+  const [isAssessmentOpen, setIsAssessmentOpen] = useState(false);
   const stats = [
     { label: "Members Transformed", value: "10K+" },
     { label: "Expert Coaches", value: "500+" },
@@ -25,7 +29,7 @@ export default function BannerV2() {
             className="inline-flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 rounded-[33554400px] backdrop-blur-md border"
             style={{
               background: "linear-gradient(to right, #007AFF33, #0B60BD33)",
-              borderColor: "#007AFF4D"
+              borderColor: "#007AFF4D",
             }}
           >
             <span className="text-[#007AFF]">
@@ -48,27 +52,39 @@ export default function BannerV2() {
           </p>
 
           <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-3 md:gap-4 w-full sm:w-auto px-6 sm:px-0 pt-2">
-            <button className="bg-[#007AFF] shadow-[0px_8px_10px_-6px_rgba(21,93,252,0.3),_0px_20px_25px_-5px_rgba(21,93,252,0.3)] hover:bg-blue-600 transition px-6 py-3.5 md:px-8 md:py-4 rounded-full font-semibold text-base md:text-lg flex items-center justify-center gap-2 md:gap-3 text-white w-full sm:w-auto">
+            <button 
+              onClick={() => setIsAssessmentOpen(true)}
+              className="bg-[#007AFF] shadow-[#155DFC4D] hover:bg-blue-600 transition px-6 py-3.5 md:px-8 md:py-4 rounded-full font-semibold text-base md:text-lg flex items-center justify-center gap-2 md:gap-3 text-white w-full sm:w-auto"
+            >
               Start Free Assessment
               <span className="text-lg md:text-xl">→</span>
             </button>
-            <button className="border text-white bg-[#FFFFFF1A] border-white/40 hover:bg-white/10 transition px-6 py-3.5 md:px-8 md:py-4 rounded-full font-semibold text-base md:text-lg w-full sm:w-auto">
-              Explore Programs
-            </button>
+            <Link to="/programs/health-fitness">
+              <button className="border text-white bg-[#FFFFFF1A] border-white/40 hover:bg-white/10 transition px-6 py-3.5 md:px-8 md:py-4 rounded-full font-semibold text-base md:text-lg w-full sm:w-auto">
+                Explore Programs
+              </button>
+            </Link>
           </div>
 
           {/* Stats */}
           <div className="flex flex-wrap justify-center gap-6 md:gap-10 pt-6 md:pt-4">
             {stats.map((stat, index) => (
               <div key={index} className="text-center w-[120px] sm:w-auto">
-                <div className="text-2xl md:text-[32px] font-bold text-white">{stat.value}</div>
-                <div className="text-[#FFFFFF80] text-xs md:text-[16px] mt-1">{stat.label}</div>
+                <div className="text-2xl md:text-[32px] font-bold text-white">
+                  {stat.value}
+                </div>
+                <div className="text-[#FFFFFF80] text-xs md:text-[16px] mt-1">
+                  {stat.label}
+                </div>
               </div>
             ))}
           </div>
         </div>
       </div>
-
+      <AssessmentModal
+        isOpen={isAssessmentOpen}
+        onClose={() => setIsAssessmentOpen(false)}
+      />
     </div>
   );
 }

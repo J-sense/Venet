@@ -24,7 +24,7 @@ export default function ExpertsDetails() {
   }
 
   return (
-    <div className="bg-[#030303] min-h-screen text-slate-100 font-inter">
+    <div className=" min-h-screen text-slate-100 font-inter my-24">
       {/* Detail Page Container */}
       <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12 py-10">
 

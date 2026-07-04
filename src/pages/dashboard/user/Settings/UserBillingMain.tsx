@@ -77,28 +77,28 @@ export default function UserBillingMain() {
               </CardHeader>
               <CardContent>
                 <div className="overflow-x-auto">
-                  <table className="w-full text-sm">
+                  <table className="w-full text-sm min-w-[600px]">
                     <thead>
                       <tr className="border-b border-zinc-800 text-left text-zinc-400">
-                        <th className="pb-4 font-medium">Date</th>
-                        <th className="pb-4 font-medium">Description</th>
-                        <th className="pb-4 font-medium">Amount</th>
-                        <th className="pb-4 font-medium">Status</th>
-                        <th className="pb-4 font-medium text-right">Invoice</th>
+                        <th className="pb-4 font-medium whitespace-nowrap">Date</th>
+                        <th className="pb-4 font-medium whitespace-nowrap">Description</th>
+                        <th className="pb-4 font-medium whitespace-nowrap">Amount</th>
+                        <th className="pb-4 font-medium whitespace-nowrap">Status</th>
+                        <th className="pb-4 font-medium text-right whitespace-nowrap">Invoice</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-zinc-800">
                       {billingHistory.map((item, i) => (
                         <tr key={i} className="hover:bg-zinc-800/50">
-                          <td className="py-4">{item.date}</td>
-                          <td className="py-4">{item.desc}</td>
-                          <td className="py-4 font-medium">{item.amount}</td>
-                          <td className="py-4">
+                          <td className="py-4 whitespace-nowrap">{item.date}</td>
+                          <td className="py-4 whitespace-nowrap">{item.desc}</td>
+                          <td className="py-4 font-medium whitespace-nowrap">{item.amount}</td>
+                          <td className="py-4 whitespace-nowrap">
                             <Badge className="bg-emerald-500/10 text-emerald-400 border-emerald-500/30">
                               Paid
                             </Badge>
                           </td>
-                          <td className="py-4 text-right">
+                          <td className="py-4 text-right whitespace-nowrap">
                             <Button
                               variant="ghost"
                               size="icon"

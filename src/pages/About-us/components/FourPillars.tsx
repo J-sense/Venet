@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 import { PILLARS } from "../data/aboutData";
 
 export const FourPillars = () => {
@@ -32,11 +33,13 @@ export const FourPillars = () => {
             <p className="self-stretch text-start py-3 text-slate-500 text-base font-normal leading-6">
               {pillar.desc}
             </p>
-            <button className="w-36 px-2.5 py-2 bg-[#0A66C2] hover:bg-[#085299] rounded-[32px] inline-flex justify-center items-center transition-colors">
-              <span className="text-white text-base font-medium font-['Inter'] leading-6">
-                Buy Now
-              </span>
-            </button>
+            <Link to={"/shopping-cart"}>
+              <button className="w-36 px-2.5 py-2 bg-[#0A66C2] hover:bg-[#085299] rounded-[32px] inline-flex justify-center items-center transition-colors">
+                <span className="text-white text-base font-medium font-['Inter'] leading-6">
+                  Buy Now
+                </span>
+              </button>
+            </Link>
           </div>
         ))}
       </div>

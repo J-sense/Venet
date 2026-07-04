@@ -42,16 +42,16 @@ export default function HealthFitnessPage() {
             </div>
 
             {/* Headline */}
-            <div className="flex flex-col items-center gap-10">
+            <div className="flex flex-col items-center gap-6 md:gap-10 mt-4 md:mt-0">
               <div>
-                <h1 className="text-center text-6xl md:text-7xl font-extrabold leading-[80px]">
+                <h1 className="text-center text-4xl sm:text-5xl md:text-7xl font-extrabold leading-tight md:leading-[80px]">
                   Achieve Your Health &amp; Fitness Goals with{" "}
                   <span className="text-blue-600">VNET</span>
                 </h1>
               </div>
 
               {/* Subtitle */}
-              <p className="max-w-[814px] text-white/70 text-lg font-normal leading-7 text-center">
+              <p className="max-w-[814px] text-white/70 text-base md:text-lg font-normal leading-relaxed md:leading-7 text-center px-2">
                 Join the VNET community and take charge of your health and
                 fitness journey. With personalized workout plans, nutrition
                 guidance, and expert support.
@@ -72,24 +72,24 @@ export default function HealthFitnessPage() {
               </div>
 
               {/* Stats */}
-              <div className="flex justify-center gap-8 md:gap-12">
+              <div className="flex flex-wrap justify-center gap-6 sm:gap-8 md:gap-12 mt-4 md:mt-0">
                 <div className="text-center">
-                  <div className="text-3xl font-bold">10K+</div>
-                  <div className="text-white/50 text-sm font-normal">
+                  <div className="text-2xl sm:text-3xl font-bold">10K+</div>
+                  <div className="text-white/50 text-xs sm:text-sm font-normal">
                     Active Members
                   </div>
                 </div>
 
                 <div className="text-center">
-                  <div className="text-3xl font-bold">500+</div>
-                  <div className="text-white/50 text-sm font-normal">
+                  <div className="text-2xl sm:text-3xl font-bold">500+</div>
+                  <div className="text-white/50 text-xs sm:text-sm font-normal">
                     Expert Trainers
                   </div>
                 </div>
 
                 <div className="text-center">
-                  <div className="text-3xl font-bold">95%</div>
-                  <div className="text-white/50 text-sm font-normal">
+                  <div className="text-2xl sm:text-3xl font-bold">95%</div>
+                  <div className="text-white/50 text-xs sm:text-sm font-normal">
                     Success Rate
                   </div>
                 </div>

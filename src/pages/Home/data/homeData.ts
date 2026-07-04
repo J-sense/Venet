@@ -13,7 +13,7 @@ export const defaultPrograms: ProgramItem[] = [
     description:
       "Personalized workout plans, nutrition guidance, and wellness tracking.",
     imageSrc: "/pr1.png",
-    to: "/programs/fitness",
+    to: "/programs/health-fitness",
     iconBg: "bg-[#1B73E8]",
     iconPath:
       "M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z",
@@ -23,7 +23,7 @@ export const defaultPrograms: ProgramItem[] = [
     description:
       "Mindfulness practices, stress management, and emotional well-being support.",
     imageSrc: "/pr2.png",
-    to: "/programs/mental",
+    to: "/programs/mental-health",
     iconBg: "bg-[#D017A0]",
     iconPath:
       "M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z",
@@ -33,7 +33,7 @@ export const defaultPrograms: ProgramItem[] = [
     description:
       "Skill development, certifications, and lifelong learning opportunities.",
     imageSrc: "/pr3.png",
-    to: "/programs/education",
+    to: "/programs/education-service",
     iconBg: "bg-[#00C48C]",
     iconPath:
       "M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 14zm-6.16-3.422a12.083 12.083 0 00.665 6.479A11.952 11.952 0 015.84 10.578zM12 14v7a11.95 11.95 0 01-4.37-3.414A12.083 12.083 0 0012 14z",

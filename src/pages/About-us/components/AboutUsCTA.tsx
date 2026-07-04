@@ -1,6 +1,10 @@
 import { ActionButton } from "@/components/ui/ActionButton";
+import { useState } from "react";
+import { AssessmentModal } from "@/components/assessment";
 
 export const AboutUsCTA = () => {
+  const [isAssessmentOpen, setIsAssessmentOpen] = useState(false);
+
   return (
     <section className="relative bg-[#1E3A8A] py-16 md:py-24 overflow-hidden min-h-[500px] flex items-center">
       {/* Bottom Curve */}
@@ -33,10 +37,16 @@ export const AboutUsCTA = () => {
         <div className="flex justify-center">
           <ActionButton
             label="Start Free Assessment"
+            onClick={() => setIsAssessmentOpen(true)}
             className="px-8 sm:px-10 py-3.5 text-base sm:text-lg font-semibold bg-white !text-[#1E3A8A] hover:bg-gray-100 transition-all"
           />
         </div>
       </div>
+
+      <AssessmentModal
+        isOpen={isAssessmentOpen}
+        onClose={() => setIsAssessmentOpen(false)}
+      />
     </section>
   );
 };

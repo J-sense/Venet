@@ -1,4 +1,5 @@
 import { CustomerFeedback } from "@/pages/Home/components/CustomerFeedback";
+import { Link } from "react-router";
 
 interface Step {
   number: number;
@@ -75,10 +76,12 @@ export default function HowItWorks({
 
           {/* Join Now Button */}
           <div className="flex justify-center mt-12">
-            <button className="bg-[#007AFF] hover:bg-blue-600 transition-all px-10 py-4 rounded-full font-semibold text-lg flex items-center gap-3 shadow-lg shadow-[#007AFF]/40">
-              {buttonText}
-              <span>→</span>
-            </button>
+            <Link to="/shopping-cart">
+              <button className="bg-[#007AFF] hover:bg-blue-600 transition-all px-10 py-4 rounded-full font-semibold text-lg flex items-center gap-3 shadow-lg shadow-[#007AFF]/40">
+                {buttonText}
+                <span>→</span>
+              </button>
+            </Link>
           </div>
         </div>
       </div>

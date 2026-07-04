@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router";
 
 interface AuthLayoutProps {
   children: React.ReactNode;
@@ -16,8 +17,14 @@ export const ExpertsAuthLayout = ({
   return (
     <div className="w-full bg-[#080A0E] flex flex-col relative ">
       {/* Absolute Logo */}
-      <div className="absolute top-6 left-8 md:top-8 md:left-16 lg:left-24 z-50">
-        <img src="/VNetLogo.png" alt="VNet Logo" className="w-32 md:w-44" />
+      <div className="absolute top-6 left-6 md:top-8 md:left-8 z-50">
+        <Link to="/" className="flex items-center flex-shrink-0 ">
+          <img
+            src="/VNetLogo.png"
+            alt="VNET Logo"
+            className="w-32 h-9 sm:w-40 sm:h-11 md:w-60 md:h-16 object-cover rounded-full border border-zinc-800 transition-all duration-300"
+          />
+        </Link>
       </div>
 
       {/* ── Main Content ── */}
@@ -33,7 +40,7 @@ export const ExpertsAuthLayout = ({
             src="/authImg.png"
             alt=""
             aria-hidden="true"
-            className="absolute  bottom-0 -right-[5%] md:-right-[10%] lg:-right-[15%] z-20 w-auto object-contain object-right-bottom h-[110%] md:h-[180%] lg:h-[190%] xl:h-[210%] pointer-events-none"
+            className="absolute brightness-130 bottom-0 -right-[5%] md:-right-[10%] lg:-right-[15%] z-20 w-auto object-contain object-right-bottom h-[110%] md:h-[180%] lg:h-[190%] xl:h-[210%] pointer-events-none"
           />
         </div>
 

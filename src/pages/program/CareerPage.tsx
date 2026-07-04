@@ -1,6 +1,7 @@
 import HowItWorks from "@/components/ui/ProgrammeHowItWorksSection";
 
 import { careerSteps } from "./data/programData";
+import { Link } from "react-router";
 
 export default function CareerPage() {
   return (
@@ -30,7 +31,7 @@ export default function CareerPage() {
               </div>
 
               {/* Main Heading */}
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold  mb-6 ">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold leading-tight mb-6">
                 We see Potential,
                 <br />
                 We <span className="text-[#3B82F6]">Unlock Careers</span>
@@ -44,17 +45,19 @@ export default function CareerPage() {
 
               {/* CTA Buttons */}
               <div className="flex flex-col sm:flex-row gap-4 mb-12">
+
                 <button className="bg-[#1A63F4] hover:bg-blue-600 shadow-[0_0_20px_rgba(26,99,244,0.4)] transition px-8 py-3.5 rounded-full font-semibold text-sm flex items-center justify-center gap-3 min-w-[220px]">
                   Start Free Assessment
                   <span>→</span>
                 </button>
+
                 <button className="px-8 py-3.5 bg-black/40 border border-white/20 hover:bg-white/10 rounded-full transition-all text-sm font-medium min-w-[160px]">
                   Learn More
                 </button>
               </div>
 
               {/* Stats */}
-              <div className="flex gap-8 md:gap-10 text-left">
+              <div className="flex flex-wrap gap-6 sm:gap-8 md:gap-10 text-left">
                 <div>
                   <div className="text-2xl md:text-3xl font-bold ">10K+</div>
                   <div className="text-white/50 text-xs mt-1 font-['Inter']">
