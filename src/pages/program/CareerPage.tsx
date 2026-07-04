@@ -1,7 +1,6 @@
 import HowItWorks from "@/components/ui/ProgrammeHowItWorksSection";
 
 import { careerSteps } from "./data/programData";
-import { Link } from "react-router";
 
 export default function CareerPage() {
   return (
