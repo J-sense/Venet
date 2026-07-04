@@ -1,4 +1,4 @@
-// hooks/useScrollLock.ts
+
 import { useEffect } from "react";
 
 export const useScrollLock = (isLocked: boolean) => {
