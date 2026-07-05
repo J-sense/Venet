@@ -6,12 +6,19 @@ import { programs } from "../program/data/programData";
 
 export const SubscriptionSuggestionMain = () => {
   // Track IDs of programs added to the cart
-  const [cart, setCart] = useState<string[]>([]);
+  const [cart, setCart] = useState<string[]>(() => {
+    const saved = localStorage.getItem("vnet_cart");
+    return saved ? JSON.parse(saved) : [];
+  });
 
   const toggleCart = (title: string) => {
-    setCart((prev) =>
-      prev.includes(title) ? prev.filter((t) => t !== title) : [...prev, title],
-    );
+    setCart((prev) => {
+      const nextCart = prev.includes(title)
+        ? prev.filter((t) => t !== title)
+        : [...prev, title];
+      localStorage.setItem("vnet_cart", JSON.stringify(nextCart));
+      return nextCart;
+    });
   };
 
   return (

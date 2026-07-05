@@ -1,10 +1,7 @@
+import { useEffect, useState } from "react";
 import { Trash2 } from "lucide-react";
-
-// Static data remains the same
-const STATIC_CART_ITEMS = [
-  { id: 1, title: "Health & Fitness Program", price: "$29.99" },
-  { id: 2, title: "Mental Health Program", price: "$19.99" },
-];
+import { Link } from "react-router";
+import { programs } from "../program/data/programData";
 
 const CART_BENEFITS = [
   "AI-powered personalized roadmaps",
@@ -23,9 +20,26 @@ const PRICING_RULES = [
 ];
 
 export const ShoppingCartPage = () => {
-  const firstPrice = 29.99;
-  const additionalPrice = 19.99;
-  const discount = 10.0;
+  const [cartItems, setCartItems] = useState<string[]>([]);
+
+  useEffect(() => {
+    const saved = localStorage.getItem("vnet_cart");
+    if (saved) {
+      setCartItems(JSON.parse(saved));
+    }
+  }, []);
+
+  const handleRemove = (title: string) => {
+    const nextCart = cartItems.filter((item) => item !== title);
+    setCartItems(nextCart);
+    localStorage.setItem("vnet_cart", JSON.stringify(nextCart));
+  };
+
+  const nItems = cartItems.length;
+
+  const firstPrice = nItems >= 1 ? 29.99 : 0.0;
+  const additionalPrice = nItems > 1 ? (nItems - 1) * 29.99 : 0.0;
+  const discount = nItems > 1 ? (nItems - 1) * 10.0 : 0.0;
   const total = firstPrice + additionalPrice - discount;
 
   return (
@@ -41,28 +55,40 @@ export const ShoppingCartPage = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Left Column: Cart Items & Benefits */}
           <div className="lg:col-span-2 space-y-6">
-            {STATIC_CART_ITEMS.map((item) => (
-              <div
-                key={item.id}
-                className="bg-[#18181B] p-7 rounded-2xl border border-[#27272A] flex justify-between items-center"
-              >
-                <div className="flex flex-col gap-1">
-                  <h3 className="text-[#FFFFFF] text-[21.79px] font-medium font-['Inter'] leading-8">
-                    {item.title}
-                  </h3>
-                  <p className="text-[#9F9FA9] text-[19.37px] font-normal font-['Inter'] leading-7">
-                    {item.price}/month
-                  </p>
-                </div>
-
-                <button
-                  className="text-red-500 hover:bg-red-900/20 p-2 rounded-lg transition-colors"
-                  aria-label="Remove item"
-                >
-                  <Trash2 size={24} />
-                </button>
+            {cartItems.length === 0 ? (
+              <div className="bg-[#18181B] p-12 rounded-2xl border border-[#27272A] text-center">
+                <h3 className="text-xl text-zinc-400 mb-6 font-['Inter']">Your cart is empty</h3>
+                <Link to="/subscription-suggestions">
+                  <button className="px-8 py-3.5 bg-blue-600 hover:bg-blue-700 transition rounded-full text-white font-semibold text-lg font-['Inter']">
+                    Browse Suggested Programs
+                  </button>
+                </Link>
               </div>
-            ))}
+            ) : (
+              cartItems.map((title, idx) => (
+                <div
+                  key={idx}
+                  className="bg-[#18181B] p-7 rounded-2xl border border-[#27272A] flex justify-between items-center"
+                >
+                  <div className="flex flex-col gap-1">
+                    <h3 className="text-[#FFFFFF] text-[21.79px] font-medium font-['Inter'] leading-8">
+                      {title}
+                    </h3>
+                    <p className="text-[#9F9FA9] text-[19.37px] font-normal font-['Inter'] leading-7">
+                      ${idx === 0 ? "29.99" : "19.99"}/month
+                    </p>
+                  </div>
+
+                  <button
+                    onClick={() => handleRemove(title)}
+                    className="text-red-500 hover:bg-red-900/20 p-2 rounded-lg transition-colors"
+                    aria-label="Remove item"
+                  >
+                    <Trash2 size={24} />
+                  </button>
+                </div>
+              ))
+            )}
 
             {/* Subscription Benefits */}
             <div className="w-full p-7 bg-blue-600/10 rounded-2xl border border-blue-600/30">
@@ -96,16 +122,18 @@ export const ShoppingCartPage = () => {
               <div className="space-y-5">
                 <div className="flex justify-between items-center text-zinc-300 text-xl font-normal font-['Inter']">
                   <span>First Program</span>
-                  <span>$29.99</span>
+                  <span>${firstPrice.toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between items-center text-zinc-300 text-xl font-normal font-['Inter']">
-                  <span>Additional Programs (1)</span>
-                  <span>$19.99</span>
+                  <span>Additional Programs ({nItems > 1 ? nItems - 1 : 0})</span>
+                  <span>${additionalPrice.toFixed(2)}</span>
                 </div>
-                <div className="flex justify-between items-center text-emerald-500 text-xl font-normal font-['Inter']">
-                  <span>Multi-program Discount</span>
-                  <span>-$10.00</span>
-                </div>
+                {nItems > 1 && (
+                  <div className="flex justify-between items-center text-emerald-500 text-xl font-normal font-['Inter']">
+                    <span>Multi-program Discount</span>
+                    <span>-${discount.toFixed(2)}</span>
+                  </div>
+                )}
               </div>
 
               {/* Total Section */}
@@ -125,12 +153,19 @@ export const ShoppingCartPage = () => {
 
               {/* Actions */}
               <div className="flex flex-col gap-4 mt-8">
-                <button className="w-full h-14 flex items-center justify-center bg-blue-600 hover:bg-blue-700 transition-colors rounded-[32px] text-white text-xl font-medium font-['Inter']">
+                <button
+                  disabled={nItems === 0}
+                  className={`w-full h-14 flex items-center justify-center bg-blue-600 hover:bg-blue-700 transition-colors rounded-[32px] text-white text-xl font-medium font-['Inter'] ${
+                    nItems === 0 ? "opacity-50 cursor-not-allowed" : ""
+                  }`}
+                >
                   Proceed to Checkout
                 </button>
-                <button className="w-full h-14 flex items-center justify-center bg-zinc-800 hover:bg-zinc-700 transition-colors rounded-[32px] text-white text-xl font-medium font-['Inter']">
-                  Add More Programs
-                </button>
+                <Link to="/subscription-suggestions" className="w-full">
+                  <button className="w-full h-14 flex items-center justify-center bg-zinc-800 hover:bg-zinc-700 transition-colors rounded-[32px] text-white text-xl font-medium font-['Inter']">
+                    Add More Programs
+                  </button>
+                </Link>
               </div>
             </div>
 
