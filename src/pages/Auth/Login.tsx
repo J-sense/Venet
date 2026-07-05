@@ -28,7 +28,7 @@ export const Login = () => {
       <FormCard className="max-w-[480px]">
         {/* 3. Wrap everything in the Form provider to fix the Context error */}
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 lg:space-y-6">
             {/* Form Inputs */}
             <FormInput
               name="email"
@@ -45,17 +45,17 @@ export const Login = () => {
             />
 
             {/* Remember & Forgot */}
-            <div className="flex items-center justify-between text-sm">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-2 text-sm">
               <label className="flex items-center gap-2 text-gray-400 cursor-pointer">
                 <input
                   type="checkbox"
-                  className="rounded bg-slate-800 border-slate-700"
+                  className="rounded bg-slate-800 border-slate-700 w-4 h-4"
                 />
                 Remember me
               </label>
               <Link
                 to="/auth/forgot-password"
-                className="text-blue-500 font-semibold hover:underline"
+                className="text-blue-500 font-semibold hover:underline w-full sm:w-auto text-left sm:text-right"
               >
                 Forgot Password?
               </Link>
@@ -64,7 +64,7 @@ export const Login = () => {
             {/* Sign In Button */}
             <button
               type="submit"
-              className="w-full bg-[#0A66C2] hover:bg-blue-700 text-white font-bold py-3.5 rounded-full transition-all"
+              className="w-full bg-[#0A66C2] hover:bg-blue-700 text-white font-bold py-3 lg:py-3.5 rounded-full transition-all"
             >
               Sign In
             </button>

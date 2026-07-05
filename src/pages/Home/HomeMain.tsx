@@ -5,7 +5,6 @@ import { FAQSection } from "./components/FAQSection";
 import { HowItWorksSection } from "./components/HowItWorksSection";
 import { MissionSection } from "./components/MissionSection";
 import { ProgramsSection } from "./components/ProgramsSection";
-import { OurTrainersSection } from "./components/OurTrainersSection";
 import { SubscriptionSection } from "./components/SubscriptionSection";
 
 export default function HomeMain() {
@@ -16,7 +15,7 @@ export default function HomeMain() {
       <ProgramsSection />
       <HowItWorksSection />
       <MissionSection />
-      <OurTrainersSection />
+      {/* <OurTrainersSection /> */}
       <CustomerFeedback />
       <SubscriptionSection />
       <FAQSection />

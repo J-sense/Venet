@@ -11,12 +11,14 @@ export const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-4 items-start">
           {/* Column 1: Brand Logo, Description & Socials */}
           <div className="lg:col-span-4 flex flex-col gap-5 max-w-sm">
-            <div className="w-[160px] h-auto">
+            {/* মোবাইল স্ক্রিনে কন্টেইনার এবং লোগো যাতে রেসপন্সিভ হয় তার পরিবর্তন */}
+            <div className="w-full max-w-[160px] sm:max-w-[200px] md:max-w-[240px] ">
               <Link to="/" className="flex items-center flex-shrink-0 ">
                 <img
                   src="/VNetLogo.png"
                   alt="VNET Logo"
-                  className="w-32 h-9 sm:w-40 sm:h-11 md:w-60 md:h-16 object-cover rounded-full border border-zinc-800 transition-all duration-300"
+                  // ক্লায়েন্টের ফিডব্যাক অনুযায়ী এখানে মোবাইল স্ক্রিনের জন্য রেসপন্সিভ সাইজিং ফিক্স করা হয়েছে
+                  className="w-full h-auto max-w-full object-contain border border-zinc-800 transition-all duration-300 rounded-full"
                 />
               </Link>
             </div>
@@ -26,7 +28,6 @@ export const Footer: React.FC = () => {
               journey to wellness, mental health.
             </p>
             {/* Social Media Circular Links */}
-
             <div className="flex items-center gap-3 mt-4">
               {/* Facebook */}
               <Link
@@ -242,11 +243,11 @@ export const Footer: React.FC = () => {
           </div>
         </div>
 
-        <div className="">
+        <div>
           <Separator className="bg-[#334155]" />
         </div>
         {/* ── HORIZONTAL DIVIDER & BOTTOM RIGHTS ROW ── */}
-        <div className="w-full border-t border-[#1E2939]/30  flex items-center justify-center">
+        <div className="w-full border-t border-[#1E2939]/30 flex items-center justify-center">
           <p className="text-[#717182] text-[14px] font-normal">
             &copy; 2026 VNET. All rights reserved.
           </p>

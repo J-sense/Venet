@@ -36,12 +36,13 @@ export default function BannerV2() {
               <Sparkles className="w-4 h-4 md:w-5 md:h-5" />
             </span>
             <span className="uppercase text-[10px] md:text-sm font-medium tracking-widest text-[#FFFFFFE5]">
-              TRANSFORM YOUR FITNESS JOURNEY
+              TRANSFORM YOUR LIFE JOURNEY
             </span>
           </div>
 
-          <h1 className="text-4xl md:text-6xl lg:text-[80px] font-bold leading-tight lg:leading-[1.1] text-white px-2">
-            Achieve Your Health Goals with{" "}
+          <h1 className="text-4xl md:text-6xl lg:text-[70px] font-bold leading-tight lg:leading-[1.1] text-white px-2">
+            Sacrifice Who You Are Today <br className="hidden md:block" />
+            For What You Can Become With{" "}
             <span className="text-[#2B7FFF]">VNET</span>
           </h1>
 
@@ -52,7 +53,7 @@ export default function BannerV2() {
           </p>
 
           <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-3 md:gap-4 w-full sm:w-auto px-6 sm:px-0 pt-2">
-            <button 
+            <button
               onClick={() => setIsAssessmentOpen(true)}
               className="bg-[#007AFF] shadow-[#155DFC4D] hover:bg-blue-600 transition px-6 py-3.5 md:px-8 md:py-4 rounded-full font-semibold text-base md:text-lg flex items-center justify-center gap-2 md:gap-3 text-white w-full sm:w-auto"
             >

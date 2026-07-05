@@ -107,6 +107,32 @@ const stepsData: StepItem[] = [
       </svg>
     ),
   },
+  {
+    id: 6,
+    title: "Expert Portal",
+    description: "For access to the expert portal and to browse experts.",
+    color: "#2B7FFF", // আপনার ওয়েবসাইটের থিমের সাথে মিল রেখে একটি সুন্দর নীল কালার দেওয়া হয়েছে
+    icon: (
+      <svg
+        className="w-6 h-6"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        {/* ইউজার আইকন */}
+        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+        <circle cx="9" cy="7" r="4" />
+
+        {/* এক্সপার্ট নেটওয়ার্ক/কানেকশন বোঝানোর জন্য গ্লোবাল লাইন */}
+        <circle cx="17" cy="8" r="1" />
+        <circle cx="21" cy="14" r="1" />
+        <path d="M17 9l1.5 2.5M19 12l1.5 1.5" />
+      </svg>
+    ),
+  },
 ];
 
 export const HowItWorksSection: React.FC = () => {

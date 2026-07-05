@@ -19,7 +19,7 @@ export const AssessmentModal = ({
       >
         {/* We place our wizard directly inside. 
             'max-h-[90vh]' and 'overflow-y-auto' keep it scrollable on small screens */}
-        <div className="max-h-[90vh] overflow-y-auto">
+        <div className="max-h-[90vh] overflow-y-auto scroll-smooth [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-slate-700 [&::-webkit-scrollbar-thumb]:rounded-full">
           <AssessmentWizard onComplete={onClose} />
         </div>
       </DialogContent>

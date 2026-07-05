@@ -92,7 +92,7 @@ export const AgreementModal = ({
       {/* Modal — the image lives only inside this */}
       <div className="fixed inset-0 z-[999] flex items-center justify-center p-4 pointer-events-none max-w-full ">
         <div
-          className="relative w-full max-w-[540px] rounded-[20px] overflow-hidden shadow-2xl pointer-events-auto"
+          className="relative w-full max-w-[540px] max-h-[90vh] md:max-h-[95vh] rounded-[20px] overflow-hidden shadow-2xl pointer-events-auto flex flex-col"
           onClick={(e) => e.stopPropagation()}
         >
           {/* ── Background image layer (stays inside modal) ── */}
@@ -109,7 +109,7 @@ export const AgreementModal = ({
           <div className="absolute inset-0 bg-[#191C2B]/80 backdrop-blur-[1px]" />
 
           {/* ── All content sits above both layers ── */}
-          <div className="relative z-10 p-7 text-white">
+          <div className="relative z-10 p-5 sm:p-7 text-white overflow-y-auto flex-1 scroll-smooth [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:bg-slate-600 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-transparent">
             {/* Close button */}
             <button
               onClick={onClose}
@@ -138,7 +138,7 @@ export const AgreementModal = ({
                 return (
                   <div
                     key={item.id}
-                    className={`rounded-xl p-3.5 border transition-all duration-150 ${
+                    className={`rounded-xl p-3 sm:p-3.5 border transition-all duration-150 ${
                       isChecked
                         ? "border-blue-500/40 bg-blue-500/10"
                         : "border-white/[0.09] bg-white/[0.04]"
@@ -155,9 +155,9 @@ export const AgreementModal = ({
                     </div>
 
                     {/* Points */}
-                    <ul className="list-disc bg-[#19273C] rounded-lg px-3 py-2.5 pl-[22px] mb-2.5 space-y-1">
+                    <ul className="list-disc bg-[#19273C] rounded-lg px-3 py-2.5 pl-[22px] mb-2.5 space-y-1 sm:space-y-1.5">
                       {item.points.map((pt, i) => (
-                        <li key={i} className="text-[11px] text-[#E2E8F0]">
+                        <li key={i} className="text-[11px] sm:text-xs text-[#E2E8F0]">
                           {pt}
                         </li>
                       ))}
@@ -184,7 +184,7 @@ export const AgreementModal = ({
                           />
                         )}
                       </div>
-                      <span className="text-[11px] text-white/45 select-none">
+                      <span className="text-[11px] sm:text-xs text-white/50 select-none pt-0.5">
                         {item.label}
                       </span>
                     </label>
