@@ -1,7 +1,6 @@
-import { useEffect, useState } from "react";
 import { Trash2 } from "lucide-react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router";
-import { programs } from "../program/data/programData";
 
 const CART_BENEFITS = [
   "AI-powered personalized roadmaps",
@@ -155,9 +154,8 @@ export const ShoppingCartPage = () => {
               <div className="flex flex-col gap-4 mt-8">
                 <button
                   disabled={nItems === 0}
-                  className={`w-full h-14 flex items-center justify-center bg-blue-600 hover:bg-blue-700 transition-colors rounded-[32px] text-white text-xl font-medium font-['Inter'] ${
-                    nItems === 0 ? "opacity-50 cursor-not-allowed" : ""
-                  }`}
+                  className={`w-full h-14 flex items-center justify-center bg-blue-600 hover:bg-blue-700 transition-colors rounded-[32px] text-white text-xl font-medium font-['Inter'] ${nItems === 0 ? "opacity-50 cursor-not-allowed" : ""
+                    }`}
                 >
                   Proceed to Checkout
                 </button>
