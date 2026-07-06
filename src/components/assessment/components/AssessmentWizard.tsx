@@ -16,21 +16,25 @@ export default function AssessmentWizard({
   };
   const stepBackgrounds = [
     "/expertBG.png", // Health & Fitness
-    "/authImg.png", // Mental Wellness
-    "/expertBG.png", // Educational Interests
-    "/expertBG.png", // Career Development
+    "/assesmentMental.png", // Mental Wellness
+    "/assessmentEducation.png", // Educational Interests
+    "/assessmentCareer.png", // Career Development
+  ];
+
+  const stepBgClasses = [
+    "bg-cover bg-center", // 1. Health & Fitness
+    "bg-[length:110%_80%] bg-center", // 2. Mental Wellness (smaller width/height)
+    "bg-cover bg-center", // 3. Educational Interests
+    "bg-cover bg-center", // 4. Career Development
   ];
 
   return (
     <div className="relative w-full overflow-hidden min-h-[600px] flex justify-center">
       {/* Dynamic Background Image */}
       <div
-        className="absolute inset-0 z-0 opacity-20 pointer-events-none transition-all duration-700 ease-in-out"
+        className={`absolute inset-0 z-0 opacity-20 pointer-events-none transition-all duration-700 ease-in-out bg-no-repeat ${stepBgClasses[currentStep - 1]}`}
         style={{
           backgroundImage: `url('${stepBackgrounds[currentStep - 1]}')`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
         }}
       />
 
