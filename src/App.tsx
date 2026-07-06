@@ -48,6 +48,7 @@ import { ExpertsDetails, ExpertsMain } from "./pages/experts";
 import NotFoundPage from "./pages/NotFoundPage";
 import PrivacyMain from "./pages/privacyPolicy/PrivacyMain";
 import TermsMain from "./pages/termsCondition/TermsMain";
+import GraphEarnignList from "./pages/dashboard/experts/overView/components/GraphEarnignList";
 
 export const App = () => {
   return (
@@ -120,6 +121,8 @@ export const App = () => {
       >
         <Route index element={<ExpertsOverview />} />
         <Route path="overview" element={<ExpertsOverview />} />
+        <Route path="overview/earnings" element={<GraphEarnignList />} />
+
         <Route path="availability" element={<ExpertesAvailability />} />
         <Route path="profile" element={<ExpertsProfile />} />
         <Route path="Reviews" element={<ExpertsReview />} />

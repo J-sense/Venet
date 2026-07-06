@@ -186,8 +186,8 @@ function CallRoom() {
       gain.connect(ctx.destination);
       osc.start();
       osc.stop(ctx.currentTime + 0.2);
-    } catch(e) {}
-    
+    } catch (e) { }
+
     navigate("/dashboard/experts/consultation/upcoming");
   };
 
@@ -206,8 +206,8 @@ function CallRoom() {
             // Layout: 1 remote = full screen, 2+ = grid
             <div
               className={`w-full h-full ${remoteUsers.length === 1
-                  ? ""
-                  : "grid grid-cols-2 gap-1"
+                ? ""
+                : "grid grid-cols-2 gap-1"
                 }`}
             >
               {remoteUsers.map((user) => (
@@ -289,8 +289,8 @@ function CallRoom() {
               onClick={() => setMicOn(prev => !prev)}
               title={micOn ? "Mute" : "Unmute"}
               className={`p-3.5 rounded-full transition-all duration-200 active:scale-90 shadow-md cursor-pointer ${micOn
-                  ? "bg-[#1E2D44] hover:bg-[#263752] text-white border border-blue-500/20"
-                  : "bg-red-500/20 hover:bg-red-500/30 text-red-400 border border-red-500/30"
+                ? "bg-[#1E2D44] hover:bg-[#263752] text-white border border-blue-500/20"
+                : "bg-red-500/20 hover:bg-red-500/30 text-red-400 border border-red-500/30"
                 }`}
             >
               {micOn ? <Mic size={19} /> : <MicOff size={19} />}
@@ -301,8 +301,8 @@ function CallRoom() {
               onClick={() => setCameraOn(prev => !prev)}
               title={cameraOn ? "Stop Video" : "Start Video"}
               className={`p-3.5 rounded-full transition-all duration-200 active:scale-90 shadow-md cursor-pointer ${cameraOn
-                  ? "bg-[#1E2D44] hover:bg-[#263752] text-white border border-blue-500/20"
-                  : "bg-red-500/20 hover:bg-red-500/30 text-red-400 border border-red-500/30"
+                ? "bg-[#1E2D44] hover:bg-[#263752] text-white border border-blue-500/20"
+                : "bg-red-500/20 hover:bg-red-500/30 text-red-400 border border-red-500/30"
                 }`}
             >
               {cameraOn ? <Video size={19} /> : <VideoOff size={19} />}
@@ -312,11 +312,10 @@ function CallRoom() {
             <button
               onClick={() => setScreenShareOn(prev => !prev)}
               title={screenShareOn ? "Stop Screen Share" : "Start Screen Share"}
-              className={`p-3.5 rounded-full transition-all duration-200 active:scale-90 shadow-md cursor-pointer ${
-                screenShareOn
+              className={`p-3.5 rounded-full transition-all duration-200 active:scale-90 shadow-md cursor-pointer ${screenShareOn
                   ? "bg-blue-600 text-white border border-blue-400/30"
                   : "bg-[#1E2D44] hover:bg-[#263752] text-white border border-white/10"
-              }`}
+                }`}
             >
               {screenShareOn ? <MonitorUp size={19} /> : <MonitorOff size={19} />}
             </button>
@@ -326,8 +325,8 @@ function CallRoom() {
               onClick={() => setChatOpen(prev => !prev)}
               title="Chat"
               className={`p-3.5 rounded-full transition-all duration-200 active:scale-90 shadow-md cursor-pointer relative ${chatOpen
-                  ? "bg-blue-600 text-white border border-blue-400/30"
-                  : "bg-[#1E2D44] hover:bg-[#263752] text-white border border-white/10"
+                ? "bg-blue-600 text-white border border-blue-400/30"
+                : "bg-[#1E2D44] hover:bg-[#263752] text-white border border-white/10"
                 }`}
             >
               <MessageSquare size={19} />
@@ -388,8 +387,8 @@ function CallRoom() {
                         href={msg.fileUrl}
                         download={msg.fileName}
                         className={`flex items-center gap-2 px-3 py-2.5 rounded-2xl text-xs font-medium border transition-colors cursor-pointer ${msg.isMe
-                            ? "bg-blue-600/30 border-blue-500/30 text-blue-200 hover:bg-blue-600/40"
-                            : "bg-[#1A2333] border-white/5 text-zinc-300 hover:bg-[#1E2A3A]"
+                          ? "bg-blue-600/30 border-blue-500/30 text-blue-200 hover:bg-blue-600/40"
+                          : "bg-[#1A2333] border-white/5 text-zinc-300 hover:bg-[#1E2A3A]"
                           }`}
                       >
                         <Paperclip size={12} className="shrink-0" />
@@ -399,10 +398,10 @@ function CallRoom() {
                       // Text bubble
                       <div
                         className={`px-3.5 py-2.5 rounded-2xl text-sm leading-relaxed ${msg.isMe
-                            ? "bg-blue-600 text-white rounded-br-sm"
-                            : msg.sender === "System"
-                              ? "bg-[#1A2333] text-zinc-400 text-xs border border-white/5 rounded-tl-sm"
-                              : "bg-[#1A2333] text-zinc-200 rounded-tl-sm border border-white/5"
+                          ? "bg-blue-600 text-white rounded-br-sm"
+                          : msg.sender === "System"
+                            ? "bg-[#1A2333] text-zinc-400 text-xs border border-white/5 rounded-tl-sm"
+                            : "bg-[#1A2333] text-zinc-200 rounded-tl-sm border border-white/5"
                           }`}
                       >
                         {msg.text}

@@ -7,7 +7,7 @@ import {
   Users,
   Video
 } from "lucide-react";
-import { useNavigate, useParams } from "react-router";
+import { useNavigate, useParams, useLocation } from "react-router";
 import { ConsultationReview } from "./ConsultationReview";
 
 const UPCOMING_SESSIONS = [
@@ -44,11 +44,13 @@ const UPCOMING_SESSIONS = [
 export const ChatWindow = () => {
   const { section, id } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
+  const isExpert = location.pathname.includes("/dashboard/experts");
 
   // ===================== UPCOMING SESSIONS =====================
   if (section === "upcoming") {
     return (
-      <div className="h-full flex flex-col overflow-hidden bg-[#0A0F1C] text-white font-sora">
+      <div className="h-full flex flex-col overflow-hidden bg-[#0F172A] text-white font-sora">
         {/* Header */}
         <div className="p-4 sm:p-6 border-b border-white/5 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
@@ -216,7 +218,7 @@ export const ChatWindow = () => {
         </div>
 
         {/* Review Section */}
-        <ConsultationReview />
+        {!isExpert && <ConsultationReview />}
       </div>
     );
   }

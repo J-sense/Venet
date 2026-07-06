@@ -15,6 +15,7 @@ export default function ExpertOverview() {
       subtitle: "All time",
       icon: <DollarSign className="w-6 h-6" />,
       trend: "+18% this month",
+      href: "earnings"
     },
     {
       title: "Total Clients",
@@ -71,6 +72,7 @@ export default function ExpertOverview() {
                 subtitle={stat.subtitle}
                 icon={stat.icon}
                 trend={stat.trend}
+                href={stat?.href}
               />
             ))}
           </div>

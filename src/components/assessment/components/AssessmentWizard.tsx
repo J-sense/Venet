@@ -16,7 +16,7 @@ export default function AssessmentWizard({
   };
   const stepBackgrounds = [
     "/expertBG.png", // Health & Fitness
-    "/expertBG.png", // Mental Wellness
+    "/authImg.png", // Mental Wellness
     "/expertBG.png", // Educational Interests
     "/expertBG.png", // Career Development
   ];
@@ -28,9 +28,9 @@ export default function AssessmentWizard({
         className="absolute inset-0 z-0 opacity-20 pointer-events-none transition-all duration-700 ease-in-out"
         style={{
           backgroundImage: `url('${stepBackgrounds[currentStep - 1]}')`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat'
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
         }}
       />
 
@@ -42,7 +42,8 @@ export default function AssessmentWizard({
             Free Assessment
           </h1>
           <p className="text-slate-400 text-xs sm:text-sm font-normal px-2">
-            Answer these questions to help us recommend the best programs for you
+            Answer these questions to help us recommend the best programs for
+            you
           </p>
         </div>
 
@@ -72,7 +73,9 @@ export default function AssessmentWizard({
               key={q.id}
               className="bg-slate-800/30 p-4 sm:p-5 rounded-xl border border-slate-700/30"
             >
-              <p className="text-slate-200 mb-3 sm:mb-4 text-sm sm:text-base leading-snug sm:leading-normal">{q.text}</p>
+              <p className="text-slate-200 mb-3 sm:mb-4 text-sm sm:text-base leading-snug sm:leading-normal">
+                {q.text}
+              </p>
               <div className="grid grid-cols-2 gap-3 sm:gap-4">
                 <button
                   onClick={() => updateAnswer(q.id, true)}

@@ -19,9 +19,8 @@ export function UserSidebar({ isOpen, onClose, navItems }: SidebarProps) {
 
   return (
     <aside
-      className={`bg-[#27272A] border-r border-[#1F1F1F] fixed top-0 left-0 z-40 flex h-screen w-[300px] flex-col transition-transform duration-300 lg:translate-x-0 ${
-        isOpen ? "translate-x-0" : "-translate-x-full"
-      }`}
+      className={`bg-[#27272A] border-r border-[#1F1F1F] fixed top-0 left-0 z-40 flex h-screen w-[300px] flex-col transition-transform duration-300 lg:translate-x-0 ${isOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
     >
       {/* Logo Section */}
       <Link to={"/"} className="p-6 flex items-center justify-center w-full">
@@ -47,11 +46,10 @@ export function UserSidebar({ isOpen, onClose, navItems }: SidebarProps) {
                 key={item.href}
                 to={item.href}
                 onClick={onClose}
-                className={`flex items-center gap-3 px-3 py-2.5 rounded-[10px] transition-all duration-300 ${
-                  isActive
+                className={`flex items-center gap-3 px-3 py-2.5 rounded-[10px] transition-all duration-300 ${isActive
                     ? "bg-blue-500/10 outline outline-1 outline-blue-500/20"
                     : "hover:bg-[#171717] hover:text-white"
-                }`}
+                  }`}
               >
                 {/* Icon/Active State Logic */}
                 {isActive ? (
@@ -69,9 +67,8 @@ export function UserSidebar({ isOpen, onClose, navItems }: SidebarProps) {
 
                 {/* Label */}
                 <span
-                  className={`text-base font-medium font-['Inter'] leading-6 ${
-                    isActive ? "text-blue-400" : "text-[#FFFFFF]"
-                  }`}
+                  className={`text-base font-medium  leading-6 ${isActive ? "text-blue-400" : "text-[#FFFFFF]"
+                    }`}
                 >
                   {item.label}
                 </span>

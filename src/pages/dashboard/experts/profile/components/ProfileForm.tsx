@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ProfileInput } from "@/components/ui/profileInput";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Plus, Trash2, Upload } from "lucide-react";
+import { Plus, Trash2, Upload, Camera } from "lucide-react";
 import React, { useState } from "react";
 import { FormProvider, useFieldArray, useForm, type SubmitHandler } from "react-hook-form";
 
@@ -120,22 +120,82 @@ export default function ProfileForm() {
         <FormProvider {...form}>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
             {/* Profile Picture */}
-            <Card className="bg-[#09090B] border-none">
-              <CardContent className="pt-6 flex flex-col items-center">
-                <div className="relative mb-4">
-                  <Avatar className="w-24 h-24 border-2 border-zinc-700">
-                    <AvatarImage src={profilePic || ""} />
-                    <AvatarFallback>JD</AvatarFallback>
-                  </Avatar>
-                  <label className="absolute -bottom-1 -right-1 bg-blue-600 hover:bg-blue-700 text-white text-xs px-3 py-1 rounded-full cursor-pointer">
-                    Upload
+            {/* Profile Picture */}
+            <Card className="bg-[#0D1526] border border-[#FFFFFF0F] rounded-2xl overflow-hidden relative shadow-lg shadow-black/25">
+              {/* Futuristic ambient light glows */}
+              <div className="absolute top-0 right-0 w-48 h-48 bg-blue-500/5 rounded-full blur-3xl pointer-events-none" />
+              <div className="absolute bottom-0 left-0 w-48 h-48 bg-purple-500/5 rounded-full blur-3xl pointer-events-none" />
+
+              <CardContent className="relative z-10 p-6 md:p-8">
+                <div className="flex flex-col md:flex-row items-center gap-6">
+                  {/* Geometric Squircle Avatar Frame with glowing ring */}
+                  <div className="relative group cursor-pointer shrink-0 select-none">
+                    {/* Glow backdrop ring */}
+                    <div className="absolute -inset-1.5 bg-gradient-to-tr from-[#2B7FFF] via-[#9333EA] to-[#3B82F6] rounded-[32px] blur-md opacity-60 group-hover:opacity-100 transition-all duration-300 pointer-events-none" />
+                    
+                    {/* Profile Picture Container */}
+                    <div className="relative w-28 h-28 bg-[#070D19] p-1.5 rounded-[30px] overflow-hidden z-10 border border-white/10">
+                      <div className="w-full h-full rounded-[24px] overflow-hidden relative bg-zinc-800">
+                        {profilePic ? (
+                          <img
+                            src={profilePic}
+                            alt="Avatar"
+                            className="w-full h-full object-cover transition duration-300 group-hover:scale-105"
+                          />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center bg-gradient-to-b from-zinc-700 to-zinc-900 text-[#90A1B9] text-xl font-bold font-sora">
+                            JD
+                          </div>
+                        )}
+                        
+                        {/* Hover Overlay Trigger */}
+                        <div className="absolute inset-0 bg-[#070D19]/80 backdrop-blur-[1px] flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                          <Camera size={20} className="text-white mb-1" />
+                          <span className="text-[9px] font-bold text-white uppercase tracking-wider font-inter">Change</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Hidden input overlaying the whole image container */}
                     <input
                       type="file"
                       accept="image/*"
-                      className="hidden"
+                      className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20"
                       onChange={handleImageUpload}
                     />
-                  </label>
+                  </div>
+
+                  {/* Metadata and Manual Buttons */}
+                  <div className="flex-1 text-center md:text-left space-y-2">
+                    <h4 className="text-white font-bold font-sora text-lg tracking-tight">
+                      Expert Profile Photo
+                    </h4>
+                    <p className="text-xs text-[#90A1B9]/70 leading-relaxed font-inter max-w-sm">
+                      Upload a high-quality, professional headshot. Supports JPG, PNG or WEBP formats (max 5MB).
+                    </p>
+                    
+                    <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 pt-2">
+                      <label className="bg-[#1E293B] hover:bg-zinc-800 border border-white/10 text-white text-xs px-4 py-2.5 rounded-xl cursor-pointer font-semibold transition-all duration-200 hover:scale-105 active:scale-95 flex items-center gap-1.5 select-none">
+                        Choose File
+                        <input
+                          type="file"
+                          accept="image/*"
+                          className="hidden"
+                          onChange={handleImageUpload}
+                        />
+                      </label>
+                      
+                      {profilePic && (
+                        <button
+                          type="button"
+                          onClick={() => setProfilePic(null)}
+                          className="text-xs text-red-400 hover:text-red-300 hover:bg-red-500/10 px-3.5 py-2 rounded-xl transition-all duration-200 font-semibold"
+                        >
+                          Remove Image
+                        </button>
+                      )}
+                    </div>
+                  </div>
                 </div>
               </CardContent>
             </Card>
