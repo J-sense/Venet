@@ -46,10 +46,11 @@ export default function BannerV2() {
             <span className="text-[#2B7FFF]">VNET</span>
           </h1>
 
-          <p className="text-sm md:text-base lg:text-lg text-[#FFFFFFB2] max-w-2xl text-center px-4">
-            Join the VNET community and take charge of your health and fitness
-            journey. With personalized workout plans, nutrition guidance, and
-            expert support.
+          <p className="text-sm md:text-base lg:text-lg text-[#FFFFFFB2] max-w-2xl text-center px-4 leading-relaxed">
+            Join the vNET community and take charge of your transformation
+            journey. We empower you with personalized programs across Health &
+            Fitness, Mental Health, Educational Services, and Career growth, all
+            backed by expert support.
           </p>
 
           <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-3 md:gap-4 w-full sm:w-auto px-6 sm:px-0 pt-2">

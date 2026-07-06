@@ -2,13 +2,32 @@ import { ActionButton } from "@/components/ui/ActionButton";
 import { useState } from "react";
 import { AssessmentModal } from "@/components/assessment";
 
-export const AboutUsCTA = () => {
+interface AboutUsCTAProps {
+  title?: string;
+  description?: string;
+  buttonText?: string;
+  bgClass?: string;
+  bottomCurveColor?: string;
+  buttonTextClass?: string;
+}
+
+export const AboutUsCTA = ({
+  title = "Ready to Start Your Journey?",
+  description = "Take the free assessment to get your personalized health & fitness program roadmap",
+  buttonText = "Start Free Assessment",
+  bgClass = "bg-[#1E3A8A]",
+  bottomCurveColor = "#191C2B",
+  buttonTextClass = "!text-[#1E3A8A]",
+}: AboutUsCTAProps) => {
   const [isAssessmentOpen, setIsAssessmentOpen] = useState(false);
 
   return (
-    <section className="relative bg-[#1E3A8A] py-16 md:py-24 overflow-hidden min-h-[500px] flex items-center">
+    <section className={`relative ${bgClass} py-16 md:py-24 overflow-hidden min-h-[500px] flex items-center`}>
       {/* Bottom Curve */}
-      <div className="absolute bottom-0 left-0 w-full text-[#191C2B] z-0">
+      <div 
+        className="absolute bottom-0 left-0 w-full z-0"
+        style={{ color: bottomCurveColor }}
+      >
         <svg
           className="w-full h-48 md:h-64 lg:h-72"
           viewBox="0 0 1440 320"
@@ -17,7 +36,7 @@ export const AboutUsCTA = () => {
           preserveAspectRatio="none"
         >
           <path
-            fill="#191C2B"
+            fill="currentColor"
             fillOpacity="1"
             d="M0,192L80,186.7C160,181,320,171,480,192C640,213,800,267,960,277.3C1120,288,1280,256,1360,240L1440,224L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"
           />
@@ -26,19 +45,18 @@ export const AboutUsCTA = () => {
 
       <div className="relative z-10 max-w-4xl mx-auto px-6 text-center w-full">
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 leading-tight">
-          Ready to Start Your Journey?
+          {title}
         </h2>
 
         <p className="text-white/80 text-base sm:text-lg md:text-xl mb-8 max-w-2xl mx-auto leading-relaxed">
-          Take the free assessment to get your personalized health & fitness
-          program roadmap
+          {description}
         </p>
 
         <div className="flex justify-center">
           <ActionButton
-            label="Start Free Assessment"
+            label={buttonText}
             onClick={() => setIsAssessmentOpen(true)}
-            className="px-8 sm:px-10 py-3.5 text-base sm:text-lg font-semibold bg-white !text-[#1E3A8A] hover:bg-gray-100 transition-all"
+            className={`px-8 sm:px-10 py-3.5 text-base sm:text-lg font-semibold bg-white ${buttonTextClass} hover:bg-gray-100 transition-all`}
           />
         </div>
       </div>

@@ -365,7 +365,14 @@ export default function DisclaimerMain() {
           </p>
         </div>
       </main>
-      <AboutUsCTA />
+      <AboutUsCTA
+        title="Ready to Start Your Journey?"
+        description="Take the free assessment to get your personalized health & fitness program roadmap"
+        buttonText="Start Free Assessment"
+        bgClass="bg-[#1E3A8A]"
+        bottomCurveColor="#191C2B"
+        buttonTextClass="!text-[#1E3A8A]"
+      />
     </div>
   );
 }

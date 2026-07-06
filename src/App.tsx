@@ -2,58 +2,59 @@ import { Navigate, Route, Routes } from "react-router";
 import CommonLayout from "./components/ui/layouts/CommonLayout";
 import { HomeMain } from "./pages/Home";
 import {
+  CareerPage,
+  EducationServicePage,
   HealthFitnessPage,
   MentalHealthPage,
-  EducationServicePage,
-  CareerPage,
 } from "./pages/program";
 
-import { SubscriptionSuggestionMain } from "./pages/SubscriptionSuggestion/SubscriptionSuggestionMain";
+import { AboutUsMain, FounderStoryPage } from "./pages/About-us";
 import { ShoppingCartPage } from "./pages/SubscriptionSuggestion/ShoppingCart";
-import { AboutUsMain } from "./pages/About-us";
+import { SubscriptionSuggestionMain } from "./pages/SubscriptionSuggestion/SubscriptionSuggestionMain";
 
 import { navItemsForExperts, navItemsForUser } from "./components/ui/navitems";
-import { UserLayout } from "./pages/dashboard/user/layout";
-import { ExpertsLayout } from "./pages/dashboard/experts/layout";
-import { UserHome } from "./pages/dashboard/user/home";
-import ProgramDetails from "./pages/dashboard/user/ProgramDetails";
-import ProgramAssessment from "./pages/dashboard/user/ProgramAssessment";
-import ProgramRoadmap from "./pages/dashboard/user/ProgramRoadmap";
-import UserCertificates from "./pages/dashboard/user/Certificates/UserCertificates";
-import { TalentPortal } from "./pages/dashboard/user/TalentPortal";
 import {
+  ExpertsForgotPassword,
+  ExpertsLogin,
+  ExpertsRegister,
+  ForgotPassword,
   Login,
   Register,
-  ForgotPassword,
   VerifyIdentity,
-  ExpertsRegister,
-  ExpertsLogin,
-  ExpertsForgotPassword,
 } from "./pages/Auth";
-import ExpertsOverview from "./pages/dashboard/experts/overView/ExpertsOverview";
 import ExpertesAvailability from "./pages/dashboard/experts/Availability/ExpertesAvailability";
+import { ExpertsLayout } from "./pages/dashboard/experts/layout";
+import ExpertsOverview from "./pages/dashboard/experts/overView/ExpertsOverview";
 import { ExpertsProfile } from "./pages/dashboard/experts/profile";
+import UserCertificates from "./pages/dashboard/user/Certificates/UserCertificates";
+import { UserHome } from "./pages/dashboard/user/home";
+import { UserLayout } from "./pages/dashboard/user/layout";
+import ProgramAssessment from "./pages/dashboard/user/ProgramAssessment";
+import ProgramDetails from "./pages/dashboard/user/ProgramDetails";
+import ProgramRoadmap from "./pages/dashboard/user/ProgramRoadmap";
+import { TalentPortal } from "./pages/dashboard/user/TalentPortal";
 
-import { ExpertSettings, ExpertsNotificationsPage, ExpertsSecurityPage } from "./pages/dashboard/experts/Setting";
+import { ChatWindow } from "./pages/dashboard/experts/MySessions/ChatWindow";
 import EXpertsMySession from "./pages/dashboard/experts/MySessions/EXpertsMySession";
 import { ExpertsReview } from "./pages/dashboard/experts/Reviews";
-import { ChatWindow } from "./pages/dashboard/experts/MySessions/ChatWindow";
+import { ExpertSettings, ExpertsNotificationsPage, ExpertsSecurityPage } from "./pages/dashboard/experts/Setting";
 
-import { UserSettingsMain, UserAccountMain, UserSecurityMain, UserBillingMain, UserNotifications } from "./pages/dashboard/user/Settings";
-import AgoraVideoCallPage from "./pages/video/AgoraVideoCallPage";
+import { UserAccountMain, UserBillingMain, UserNotifications, UserSecurityMain, UserSettingsMain } from "./pages/dashboard/user/Settings";
 import { ResumeBuildForm } from "./pages/dashboard/user/TalentPortal";
+import AgoraVideoCallPage from "./pages/video/AgoraVideoCallPage";
 
-import NotFoundPage from "./pages/NotFoundPage";
 import DisclaimerMain from "./pages/Disclaimer/DisclaimerMain";
+import { ExpertsDetails, ExpertsMain } from "./pages/experts";
+import NotFoundPage from "./pages/NotFoundPage";
 import PrivacyMain from "./pages/privacyPolicy/PrivacyMain";
 import TermsMain from "./pages/termsCondition/TermsMain";
-import { ExpertsDetails, ExpertsMain } from "./pages/experts";
 
 export const App = () => {
   return (
     <Routes>
       <Route path="/video-call/:channel" element={<AgoraVideoCallPage />} />
       <Route path="/" element={<CommonLayout />}>
+
         <Route index element={<HomeMain />} />
 
         <Route
@@ -68,6 +69,7 @@ export const App = () => {
         <Route path="/programs/career" element={<CareerPage />} />
         <Route path="/experts" element={<ExpertsMain />} />
         <Route path="/about" element={<AboutUsMain />} />
+        <Route path="/founder-story" element={<FounderStoryPage />} />
         <Route path="/experts/:id" element={<ExpertsDetails />} />
         <Route path="/shopping-cart" element={<ShoppingCartPage />} />
         <Route path="/disclaimer" element={<DisclaimerMain />} />
@@ -138,6 +140,7 @@ export const App = () => {
 
       {/* Catch-all Not Found Route */}
       <Route path="*" element={<NotFoundPage />} />
+
     </Routes>
   );
 };

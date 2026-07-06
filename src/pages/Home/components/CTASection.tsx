@@ -25,7 +25,7 @@ export const CTASection: React.FC = () => {
           titleAccent="Journey?"
           titlePrimary="Ready to Start Your "
         />
-        <button 
+        <button
           onClick={() => setIsAssessmentOpen(true)}
           className="mt-4 px-8 py-3.5 bg-[#2B7FFF] text-white font-bold font-inter text-sm rounded-full shadow-[0_4px_20px_rgba(43,127,255,0.3)] hover:bg-[#0066FF] hover:shadow-[0_4px_25px_rgba(43,127,255,0.45)] transition-all duration-200 active:scale-[0.98]"
         >
