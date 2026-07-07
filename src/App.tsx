@@ -122,6 +122,7 @@ export const App = () => {
         <Route index element={<ExpertsOverview />} />
         <Route path="overview" element={<ExpertsOverview />} />
         <Route path="overview/earnings" element={<GraphEarnignList />} />
+        <Route path="earnings" element={<GraphEarnignList />} />
 
         <Route path="availability" element={<ExpertesAvailability />} />
         <Route path="profile" element={<ExpertsProfile />} />

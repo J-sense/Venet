@@ -24,15 +24,18 @@ export function ExpertsSidebar({ isOpen, onClose, navItems }: SidebarProps) {
       }`}
     >
       {/* Logo Section */}
-      <Link to={"/"} className="p-6 flex items-center justify-center w-full">
-        <img
-          src="/VNetLogo.png"
-          alt="VNET"
-          className="h-auto w-[300px] max-w-[160px] object-contain brightness-110 rounded-full"
-        />
-      </Link>
+      <div className="p-6 flex flex-col items-center justify-center w-full border-b border-[#1F1F1F]/60">
+        <Link to={"/"}>
+          <img
+            src="/VNetLogo.png"
+            alt="VNET"
+            className="h-auto w-[300px] max-w-[160px] object-contain brightness-110 rounded-full"
+          />
+        </Link>
+      </div>
+
       {/* Navigation */}
-      <nav className="flex-1 px-4 mt-4">
+      <nav className="flex-1 px-4 mt-6">
         <p className="text-[#71717B] text-[12px] font-semibold uppercase tracking-[2px] px-4 mb-4">
           Main Menu
         </p>
@@ -41,7 +44,10 @@ export function ExpertsSidebar({ isOpen, onClose, navItems }: SidebarProps) {
           {navItems?.map((item) => {
             const isActive =
               location.pathname === item.href ||
-              location.pathname.startsWith(`${item.href}/`);
+              location.pathname.startsWith(`${item.href}/`) ||
+              (item.href === "/dashboard/experts/overview" &&
+                (location.pathname === "/dashboard/experts" ||
+                  location.pathname === "/dashboard/experts/"));
             const Icon = item.icon;
 
             return (
@@ -49,12 +55,17 @@ export function ExpertsSidebar({ isOpen, onClose, navItems }: SidebarProps) {
                 key={item.href}
                 to={item.href}
                 onClick={onClose}
-                className={`flex items-center gap-3 px-3 py-2.5 rounded-[10px] transition-all duration-300 ${
+                className={`relative flex items-center gap-3 px-3.5 py-2.5 rounded-[10px] transition-all duration-300 ${
                   isActive
-                    ? "bg-blue-500/10 outline outline-1 outline-blue-500/20 text-[16px]"
-                    : "hover:bg-[#171717] hover:text-white text-[16px] text-[#94A3B8]"
+                    ? "bg-blue-500/10 outline outline-1 outline-blue-500/20 text-[16px] shadow-sm shadow-blue-500/5"
+                    : "hover:bg-[#171717] hover:text-white text-[16px] text-[#94A3B8] hover:translate-x-1.5"
                 }`}
               >
+                {/* Active Accent Line Indicator */}
+                {isActive && (
+                  <span className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 bg-blue-500 rounded-r-full" />
+                )}
+
                 {/* Icon/Active State Logic */}
                 {isActive ? (
                   <div className="size-5 relative grid grid-cols-2 gap-1 content-center p-0.5">
@@ -84,14 +95,27 @@ export function ExpertsSidebar({ isOpen, onClose, navItems }: SidebarProps) {
       </nav>
 
       {/* Bottom Actions */}
-      <div className="p-4 border-t border-[#1F1F1F]">
-        <button
-          onClick={handleLogout}
-          className="w-full flex items-center justify-between px-4 py-3 text-[14px] font-medium text-[#A3A3A3] hover:text-red-500 transition-colors"
-        >
-          <span>Log Out</span>
-          <LogOut className="w-4 h-4" />
-        </button>
+      <div className="p-4 border-t border-white/5 bg-[#1E1E21]/20 mt-auto">
+        <div className="flex items-center justify-between gap-3 bg-white/[0.02] border border-white/[0.05] rounded-2xl p-3 shadow-md select-none">
+          {/* User Info Block */}
+          <div className="min-w-0">
+            <h4 className="text-sm font-semibold text-white truncate leading-tight">
+              Sarah Jenkins
+            </h4>
+            <p className="text-[11px] text-zinc-500 font-medium truncate mt-1 leading-none">
+              Verified Expert
+            </p>
+          </div>
+
+          {/* Logout Button */}
+          <button
+            onClick={handleLogout}
+            title="Log Out"
+            className="p-2.5 text-zinc-400 hover:text-red-400 hover:bg-red-500/10 active:bg-red-500/20 rounded-xl border border-white/5 hover:border-red-500/20 transition-all duration-300 cursor-pointer shrink-0"
+          >
+            <LogOut className="w-4 h-4" />
+          </button>
+        </div>
       </div>
     </aside>
   );
