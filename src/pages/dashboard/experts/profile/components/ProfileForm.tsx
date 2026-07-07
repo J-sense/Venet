@@ -2,15 +2,19 @@
 "use client";
 
 import { ActionButton } from "@/components/ui/ActionButton";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { BlackActionButton } from "@/components/ui/BlackActionButton";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ProfileInput } from "@/components/ui/profileInput";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Plus, Trash2, Upload, Camera } from "lucide-react";
+import { Camera, Plus, Trash2, Upload } from "lucide-react";
 import React, { useState } from "react";
-import { FormProvider, useFieldArray, useForm, type SubmitHandler } from "react-hook-form";
+import {
+  FormProvider,
+  useFieldArray,
+  useForm,
+  type SubmitHandler,
+} from "react-hook-form";
 
 import { profileSchema, type ProfileFormData } from "../schemas/profileSchema";
 
@@ -132,7 +136,7 @@ export default function ProfileForm() {
                   <div className="relative group cursor-pointer shrink-0 select-none">
                     {/* Glow backdrop ring */}
                     <div className="absolute -inset-1.5 bg-gradient-to-tr from-[#2B7FFF] via-[#9333EA] to-[#3B82F6] rounded-[32px] blur-md opacity-60 group-hover:opacity-100 transition-all duration-300 pointer-events-none" />
-                    
+
                     {/* Profile Picture Container */}
                     <div className="relative w-28 h-28 bg-[#070D19] p-1.5 rounded-[30px] overflow-hidden z-10 border border-white/10">
                       <div className="w-full h-full rounded-[24px] overflow-hidden relative bg-zinc-800">
@@ -147,11 +151,13 @@ export default function ProfileForm() {
                             JD
                           </div>
                         )}
-                        
+
                         {/* Hover Overlay Trigger */}
                         <div className="absolute inset-0 bg-[#070D19]/80 backdrop-blur-[1px] flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                           <Camera size={20} className="text-white mb-1" />
-                          <span className="text-[9px] font-bold text-white uppercase tracking-wider font-inter">Change</span>
+                          <span className="text-[9px] font-bold text-white uppercase tracking-wider font-inter">
+                            Change
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -171,9 +177,10 @@ export default function ProfileForm() {
                       Expert Profile Photo
                     </h4>
                     <p className="text-xs text-[#90A1B9]/70 leading-relaxed font-inter max-w-sm">
-                      Upload a high-quality, professional headshot. Supports JPG, PNG or WEBP formats (max 5MB).
+                      Upload a high-quality, professional headshot. Supports
+                      JPG, PNG or WEBP formats (max 5MB).
                     </p>
-                    
+
                     <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 pt-2">
                       <label className="bg-[#1E293B] hover:bg-zinc-800 border border-white/10 text-white text-xs px-4 py-2.5 rounded-xl cursor-pointer font-semibold transition-all duration-200 hover:scale-105 active:scale-95 flex items-center gap-1.5 select-none">
                         Choose File
@@ -184,7 +191,7 @@ export default function ProfileForm() {
                           onChange={handleImageUpload}
                         />
                       </label>
-                      
+
                       {profilePic && (
                         <button
                           type="button"

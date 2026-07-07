@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
 import { MoreVertical } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 
 export default function GraphEarnignList() {
     const containerRef = useRef<HTMLDivElement>(null);
