@@ -19,8 +19,9 @@ export function UserSidebar({ isOpen, onClose, navItems }: SidebarProps) {
 
   return (
     <aside
-      className={`bg-[#27272A] border-r border-[#1F1F1F] fixed top-0 left-0 z-40 flex h-screen w-[300px] flex-col transition-transform duration-300 lg:translate-x-0 ${isOpen ? "translate-x-0" : "-translate-x-full"
-        }`}
+      className={`bg-[#18181B] border-r border-[#1F1F1F] fixed top-0 left-0 z-40 flex h-screen w-[300px] flex-col transition-transform duration-300 lg:translate-x-0 ${
+        isOpen ? "translate-x-0" : "-translate-x-full"
+      }`}
     >
       {/* Logo Section */}
       <div className="p-6 flex flex-col items-center justify-center w-full border-b border-[#1F1F1F]/60">
@@ -43,7 +44,8 @@ export function UserSidebar({ isOpen, onClose, navItems }: SidebarProps) {
           {navItems?.map((item) => {
             const isActive =
               location.pathname === item.href ||
-              (item.href !== "/dashboard/user" && location.pathname.startsWith(`${item.href}/`));
+              (item.href !== "/dashboard/user" &&
+                location.pathname.startsWith(`${item.href}/`));
             const Icon = item.icon;
 
             return (
