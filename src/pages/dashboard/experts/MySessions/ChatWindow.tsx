@@ -209,7 +209,7 @@ export const ChatWindow = () => {
 
         {/* Messages Area */}
         <div className="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto bg-[#0A0F1C] space-y-6">
-          <div className="bg-[#1E2937] p-4 sm:p-5 rounded-2xl max-w-[90%] sm:max-w-[75%] lg:max-w-[60%] xl:max-w-[50%]">
+          <div className="bg-[#1E2937] p-4 sm:p-5 rounded-2xl text-white max-w-[90%] sm:max-w-[75%] lg:max-w-[60%] xl:max-w-[50%]">
             Hello! How can I help you today?
           </div>
           <div className="bg-blue-600 p-4 sm:p-5 rounded-2xl ml-auto max-w-[90%] sm:max-w-[75%] lg:max-w-[60%] xl:max-w-[50%] text-white">

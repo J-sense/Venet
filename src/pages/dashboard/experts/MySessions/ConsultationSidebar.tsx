@@ -1,5 +1,5 @@
 // src/pages/experts/ConsultationSidebar.tsx
-import { useNavigate, useParams } from "react-router";
+import { useNavigate, useParams, useLocation } from "react-router";
 import { X, Search } from "lucide-react";
 
 const MOCK_HISTORY_LIST = [
@@ -24,8 +24,13 @@ interface ConsultationSidebarProps {
 
 export const ConsultationSidebar = ({ onClose }: ConsultationSidebarProps) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { section, id } = useParams();
   const activeSection = section || "upcoming";
+
+  const basePath = location.pathname.includes("/dashboard/user")
+    ? "/dashboard/user"
+    : "/dashboard/experts";
 
   return (
     <div className="h-full flex flex-col rounded-2xl px-1 py-6">
@@ -47,7 +52,7 @@ export const ConsultationSidebar = ({ onClose }: ConsultationSidebarProps) => {
             <button
               key={s}
               onClick={() => {
-                navigate(`/dashboard/experts/consultation/${s}`);
+                navigate(`${basePath}/consultation/${s}`);
                 onClose?.(); // Close sidebar on mobile after navigation
               }}
               className={`flex-1 py-3 rounded-full text-sm font-medium transition-all ${
@@ -78,9 +83,7 @@ export const ConsultationSidebar = ({ onClose }: ConsultationSidebarProps) => {
                   <div
                     key={item.id}
                     onClick={() => {
-                      navigate(
-                        `/dashboard/experts/consultation/previous/${item.id}`,
-                      );
+                      navigate(`${basePath}/consultation/previous/${item.id}`);
                       onClose?.();
                     }}
                     className={`flex gap-3 p-3 rounded-3xl cursor-pointer transition-all hover:bg-white/5 ${

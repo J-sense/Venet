@@ -4,190 +4,178 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { CreditCard, Download, Plus, Trash2 } from "lucide-react";
+import { CreditCard, Download, Plus, Trash2, Receipt, Clock } from "lucide-react";
 
 import { subscriptions, billingHistory } from "./data/userBillingData";
 
 export default function UserBillingMain() {
   return (
-    <div className="min-h-screen bg-zinc-950 text-white p-6 md:p-8">
-      <div className="max-w-7xl mx-auto space-y-8">
-        <h1 className="text-3xl font-bold">Billing</h1>
+    <div className="w-full max-w-7xl mx-auto space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight text-white">Billing & Payments</h1>
+          <p className="text-zinc-400 mt-1">Manage your subscriptions and payment methods</p>
+        </div>
+      </div>
 
-        {/* Main Grid: 70% Left - 30% Right */}
-        <div className="grid grid-cols-1 xl:grid-cols-12 gap-6">
-          {/* LEFT SIDE - 70% */}
-          <div className="xl:col-span-8 space-y-6">
-            {/* Active Subscriptions */}
-            <Card className="bg-[#122131] border-zinc-800">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-[#D4E4FA] text-[24px] font-semibold">
-                  <span className="text-blue-400">✦</span> Active Subscriptions
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                {subscriptions.map((sub, i) => (
-                  <div
-                    key={i}
-                    className="bg-[#2736474D]/30 border border-zinc-700 rounded-2xl p-6"
-                  >
-                    <div className="flex justify-between items-start">
-                      <div>
-                        <h3 className="font-semibold text-lg text-[#D4E4FA]">
-                          {sub.name}
-                        </h3>
-                        <p className="text-2xl font-bold mt-1 text-[#BDC9C6]">
-                          {sub.price}
-                        </p>
-                      </div>
-                      <Badge className="bg-emerald-500/10 text-emerald-400 border-emerald-500/30">
-                        Active
-                      </Badge>
+      {/* Main Grid: 70% Left - 30% Right */}
+      <div className="grid grid-cols-1 xl:grid-cols-12 gap-8">
+        {/* LEFT SIDE - 70% */}
+        <div className="xl:col-span-8 space-y-8">
+          {/* Active Subscriptions */}
+          <Card className="bg-[#0D1526] border border-white/5 rounded-3xl p-1 relative overflow-hidden shadow-2xl shadow-black/40 group">
+            <div className="absolute inset-0 bg-gradient-to-br from-white/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+            <CardHeader className="p-6 md:p-8 pb-0">
+              <CardTitle className="flex items-center gap-3 text-white text-2xl font-bold tracking-tight">
+                <div className="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center border border-blue-500/20 shadow-inner">
+                  <Receipt className="w-5 h-5 text-blue-400" />
+                </div>
+                Active Subscriptions
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="p-6 md:p-8 space-y-6 relative z-10">
+              {subscriptions.map((sub, i) => (
+                <div
+                  key={i}
+                  className="bg-[#101E2D] border border-white/10 hover:border-blue-500/50 transition-all duration-300 rounded-2xl p-6 shadow-md hover:shadow-xl hover:shadow-blue-500/10 hover:-translate-y-1 cursor-pointer group/sub"
+                >
+                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4">
+                    <div>
+                      <h3 className="font-bold text-lg text-white tracking-tight group-hover/sub:text-blue-400 transition-colors">
+                        {sub.name}
+                      </h3>
+                      <p className="text-3xl font-extrabold mt-1 text-white tracking-tight">
+                        {sub.price}
+                      </p>
                     </div>
+                    <Badge className="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-3 py-1 font-semibold uppercase tracking-widest text-[10px] w-fit group-hover/sub:bg-emerald-500/20 transition-colors">
+                      Active
+                    </Badge>
+                  </div>
 
-                    <div className="mt-6 flex justify-between items-center text-sm">
-                      <div className="flex text-[#BDC9C6]">
-                        <span>Next billing :</span>
-                        <span className="font-medium ml-1">
-                          {sub.nextBilling}
-                        </span>
-                      </div>
-                      <span className="text-[#0A66C2] cursor-pointer hover:underline">
-                        Manage
+                  <div className="mt-6 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 text-sm pt-6 border-t border-white/5">
+                    <div className="flex items-center text-zinc-400">
+                      <span className="font-medium">Next billing:</span>
+                      <span className="font-bold text-white ml-2">
+                        {sub.nextBilling}
                       </span>
                     </div>
+                    <Button variant="outline" className="bg-transparent border-white/10 group-hover/sub:bg-blue-600 group-hover/sub:border-transparent group-hover/sub:text-white group-hover/sub:shadow-lg group-hover/sub:shadow-blue-900/20 text-white transition-all duration-300">
+                      Manage Plan
+                    </Button>
                   </div>
-                ))}
-              </CardContent>
-            </Card>
-
-            {/* Billing History */}
-            <Card className="bg-[#122131] border-zinc-800">
-              <CardHeader className="flex flex-row items-center justify-between">
-                <CardTitle className="flex items-center gap-2 text-[#D4E4FA] text-[24px] font-semibold">
-                  <span>🕒</span> Billing History
-                </CardTitle>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="text-blue-400 hover:text-blue-300"
-                >
-                  <Download className="w-4 h-4 mr-2" /> Export
-                </Button>
-              </CardHeader>
-              <CardContent>
-                <div className="overflow-x-auto">
-                  <table className="w-full text-sm min-w-[600px]">
-                    <thead>
-                      <tr className="border-b border-zinc-800 text-left text-zinc-400">
-                        <th className="pb-4 font-medium whitespace-nowrap">Date</th>
-                        <th className="pb-4 font-medium whitespace-nowrap">Description</th>
-                        <th className="pb-4 font-medium whitespace-nowrap">Amount</th>
-                        <th className="pb-4 font-medium whitespace-nowrap">Status</th>
-                        <th className="pb-4 font-medium text-right whitespace-nowrap">Invoice</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-zinc-800">
-                      {billingHistory.map((item, i) => (
-                        <tr key={i} className="hover:bg-zinc-800/50">
-                          <td className="py-4 whitespace-nowrap">{item.date}</td>
-                          <td className="py-4 whitespace-nowrap">{item.desc}</td>
-                          <td className="py-4 font-medium whitespace-nowrap">{item.amount}</td>
-                          <td className="py-4 whitespace-nowrap">
-                            <Badge className="bg-emerald-500/10 text-emerald-400 border-emerald-500/30">
-                              Paid
-                            </Badge>
-                          </td>
-                          <td className="py-4 text-right whitespace-nowrap">
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              className="text-zinc-400 hover:text-white"
-                            >
-                              📄
-                            </Button>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
                 </div>
-              </CardContent>
-            </Card>
-          </div>
+              ))}
+            </CardContent>
+          </Card>
 
-          {/* RIGHT SIDE - 30% */}
-          <div className="xl:col-span-4 space-y-6">
-            {/* Payment Method */}
-            <div className="bg-[#111827] border border-white/10 rounded-2xl p-6 h-fit">
-              <div className="flex items-center gap-2 mb-6 text-blue-400">
-                <CreditCard className="w-5 h-5" />
-                <h2 className="text-white font-semibold text-lg">
+          {/* Billing History */}
+          <Card className="bg-[#0D1526] border border-white/5 rounded-3xl p-1 relative overflow-hidden shadow-2xl shadow-black/40 group">
+            <div className="absolute inset-0 bg-gradient-to-br from-white/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+            <CardHeader className="p-6 md:p-8 pb-0 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <CardTitle className="flex items-center gap-3 text-white text-2xl font-bold tracking-tight">
+                <div className="w-10 h-10 rounded-xl bg-purple-500/10 flex items-center justify-center border border-purple-500/20 shadow-inner">
+                  <Clock className="w-5 h-5 text-purple-400" />
+                </div>
+                Billing History
+              </CardTitle>
+              <Button
+                variant="outline"
+                className="bg-transparent border-white/10 hover:bg-white/5 text-white transition-colors"
+              >
+                <Download className="w-4 h-4 mr-2" /> Export
+              </Button>
+            </CardHeader>
+            <CardContent className="p-6 md:p-8 relative z-10">
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm min-w-[600px]">
+                  <thead>
+                    <tr className="border-b border-white/10 text-left text-zinc-400">
+                      <th className="pb-4 font-semibold whitespace-nowrap">Date</th>
+                      <th className="pb-4 font-semibold whitespace-nowrap">Description</th>
+                      <th className="pb-4 font-semibold whitespace-nowrap">Amount</th>
+                      <th className="pb-4 font-semibold whitespace-nowrap">Status</th>
+                      <th className="pb-4 font-semibold text-right whitespace-nowrap">Invoice</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-white/5">
+                    {billingHistory.map((item, i) => (
+                      <tr key={i} className="hover:bg-white/[0.04] transition-colors cursor-pointer group/row">
+                        <td className="py-5 whitespace-nowrap font-medium text-zinc-400 group-hover/row:text-zinc-200 transition-colors">{item.date}</td>
+                        <td className="py-5 whitespace-nowrap text-white font-medium group-hover/row:text-blue-300 transition-colors">{item.desc}</td>
+                        <td className="py-5 font-bold whitespace-nowrap text-white">{item.amount}</td>
+                        <td className="py-5 whitespace-nowrap">
+                          <Badge className="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2 py-0.5 group-hover/row:bg-emerald-500/20 transition-colors">
+                            Paid
+                          </Badge>
+                        </td>
+                        <td className="py-5 text-right whitespace-nowrap">
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="text-blue-400 opacity-50 group-hover/row:opacity-100 hover:text-white hover:bg-blue-500/20 group-hover/row:scale-110 transition-all duration-300"
+                          >
+                            <Download className="w-4 h-4" />
+                          </Button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* RIGHT SIDE - 30% */}
+        <div className="xl:col-span-4 space-y-8 hidden">
+          {/* Payment Method */}
+          <Card className="bg-[#0D1526] border border-white/5 rounded-3xl p-6 relative overflow-hidden shadow-2xl shadow-black/40 group">
+            <div className="absolute inset-0 bg-gradient-to-br from-white/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+            <div className="relative z-10">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center border border-blue-500/20 shadow-inner shrink-0">
+                  <CreditCard className="w-5 h-5 text-blue-400" />
+                </div>
+                <h2 className="text-white font-bold text-xl tracking-tight">
                   Payment Method
                 </h2>
               </div>
 
-              <div className="bg-[#1e293b] border border-white/5 rounded-xl p-5 mb-6">
+              <div className="bg-[#101E2D] border border-white/10 rounded-2xl p-5 mb-6 group/card hover:border-blue-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/10 hover:-translate-y-1 cursor-pointer">
                 <div className="flex items-start justify-between">
                   <div className="flex items-center gap-4">
-                    <div className="bg-black border border-white/10 text-white font-bold text-xl w-14 h-9 rounded flex items-center justify-center">
+                    <div className="bg-black/50 border border-white/10 text-white font-black italic text-sm w-12 h-8 rounded flex items-center justify-center shadow-inner group-hover/card:border-blue-500/50 transition-colors">
                       VISA
                     </div>
                     <div>
-                      <p className="font-mono text-lg tracking-widest text-white">
-                        •••• •••• •••• 4242
+                      <p className="font-mono text-sm tracking-widest text-white font-medium group-hover/card:text-blue-100 transition-colors">
+                        •••• •••• 4242
                       </p>
-                      <p className="text-sm text-gray-400">Expires 12/25</p>
+                      <p className="text-xs text-zinc-400 mt-1">Exp 12/25</p>
                     </div>
                   </div>
 
                   <div className="flex flex-col items-end gap-3">
-                    <span className="text-xs bg-white/10 px-3 py-1 rounded text-gray-300">
+                    <span className="text-[10px] uppercase tracking-wider font-bold bg-white/5 border border-white/10 px-2 py-0.5 rounded text-zinc-300 group-hover/card:bg-blue-500/10 group-hover/card:text-blue-400 transition-colors">
                       Default
                     </span>
-                    <Trash2 className="w-4 h-4 text-gray-500 hover:text-red-400 cursor-pointer" />
+                    <button className="text-zinc-500 hover:text-red-400 transition-colors hover:scale-110 active:scale-95">
+                      <Trash2 className="w-4 h-4" />
+                    </button>
                   </div>
                 </div>
               </div>
 
-              <button className="w-full py-3.5 border border-white/10 bg-transparent hover:bg-white/5 transition-colors rounded-xl text-sm font-medium flex items-center justify-center gap-2">
+              <Button className="w-full h-12 bg-transparent hover:bg-white/5 border border-dashed border-white/20 hover:border-blue-500/50 hover:text-blue-400 text-white transition-all duration-300 rounded-xl font-semibold flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98]">
                 <Plus className="w-4 h-4" />
-                Add Payment Method
-              </button>
+                Add New Method
+              </Button>
             </div>
+          </Card>
 
-            {/* Upcoming Charges */}
-            <div className="bg-[#111827] border border-white/10 rounded-2xl p-6 h-fit">
-              <h2 className="text-[#D4E4FA] text-xl font-semibold mb-6">
-                Upcoming Charges
-              </h2>
+          {/* Upcoming Charges */}
 
-              <div className="space-y-4">
-                <div className="flex justify-between text-zinc-300">
-                  <span>Stress Management Pro</span>
-                  <span className="font-medium text-white">$19.99</span>
-                </div>
-                <div className="flex justify-between text-zinc-300">
-                  <span>Career Growth Suite</span>
-                  <span className="font-medium text-white">$29.99</span>
-                </div>
-              </div>
-
-              <div className="border-t border-white/10 mt-6 pt-5 flex justify-between items-center">
-                <span className="text-zinc-300 font-medium">
-                  Total Due (Oct 15 - Oct 22)
-                </span>
-                <span className="text-2xl font-semibold text-blue-400">
-                  $49.98
-                </span>
-              </div>
-
-              <p className="text-xs text-zinc-500 mt-6 leading-relaxed">
-                Charges will be billed automatically to your default payment
-                method.
-              </p>
-            </div>
-          </div>
         </div>
       </div>
     </div>

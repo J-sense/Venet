@@ -23,9 +23,15 @@ import UpdateResumeAIModal from "./UpdateResumeAIModal";
 
 export default function TalentPortalUnlocked() {
   const [isOpenAiModal, setIsOpenAiModal] = useState(false);
+  const [isCoverLetterExpanded, setIsCoverLetterExpanded] = useState(false);
+  const [coverLetterPrompt, setCoverLetterPrompt] = useState("");
   return (
-    <div className="min-h-screen bg-zinc-950 text-white p-6">
-      <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen bg-[#030712] text-white w-full relative overflow-hidden md:p-8">
+      {/* Ambient Background Glows */}
+      <div className="absolute top-0 right-1/4 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-0 left-1/4 w-[500px] h-[500px] bg-purple-600/10 rounded-full blur-[120px] pointer-events-none" />
+
+      <div className="w-full relative z-10">
         <div className="grid grid-cols-1 xl:grid-cols-12 gap-6">
           {/* LEFT SIDE - 70% */}
           <div className="xl:col-span-8 space-y-6">
@@ -96,12 +102,12 @@ export default function TalentPortalUnlocked() {
 
             {/* Recommended Jobs */}
 
-            <CardContent className="">
-              <div className="flex justify-between items-center mb-6 w-full ">
-                <h2 className="text-2xl font-semibold">Recommended Jobs</h2>
+            <CardContent className="px-0 sm:px-6">
+              <div className="flex justify-between items-center mb-6 w-full">
+                <h2 className="text-xl sm:text-2xl font-semibold">Recommended Jobs</h2>
                 <Button
                   variant="link"
-                  className="text-blue-400 hover:text-blue-300"
+                  className="text-blue-400 hover:text-blue-300 px-0"
                 >
                   View All <ArrowRight className="ml-1 w-4 h-4" />
                 </Button>
@@ -111,49 +117,49 @@ export default function TalentPortalUnlocked() {
                 {recommendedJobs.map((job, i) => (
                   <div
                     key={i}
-                    className="bg-[#0D1526] border border-[#FFFFFF0F] rounded-2xl p-5 flex flex-col gap-4"
+                    className="bg-[#0D1526] border border-[#FFFFFF0F] rounded-2xl p-4 sm:p-5 flex flex-col gap-4 sm:gap-5"
                   >
-                    <div className="flex items-start justify-between">
-                      <div className="flex gap-4">
+                    <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 sm:gap-4">
+                      <div className="flex gap-3 sm:gap-4">
                         {/* Avatar Placeholder */}
-                        <div className="w-12 h-12 bg-[#0F1C2E] rounded-lg flex items-center justify-center font-bold text-emerald-400 border border-[#1E293B]">
+                        <div className="w-10 h-10 sm:w-12 sm:h-12 shrink-0 bg-[#0F1C2E] rounded-lg flex items-center justify-center font-bold text-emerald-400 border border-[#1E293B]">
                           TC
                         </div>
                         <div>
-                          <h3 className="text-white font-semibold text-lg">
+                          <h3 className="text-white font-semibold text-base sm:text-lg">
                             {job.title}
                           </h3>
-                          <p className="text-[#90A1B9] text-sm">
+                          <p className="text-[#90A1B9] text-xs sm:text-sm">
                             {job.company}
                           </p>
                         </div>
                       </div>
 
                       {/* Match Pill */}
-                      <div className="flex items-center gap-1.5 px-3 py-1 rounded-full border border-[#1E293B] text-emerald-400 text-xs font-medium">
-                        <CheckCircle2 className="w-3.5 h-3.5" />
+                      <div className="self-start sm:self-auto flex items-center gap-1.5 px-3 py-1 rounded-full border border-[#1E293B] text-emerald-400 text-xs font-medium">
+                        <CheckCircle2 className="w-3.5 h-3.5 shrink-0" />
                         {job.match} match
                       </div>
                     </div>
 
                     {/* Metadata Row */}
-                    <div className="flex items-center gap-6 text-[#90A1B9] text-sm">
-                      <div className="flex items-center gap-1.5">
+                    <div className="flex flex-wrap items-center gap-x-5 gap-y-3 text-[#90A1B9] text-xs sm:text-sm">
+                      <div className="flex items-center gap-1.5 shrink-0">
                         <MapPin className="w-4 h-4" /> {job.location}
                       </div>
-                      <div className="flex items-center gap-1.5">
+                      <div className="flex items-center gap-1.5 shrink-0">
                         <DollarSign className="w-4 h-4" /> {job.salary}
                       </div>
-                      <div className="flex items-center gap-1.5">
+                      <div className="flex items-center gap-1.5 shrink-0">
                         <Clock className="w-4 h-4" /> {job.time}
                       </div>
-                      <span className="px-3 py-1 bg-[#1E293B] rounded-full text-xs text-white/80">
+                      <span className="px-3 py-1 bg-[#1E293B] rounded-full text-[11px] sm:text-xs text-white/80 shrink-0">
                         {job.type}
                       </span>
                     </div>
 
                     {/* Action Button */}
-                    <Button className="bg-[#1E3A8A] hover:bg-[#1E3A8A]/90 text-white w-fit px-6 flex items-center gap-2">
+                    <Button className="bg-[#1E3A8A] hover:bg-[#1E3A8A]/90 text-white w-full sm:w-fit px-6 flex items-center justify-center gap-2 mt-1 sm:mt-0">
                       Apply Now <ChevronRight className="w-4 h-4" />
                     </Button>
                   </div>
@@ -201,7 +207,7 @@ export default function TalentPortalUnlocked() {
             </Card>
 
             {/* Cover Letter Generator */}
-            <Card className="bg-[#0D1526] border-[#FFFFFF0F] p-5">
+            <Card className="bg-[#0D1526] border-[#FFFFFF0F] p-5 transition-all duration-300">
               <CardContent className="p-0">
                 {/* Icon at the top */}
                 <div className="w-12 h-12 bg-[#8E51FF1A]  border border-[#8E51FF33]/20 rounded-xl flex items-center justify-center mb-4">
@@ -211,18 +217,49 @@ export default function TalentPortalUnlocked() {
                 {/* Text content */}
                 <div className="mb-6">
                   <h3 className="font-semibold text-white text-lg">
-                    Resume Builder
+                    Cover Letter Generator
                   </h3>
                   <p className="text-sm text-[#90A1B9] mt-1 leading-relaxed">
-                    Create a professional resume showcasing your vNET
-                    certifications and achievements.
+                    AI-powered cover letters tailored to each job application.
                   </p>
                 </div>
 
+                {/* Expandable Section */}
+                <div
+                  className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                    isCoverLetterExpanded
+                      ? "max-h-96 opacity-100 mb-6"
+                      : "max-h-0 opacity-0 mb-0"
+                  }`}
+                >
+                  <label className="text-xs text-zinc-400 font-medium mb-2 block uppercase tracking-wider">
+                    Job Details
+                  </label>
+                  <textarea
+                    value={coverLetterPrompt}
+                    onChange={(e) => setCoverLetterPrompt(e.target.value)}
+                    placeholder="Paste the job description or enter key points to include in your cover letter..."
+                    className="w-full bg-[#101E2D] border border-white/10 rounded-xl p-4 text-sm text-white placeholder:text-[#6a768a] focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 resize-none h-32"
+                  />
+                </div>
+
                 {/* Button */}
-                <Button className="w-full rounded-full py-6 bg-[#194BFB] hover:bg-[#1D4ED8] text-white font-medium flex items-center justify-center gap-2">
+                <Button
+                  onClick={() => {
+                    if (isCoverLetterExpanded && coverLetterPrompt.trim()) {
+                      alert("Generating AI cover letter...");
+                    } else {
+                      setIsCoverLetterExpanded(!isCoverLetterExpanded);
+                    }
+                  }}
+                  className={`w-full rounded-full py-6 font-medium flex items-center justify-center gap-2 transition-all duration-300 ${
+                    isCoverLetterExpanded
+                      ? "bg-[#10B981] hover:bg-[#059669] text-white shadow-lg shadow-emerald-900/20"
+                      : "bg-[#194BFB] hover:bg-[#1D4ED8] text-white shadow-lg shadow-blue-900/20"
+                  }`}
+                >
                   <Sparkles className="w-4 h-4" />
-                  Generate Letter
+                  {isCoverLetterExpanded ? "Generate Now" : "Write Cover Letter"}
                 </Button>
               </CardContent>
             </Card>

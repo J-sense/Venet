@@ -37,9 +37,19 @@ import { TalentPortal } from "./pages/dashboard/user/TalentPortal";
 import { ChatWindow } from "./pages/dashboard/experts/MySessions/ChatWindow";
 import EXpertsMySession from "./pages/dashboard/experts/MySessions/EXpertsMySession";
 import { ExpertsReview } from "./pages/dashboard/experts/Reviews";
-import { ExpertSettings, ExpertsNotificationsPage, ExpertsSecurityPage } from "./pages/dashboard/experts/Setting";
+import {
+  ExpertSettings,
+  ExpertsNotificationsPage,
+  ExpertsSecurityPage,
+} from "./pages/dashboard/experts/Setting";
 
-import { UserAccountMain, UserBillingMain, UserNotifications, UserSecurityMain, UserSettingsMain } from "./pages/dashboard/user/Settings";
+import {
+  UserAccountMain,
+  UserBillingMain,
+  UserNotifications,
+  UserSecurityMain,
+  UserSettingsMain,
+} from "./pages/dashboard/user/Settings";
 import { ResumeBuildForm } from "./pages/dashboard/user/TalentPortal";
 import AgoraVideoCallPage from "./pages/video/AgoraVideoCallPage";
 
@@ -55,7 +65,6 @@ export const App = () => {
     <Routes>
       <Route path="/video-call/:channel" element={<AgoraVideoCallPage />} />
       <Route path="/" element={<CommonLayout />}>
-
         <Route index element={<HomeMain />} />
 
         <Route
@@ -94,6 +103,7 @@ export const App = () => {
         <Route path="manual-input" element={<ResumeBuildForm />} />
         <Route path="consultation" element={<EXpertsMySession />}>
           {/* Remove the hardcoded div and point to ChatWindow */}
+          <Route index element={<Navigate to="upcoming" replace />} />
           <Route path=":section" element={<ChatWindow />} />
           <Route path=":section/:id" element={<ChatWindow />} />
         </Route>
@@ -144,7 +154,6 @@ export const App = () => {
 
       {/* Catch-all Not Found Route */}
       <Route path="*" element={<NotFoundPage />} />
-
     </Routes>
   );
 };

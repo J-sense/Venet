@@ -265,7 +265,7 @@ export default function ProfileForm() {
             <Card className="bg-[#0F172A] border-none">
               <CardHeader className="flex flex-row items-center justify-between">
                 <div>
-                  <CardTitle className="text-white font-semibold">
+                  <CardTitle className="text-white font-semibold uppercase">
                     Specializations
                   </CardTitle>
                   <p className="text-sm text-zinc-400 mt-1">
@@ -277,14 +277,14 @@ export default function ProfileForm() {
                   onClick={() => appendSpec({ title: "", description: "" })}
                   className="bg-[rgba(59,130,246,0.2)] hover:bg-blue-200 text-[#0A66C2]"
                 >
-                  <Plus className="w-4 h-4 mr-2" /> Add
+                  <Plus className="w-4 h-4 mr-2" /> Add Specialization
                 </Button>
               </CardHeader>
               <CardContent className="space-y-6">
                 {specFields.map((field, index) => (
                   <div
                     key={field.id}
-                    className="bg-[#334155] border-none rounded-xl p-5 relative"
+                    className="bg-zinc-900 border border-zinc-700 rounded-xl p-6 relative"
                   >
                     <Button
                       type="button"
