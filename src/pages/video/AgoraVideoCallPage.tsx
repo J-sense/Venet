@@ -188,7 +188,13 @@ function CallRoom() {
       osc.stop(ctx.currentTime + 0.2);
     } catch (e) { }
 
-    navigate("/dashboard/experts/consultation/upcoming");
+    const role = searchParams.get("role");
+    if (role === "user") {
+      navigate("/dashboard/user/consultation/upcoming");
+    } else {
+      // Default to expert if not specified or is "expert"
+      navigate("/dashboard/experts/consultation/upcoming");
+    }
   };
 
   // ──────────────────────────────────────────────────────────

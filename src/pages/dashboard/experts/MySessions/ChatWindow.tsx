@@ -161,7 +161,7 @@ export const ChatWindow = () => {
                         navigate(
                           `/video-call/${session.channel}?remoteName=${encodeURIComponent(
                             session.name,
-                          )}&localName=${encodeURIComponent("Alice Wong")}`,
+                          )}&localName=${encodeURIComponent("Alice Wong")}&role=${isExpert ? "expert" : "user"}`,
                         )
                       }
                       className="w-full bg-[#0066fe] hover:bg-[#0057d9] text-white font-bold py-3.5 sm:py-4 px-6 sm:px-8 rounded-2xl flex items-center justify-center gap-2.5 transition-all active:scale-[0.985] shadow-xl shadow-blue-600/25 ring-1 ring-blue-500/50"

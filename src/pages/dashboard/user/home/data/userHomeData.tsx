@@ -1,4 +1,4 @@
-import { Heart } from "lucide-react";
+import { Heart, Briefcase, GraduationCap } from "lucide-react";
 
 export const upcomingTasks = [
   {
@@ -61,14 +61,26 @@ export const trainers = [
 export const myPrograms = [
   {
     title: "Health & Fitness",
-    status: "Not Started",
+    status: "In Progress",
     progress: 60,
     icon: <Heart className="w-6 h-6 text-rose-500" />,
   },
   {
     title: "Mental Health",
     status: "Not Started",
-    progress: 60,
-    icon: <Heart className="w-6 h-6 text-rose-500" />,
+    progress: 0,
+    icon: <Heart className="w-6 h-6 text-purple-400" />,
+  },
+  {
+    title: "Career Accelerator",
+    status: "In Progress",
+    progress: 35,
+    icon: <Briefcase className="w-6 h-6 text-blue-500" />,
+  },
+  {
+    title: "Education Services",
+    status: "Completed",
+    progress: 100,
+    icon: <GraduationCap className="w-6 h-6 text-emerald-500" />,
   },
 ];

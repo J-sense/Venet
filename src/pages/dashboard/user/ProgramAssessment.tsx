@@ -23,11 +23,33 @@ const assessmentData: Record<string, string[]> = {
     "How much water do you drink daily?",
     "What is your biggest obstacle to staying fit?",
   ],
+  "career-accelerator": [
+    "What is your ultimate career goal?",
+    "How satisfied are you with your current role?",
+    "What skills would you most like to develop?",
+    "How comfortable are you with public speaking and networking?",
+    "When was the last time you updated your resume?",
+    "Do you have an active LinkedIn profile?",
+    "What is your biggest challenge in job searching?",
+    "Are you looking to change industries or stay in your current field?",
+  ],
+  "education-services": [
+    "What subjects or skills are you most interested in learning?",
+    "What is your preferred learning style (e.g., visual, auditory, hands-on)?",
+    "How many hours per week can you dedicate to studying?",
+    "What is your highest level of completed education?",
+    "Do you prefer self-paced courses or live instruction?",
+    "What are your main obstacles to learning new things?",
+    "Are you learning for career advancement or personal interest?",
+    "Do you need a certificate of completion for your goals?",
+  ],
 };
 
 const programTitles: Record<string, string> = {
   "mental-health": "Mental Health Program",
   "health-&-fitness": "Health & Fitness Program",
+  "career-accelerator": "Career Accelerator",
+  "education-services": "Education Services",
 };
 
 export default function ProgramAssessment() {

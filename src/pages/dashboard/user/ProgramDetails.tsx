@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Brain, HeartPulse } from "lucide-react";
+import { ArrowLeft, Brain, HeartPulse, Briefcase, GraduationCap } from "lucide-react";
 import { useNavigate, useParams } from "react-router";
 
 const programData: Record<string, any> = {
@@ -57,6 +57,62 @@ const programData: Record<string, any> = {
       {
         title: "Certification",
         desc: "Complete milestones and earn your fitness certificate",
+      },
+    ],
+  },
+  "career-accelerator": {
+    title: "Career Accelerator",
+    icon: <Briefcase className="w-8 h-8 text-blue-500" />,
+    description:
+      "Fast-track your professional growth with personalized coaching, resume reviews, and interview prep.",
+    steps: [
+      {
+        title: "Career Assessment",
+        desc: "Evaluate your current skills and define your dream career path",
+      },
+      {
+        title: "Profile Optimization",
+        desc: "Revamp your resume, LinkedIn, and portfolio to stand out",
+      },
+      {
+        title: "Interview Preparation",
+        desc: "Practice with mock interviews and receive expert feedback",
+      },
+      {
+        title: "Networking Strategy",
+        desc: "Learn how to connect with industry leaders and find hidden opportunities",
+      },
+      {
+        title: "Certification",
+        desc: "Complete the program and earn your career readiness certificate",
+      },
+    ],
+  },
+  "education-services": {
+    title: "Education Services",
+    icon: <GraduationCap className="w-8 h-8 text-emerald-500" />,
+    description:
+      "Expand your knowledge base with curated courses, skill-building paths, and expert academic guidance.",
+    steps: [
+      {
+        title: "Skills Gap Analysis",
+        desc: "Identify the exact skills you need to learn for your goals",
+      },
+      {
+        title: "Custom Learning Path",
+        desc: "Get a curated list of courses and materials tailored to you",
+      },
+      {
+        title: "Weekly Milestones",
+        desc: "Stay on track with bite-sized weekly learning objectives",
+      },
+      {
+        title: "Expert Mentorship",
+        desc: "Access mentors to help you overcome learning hurdles",
+      },
+      {
+        title: "Certification",
+        desc: "Pass the final assessment and receive your education certificate",
       },
     ],
   },
