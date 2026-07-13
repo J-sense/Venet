@@ -15,20 +15,26 @@ export const subscriptions = [
 
 export const billingHistory = [
   {
-    date: "Sep 15, 2023",
-    desc: "Stress Management Pro",
+    date: "Sep 15, 2023 & 8pm",
+    expertName: "Mike Chen",
+    expertise: "Nutritionist",
+    duration: "35 Minute",
     amount: "$19.99",
-    status: "Paid",
+    status: "Pending",
   },
   {
-    date: "Sep 22, 2023",
-    desc: "Career Growth Suite",
+    date: "Sep 22, 2023 & 8pm",
+    expertName: "Mike Chen",
+    expertise: "Nutritionist",
+    duration: "35 Minute",
     amount: "$29.99",
     status: "Paid",
   },
   {
-    date: "Aug 15, 2023",
-    desc: "Stress Management Pro",
+    date: "Aug 15, 2023 & 8pm",
+    expertName: "Mike Chen",
+    expertise: "Nutritionist",
+    duration: "35 Minute",
     amount: "$19.99",
     status: "Paid",
   },

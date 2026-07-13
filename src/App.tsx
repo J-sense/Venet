@@ -51,6 +51,7 @@ import {
   UserSettingsMain,
 } from "./pages/dashboard/user/Settings";
 import { ResumeBuildForm } from "./pages/dashboard/user/TalentPortal";
+import UserInvoiceMain from "./pages/dashboard/user/Invoice/UserInvoiceMain";
 import AgoraVideoCallPage from "./pages/video/AgoraVideoCallPage";
 
 import DisclaimerMain from "./pages/Disclaimer/DisclaimerMain";
@@ -114,6 +115,7 @@ export const App = () => {
           <Route path="billing" element={<UserBillingMain />} />
           <Route path="notifications" element={<UserNotifications />} />
         </Route>
+        <Route path="invoice/:id" element={<UserInvoiceMain />} />
       </Route>
       <Route path="/auth">
         <Route path="login" element={<Login />} />
