@@ -5,6 +5,7 @@ export const profileSchema = z.object({
   lastName: z.string().min(1, "Last name is required"),
   email: z.string().email("Invalid email address"),
   phone: z.string().min(10, "Phone number must be at least 10 digits"),
+  hourlyRate: z.string().min(1, "Hourly rate is required"),
   aboutMe: z
     .string()
     .max(500, "About me must be less than 500 characters")

@@ -33,6 +33,7 @@ export default function ProfileForm() {
       lastName: "",
       email: "",
       phone: "",
+      hourlyRate: "",
       aboutMe: "",
       specializations: [{ title: "", description: "" }],
       certifications: [],
@@ -234,12 +235,20 @@ export default function ProfileForm() {
                   showLeftIcon
                   placeholder="you@example.com"
                 />
-                <ProfileInput
-                  name="phone"
-                  label="Phone Number"
-                  type="tel"
-                  placeholder="+1 (555) 123-4567"
-                />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <ProfileInput
+                    name="phone"
+                    label="Phone Number"
+                    type="tel"
+                    placeholder="+1 (555) 123-4567"
+                  />
+                  <ProfileInput
+                    name="hourlyRate"
+                    label="Hourly Rate"
+                    type="text"
+                    placeholder="e.g. $50/hr"
+                  />
+                </div>
               </CardContent>
             </Card>
 
