@@ -54,11 +54,7 @@ export function ExpertsSidebar({ isOpen, onClose, navItems }: SidebarProps) {
               <Link
                 key={item.href}
                 to={item.href}
-                onClick={() => {
-                  if (window.innerWidth < 1024) {
-                    onClose();
-                  }
-                }}
+                onClick={onClose}
                 className={`relative flex items-center gap-3 px-3.5 py-2.5 rounded-[10px] transition-all duration-300 ${
                   isActive
                     ? "bg-blue-500/10 outline outline-1 outline-blue-500/20 text-[16px] shadow-sm shadow-blue-500/5"

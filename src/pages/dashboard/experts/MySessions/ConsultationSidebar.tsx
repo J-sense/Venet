@@ -1,6 +1,6 @@
 // src/pages/experts/ConsultationSidebar.tsx
 import { useNavigate, useParams, useLocation } from "react-router";
-import { X, Search } from "lucide-react";
+import { Search } from "lucide-react";
 
 const MOCK_HISTORY_LIST = [
   {
@@ -33,13 +33,7 @@ export const ConsultationSidebar = ({ onClose }: ConsultationSidebarProps) => {
     : "/dashboard/experts";
 
   return (
-    <div className="h-full flex flex-col rounded-2xl px-1 py-6">
-      {/* Mobile Close Button */}
-      <div className="lg:hidden flex justify-end p-4 border-b border-white/10">
-        <button onClick={onClose} className="text-white">
-          <X size={24} />
-        </button>
-      </div>
+    <div className="h-full flex flex-col px-1 py-5">
 
       <div className="p-6 flex flex-col h-full">
         <h2 className="text-xl font-bold mb-6 text-white">

@@ -8,7 +8,7 @@ import { ScrollToTop } from "@/components/ui/ScrollToTop";
 
 type UserLayoutProps = {
   navItems: any[];
-  user?: any; // Added user prop to handle the data being passed in
+  user?: any;
 };
 
 const getHeaderContent = (pathname: string) => {
@@ -23,69 +23,93 @@ const getHeaderContent = (pathname: string) => {
   } else if (pathname.includes("/consultation")) {
     return { title: "Consultations", subtitle: "Manage your upcoming and past sessions" };
   } else {
-    // Default to Overview
     return { title: "Expert Dashboard", subtitle: "Welcome back" };
   }
 };
 
+const SIDEBAR_WIDTH = 260;
+const DESKTOP_BREAKPOINT = 1024; // lg
+
 const ExpertsLayout = ({ navItems }: UserLayoutProps) => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(window.innerWidth >= 1024);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(
+    () => window.innerWidth >= DESKTOP_BREAKPOINT
+  );
+  const isDesktop = () => window.innerWidth >= DESKTOP_BREAKPOINT;
+
   const location = useLocation();
   const mainRef = useRef<HTMLElement>(null);
+  const headerContent = getHeaderContent(location.pathname);
 
+  // Sync sidebar state on window resize
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth < 1024) {
-        setIsSidebarOpen(false);
-      }
+      setIsSidebarOpen(isDesktop());
     };
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-  const headerContent = getHeaderContent(location.pathname);
 
   const toggleSidebar = () => setIsSidebarOpen((prev) => !prev);
-  const handleSidebarClose = () => setIsSidebarOpen(false);
+  // On desktop, nav-link clicks should NOT close the sidebar
+  const handleSidebarClose = () => {
+    if (!isDesktop()) setIsSidebarOpen(false);
+  };
+
+  // On small/medium screens the sidebar is an overlay — content does NOT shift
+  // On large screens the sidebar pushes content via margin
+  const isOverlay = !isDesktop();
 
   return (
-    <div className="flex min-h-screen w-full bg-[#FAF8F6] relative overflow-hidden text-[#2C1810]">
-      {/* Sidebar - Desktop & Mobile */}
+    <div className="flex min-h-screen w-full bg-black text-white">
+      {/* Dark backdrop — only on small/medium screens when sidebar open */}
+      {isSidebarOpen && isOverlay && (
+        <div
+          className="fixed inset-0 z-30 bg-black/60 backdrop-blur-sm"
+          onClick={handleSidebarClose}
+          aria-hidden="true"
+        />
+      )}
+
+      {/* Sidebar */}
       <ExpertsSidebar
         isOpen={isSidebarOpen}
         onClose={handleSidebarClose}
         navItems={navItems}
       />
 
-      {/* Main Content Area */}
-      <div className={`flex flex-col flex-1 transition-all duration-300 relative z-10 ${isSidebarOpen ? "lg:ml-[260px]" : "lg:ml-0"}`}>
+      {/* Main Content — shifts right on desktop when sidebar is open */}
+      <div
+        className="flex flex-col flex-1 min-w-0 transition-all duration-300"
+        style={{ marginLeft: isSidebarOpen && !isOverlay ? SIDEBAR_WIDTH : 0 }}
+      >
         {/* Top Header */}
-        <header className="sticky top-0 z-40 h-16 md:h-20 lg:h-24 bg-black border-b border-zinc-800 px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-          {/* Left: Mobile Menu Toggle & Dynamic Titles */}
-          <div className="flex items-center gap-2 sm:gap-4 flex-1 min-w-0">
+        <header className="sticky top-0 z-20 h-16 md:h-20 bg-black border-b border-zinc-800 px-4 sm:px-6 flex items-center justify-between shrink-0">
+          {/* Left: Toggle + Title */}
+          <div className="flex items-center gap-3 flex-1 min-w-0">
             <button
               onClick={toggleSidebar}
-              className="p-1.5 sm:p-2 hover:bg-zinc-800 rounded-xl transition-colors shrink-0"
-              aria-label="Toggle menu"
+              className="p-2 hover:bg-zinc-800 rounded-xl transition-colors shrink-0"
+              aria-label={isSidebarOpen ? "Close menu" : "Open menu"}
             >
-              <Menu className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+              <Menu className="w-5 h-5 text-white" />
             </button>
-            <div className="flex flex-col min-w-0 ml-5">
-              <h1 className="text-white text-lg sm:text-xl md:text-2xl font-bold tracking-tight truncate">
+            <div className="flex flex-col min-w-0">
+              <h1 className="text-white text-base sm:text-lg md:text-xl font-bold tracking-tight truncate">
                 {headerContent.title}
               </h1>
-              <p className="text-[#94A3B8] text-xs sm:text-sm hidden sm:block truncate">
+              <p className="text-[#94A3B8] text-xs hidden sm:block truncate">
                 {headerContent.subtitle}
               </p>
             </div>
           </div>
 
-          {/* Right: Notifications & User Avatar */}
-          <div className="flex items-center gap-3 sm:gap-6 shrink-0 ml-2">
-            <button className="relative p-1.5 sm:p-2 text-zinc-400 hover:text-white hover:bg-zinc-800 rounded-full transition-all">
+          {/* Right: Notifications & Avatar */}
+          <div className="flex items-center gap-2 sm:gap-4 shrink-0">
+            <button className="relative p-2 text-zinc-400 hover:text-white hover:bg-zinc-800 rounded-full transition-all">
               <Bell className="w-4 h-4 sm:w-5 sm:h-5" />
-              <span className="absolute top-1 right-1.5 w-1.5 h-1.5 sm:w-2 sm:h-2 bg-red-500 rounded-full border-2 border-black"></span>
+              <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 bg-red-500 rounded-full border border-black" />
             </button>
-            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 border-zinc-700 overflow-hidden cursor-pointer hover:border-zinc-500 transition-colors">
+            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full border-2 border-zinc-700 overflow-hidden cursor-pointer hover:border-zinc-500 transition-colors">
               <img
                 src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?q=80&w=200&auto=format&fit=crop"
                 alt="Expert Profile"
