@@ -8,6 +8,7 @@ import { ExpartFormCard } from "@/pages/Auth/components/ExpartFormCard";
 import { Form } from "@/components/ui/form";
 import { FormInput } from "@/components/ui/FormInput";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router";
 
 const loginSchema = z.object({
   email: z.string().email("Invalid email address"),
@@ -15,6 +16,7 @@ const loginSchema = z.object({
 });
 
 export default function ExpertsLogin() {
+  const navigate = useNavigate();
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -25,6 +27,7 @@ export default function ExpertsLogin() {
 
   const onSubmit = (values: z.infer<typeof loginSchema>) => {
     console.log("Login Attempt:", values);
+    navigate("/dashboard/experts");
   };
 
   return (

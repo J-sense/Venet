@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 import { AuthLayout } from "@/pages/Auth/components/AuthLayout";
 import { FormCard } from "@/pages/Auth/components/FormCard";
@@ -7,6 +7,7 @@ import { Form } from "@/components/ui/form";
 import { FormInput } from "@/components/ui/FormInput";
 
 export const Login = () => {
+  const navigate = useNavigate();
   // 1. Initialize the form hook
   const form = useForm({
     defaultValues: {
@@ -17,6 +18,7 @@ export const Login = () => {
 
   const onSubmit = (data: any) => {
     console.log("Login Attempt:", data);
+    navigate("/dashboard/user");
   };
 
   return (
@@ -28,7 +30,10 @@ export const Login = () => {
       <FormCard className="max-w-[480px]">
         {/* 3. Wrap everything in the Form provider to fix the Context error */}
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 lg:space-y-6">
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="space-y-4 lg:space-y-6"
+          >
             {/* Form Inputs */}
             <FormInput
               name="email"
