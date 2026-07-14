@@ -46,7 +46,7 @@ export default function EXpertsMySession() {
         </div>
 
         {/* Page Content */}
-        <div className="flex-1 overflow-y-auto overscroll-contain px-4 sm:px-6 py-6 lg:py-8 bg-[#0F172A]">
+        <div className="flex-1 overflow-hidden flex flex-col bg-[#0F172A]">
           <Outlet />
         </div>
       </main>

@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { Menu, Bell } from "lucide-react";
-import { useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { Outlet, useLocation } from "react-router";
 import { ExpertsSidebar } from "./ExpertsSidebar";
+import { ScrollToTop } from "@/components/ui/ScrollToTop";
 
 type UserLayoutProps = {
   navItems: any[];
@@ -28,8 +29,19 @@ const getHeaderContent = (pathname: string) => {
 };
 
 const ExpertsLayout = ({ navItems }: UserLayoutProps) => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(window.innerWidth >= 1024);
   const location = useLocation();
+  const mainRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 1024) {
+        setIsSidebarOpen(false);
+      }
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
   const headerContent = getHeaderContent(location.pathname);
 
   const toggleSidebar = () => setIsSidebarOpen((prev) => !prev);
@@ -45,14 +57,14 @@ const ExpertsLayout = ({ navItems }: UserLayoutProps) => {
       />
 
       {/* Main Content Area */}
-      <div className="flex flex-col flex-1 lg:ml-[260px] transition-all duration-300 relative z-10">
+      <div className={`flex flex-col flex-1 transition-all duration-300 relative z-10 ${isSidebarOpen ? "lg:ml-[260px]" : "lg:ml-0"}`}>
         {/* Top Header */}
         <header className="sticky top-0 z-40 h-16 md:h-20 lg:h-24 bg-black border-b border-zinc-800 px-4 sm:px-6 lg:px-8 flex items-center justify-between">
           {/* Left: Mobile Menu Toggle & Dynamic Titles */}
           <div className="flex items-center gap-2 sm:gap-4 flex-1 min-w-0">
             <button
               onClick={toggleSidebar}
-              className="lg:hidden p-1.5 sm:p-2 hover:bg-zinc-800 rounded-xl transition-colors shrink-0"
+              className="p-1.5 sm:p-2 hover:bg-zinc-800 rounded-xl transition-colors shrink-0"
               aria-label="Toggle menu"
             >
               <Menu className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
@@ -83,7 +95,8 @@ const ExpertsLayout = ({ navItems }: UserLayoutProps) => {
           </div>
         </header>
 
-        <main className="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto bg-[#000000]">
+        <main ref={mainRef} className="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto bg-[#000000]">
+          <ScrollToTop scrollRef={mainRef} />
           <Outlet />
         </main>
       </div>

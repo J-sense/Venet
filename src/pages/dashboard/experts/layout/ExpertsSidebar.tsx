@@ -19,17 +19,17 @@ export function ExpertsSidebar({ isOpen, onClose, navItems }: SidebarProps) {
 
   return (
     <aside
-      className={`bg-[#18181B] border-r border-[#1F1F1F] fixed top-0 left-0 z-40 flex h-screen w-[300px] flex-col transition-transform duration-300 lg:translate-x-0 ${
+      className={`bg-[#18181B] border-r border-[#1F1F1F] fixed top-0 left-0 z-40 flex h-screen w-[260px] flex-col transition-transform duration-300 ${
         isOpen ? "translate-x-0" : "-translate-x-full"
       }`}
     >
       {/* Logo Section */}
       <div className="p-6 flex flex-col items-center justify-center w-full border-b border-[#1F1F1F]/60">
-        <Link to={"/"}>
+        <Link to={"/"} onClick={onClose}>
           <img
             src="/VNetLogo.png"
             alt="VNET"
-            className="h-auto w-[300px] max-w-[160px] object-contain brightness-110 rounded-full"
+            className="h-auto w-[260px] max-w-[160px] object-contain brightness-110 rounded-full"
           />
         </Link>
       </div>
@@ -54,7 +54,11 @@ export function ExpertsSidebar({ isOpen, onClose, navItems }: SidebarProps) {
               <Link
                 key={item.href}
                 to={item.href}
-                onClick={onClose}
+                onClick={() => {
+                  if (window.innerWidth < 1024) {
+                    onClose();
+                  }
+                }}
                 className={`relative flex items-center gap-3 px-3.5 py-2.5 rounded-[10px] transition-all duration-300 ${
                   isActive
                     ? "bg-blue-500/10 outline outline-1 outline-blue-500/20 text-[16px] shadow-sm shadow-blue-500/5"
