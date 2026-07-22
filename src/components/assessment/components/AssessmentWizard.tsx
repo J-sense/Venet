@@ -10,6 +10,7 @@ export default function AssessmentWizard({
   const navigate = useNavigate();
   const { currentStep, answers, updateAnswer, goToNext, goToPrevious } =
     useAssessment(4);
+  console.log(answers);
   const handleSubmit = () => {
     onComplete();
     navigate("/subscription-suggestions");
