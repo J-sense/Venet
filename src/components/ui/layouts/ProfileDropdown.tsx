@@ -1,16 +1,15 @@
-import { useState, useRef, useEffect } from "react";
-import { Link, useNavigate } from "react-router";
+import { baseApi } from "@/redux/baseApi";
+import { logout, type IUser } from "@/redux/features/auth/authSlice";
+import { useAppDispatch } from "@/redux/hooks";
 import {
-  User,
+  ChevronDown,
+  LayoutDashboard,
   LogOut,
   Settings,
-  LayoutDashboard,
-  ChevronDown,
-  Shield,
+  Shield
 } from "lucide-react";
-import { useAppDispatch } from "@/redux/hooks";
-import { logout, type IUser } from "@/redux/features/auth/authSlice";
-import { baseApi } from "@/redux/baseApi";
+import { useEffect, useRef, useState } from "react";
+import { Link, useNavigate } from "react-router";
 import { toast } from "sonner";
 
 interface ProfileDropdownProps {
@@ -95,9 +94,8 @@ export const ProfileDropdown = ({ user }: ProfileDropdownProps) => {
           {firstName || fullName}
         </span>
         <ChevronDown
-          className={`w-4 h-4 text-gray-400 transition-transform duration-200 ${
-            isOpen ? "rotate-180 text-blue-400" : ""
-          }`}
+          className={`w-4 h-4 text-gray-400 transition-transform duration-200 ${isOpen ? "rotate-180 text-blue-400" : ""
+            }`}
         />
       </button>
 
