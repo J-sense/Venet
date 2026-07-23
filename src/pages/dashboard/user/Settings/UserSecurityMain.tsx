@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -8,12 +9,14 @@ import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { FormInput } from "@/components/ui/FormInput";
+import { useUserSecurityPasswordChangeMutation } from "@/redux/features/auth/auth.api";
+import { toast } from "sonner";
 
 // 1. Zod Schema
 const formSchema = z
   .object({
     currentPassword: z.string().min(1, "Current password is required"),
-    newPassword: z.string().min(12, "Password must be at least 12 characters"),
+    newPassword: z.string().min(0, "Password must be at least 0 characters"),
     confirmPassword: z.string().min(1, "Please confirm your new password"),
   })
   .refine((data) => data.newPassword === data.confirmPassword, {
@@ -31,11 +34,30 @@ export default function UserSecurityMain() {
       confirmPassword: "",
     },
   });
-
+  const [userSecurityChanagePassword, { isLoading }] =
+    useUserSecurityPasswordChangeMutation();
   // 3. Submit Handler
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
     // Add your API call here
+    try {
+      const response = await userSecurityChanagePassword({
+        password: values.currentPassword,
+        new_password: values.newPassword,
+        confirm_password: values.confirmPassword,
+      });
+      console.log(response);
+      if (response?.data?.success) {
+        toast.success(
+          response?.data?.details || "Password changed successfully!",
+        );
+      } else {
+        console.log(response);
+        toast.error((response?.error as any)?.data?.details);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
@@ -82,7 +104,7 @@ export default function UserSecurityMain() {
             </div>
 
             <Button type="submit" className="bg-[#0A66C2] text-white">
-              Update Password
+              {isLoading ? "Updating..." : "Update Password"}
             </Button>
           </form>
         </Form>

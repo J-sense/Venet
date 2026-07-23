@@ -8,11 +8,10 @@ export const axiosInstance = axios.create({
 // Add a request interceptor
 axiosInstance.interceptors.request.use(
   function (config) {
-    // Do something before request is sent
     return config;
   },
   function (error) {
-    // Do something with request error
+    console.log(error);
     return Promise.reject(error);
   },
 );
@@ -20,13 +19,64 @@ axiosInstance.interceptors.request.use(
 // Add a response interceptor
 axiosInstance.interceptors.response.use(
   function (response) {
-    // Any status code that lie within the range of 2xx cause this function to trigger
-    // Do something with response data
     return response;
   },
-  function (error) {
-    // Any status codes that falls outside the range of 2xx cause this function to trigger
-    // Do something with response error
+  async function (error) {
+    const originalRequest = error?.config;
+
+    // Handle 401 Unauthorized errors by refreshing token
+    if (
+      error?.response?.status === 401 &&
+      originalRequest &&
+      !originalRequest._retry &&
+      !originalRequest.url?.includes("/auth/refresh/")
+    ) {
+      originalRequest._retry = true;
+
+      try {
+        const { store } = await import("@/redux/store");
+        const { logout, setToken } = await import("@/redux/features/auth/authSlice");
+
+        const refreshToken = store.getState().auth.refresh;
+
+        if (refreshToken) {
+          // Call refresh endpoint with stored refresh token
+          const res = await axiosInstance.post(`${config.baseUrl}/auth/refresh/`, {
+            refresh: refreshToken,
+          });
+
+          console.log("Token Refresh Response:", res.data.access);
+
+          const newAccessToken =
+            res.data?.access
+
+          const newRefreshToken =
+            res.data?.refresh ||
+            res.data?.data?.refresh ||
+            refreshToken;
+
+          if (newAccessToken) {
+            // Update Redux state with new access token
+            store.dispatch(
+              setToken({ token: newAccessToken, refresh: newRefreshToken })
+            );
+
+            // Update Authorization header for original failed request & retry
+            originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+            return axiosInstance(originalRequest);
+          }
+        }
+
+        // If no refresh token exists or no new token returned, logout user
+        store.dispatch(logout());
+      } catch (refreshError) {
+        console.error("Token refresh failed:", refreshError);
+        const { store } = await import("@/redux/store");
+        const { logout } = await import("@/redux/features/auth/authSlice");
+        store.dispatch(logout());
+      }
+    }
+
     return Promise.reject(error);
   },
 );
