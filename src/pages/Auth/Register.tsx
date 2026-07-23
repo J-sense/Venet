@@ -17,6 +17,8 @@ import {
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { AgreementModal } from "./components/AgreementModal";
+import { useRegisterMutation } from "@/redux/features/auth/auth.api";
+import { toast } from "sonner";
 
 // Schema
 const registerSchema = z
@@ -52,9 +54,40 @@ export const Register = () => {
       terms: false,
     },
   });
-
-  const onSubmit = (values: z.infer<typeof registerSchema>) => {
-    console.log("Registration Data:", values);
+  const {
+    formState: { isSubmitting },
+  } = form;
+  const [register, { isLoading }] = useRegisterMutation();
+  const onSubmit = async (values: z.infer<typeof registerSchema>) => {
+    try {
+      const res = await register({
+        first_name: values.firstName,
+        last_name: values.lastName,
+        email: values.email,
+        password: values.password,
+        confirm_password: values.confirmPassword,
+      });
+      console.log(res);
+      if (res?.data) {
+        toast.success(
+          res.data?.message ||
+            res.data?.details ||
+            "Registration successful! Please check your email to verify your account."
+        );
+        navigate("/auth/login");
+      } else if (res?.error) {
+        const errorData = res.error as any;
+        toast.error(
+          errorData?.data?.message ||
+            errorData?.data?.details ||
+            errorData?.data?.error ||
+            "Registration failed"
+        );
+      }
+    } catch (error: any) {
+      console.log(error);
+      toast.error(error?.message || "An unexpected error occurred");
+    }
   };
 
   return (
@@ -153,11 +186,12 @@ export const Register = () => {
             {/* Submit Button */}
             <Button
               type="submit"
+              disabled={isLoading || isSubmitting}
               className="w-full h-14 px-7 py-3 bg-[#0A66C2] hover:bg-blue-700 rounded-[82px] 
                          inline-flex justify-center items-center gap-2.5 text-white text-md 
-                         font-medium leading-8 transition-all"
+                         font-medium leading-8 transition-all disabled:opacity-50"
             >
-              Create Account
+              {isLoading ? "Creating Account..." : "Create Account"}
             </Button>
 
             {/* Footer Links */}

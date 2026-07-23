@@ -1,7 +1,13 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X, ChevronDown, LogOut } from "lucide-react";
 import { AssessmentModal } from "@/components/assessment";
+import { useMyProfileQuery } from "@/redux/features/auth/auth.api";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { logout, selectCurrentUser } from "@/redux/features/auth/authSlice";
+import { ProfileDropdown } from "./ProfileDropdown";
+import { baseApi } from "@/redux/baseApi";
+import { toast } from "sonner";
 
 export const CommonNavbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -10,11 +16,23 @@ export const CommonNavbar = () => {
   const [programsOpen, setProgramsOpen] = useState(false); // Desktop hover
   const [mobileProgramsOpen, setMobileProgramsOpen] = useState(false); // Mobile accordion
 
+  const dispatch = useAppDispatch();
+  const userFromRedux = useAppSelector(selectCurrentUser);
+  const { data: myProfile } = useMyProfileQuery(undefined);
+  const userProfile = myProfile?.data || userFromRedux;
+
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  const handleMobileLogout = () => {
+    dispatch(logout());
+    dispatch(baseApi.util.resetApiState());
+    setMobileMenuOpen(false);
+    toast.success("Logged out successfully");
+  };
 
   const navLinkStyles = ({ isActive }: { isActive: boolean }) =>
     `font-inter text-base font-medium leading-6 transition-colors ${
@@ -99,18 +117,32 @@ export const CommonNavbar = () => {
 
           <div className="flex items-center gap-4">
             <div className="hidden sm:flex items-center gap-3">
-              <Link
-                to="/auth/login"
-                className="px-[32px] py-[12px] rounded-full text-sm font-medium text-[#0A66C2] border border-[#0A66C2] bg-transparent hover:bg-white/5 transition-colors"
-              >
-                Log In
-              </Link>
-              <button
-                onClick={() => setIsAssessmentOpen(true)}
-                className="bg-[#007AFF] text-white px-[32px] py-[12px] rounded-full font-bold"
-              >
-                Start Free
-              </button>
+              {userProfile ? (
+                <>
+                  <ProfileDropdown user={userProfile} />
+                  <button
+                    onClick={() => setIsAssessmentOpen(true)}
+                    className="bg-[#007AFF] text-white px-[24px] py-[10px] rounded-full font-bold text-sm hover:bg-blue-600 transition-colors"
+                  >
+                    Start Free
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link
+                    to="/auth/login"
+                    className="px-[32px] py-[12px] rounded-full text-sm font-medium text-[#0A66C2] border border-[#0A66C2] bg-transparent hover:bg-white/5 transition-colors"
+                  >
+                    Log In
+                  </Link>
+                  <button
+                    onClick={() => setIsAssessmentOpen(true)}
+                    className="bg-[#007AFF] text-white px-[32px] py-[12px] rounded-full font-bold"
+                  >
+                    Start Free
+                  </button>
+                </>
+              )}
             </div>
 
             <AssessmentModal
@@ -227,24 +259,71 @@ export const CommonNavbar = () => {
 
         {/* Mobile Call to Actions */}
         <div className="flex flex-col gap-4 mt-12 pb-10">
-          <Link
-            to="/auth/login"
-            onClick={() => setMobileMenuOpen(false)}
-            className="w-full text-center px-8 py-4 rounded-full text-lg font-bold text-[#007AFF] border-2 border-[#007AFF] bg-transparent hover:bg-[#007AFF]/10 active:scale-95 transition-all duration-300"
-          >
-            Log In
-          </Link>
-          <button
-            onClick={() => {
-              setIsAssessmentOpen(true);
-              setMobileMenuOpen(false);
-            }}
-            className="w-full text-center px-8 py-4 rounded-full text-lg font-bold text-white bg-[#007AFF] hover:bg-[#0066FF] shadow-[0_0_20px_rgba(0,122,255,0.4)] active:scale-95 transition-all duration-300"
-          >
-            Start Free
-          </button>
+          {userProfile ? (
+            <>
+              <div className="flex items-center gap-3 px-4 py-3 rounded-2xl bg-[#191C2B] border border-white/10">
+                {userProfile.image ? (
+                  <img
+                    src={userProfile.image}
+                    alt={userProfile.first_name}
+                    className="w-10 h-10 rounded-full object-cover border border-blue-500/40"
+                  />
+                ) : (
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white font-bold">
+                    {(userProfile.first_name?.[0] || "U").toUpperCase()}
+                  </div>
+                )}
+                <div className="flex flex-col min-w-0">
+                  <span className="text-white font-bold text-base truncate">
+                    {userProfile.first_name} {userProfile.last_name}
+                  </span>
+                  <span className="text-xs text-gray-400 truncate">
+                    {userProfile.email}
+                  </span>
+                </div>
+              </div>
+              <Link
+                to={
+                  userProfile.role?.toUpperCase() === "EXPERT"
+                    ? "/dashboard/experts"
+                    : "/dashboard/user"
+                }
+                onClick={() => setMobileMenuOpen(false)}
+                className="w-full text-center px-8 py-4 rounded-full text-lg font-bold text-white bg-[#007AFF] hover:bg-blue-600 transition-colors"
+              >
+                Go to Dashboard
+              </Link>
+              <button
+                onClick={handleMobileLogout}
+                className="w-full flex items-center justify-center gap-2 px-8 py-4 rounded-full text-lg font-bold text-red-400 border border-red-500/30 bg-red-500/10 hover:bg-red-500/20 transition-colors cursor-pointer"
+              >
+                <LogOut className="w-5 h-5" />
+                <span>Log Out</span>
+              </button>
+            </>
+          ) : (
+            <>
+              <Link
+                to="/auth/login"
+                onClick={() => setMobileMenuOpen(false)}
+                className="w-full text-center px-8 py-4 rounded-full text-lg font-bold text-[#007AFF] border-2 border-[#007AFF] bg-transparent hover:bg-[#007AFF]/10 active:scale-95 transition-all duration-300"
+              >
+                Log In
+              </Link>
+              <button
+                onClick={() => {
+                  setIsAssessmentOpen(true);
+                  setMobileMenuOpen(false);
+                }}
+                className="w-full text-center px-8 py-4 rounded-full text-lg font-bold text-white bg-[#007AFF] hover:bg-[#0066FF] shadow-[0_0_20px_rgba(0,122,255,0.4)] active:scale-95 transition-all duration-300"
+              >
+                Start Free
+              </button>
+            </>
+          )}
         </div>
       </div>
     </header>
   );
 };
+

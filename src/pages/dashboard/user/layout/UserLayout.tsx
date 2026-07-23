@@ -1,10 +1,12 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
-import { Menu, User, Bell } from "lucide-react";
+import { Menu, Bell } from "lucide-react";
 import { useRef, useState, useEffect } from "react";
 import { Outlet, useLocation } from "react-router";
 import { UserSidebar } from "./UserSidebar";
 import { ScrollToTop } from "@/components/ui/ScrollToTop";
+import { useMyProfileQuery } from "@/redux/features/auth/auth.api";
+import { useAppSelector } from "@/redux/hooks";
+import { selectCurrentUser } from "@/redux/features/auth/authSlice";
+import { ProfileDropdown } from "@/components/ui/layouts/ProfileDropdown";
 
 type UserLayoutProps = {
   navItems: any[];
@@ -39,6 +41,10 @@ const UserLayout = ({ navItems, user }: UserLayoutProps) => {
   const location = useLocation();
   const mainRef = useRef<HTMLElement>(null);
   const headerContent = getHeaderContent(location.pathname);
+
+  const { data: myProfile } = useMyProfileQuery(undefined);
+  const userFromRedux = useAppSelector(selectCurrentUser);
+  const userData = myProfile?.data || user?.data || userFromRedux;
 
   // Sync sidebar state on window resize
   useEffect(() => {
@@ -109,10 +115,11 @@ const UserLayout = ({ navItems, user }: UserLayoutProps) => {
               <Bell className="w-4 h-4 sm:w-5 sm:h-5" />
               <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 bg-blue-500 rounded-full border border-black" />
             </button>
-            <button className="flex items-center gap-2 bg-[#1E293B] text-white px-3 py-2 hover:bg-[#334155] rounded-full transition-all border border-zinc-700">
-              <User className="w-4 h-4 sm:w-5 sm:h-5" />
-              <span className="text-xs sm:text-sm font-medium">{user?.data?.first_name || "User"}</span>
-            </button>
+            {userData ? (
+              <ProfileDropdown user={userData} />
+            ) : (
+              <div className="w-8 h-8 rounded-full bg-zinc-800 animate-pulse" />
+            )}
           </div>
         </header>
 

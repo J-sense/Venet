@@ -14,14 +14,22 @@ const axiosBaseQuery =
     unknown,
     unknown
   > =>
-  async ({ url, method, data, params, headers }) => {
+  async ({ url, method, data, params, headers }, api) => {
     try {
+      const state = api.getState() as { auth?: { token?: string } };
+      const token = state?.auth?.token;
+
+      const requestHeaders = {
+        ...headers,
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      };
+
       const result = await axiosInstance({
         url: url,
         method,
         data,
         params,
-        headers,
+        headers: requestHeaders,
       });
       return { data: result.data };
     } catch (axiosError) {

@@ -1,25 +1,72 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import { toast } from "sonner";
 
 import { AuthLayout } from "@/pages/Auth/components/AuthLayout";
 import { FormCard } from "@/pages/Auth/components/FormCard";
 import { Form } from "@/components/ui/form";
 import { FormInput } from "@/components/ui/FormInput";
+import { useLoginUserMutation } from "@/redux/features/auth/auth.api";
+
+import { useAppDispatch } from "@/redux/hooks";
+import { setUser } from "@/redux/features/auth/authSlice";
+
+const loginSchema = z.object({
+  email: z.string().email("Please enter a valid email address"),
+  password: z.string().min(1, "Password is required"),
+});
 
 export const Login = () => {
   const navigate = useNavigate();
-  // 1. Initialize the form hook
-  const form = useForm({
+  const dispatch = useAppDispatch();
+  const form = useForm<z.infer<typeof loginSchema>>({
+    resolver: zodResolver(loginSchema),
     defaultValues: {
       email: "",
       password: "",
     },
   });
 
-  const onSubmit = (data: any) => {
-    console.log("Login Attempt:", data);
-    navigate("/dashboard/user");
+  const [loginUser, { isLoading }] = useLoginUserMutation();
+
+  const onSubmit = async (values: z.infer<typeof loginSchema>) => {
+    try {
+      const res = await loginUser({
+        email: values.email,
+        password: values.password,
+      });
+      console.log("Login Attempt Result:", res);
+
+      if (res?.data?.success && res?.data?.data) {
+        const { access, refresh, user } = res.data.data;
+        dispatch(
+          setUser({
+            user,
+            token: access,
+            refresh,
+          })
+        );
+        toast.success(
+          res.data?.details || res.data?.message || "Login successful!"
+        );
+        navigate("/dashboard/user");
+      } else if (res?.error) {
+        console.log(res?.error);
+        const errorData = res.error as any;
+        toast.error(
+          errorData?.data?.detail ||
+            errorData?.data?.message ||
+            errorData?.data?.details ||
+            "Invalid email or password. Please try again."
+        );
+      }
+    } catch (error: any) {
+      console.error(error);
+      toast.error(error?.message || "An error occurred while signing in.");
+    }
   };
 
   return (
@@ -70,9 +117,10 @@ export const Login = () => {
             {/* Sign In Button */}
             <button
               type="submit"
-              className="w-full bg-[#0A66C2] hover:bg-blue-700 text-white font-bold py-3 lg:py-3.5 rounded-full transition-all"
+              disabled={isLoading}
+              className="w-full bg-[#0A66C2] hover:bg-blue-700 text-white font-bold py-3 lg:py-3.5 rounded-full transition-all disabled:opacity-50"
             >
-              Sign In
+              {isLoading ? "Signing In..." : "Sign In"}
             </button>
 
             {/* Divider */}

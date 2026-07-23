@@ -5,9 +5,15 @@ interface AuthLayoutProps {
   children: React.ReactNode;
   title: string;
   subtitle: string;
+  isCentered?: boolean;
 }
 
-export const AuthLayout = ({ children, title, subtitle }: AuthLayoutProps) => {
+export const AuthLayout = ({
+  children,
+  title,
+  subtitle,
+  isCentered = false,
+}: AuthLayoutProps) => {
   return (
     <div className="w-full bg-[#080A0E] flex flex-col relative h-screen overflow-hidden">
       {/* Absolute Logo */}
@@ -39,7 +45,13 @@ export const AuthLayout = ({ children, title, subtitle }: AuthLayoutProps) => {
         </div>
 
         {/* RIGHT: Form Panel */}
-        <div className="flex-1 flex items-start justify-center w-full z-30 px-4 py-4 sm:px-6 lg:py-12 overflow-y-auto relative h-full pt-20 md:pt-24 lg:pt-14">
+        <div
+          className={`flex-1 flex ${
+            isCentered ? "items-center" : "items-start"
+          } justify-center w-full z-30 px-4 py-4 sm:px-6 lg:py-12 overflow-y-auto relative h-full ${
+            isCentered ? "pt-12" : "pt-20 md:pt-24 lg:pt-14"
+          }`}
+        >
           {/* Mobile Full Background (Only visible on small screens) */}
           <div className="md:hidden absolute inset-0 z-0">
             <div
@@ -52,7 +64,11 @@ export const AuthLayout = ({ children, title, subtitle }: AuthLayoutProps) => {
             <div className="absolute inset-0 backdrop-blur-[60px]" />
           </div>
 
-          <div className="w-full max-w-[400px] md:max-w-[420px] lg:max-w-[480px] xl:max-w-[520px] relative z-10 mt-12 md:mt-16 lg:mt-16">
+          <div
+            className={`w-full max-w-[400px] md:max-w-[420px] lg:max-w-[480px] xl:max-w-[520px] relative z-10 ${
+              isCentered ? "my-auto" : "mt-12 md:mt-16 lg:mt-16"
+            }`}
+          >
             <div className="relative rounded-3xl sm:rounded-[2rem] bg-[#191C2B] backdrop-blur-3xl border border-white/[0.06] p-6 sm:p-7 lg:px-10 lg:py-8 shadow-[0_16px_60px_-15px_rgba(0,0,0,0.8)]">
               <div className="text-center mb-4 lg:mb-6">
                 <h1 className="text-2xl sm:text-[28px] font-bold text-white tracking-tight mb-1 lg:mb-2">
