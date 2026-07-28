@@ -1,6 +1,9 @@
 import { CustomerFeedback } from "@/pages/Home/components/CustomerFeedback";
 import { selectCurrentToken } from "@/redux/features/auth/authSlice";
-import { useAddToCartMultipleMutation, useGetAllCartItemsQuery } from "@/redux/features/cart/cart.api";
+import {
+  useAddToCartMultipleMutation,
+  useGetAllCartItemsQuery,
+} from "@/redux/features/cart/cart.api";
 import { addToCart, selectCartItems } from "@/redux/features/cart/cartSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { ShoppingCart, Check, Loader2 } from "lucide-react";
@@ -33,7 +36,8 @@ export default function HowItWorks({
   const dispatch = useAppDispatch();
   const rawCartItems = useAppSelector(selectCartItems);
   const token = useAppSelector(selectCurrentToken);
-  const [addToCartApi, { isLoading: isAddingToCart }] = useAddToCartMultipleMutation();
+  const [addToCartApi, { isLoading: isAddingToCart }] =
+    useAddToCartMultipleMutation();
   const { data: getAllCartItem } = useGetAllCartItemsQuery(undefined, {
     skip: !token,
   });
@@ -44,14 +48,14 @@ export default function HowItWorks({
     getAllCartItem?.data?.items?.some(
       (item: any) =>
         item.program?.id === targetProgramId ||
-        item.program?.name?.toLowerCase() === programTitle.toLowerCase()
-    )
+        item.program?.name?.toLowerCase() === programTitle.toLowerCase(),
+    ),
   );
 
   const isAddedInRedux = rawCartItems.some(
     (item) =>
       (typeof item === "string" ? item : item.title).toLowerCase() ===
-      programTitle.toLowerCase()
+      programTitle.toLowerCase(),
   );
 
   const isAdded = token ? isAddedInBackend : isAddedInRedux;
@@ -160,7 +164,7 @@ export default function HowItWorks({
             )}
 
             <Link to="/shopping-cart">
-              <button className="bg-[#007AFF] hover:bg-blue-600 transition-all px-10 py-4 rounded-full font-semibold text-lg flex items-center gap-3 shadow-lg shadow-[#007AFF]/40">
+              <button className="bg-[#007AFF] hidden hover:bg-blue-600 transition-all px-10 py-4 rounded-full font-semibold text-lg flex items-center gap-3 shadow-lg shadow-[#007AFF]/40">
                 {buttonText}
                 <span>→</span>
               </button>

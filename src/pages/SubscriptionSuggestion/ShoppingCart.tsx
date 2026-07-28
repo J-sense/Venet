@@ -192,7 +192,7 @@ export const ShoppingCartPage = () => {
                   Your cart is empty
                 </h3>
                 <Link to="/subscription-suggestions">
-                  <button className="px-8 py-3.5 bg-blue-600 hover:bg-blue-700 transition rounded-full text-white font-semibold text-lg font-['Inter']">
+                  <button className="hidden px-8 py-3.5 bg-blue-600 hover:bg-blue-700 transition rounded-full text-white font-semibold text-lg font-['Inter']">
                     Browse Suggested Programs
                   </button>
                 </Link>
