@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router";
+import { Link, useNavigate, useLocation } from "react-router";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { toast } from "sonner";
@@ -10,11 +10,8 @@ import { FormCard } from "@/pages/Auth/components/FormCard";
 import { Form } from "@/components/ui/form";
 import { FormInput } from "@/components/ui/FormInput";
 import { useLoginUserMutation } from "@/redux/features/auth/auth.api";
-import {
-  useAddToCartMultipleMutation,
-  // useSyncCartMutation,
-} from "@/redux/features/cart/cart.api";
-import { selectCartItems } from "@/redux/features/cart/cartSlice";
+import { useAddToCartMultipleMutation } from "@/redux/features/cart/cart.api";
+import { selectCartItems, clearCart } from "@/redux/features/cart/cartSlice";
 
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setUser } from "@/redux/features/auth/authSlice";
@@ -26,10 +23,11 @@ const loginSchema = z.object({
 
 export const Login = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const dispatch = useAppDispatch();
   const cartItems = useAppSelector(selectCartItems);
-  console.log(cartItems);
   const [syncCart] = useAddToCartMultipleMutation();
+  const fromPath = location.state?.from;
 
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
@@ -62,7 +60,7 @@ export const Login = () => {
           res.data?.details || res.data?.message || "Login successful!",
         );
 
-        // AUTO SYNC GUEST CART POST REQUEST
+        // 1. AUTO SYNC GUEST CART POST REQUEST
         if (cartItems.length > 0) {
           try {
             const program_ids = cartItems.map((item) =>
@@ -70,21 +68,29 @@ export const Login = () => {
                 ? item.program_id
                 : "02ed108d-1636-4acd-acd9-c85a30100fbc",
             );
-            console.log(program_ids, "idssss");
-            const res = await syncCart({ program_ids: program_ids });
-            console.log(res);
-            toast.success("Guest cart synced successfully!");
+            await syncCart({ program_ids }).unwrap();
+            toast.success("Guest cart synced to your account!");
+            
+            // Clear local Redux cart slice since items are now persisted in database
+            dispatch(clearCart());
           } catch (err) {
-            console.log("Cart sync payload sent, proceeding to cart...", err);
+            console.log("Cart sync error:", err);
+            // Clear cart slice anyway as request was sent
+            dispatch(clearCart());
           }
-          navigate("/shopping-cart");
+        }
+
+        // 2. PURCHASE FLOW: If user clicked purchase/checkout when unauthenticated
+        if (fromPath) {
+          navigate(fromPath);
           return;
         }
 
-        if (user.role == "USER") {
-          navigate("/dashboard/user");
-        } else if (user.role == "EXPERT") {
+        // 3. NORMAL LOGIN: Redirect to user's role dashboard
+        if (user.role === "EXPERT") {
           navigate("/dashboard/experts");
+        } else {
+          navigate("/dashboard/user");
         }
       } else if (res?.error) {
         const errorData = res.error as any;
@@ -109,8 +115,8 @@ export const Login = () => {
         } else {
           toast.error(
             errorData?.data?.message ||
-              errorData?.data?.detail ||
-              "Invalid email or password. Please try again.",
+            errorData?.data?.detail ||
+            "Invalid email or password. Please try again.",
           );
         }
       }

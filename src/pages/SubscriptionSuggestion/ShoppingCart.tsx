@@ -84,7 +84,10 @@ export const ShoppingCartPage = () => {
         toast.success("Cart cleared from database!");
         refetch();
       } catch (err) {
-        console.log("Cart clear API call sent, trying fallback clearCartApi...", err);
+        console.log(
+          "Cart clear API call sent, trying fallback clearCartApi...",
+          err,
+        );
         try {
           await clearCartApi().unwrap();
           dispatch(clearCart());
@@ -222,7 +225,10 @@ export const ShoppingCartPage = () => {
                     aria-label="Remove item"
                   >
                     {deletingId === item.id ? (
-                      <Loader2 size={24} className="animate-spin text-red-400" />
+                      <Loader2
+                        size={24}
+                        className="animate-spin text-red-400"
+                      />
                     ) : (
                       <Trash2 size={24} />
                     )}
@@ -306,7 +312,7 @@ export const ShoppingCartPage = () => {
               <div className="pt-7 mt-7 border-t border-zinc-800">
                 <div className="flex justify-between items-center mb-2">
                   <span className="text-white text-2xl font-normal font-['Inter']">
-                    Monthly Total
+                    Total
                   </span>
                   <span className="text-white text-2xl font-normal font-['Inter']">
                     ${Number(total).toFixed(2)}
@@ -332,7 +338,7 @@ export const ShoppingCartPage = () => {
                     ? "Redirecting to Payment..."
                     : "Proceed to Checkout"}
                 </button>
-                <Link to="/subscription-suggestions" className="w-full">
+                <Link to="/subscription-suggestions" className="w-full hidden">
                   <button className="w-full h-14 flex items-center justify-center bg-zinc-800 hover:bg-zinc-700 transition-colors rounded-[32px] text-white text-xl font-medium font-['Inter']">
                     Add More Programs
                   </button>

@@ -1,12 +1,6 @@
 import { useEffect } from "react";
 import { Link, useSearchParams } from "react-router";
-import {
-  Check,
-  ArrowRight,
-  LayoutDashboard,
-  Home,
-  ShieldCheck,
-} from "lucide-react";
+import { Check, LayoutDashboard, Home, ShieldCheck } from "lucide-react";
 import { useAppDispatch } from "@/redux/hooks";
 import { clearCart } from "@/redux/features/cart/cartSlice";
 import { baseApi } from "@/redux/baseApi";

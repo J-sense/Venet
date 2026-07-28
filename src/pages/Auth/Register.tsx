@@ -72,8 +72,8 @@ export const Register = () => {
 
       toast.success(
         res.message ||
-          res.details ||
-          "Registration successful! Please check your email to verify your account.",
+        res.details ||
+        "Registration successful! Please check your email to verify your account.",
       );
       navigate("/auth/login");
     } catch (error: any) {
@@ -113,8 +113,8 @@ export const Register = () => {
       } else {
         toast.error(
           apiError.data?.message ||
-            apiError.data?.error ||
-            "Registration failed. Please try again.",
+          apiError.data?.error ||
+          "Registration failed. Please try again.",
         );
       }
     }
