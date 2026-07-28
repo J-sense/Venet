@@ -11,6 +11,8 @@ import {
 import { AboutUsMain, FounderStoryPage } from "./pages/About-us";
 import { ShoppingCartPage } from "./pages/SubscriptionSuggestion/ShoppingCart";
 import { SubscriptionSuggestionMain } from "./pages/SubscriptionSuggestion/SubscriptionSuggestionMain";
+import { PaymentSuccessPage } from "./pages/SubscriptionSuggestion/PaymentSuccessPage";
+import { PaymentCancelPage } from "./pages/SubscriptionSuggestion/PaymentCancelPage";
 
 import { navItemsForExperts, navItemsForUser } from "./components/ui/navitems";
 import {
@@ -83,6 +85,10 @@ export const App = () => {
         <Route path="/founder-story" element={<FounderStoryPage />} />
         <Route path="/experts/:id" element={<ExpertsDetails />} />
         <Route path="/shopping-cart" element={<ShoppingCartPage />} />
+        <Route path="/payment-success" element={<PaymentSuccessPage />} />
+        <Route path="/payment-cancel" element={<PaymentCancelPage />} />
+        <Route path="/checkout/success" element={<PaymentSuccessPage />} />
+        <Route path="/checkout/cancel" element={<PaymentCancelPage />} />
         <Route path="/disclaimer" element={<DisclaimerMain />} />
         <Route path="/privacy" element={<PrivacyMain />} />
         <Route path="/terms" element={<TermsMain />} />

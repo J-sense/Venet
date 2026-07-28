@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Sparkles } from "lucide-react";
 import { Link } from "react-router";
 import { AssessmentModal } from "@/components/assessment";
+import { useAllProgramsQuery } from "@/redux/features/programs/program.api";
 
 export default function BannerV2() {
   const [isAssessmentOpen, setIsAssessmentOpen] = useState(false);
@@ -10,6 +11,8 @@ export default function BannerV2() {
     { label: "Expert Coaches", value: "500+" },
     { label: "Success Rate", value: "95%" },
   ];
+  const { data: getAllPrograms } = useAllProgramsQuery(undefined);
+  console.log(getAllPrograms);
   return (
     <div className="relative min-h-[100vh] lg:min-h-[112vh] flex items-center overflow-hidden bg-black">
       {/* Background Image */}

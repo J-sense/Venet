@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router";
-import { Menu, X, ChevronDown, LogOut } from "lucide-react";
+import { Menu, X, ChevronDown, LogOut, ShoppingCart, ShoppingBag } from "lucide-react";
 import { AssessmentModal } from "@/components/assessment";
 import { useMyProfileQuery } from "@/redux/features/auth/auth.api";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { logout, selectCurrentUser } from "@/redux/features/auth/authSlice";
+import { logout, selectCurrentUser, selectCurrentToken } from "@/redux/features/auth/authSlice";
+import { selectCartCount } from "@/redux/features/cart/cartSlice";
+import { useGetAllCartItemsQuery } from "@/redux/features/cart/cart.api";
 import { ProfileDropdown } from "./ProfileDropdown";
 import { baseApi } from "@/redux/baseApi";
 import { toast } from "sonner";
@@ -18,6 +20,15 @@ export const CommonNavbar = () => {
 
   const dispatch = useAppDispatch();
   const userFromRedux = useAppSelector(selectCurrentUser);
+  const token = useAppSelector(selectCurrentToken);
+  const reduxCartCount = useAppSelector(selectCartCount);
+  const { data: getAllCart } = useGetAllCartItemsQuery(undefined, {
+    skip: !token,
+  });
+  const displayCartCount = token
+    ? getAllCart?.data?.items?.length ?? 0
+    : reduxCartCount;
+
   const { data: myProfile } = useMyProfileQuery(undefined);
   const userProfile = myProfile?.data || userFromRedux;
 
@@ -116,6 +127,29 @@ export const CommonNavbar = () => {
           </nav>
 
           <div className="flex items-center gap-4">
+            {/* Ultra-Modern Luxury Shopping Cart Button */}
+            <Link
+              to="/shopping-cart"
+              className="group relative p-[1.5px] rounded-full bg-gradient-to-r from-blue-500/40 via-indigo-500/40 to-cyan-400/40 hover:from-blue-400 hover:via-cyan-400 hover:to-indigo-400 transition-all duration-500 shadow-[0_0_20px_rgba(0,122,255,0.25)] hover:shadow-[0_0_30px_rgba(0,122,255,0.6)] active:scale-95 flex items-center justify-center"
+              title="View Cart"
+            >
+              <div className="w-11 h-11 rounded-full bg-[#0B0F19]/90 hover:bg-[#0E1526] backdrop-blur-xl flex items-center justify-center relative overflow-hidden transition-colors duration-300">
+                {/* Subtle sheen highlight */}
+                <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/5 to-white/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                
+                {/* Ambient glow core */}
+                <div className="absolute inset-1 rounded-full bg-blue-500/10 blur-md group-hover:bg-cyan-400/25 transition-all duration-300" />
+
+                <ShoppingBag className="relative z-10 w-5 h-5 text-cyan-400 group-hover:text-white group-hover:scale-110 group-hover:-rotate-6 transition-all duration-300 drop-shadow-[0_0_12px_rgba(6,182,212,0.9)]" />
+              </div>
+
+              {displayCartCount > 0 && (
+                <span className="absolute -top-1 -right-1 z-20 bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-500 text-white text-[11px] font-black min-w-[20px] h-5 px-1 rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(0,198,255,0.9)] ring-2 ring-[#0B0F19] group-hover:scale-115 transition-transform duration-300">
+                  {displayCartCount}
+                </span>
+              )}
+            </Link>
+
             <div className="hidden sm:flex items-center gap-3">
               {userProfile ? (
                 <>
@@ -254,6 +288,24 @@ export const CommonNavbar = () => {
             }
           >
             About us
+          </NavLink>
+
+          <NavLink
+            to="/shopping-cart"
+            onClick={() => setMobileMenuOpen(false)}
+            className={({ isActive }) =>
+              `text-3xl font-extrabold tracking-tight transition-all duration-300 flex items-center justify-between ${isActive ? "text-[#007AFF] pl-2 border-l-4 border-[#007AFF]" : "text-gray-200 hover:text-white"}`
+            }
+          >
+            <span className="flex items-center gap-3">
+              <ShoppingBag className="w-7 h-7 text-cyan-400 drop-shadow-[0_0_8px_rgba(6,182,212,0.8)]" />
+              <span>Cart</span>
+            </span>
+            {displayCartCount > 0 && (
+              <span className="bg-gradient-to-tr from-blue-600 to-indigo-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
+                {displayCartCount} {displayCartCount === 1 ? "Item" : "Items"}
+              </span>
+            )}
           </NavLink>
         </div>
 

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { AuthLayout } from "@/pages/Auth/components/AuthLayout";
 import { FormCard } from "@/pages/Auth/components/FormCard";
 import {

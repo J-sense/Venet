@@ -2,8 +2,12 @@ import { ActionButton } from "@/components/ui/ActionButton";
 import HowItWorks from "@/components/ui/ProgrammeHowItWorksSection";
 
 import { fitnessSteps } from "./data/programData";
+import { useHealthAndFitnessProgramQuery } from "@/redux/features/programs/program.api";
 
 export default function HealthFitnessPage() {
+  const { data: healthAndFintnessProgram } =
+    useHealthAndFitnessProgramQuery(undefined);
+  console.log(healthAndFintnessProgram?.data?.id);
   return (
     <div className="bg-[#0A0A0A] text-white ">
       {/* Full Screen Hero Section */}
@@ -101,6 +105,8 @@ export default function HealthFitnessPage() {
 
       {/* Program Content Below */}
       <HowItWorks
+        programId={healthAndFintnessProgram?.data?.id || "086fde4d-87d9-4191-ac82-61ced65f51ee"}
+        programTitle="Health & Fitness Program"
         steps={fitnessSteps}
         subtitle="Your journey from assessment to fitness transformation in 5 simple steps"
         buttonText="Start Your Fitness Journey"

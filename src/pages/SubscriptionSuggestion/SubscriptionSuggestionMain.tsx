@@ -1,24 +1,26 @@
-import { useState } from "react";
 import { Check, ShoppingCart } from "lucide-react";
-
 import { Link } from "react-router";
 import { programs } from "../program/data/programData";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import {
+  addToCart,
+  removeFromCart,
+  selectCartItems,
+} from "@/redux/features/cart/cartSlice";
 
 export const SubscriptionSuggestionMain = () => {
-  // Track IDs of programs added to the cart
-  const [cart, setCart] = useState<string[]>(() => {
-    const saved = localStorage.getItem("vnet_cart");
-    return saved ? JSON.parse(saved) : [];
-  });
+  const dispatch = useAppDispatch();
+  const rawCartItems = useAppSelector(selectCartItems);
+  const cartTitles = rawCartItems.map((item) =>
+    typeof item === "string" ? item : item.title
+  );
 
   const toggleCart = (title: string) => {
-    setCart((prev) => {
-      const nextCart = prev.includes(title)
-        ? prev.filter((t) => t !== title)
-        : [...prev, title];
-      localStorage.setItem("vnet_cart", JSON.stringify(nextCart));
-      return nextCart;
-    });
+    if (cartTitles.includes(title)) {
+      dispatch(removeFromCart(title));
+    } else {
+      dispatch(addToCart({ title, price: 29.99 }));
+    }
   };
 
   return (
@@ -28,12 +30,12 @@ export const SubscriptionSuggestionMain = () => {
       <div className="max-w-[1000px] w-full mx-auto relative z-10">
         <div className="absolute top-60 left-0 w-[500px] h-[500px] blur-[100px] rounded-full pointer-events-none -translate-x-1/2 -translate-y-1/2 bg-gradient-to-br from-[#0B60BD]/50 to-transparent -z-10" />
         {/* Cart Notification Bar - Appears when items are in cart */}
-        {cart.length > 0 && (
+        {cartTitles.length > 0 && (
           <div className="mb-8 p-4 bg-[#0F172A] border border-blue-900/50 rounded-xl flex items-center justify-between">
             <div className="flex items-center gap-3 text-white">
               <ShoppingCart className="size-5 text-blue-500" />
               <span className="font-medium">
-                {cart.length} programs in cart
+                {cartTitles.length} programs in cart
               </span>
             </div>
             <Link to={"/shopping-cart"}>
@@ -56,7 +58,7 @@ export const SubscriptionSuggestionMain = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {programs.map((program, idx) => {
             const Icon = program.icon;
-            const isAdded = cart.includes(program.title);
+            const isAdded = cartTitles.includes(program.title);
 
             return (
               <div

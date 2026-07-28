@@ -1,8 +1,11 @@
 import HowItWorks from "@/components/ui/ProgrammeHowItWorksSection";
 
 import { careerSteps } from "./data/programData";
+import { useCareerProgrammeQuery } from "@/redux/features/programs/program.api";
 
 export default function CareerPage() {
+  const { data: careerProgramData } = useCareerProgrammeQuery(undefined);
+  console.log(careerProgramData);
   return (
     <div className="bg-[#0A0A0A] text-white">
       {/* Full Screen Hero */}
@@ -44,7 +47,6 @@ export default function CareerPage() {
 
               {/* CTA Buttons */}
               <div className="flex flex-col sm:flex-row gap-4 mb-12">
-
                 <button className="bg-[#1A63F4] hover:bg-blue-600 shadow-[0_0_20px_rgba(26,99,244,0.4)] transition px-8 py-3.5 rounded-full font-semibold text-sm flex items-center justify-center gap-3 min-w-[220px]">
                   Start Free Assessment
                   <span>→</span>
@@ -85,6 +87,10 @@ export default function CareerPage() {
       </div>
 
       <HowItWorks
+        programId={
+          careerProgramData?.data?.id || "6f9df1d7-a70b-4355-add7-2df64157bfd8"
+        }
+        programTitle="Career Program"
         steps={careerSteps}
         subtitle="Your journey from assessment to career success in 5 simple steps"
         buttonText="Start Your Career Journey"

@@ -9,6 +9,13 @@ const authApi = baseApi.injectEndpoints({
         data: userInfo,
       }),
     }),
+    registerExpert: builder.mutation({
+      query: (userInfo) => ({
+        url: "/auth/register/",
+        method: "POST",
+        data: userInfo,
+      }),
+    }),
     loginUser: builder.mutation({
       query: (userInfo) => ({
         url: "/auth/login/email/",
@@ -61,4 +68,5 @@ export const {
   useMyProfileQuery,
   useForgetPasswordUserMutation,
   useUserSecurityPasswordChangeMutation,
+  useRegisterExpertMutation,
 } = authApi;

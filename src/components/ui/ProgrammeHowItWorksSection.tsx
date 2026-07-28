@@ -1,5 +1,11 @@
 import { CustomerFeedback } from "@/pages/Home/components/CustomerFeedback";
+import { selectCurrentToken } from "@/redux/features/auth/authSlice";
+import { useAddToCartMultipleMutation, useGetAllCartItemsQuery } from "@/redux/features/cart/cart.api";
+import { addToCart, selectCartItems } from "@/redux/features/cart/cartSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { ShoppingCart, Check, Loader2 } from "lucide-react";
 import { Link } from "react-router";
+import { toast } from "sonner";
 
 interface Step {
   number: number;
@@ -12,6 +18,8 @@ interface HowItWorksProps {
   title?: string;
   subtitle?: string;
   buttonText?: string;
+  programTitle?: string;
+  programId?: string;
 }
 
 export default function HowItWorks({
@@ -19,7 +27,55 @@ export default function HowItWorks({
   title = "How It Works",
   subtitle = "Your journey from assessment to success in 5 simple steps",
   buttonText = "Start Your Journey",
+  programTitle = "VNET Wellness Program",
+  programId,
 }: HowItWorksProps) {
+  const dispatch = useAppDispatch();
+  const rawCartItems = useAppSelector(selectCartItems);
+  const token = useAppSelector(selectCurrentToken);
+  const [addToCartApi, { isLoading: isAddingToCart }] = useAddToCartMultipleMutation();
+  const { data: getAllCartItem } = useGetAllCartItemsQuery(undefined, {
+    skip: !token,
+  });
+
+  const targetProgramId = programId || "02ed108d-1636-4acd-acd9-c85a30100fbc";
+
+  const isAddedInBackend = Boolean(
+    getAllCartItem?.data?.items?.some(
+      (item: any) =>
+        item.program?.id === targetProgramId ||
+        item.program?.name?.toLowerCase() === programTitle.toLowerCase()
+    )
+  );
+
+  const isAddedInRedux = rawCartItems.some(
+    (item) =>
+      (typeof item === "string" ? item : item.title).toLowerCase() ===
+      programTitle.toLowerCase()
+  );
+
+  const isAdded = token ? isAddedInBackend : isAddedInRedux;
+
+  const handleAddToCart = async () => {
+    if (!isAdded) {
+      const pId = programId || "02ed108d-1636-4acd-acd9-c85a30100fbc";
+      dispatch(
+        addToCart({ program_id: pId, title: programTitle, price: 29.99 }),
+      );
+      toast.success(`${programTitle} added to cart!`);
+
+      if (token) {
+        try {
+          await addToCartApi({
+            program_ids: [pId],
+          }).unwrap();
+        } catch (err) {
+          console.log("Add to cart API sent:", err);
+        }
+      }
+    }
+  };
+
   return (
     <>
       <div className="pt-40 bg-black relative overflow-hidden">
@@ -74,8 +130,35 @@ export default function HowItWorks({
             ))}
           </div>
 
-          {/* Join Now Button */}
-          <div className="flex justify-center mt-12">
+          {/* Action Buttons: Add to Cart & View Cart */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mt-14">
+            {isAdded ? (
+              <div className="relative inline-flex items-center gap-3 px-9 py-4 rounded-full bg-emerald-950/70 border border-emerald-500/50 text-emerald-300 font-bold text-lg shadow-[0_0_30px_rgba(16,185,129,0.35)] backdrop-blur-xl transition-all duration-300">
+                <div className="w-6 h-6 rounded-full bg-emerald-500/20 border border-emerald-400 flex items-center justify-center text-emerald-300 shadow-[0_0_10px_rgba(16,185,129,0.8)]">
+                  <Check className="w-3.5 h-3.5 stroke-[3]" />
+                </div>
+                <span>Added to Cart</span>
+              </div>
+            ) : (
+              <button
+                onClick={handleAddToCart}
+                disabled={isAddingToCart}
+                className="group relative px-9 py-4 rounded-full bg-[#007AFF] hover:bg-blue-600 text-white font-bold text-lg flex items-center gap-3 transition-colors duration-200 cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed active:scale-[0.98] shadow-lg shadow-[#007AFF]/30"
+              >
+                {isAddingToCart ? (
+                  <>
+                    <Loader2 className="w-5 h-5 text-white animate-spin" />
+                    <span>Adding to Cart...</span>
+                  </>
+                ) : (
+                  <>
+                    <ShoppingCart className="w-5 h-5 text-white group-hover:scale-105 transition-transform duration-200" />
+                    <span>Add Program to Cart</span>
+                  </>
+                )}
+              </button>
+            )}
+
             <Link to="/shopping-cart">
               <button className="bg-[#007AFF] hover:bg-blue-600 transition-all px-10 py-4 rounded-full font-semibold text-lg flex items-center gap-3 shadow-lg shadow-[#007AFF]/40">
                 {buttonText}

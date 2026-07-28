@@ -2,8 +2,12 @@ import { ActionButton } from "@/components/ui/ActionButton";
 import HowItWorks from "@/components/ui/ProgrammeHowItWorksSection";
 
 import { educationSteps } from "./data/programData";
+import { useEducationServiceProgramQuery } from "@/redux/features/programs/program.api";
 
 export default function EducationServicePage() {
+  const { data: educationServiceProgram } =
+    useEducationServiceProgramQuery(undefined);
+  console.log(educationServiceProgram);
   return (
     <div className="bg-[#0A0A0A] text-white pt-6">
       {/* Full Screen Hero */}
@@ -23,7 +27,9 @@ export default function EducationServicePage() {
           <div className="max-w-7xl mx-auto text-center">
             {/* Badge */}
             <div className="inline-flex items-center gap-1.5 sm:gap-2 bg-blue-500/10 border border-blue-500/30 px-4 py-2 sm:px-6 sm:py-2.5 rounded-full mb-6 sm:mb-8 max-w-full">
-              <span className="text-blue-400 text-xs sm:text-base shrink-0">★</span>
+              <span className="text-blue-400 text-xs sm:text-base shrink-0">
+                ★
+              </span>
               <span className="uppercase text-blue-300 text-[10px] sm:text-sm font-medium tracking-wider sm:tracking-widest truncate sm:whitespace-normal">
                 EDUCATION . SERVICE . DIRECTION
               </span>
@@ -59,18 +65,28 @@ export default function EducationServicePage() {
             {/* Stats */}
             <div className="flex flex-wrap justify-center gap-6 sm:gap-12">
               <div className="text-center">
-                <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-blue-500">10K+</div>
+                <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-blue-500">
+                  10K+
+                </div>
                 <div className="text-white/60 text-[10px] sm:text-xs md:text-sm mt-1">
                   Students Enrolled
                 </div>
               </div>
               <div className="text-center">
-                <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-blue-500">500+</div>
-                <div className="text-white/60 text-[10px] sm:text-xs md:text-sm mt-1">Expert Mentors</div>
+                <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-blue-500">
+                  500+
+                </div>
+                <div className="text-white/60 text-[10px] sm:text-xs md:text-sm mt-1">
+                  Expert Mentors
+                </div>
               </div>
               <div className="text-center">
-                <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-blue-500">95%</div>
-                <div className="text-white/60 text-[10px] sm:text-xs md:text-sm mt-1">Success Rate</div>
+                <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-blue-500">
+                  95%
+                </div>
+                <div className="text-white/60 text-[10px] sm:text-xs md:text-sm mt-1">
+                  Success Rate
+                </div>
               </div>
             </div>
           </div>
@@ -79,6 +95,11 @@ export default function EducationServicePage() {
 
       {/* Additional Content */}
       <HowItWorks
+        programId={
+          educationServiceProgram?.data?.id ||
+          "02ed108d-1636-4acd-acd9-c85a30100fbc"
+        }
+        programTitle="Education Service Program"
         steps={educationSteps}
         subtitle="Your journey from assessment to career success in 5 simple steps"
         buttonText="Start Learning Now"

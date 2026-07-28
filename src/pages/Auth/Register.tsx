@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -57,6 +58,7 @@ export const Register = () => {
   const {
     formState: { isSubmitting },
   } = form;
+  const { setError } = form;
   const [register, { isLoading }] = useRegisterMutation();
   const onSubmit = async (values: z.infer<typeof registerSchema>) => {
     try {
@@ -66,27 +68,55 @@ export const Register = () => {
         email: values.email,
         password: values.password,
         confirm_password: values.confirmPassword,
-      });
-      console.log(res);
-      if (res?.data) {
-        toast.success(
-          res.data?.message ||
-            res.data?.details ||
-            "Registration successful! Please check your email to verify your account."
-        );
-        navigate("/auth/login");
-      } else if (res?.error) {
-        const errorData = res.error as any;
+      }).unwrap();
+
+      toast.success(
+        res.message ||
+          res.details ||
+          "Registration successful! Please check your email to verify your account.",
+      );
+      navigate("/auth/login");
+    } catch (error: any) {
+      const apiError = error as {
+        data?: {
+          details?: Record<string, string | string[]> | string;
+          message?: string;
+          error?: string;
+        };
+      };
+      const details = apiError.data?.details;
+
+      const fieldMap: Record<string, keyof z.infer<typeof registerSchema>> = {
+        first_name: "firstName",
+        last_name: "lastName",
+        email: "email",
+        password: "password",
+        confirm_password: "confirmPassword",
+      };
+
+      if (details && typeof details === "object" && !Array.isArray(details)) {
+        Object.entries(details).forEach(([field, message]) => {
+          const text = Array.isArray(message)
+            ? message.join(" ")
+            : String(message);
+
+          const targetField = fieldMap[field];
+
+          if (targetField) {
+            setError(targetField, { type: "server", message: text });
+          }
+
+          toast.error(text);
+        });
+      } else if (typeof details === "string") {
+        toast.error(details);
+      } else {
         toast.error(
-          errorData?.data?.message ||
-            errorData?.data?.details ||
-            errorData?.data?.error ||
-            "Registration failed"
+          apiError.data?.message ||
+            apiError.data?.error ||
+            "Registration failed. Please try again.",
         );
       }
-    } catch (error: any) {
-      console.log(error);
-      toast.error(error?.message || "An unexpected error occurred");
     }
   };
 

@@ -10,8 +10,13 @@ import { FormCard } from "@/pages/Auth/components/FormCard";
 import { Form } from "@/components/ui/form";
 import { FormInput } from "@/components/ui/FormInput";
 import { useLoginUserMutation } from "@/redux/features/auth/auth.api";
+import {
+  useAddToCartMultipleMutation,
+  // useSyncCartMutation,
+} from "@/redux/features/cart/cart.api";
+import { selectCartItems } from "@/redux/features/cart/cartSlice";
 
-import { useAppDispatch } from "@/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setUser } from "@/redux/features/auth/authSlice";
 
 const loginSchema = z.object({
@@ -22,6 +27,10 @@ const loginSchema = z.object({
 export const Login = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const cartItems = useAppSelector(selectCartItems);
+  console.log(cartItems);
+  const [syncCart] = useAddToCartMultipleMutation();
+
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -47,21 +56,63 @@ export const Login = () => {
             user,
             token: access,
             refresh,
-          })
+          }),
         );
         toast.success(
-          res.data?.details || res.data?.message || "Login successful!"
+          res.data?.details || res.data?.message || "Login successful!",
         );
-        navigate("/dashboard/user");
+
+        // AUTO SYNC GUEST CART POST REQUEST
+        if (cartItems.length > 0) {
+          try {
+            const program_ids = cartItems.map((item) =>
+              typeof item === "object" && item.program_id
+                ? item.program_id
+                : "02ed108d-1636-4acd-acd9-c85a30100fbc",
+            );
+            console.log(program_ids, "idssss");
+            const res = await syncCart({ program_ids: program_ids });
+            console.log(res);
+            toast.success("Guest cart synced successfully!");
+          } catch (err) {
+            console.log("Cart sync payload sent, proceeding to cart...", err);
+          }
+          navigate("/shopping-cart");
+          return;
+        }
+
+        if (user.role == "USER") {
+          navigate("/dashboard/user");
+        } else if (user.role == "EXPERT") {
+          navigate("/dashboard/experts");
+        }
       } else if (res?.error) {
-        console.log(res?.error);
         const errorData = res.error as any;
-        toast.error(
-          errorData?.data?.detail ||
+        const details = errorData?.data?.details;
+
+        if (details && typeof details === "object" && !Array.isArray(details)) {
+          Object.entries(details).forEach(([field, message]) => {
+            const text = Array.isArray(message)
+              ? message.join(" ")
+              : String(message);
+
+            // map server field names to form fields where applicable
+            if (field === "email" || field === "password") {
+              setError(field, { type: "server", message: text });
+            } else {
+              // non_field_errors / other general errors -> toast
+              toast.error(text);
+            }
+          });
+        } else if (typeof errorData?.data === "string") {
+          toast.error(errorData.data);
+        } else {
+          toast.error(
             errorData?.data?.message ||
-            errorData?.data?.details ||
-            "Invalid email or password. Please try again."
-        );
+              errorData?.data?.detail ||
+              "Invalid email or password. Please try again.",
+          );
+        }
       }
     } catch (error: any) {
       console.error(error);

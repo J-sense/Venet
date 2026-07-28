@@ -1,8 +1,12 @@
 import HowItWorks from "@/components/ui/ProgrammeHowItWorksSection";
 
 import { mentalHealthSteps } from "./data/programData";
+import { useMentalHealthProgramQuery } from "@/redux/features/programs/program.api";
 
 export default function MentalHealthPage() {
+  const { data: mentalHealthProgram } = useMentalHealthProgramQuery(undefined);
+  console.log(mentalHealthProgram);
+  console.log(mentalHealthProgram?.data?.id);
   return (
     <div className="bg-[#0A0A0A] text-white pt-20 bg-black min-h-screen">
       {/* Full Screen Hero Section */}
@@ -67,19 +71,25 @@ export default function MentalHealthPage() {
             {/* Stats */}
             <div className="grid grid-cols-3 gap-4 sm:gap-10 md:gap-14 text-center lg:text-left w-full">
               <div className="flex flex-col items-center lg:items-start">
-                <div className="text-xl sm:text-2xl md:text-3xl font-bold">10K+</div>
+                <div className="text-xl sm:text-2xl md:text-3xl font-bold">
+                  10K+
+                </div>
                 <div className="text-white/50 text-[10px] sm:text-xs mt-1 font-['Inter']">
                   Active Members
                 </div>
               </div>
               <div className="flex flex-col items-center lg:items-start">
-                <div className="text-xl sm:text-2xl md:text-3xl font-bold">500+</div>
+                <div className="text-xl sm:text-2xl md:text-3xl font-bold">
+                  500+
+                </div>
                 <div className="text-white/50 text-[10px] sm:text-xs mt-1 font-['Inter']">
                   Expert Trainers
                 </div>
               </div>
               <div className="flex flex-col items-center lg:items-start">
-                <div className="text-xl sm:text-2xl md:text-3xl font-bold">95%</div>
+                <div className="text-xl sm:text-2xl md:text-3xl font-bold">
+                  95%
+                </div>
                 <div className="text-white/50 text-[10px] sm:text-xs mt-1 font-['Inter']">
                   Success Rate
                 </div>
@@ -94,6 +104,8 @@ export default function MentalHealthPage() {
       </div>
       {/* Rest of Page Content */}
       <HowItWorks
+        programId={mentalHealthProgram?.data?.id}
+        programTitle="Mental Health Program"
         steps={mentalHealthSteps}
         subtitle="Your journey from assessment to mental wellness in 5 simple steps"
         buttonText="Join Now"
