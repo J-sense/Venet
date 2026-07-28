@@ -159,7 +159,7 @@ export const Login = () => {
 
             {/* Remember & Forgot */}
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-2 text-sm">
-              <label className="flex items-center gap-2 text-gray-400 cursor-pointer">
+              <label className="hidden flex items-center gap-2 text-gray-400 cursor-pointer">
                 <input
                   type="checkbox"
                   className="rounded bg-slate-800 border-slate-700 w-4 h-4"

@@ -70,9 +70,12 @@ export default function HowItWorks({
 
       if (token) {
         try {
-          await addToCartApi({
+          const res = await addToCartApi({
             program_ids: [pId],
           }).unwrap();
+          if (res?.data?.skipped_items[0]?.reason) {
+            toast.error(res?.data?.skipped_items[0]?.reason);
+          }
         } catch (err) {
           console.log("Add to cart API sent:", err);
         }
