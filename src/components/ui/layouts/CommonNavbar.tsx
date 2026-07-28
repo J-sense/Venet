@@ -1,15 +1,19 @@
+import { AssessmentModal } from "@/components/assessment";
+import { baseApi } from "@/redux/baseApi";
+import { useMyProfileQuery } from "@/redux/features/auth/auth.api";
+import {
+  logout,
+  selectCurrentToken,
+  selectCurrentUser,
+} from "@/redux/features/auth/authSlice";
+import { useGetAllCartItemsQuery } from "@/redux/features/cart/cart.api";
+import { selectCartCount } from "@/redux/features/cart/cartSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { ChevronDown, LogOut, Menu, ShoppingBag, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router";
-import { Menu, X, ChevronDown, LogOut, ShoppingCart, ShoppingBag } from "lucide-react";
-import { AssessmentModal } from "@/components/assessment";
-import { useMyProfileQuery } from "@/redux/features/auth/auth.api";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { logout, selectCurrentUser, selectCurrentToken } from "@/redux/features/auth/authSlice";
-import { selectCartCount } from "@/redux/features/cart/cartSlice";
-import { useGetAllCartItemsQuery } from "@/redux/features/cart/cart.api";
-import { ProfileDropdown } from "./ProfileDropdown";
-import { baseApi } from "@/redux/baseApi";
 import { toast } from "sonner";
+import { ProfileDropdown } from "./ProfileDropdown";
 
 export const CommonNavbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -26,7 +30,7 @@ export const CommonNavbar = () => {
     skip: !token,
   });
   const displayCartCount = token
-    ? getAllCart?.data?.items?.length ?? 0
+    ? (getAllCart?.data?.items?.length ?? 0)
     : reduxCartCount;
 
   const { data: myProfile } = useMyProfileQuery(undefined);
@@ -136,7 +140,7 @@ export const CommonNavbar = () => {
               <div className="w-11 h-11 rounded-full bg-[#0B0F19]/90 hover:bg-[#0E1526] backdrop-blur-xl flex items-center justify-center relative overflow-hidden transition-colors duration-300">
                 {/* Subtle sheen highlight */}
                 <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/5 to-white/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                
+
                 {/* Ambient glow core */}
                 <div className="absolute inset-1 rounded-full bg-blue-500/10 blur-md group-hover:bg-cyan-400/25 transition-all duration-300" />
 
@@ -378,4 +382,3 @@ export const CommonNavbar = () => {
     </header>
   );
 };
-

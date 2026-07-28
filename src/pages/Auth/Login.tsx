@@ -70,7 +70,7 @@ export const Login = () => {
             );
             await syncCart({ program_ids }).unwrap();
             toast.success("Guest cart synced to your account!");
-            
+
             // Clear local Redux cart slice since items are now persisted in database
             dispatch(clearCart());
           } catch (err) {
@@ -104,7 +104,10 @@ export const Login = () => {
 
             // map server field names to form fields where applicable
             if (field === "email" || field === "password") {
-              setError(field, { type: "server", message: text });
+              form.setError(field as "email" | "password", {
+                type: "server",
+                message: text,
+              });
             } else {
               // non_field_errors / other general errors -> toast
               toast.error(text);
@@ -115,8 +118,8 @@ export const Login = () => {
         } else {
           toast.error(
             errorData?.data?.message ||
-            errorData?.data?.detail ||
-            "Invalid email or password. Please try again.",
+              errorData?.data?.detail ||
+              "Invalid email or password. Please try again.",
           );
         }
       }
@@ -214,3 +217,6 @@ export const Login = () => {
     </AuthLayout>
   );
 };
+// function setError(field: string, arg1: { type: string; message: string }) {
+//   throw new Error("Function not implemented.");
+// }
