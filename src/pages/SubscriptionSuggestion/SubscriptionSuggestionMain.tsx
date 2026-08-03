@@ -117,7 +117,7 @@ export const SubscriptionSuggestionMain = () => {
                   ),
                 );
                 const isAddedInRedux = cartTitles.some(
-                  (t) => t.toLowerCase() === program.name?.toLowerCase(),
+                  (t) => t.toLowerCase() === program?.name?.toLowerCase(),
                 );
                 const isAdded = token
                   ? isAddedInBackend || isAddedInRedux
