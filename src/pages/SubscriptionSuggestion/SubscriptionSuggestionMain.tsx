@@ -28,24 +28,24 @@ export const SubscriptionSuggestionMain = () => {
 
   const rawCartItems = useAppSelector(selectCartItems);
   const cartTitles = rawCartItems.map((item) =>
-    typeof item === "string" ? item : item.title
+    typeof item === "string" ? item : item.title,
   );
 
   const handleToggleCart = async (
     programId: string,
     title: string,
-    price: number
+    price: number,
   ) => {
     const isAddedInBackend = Boolean(
       getAllCartItem?.data?.items?.some(
         (item: any) =>
           item.program?.id === programId ||
-          item.program?.name?.toLowerCase() === title.toLowerCase()
-      )
+          item.program?.name?.toLowerCase() === title.toLowerCase(),
+      ),
     );
 
     const isAddedInRedux = cartTitles.some(
-      (t) => t.toLowerCase() === title.toLowerCase()
+      (t) => t.toLowerCase() === title.toLowerCase(),
     );
 
     const isAdded = token ? isAddedInBackend || isAddedInRedux : isAddedInRedux;
@@ -103,21 +103,21 @@ export const SubscriptionSuggestionMain = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {recommendations && recommendations.length > 0
+          {recommendations && recommendations?.length > 0
             ? recommendations.map((item: any, idx: number) => {
                 const program = item.program;
-                const price = parseFloat(program.price) || 29.99;
+                const price = parseFloat(program?.price) || 29.99;
 
                 const isAddedInBackend = Boolean(
                   getAllCartItem?.data?.items?.some(
                     (cartItem: any) =>
                       cartItem.program?.id === program.id ||
                       cartItem.program?.name?.toLowerCase() ===
-                        program.name?.toLowerCase()
-                  )
+                        program.name?.toLowerCase(),
+                  ),
                 );
                 const isAddedInRedux = cartTitles.some(
-                  (t) => t.toLowerCase() === program.name?.toLowerCase()
+                  (t) => t.toLowerCase() === program.name?.toLowerCase(),
                 );
                 const isAdded = token
                   ? isAddedInBackend || isAddedInRedux
@@ -168,7 +168,10 @@ export const SubscriptionSuggestionMain = () => {
                       </h4>
                       <div className="space-y-2.5">
                         {program.benefits?.map((b: any, i: number) => (
-                          <div key={b.id || i} className="flex items-start gap-2.5">
+                          <div
+                            key={b.id || i}
+                            className="flex items-start gap-2.5"
+                          >
                             <Check className="text-blue-600 size-4 shrink-0 mt-0.5" />
                             <span className="text-slate-400 text-xs">
                               {typeof b === "string" ? b : b.text}
@@ -183,7 +186,9 @@ export const SubscriptionSuggestionMain = () => {
                         <span className="text-white text-2xl font-bold">
                           ${program.price}
                         </span>
-                        <span className="text-slate-500 text-xs ml-1">/month</span>
+                        <span className="text-slate-500 text-xs ml-1">
+                          /month
+                        </span>
                       </div>
                       <button
                         onClick={() =>
@@ -242,8 +247,8 @@ export const SubscriptionSuggestionMain = () => {
                           Why This is Recommended
                         </h4>
                         <p className="text-slate-500 text-xs mt-1 leading-5">
-                          Based on your assessment responses, this program aligns
-                          well with your goals.
+                          Based on your assessment responses, this program
+                          aligns well with your goals.
                         </p>
                       </div>
                     </div>
@@ -267,7 +272,9 @@ export const SubscriptionSuggestionMain = () => {
                         <span className="text-white text-2xl font-bold">
                           $29.99
                         </span>
-                        <span className="text-slate-500 text-xs ml-1">/month</span>
+                        <span className="text-slate-500 text-xs ml-1">
+                          /month
+                        </span>
                       </div>
                       <button
                         onClick={() =>
@@ -290,4 +297,3 @@ export const SubscriptionSuggestionMain = () => {
     </div>
   );
 };
-
