@@ -26,9 +26,9 @@ export const SubscriptionSuggestionMain = () => {
     skip: !token,
   });
 
-  const rawCartItems = useAppSelector(selectCartItems);
+  const rawCartItems = useAppSelector(selectCartItems) || [];
   const cartTitles = rawCartItems.map((item) =>
-    typeof item === "string" ? item : item.title,
+    typeof item === "string" ? item : item?.title || "",
   );
 
   const handleToggleCart = async (
@@ -39,13 +39,13 @@ export const SubscriptionSuggestionMain = () => {
     const isAddedInBackend = Boolean(
       getAllCartItem?.data?.items?.some(
         (item: any) =>
-          item.program?.id === programId ||
-          item.program?.name?.toLowerCase() === title.toLowerCase(),
+          (programId && item?.program?.id === programId) ||
+          item?.program?.name?.toLowerCase() === title?.toLowerCase(),
       ),
     );
 
     const isAddedInRedux = cartTitles.some(
-      (t) => t.toLowerCase() === title.toLowerCase(),
+      (t) => t?.toLowerCase() === title?.toLowerCase(),
     );
 
     const isAdded = token ? isAddedInBackend || isAddedInRedux : isAddedInRedux;
@@ -77,12 +77,12 @@ export const SubscriptionSuggestionMain = () => {
       <div className="max-w-[1000px] w-full mx-auto relative z-10">
         <div className="absolute top-60 left-0 w-[500px] h-[500px] blur-[100px] rounded-full pointer-events-none -translate-x-1/2 -translate-y-1/2 bg-gradient-to-br from-[#0B60BD]/50 to-transparent -z-10" />
         {/* Cart Notification Bar - Appears when items are in cart */}
-        {cartTitles.length > 0 && (
+        {cartTitles?.length > 0 && (
           <div className="mb-8 p-4 bg-[#0F172A] border border-blue-900/50 rounded-xl flex items-center justify-between">
             <div className="flex items-center gap-3 text-white">
               <ShoppingCart className="size-5 text-blue-500" />
               <span className="font-medium">
-                {cartTitles.length} programs in cart
+                {cartTitles?.length} programs in cart
               </span>
             </div>
             <Link to={"/shopping-cart"}>
@@ -105,19 +105,19 @@ export const SubscriptionSuggestionMain = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {recommendations && recommendations?.length > 0
             ? recommendations.map((item: any, idx: number) => {
-                const program = item.program;
+                const program = item?.program;
                 const price = parseFloat(program?.price) || 29.99;
 
                 const isAddedInBackend = Boolean(
                   getAllCartItem?.data?.items?.some(
                     (cartItem: any) =>
-                      cartItem.program?.id === program.id ||
-                      cartItem.program?.name?.toLowerCase() ===
-                        program.name?.toLowerCase(),
+                      cartItem?.program?.id === program?.id ||
+                      cartItem?.program?.name?.toLowerCase() ===
+                        program?.name?.toLowerCase(),
                   ),
                 );
                 const isAddedInRedux = cartTitles.some(
-                  (t) => t.toLowerCase() === program?.name?.toLowerCase(),
+                  (t) => t?.toLowerCase() === program?.name?.toLowerCase(),
                 );
                 const isAdded = token
                   ? isAddedInBackend || isAddedInRedux
@@ -125,7 +125,7 @@ export const SubscriptionSuggestionMain = () => {
 
                 return (
                   <div
-                    key={program.id || idx}
+                    key={program?.id || idx}
                     className="relative p-8 bg-[#0F172A] rounded-2xl border border-[#155DFC] flex flex-col z-0"
                   >
                     {/* Top-Left Corner Gradient */}
@@ -143,10 +143,10 @@ export const SubscriptionSuggestionMain = () => {
                     <div className="flex gap-4">
                       <div>
                         <h3 className="text-white text-xl font-bold leading-7">
-                          {program.name}
+                          {program?.name}
                         </h3>
                         <p className="text-slate-400 text-sm mt-1">
-                          {program.description}
+                          {program?.description}
                         </p>
                       </div>
                     </div>
@@ -157,7 +157,7 @@ export const SubscriptionSuggestionMain = () => {
                           Why This is Recommended
                         </h4>
                         <p className="text-slate-400 text-xs mt-1 leading-5">
-                          {item.reason || program.recommendation_reason}
+                          {item?.reason || program?.recommendation_reason}
                         </p>
                       </div>
                     </div>
@@ -167,14 +167,14 @@ export const SubscriptionSuggestionMain = () => {
                         Benefits
                       </h4>
                       <div className="space-y-2.5">
-                        {program.benefits?.map((b: any, i: number) => (
+                        {program?.benefits?.map((b: any, i: number) => (
                           <div
-                            key={b.id || i}
+                            key={b?.id || i}
                             className="flex items-start gap-2.5"
                           >
                             <Check className="text-blue-600 size-4 shrink-0 mt-0.5" />
                             <span className="text-slate-400 text-xs">
-                              {typeof b === "string" ? b : b.text}
+                              {typeof b === "string" ? b : b?.text}
                             </span>
                           </div>
                         ))}
@@ -184,7 +184,7 @@ export const SubscriptionSuggestionMain = () => {
                     <div className="pt-8">
                       <div className="mb-4">
                         <span className="text-white text-2xl font-bold">
-                          ${program.price}
+                          ${program?.price}
                         </span>
                         <span className="text-slate-500 text-xs ml-1">
                           /month
@@ -192,7 +192,7 @@ export const SubscriptionSuggestionMain = () => {
                       </div>
                       <button
                         onClick={() =>
-                          handleToggleCart(program.id, program.name, price)
+                          handleToggleCart(program?.id, program?.name, price)
                         }
                         className={`w-full py-3 rounded-xl text-sm font-semibold transition-all ${
                           isAdded
@@ -207,8 +207,8 @@ export const SubscriptionSuggestionMain = () => {
                 );
               })
             : programs.map((program, idx) => {
-                const Icon = program.icon;
-                const isAdded = cartTitles.includes(program.title);
+                const Icon = program?.icon;
+                const isAdded = cartTitles.includes(program?.title);
 
                 return (
                   <div
@@ -228,15 +228,17 @@ export const SubscriptionSuggestionMain = () => {
                     </div>
 
                     <div className="flex gap-4">
-                      <div className={`size-10 shrink-0 ${program.iconColor}`}>
-                        <Icon size={40} strokeWidth={1.5} />
-                      </div>
+                      {Icon && (
+                        <div className={`size-10 shrink-0 ${program?.iconColor}`}>
+                          <Icon size={40} strokeWidth={1.5} />
+                        </div>
+                      )}
                       <div>
                         <h3 className="text-white text-xl font-bold leading-7">
-                          {program.title}
+                          {program?.title}
                         </h3>
                         <p className="text-slate-400 text-sm mt-1">
-                          {program.desc}
+                          {program?.desc}
                         </p>
                       </div>
                     </div>
@@ -258,7 +260,7 @@ export const SubscriptionSuggestionMain = () => {
                         Benefits
                       </h4>
                       <div className="space-y-2.5">
-                        {program.benefits.map((b, i) => (
+                        {program?.benefits?.map((b: any, i: number) => (
                           <div key={i} className="flex items-start gap-2.5">
                             <Check className="text-blue-600 size-4 shrink-0 mt-0.5" />
                             <span className="text-slate-400 text-xs">{b}</span>
@@ -278,7 +280,7 @@ export const SubscriptionSuggestionMain = () => {
                       </div>
                       <button
                         onClick={() =>
-                          handleToggleCart("", program.title, 29.99)
+                          handleToggleCart("", program?.title, 29.99)
                         }
                         className={`w-full py-3 rounded-xl text-sm font-semibold transition-all ${
                           isAdded
