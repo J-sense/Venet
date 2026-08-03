@@ -10,25 +10,25 @@ const programApi = baseApi.injectEndpoints({
     }),
     educationServiceProgram: builder.query({
       query: () => ({
-        url: "/programs/b3b61c6a-616a-44a1-a90c-1b1fb3fc413f",
+        url: "/programs/educational-services-program/",
         method: "GET",
       }),
     }),
     healthAndFitnessProgram: builder.query({
       query: () => ({
-        url: "/programs/f95c519e-dc8e-4288-abc3-42f337d5aab7",
+        url: "/programs/health-fitness-program/",
         method: "GET",
       }),
     }),
     careerProgramme: builder.query({
       query: () => ({
-        url: "/programs/7280701a-82e7-4cea-bb16-52fc895fa5c3",
+        url: "/programs/career-preparation-program/",
         method: "GET",
       }),
     }),
     mentalHealthProgram: builder.query({
       query: () => ({
-        url: "/programs/658f5358-d440-46ad-8228-3786467b458c",
+        url: "/programs/mental-health-program/",
         method: "GET",
       }),
     }),

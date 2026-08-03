@@ -1,3 +1,4 @@
+import { useGetAllAssessmentQuestionsQuery } from "@/redux/features/assessment/assessment.api";
 import BannerV2 from "./components/BannerV2";
 import { CTASection } from "./components/CTASection";
 import { CustomerFeedback } from "./components/CustomerFeedback";
@@ -8,6 +9,9 @@ import { ProgramsSection } from "./components/ProgramsSection";
 import { SubscriptionSection } from "./components/SubscriptionSection";
 
 export default function HomeMain() {
+  const { data: assessmentQuestions } =
+    useGetAllAssessmentQuestionsQuery(undefined);
+  console.log(assessmentQuestions, "assessmentQuestions");
   return (
     <div>
       {/* <Banner /> */}
