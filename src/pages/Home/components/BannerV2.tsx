@@ -64,7 +64,7 @@ export default function BannerV2() {
               Start Free Assessment
               <span className="text-lg md:text-xl">→</span>
             </button>
-            <Link to="/programs/health-fitness">
+            <Link to="/programs/all-programs">
               <button className="border text-white bg-[#FFFFFF1A] border-white/40 hover:bg-white/10 transition px-6 py-3.5 md:px-8 md:py-4 rounded-full font-semibold text-base md:text-lg w-full sm:w-auto">
                 Explore Programs
               </button>

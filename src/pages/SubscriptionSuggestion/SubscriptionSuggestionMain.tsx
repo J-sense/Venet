@@ -26,9 +26,9 @@ export const SubscriptionSuggestionMain = () => {
     skip: !token,
   });
 
-  const rawCartItems = useAppSelector(selectCartItems) || [];
+  const rawCartItems = useAppSelector(selectCartItems);
   const cartTitles = rawCartItems.map((item) =>
-    typeof item === "string" ? item : item?.title || "",
+    typeof item === "string" ? item : item.title,
   );
 
   const handleToggleCart = async (
@@ -39,13 +39,13 @@ export const SubscriptionSuggestionMain = () => {
     const isAddedInBackend = Boolean(
       getAllCartItem?.data?.items?.some(
         (item: any) =>
-          (programId && item?.program?.id === programId) ||
-          item?.program?.name?.toLowerCase() === title?.toLowerCase(),
+          item.program?.id === programId ||
+          item.program?.name?.toLowerCase() === title.toLowerCase(),
       ),
     );
 
     const isAddedInRedux = cartTitles.some(
-      (t) => t?.toLowerCase() === title?.toLowerCase(),
+      (t) => t.toLowerCase() === title.toLowerCase(),
     );
 
     const isAdded = token ? isAddedInBackend || isAddedInRedux : isAddedInRedux;
@@ -105,195 +105,191 @@ export const SubscriptionSuggestionMain = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {recommendations && recommendations?.length > 0
             ? recommendations.map((item: any, idx: number) => {
-                const program = item?.program;
-                const price = parseFloat(program?.price) || 29.99;
+              const program = item.program;
+              const price = parseFloat(program?.price) || 29.99;
 
-                const isAddedInBackend = Boolean(
-                  getAllCartItem?.data?.items?.some(
-                    (cartItem: any) =>
-                      cartItem?.program?.id === program?.id ||
-                      cartItem?.program?.name?.toLowerCase() ===
-                        program?.name?.toLowerCase(),
-                  ),
-                );
-                const isAddedInRedux = cartTitles.some(
-                  (t) => t?.toLowerCase() === program?.name?.toLowerCase(),
-                );
-                const isAdded = token
-                  ? isAddedInBackend || isAddedInRedux
-                  : isAddedInRedux;
+              const isAddedInBackend = Boolean(
+                getAllCartItem?.data?.items?.some(
+                  (cartItem: any) =>
+                    cartItem.program?.id === program.id ||
+                    cartItem.program?.name?.toLowerCase() ===
+                    program.name?.toLowerCase(),
+                ),
+              );
+              const isAddedInRedux = cartTitles.some(
+                (t) => t.toLowerCase() === program?.name?.toLowerCase(),
+              );
+              const isAdded = token
+                ? isAddedInBackend || isAddedInRedux
+                : isAddedInRedux;
 
-                return (
-                  <div
-                    key={program?.id || idx}
-                    className="relative p-8 bg-[#0F172A] rounded-2xl border border-[#155DFC] flex flex-col z-0"
-                  >
-                    {/* Top-Left Corner Gradient */}
-                    <div className="absolute inset-0 overflow-hidden rounded-2xl -z-10 pointer-events-none">
-                      <div
-                        className="absolute -top-[100px] -left-[100px] w-[300px] h-[300px] rounded-full blur-[80px]"
-                        style={{ backgroundColor: "#185CA633" }}
-                      />
-                    </div>
+              return (
+                <div
+                  key={program.id || idx}
+                  className="relative p-8 bg-[#0F172A] rounded-2xl border border-[#155DFC] flex flex-col z-0"
+                >
+                  {/* Top-Left Corner Gradient */}
+                  <div className="absolute inset-0 overflow-hidden rounded-2xl -z-10 pointer-events-none">
+                    <div
+                      className="absolute -top-[100px] -left-[100px] w-[300px] h-[300px] rounded-full blur-[80px]"
+                      style={{ backgroundColor: "#185CA633" }}
+                    />
+                  </div>
 
-                    <div className="absolute -top-3 left-6 bg-blue-600 px-3 py-1 rounded-full text-[10px] font-bold text-white uppercase tracking-wider z-10">
-                      Recommended for You
-                    </div>
+                  <div className="absolute -top-3 left-6 bg-blue-600 px-3 py-1 rounded-full text-[10px] font-bold text-white uppercase tracking-wider z-10">
+                    Recommended for You
+                  </div>
 
-                    <div className="flex gap-4">
-                      <div>
-                        <h3 className="text-white text-xl font-bold leading-7">
-                          {program?.name}
-                        </h3>
-                        <p className="text-slate-400 text-sm mt-1">
-                          {program?.description}
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="pt-6">
-                      <div className="p-4 bg-[#155DFC1A] rounded-lg border border-[#155DFC1A]/30">
-                        <h4 className="text-white text-sm font-semibold">
-                          Why This is Recommended
-                        </h4>
-                        <p className="text-slate-400 text-xs mt-1 leading-5">
-                          {item?.reason || program?.recommendation_reason}
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="pt-6 flex-grow">
-                      <h4 className="text-white text-sm font-semibold mb-3">
-                        Benefits
-                      </h4>
-                      <div className="space-y-2.5">
-                        {program?.benefits?.map((b: any, i: number) => (
-                          <div
-                            key={b?.id || i}
-                            className="flex items-start gap-2.5"
-                          >
-                            <Check className="text-blue-600 size-4 shrink-0 mt-0.5" />
-                            <span className="text-slate-400 text-xs">
-                              {typeof b === "string" ? b : b?.text}
-                            </span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    <div className="pt-8">
-                      <div className="mb-4">
-                        <span className="text-white text-2xl font-bold">
-                          ${program?.price}
-                        </span>
-                        <span className="text-slate-500 text-xs ml-1">
-                          /month
-                        </span>
-                      </div>
-                      <button
-                        onClick={() =>
-                          handleToggleCart(program?.id, program?.name, price)
-                        }
-                        className={`w-full py-3 rounded-xl text-sm font-semibold transition-all ${
-                          isAdded
-                            ? "bg-slate-800 text-white hover:bg-slate-700"
-                            : "bg-blue-600 hover:bg-blue-700 text-white"
-                        }`}
-                      >
-                        {isAdded ? "Remove from cart" : "Add to Cart"}
-                      </button>
+                  <div className="flex gap-4">
+                    <div>
+                      <h3 className="text-white text-xl font-bold leading-7">
+                        {program.name}
+                      </h3>
+                      <p className="text-slate-400 text-sm mt-1">
+                        {program.description}
+                      </p>
                     </div>
                   </div>
-                );
-              })
-            : programs.map((program, idx) => {
-                const Icon = program?.icon;
-                const isAdded = cartTitles.includes(program?.title);
 
-                return (
-                  <div
-                    key={idx}
-                    className="relative p-8 bg-[#0F172A] rounded-2xl border border-[#155DFC] flex flex-col z-0"
-                  >
-                    {/* Top-Left Corner Gradient */}
-                    <div className="absolute inset-0 overflow-hidden rounded-2xl -z-10 pointer-events-none">
-                      <div
-                        className="absolute -top-[100px] -left-[100px] w-[300px] h-[300px] rounded-full blur-[80px]"
-                        style={{ backgroundColor: "#185CA633" }}
-                      />
+                  <div className="pt-6">
+                    <div className="p-4 bg-[#155DFC1A] rounded-lg border border-[#155DFC1A]/30">
+                      <h4 className="text-white text-sm font-semibold">
+                        Why This is Recommended
+                      </h4>
+                      <p className="text-slate-400 text-xs mt-1 leading-5">
+                        {item?.reason || program?.recommendation_reason}
+                      </p>
                     </div>
+                  </div>
 
-                    <div className="absolute -top-3 left-6 bg-blue-600 px-3 py-1 rounded-full text-[10px] font-bold text-white uppercase tracking-wider z-10">
-                      Recommended for You
-                    </div>
-
-                    <div className="flex gap-4">
-                      {Icon && (
-                        <div className={`size-10 shrink-0 ${program?.iconColor}`}>
-                          <Icon size={40} strokeWidth={1.5} />
+                  <div className="pt-6 flex-grow">
+                    <h4 className="text-white text-sm font-semibold mb-3">
+                      Benefits
+                    </h4>
+                    <div className="space-y-2.5">
+                      {program.benefits?.map((b: any, i: number) => (
+                        <div
+                          key={b.id || i}
+                          className="flex items-start gap-2.5"
+                        >
+                          <Check className="text-blue-600 size-4 shrink-0 mt-0.5" />
+                          <span className="text-slate-400 text-xs">
+                            {typeof b === "string" ? b : b.text}
+                          </span>
                         </div>
-                      )}
-                      <div>
-                        <h3 className="text-white text-xl font-bold leading-7">
-                          {program?.title}
-                        </h3>
-                        <p className="text-slate-400 text-sm mt-1">
-                          {program?.desc}
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="pt-6">
-                      <div className="p-4 bg-[#155DFC1A] rounded-lg border border-[#155DFC1A]/30">
-                        <h4 className="text-white text-sm font-semibold">
-                          Why This is Recommended
-                        </h4>
-                        <p className="text-slate-500 text-xs mt-1 leading-5">
-                          Based on your assessment responses, this program
-                          aligns well with your goals.
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="pt-6 flex-grow">
-                      <h4 className="text-white text-sm font-semibold mb-3">
-                        Benefits
-                      </h4>
-                      <div className="space-y-2.5">
-                        {program?.benefits?.map((b: any, i: number) => (
-                          <div key={i} className="flex items-start gap-2.5">
-                            <Check className="text-blue-600 size-4 shrink-0 mt-0.5" />
-                            <span className="text-slate-400 text-xs">{b}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    <div className="pt-8">
-                      <div className="mb-4">
-                        <span className="text-white text-2xl font-bold">
-                          $29.99
-                        </span>
-                        <span className="text-slate-500 text-xs ml-1">
-                          /month
-                        </span>
-                      </div>
-                      <button
-                        onClick={() =>
-                          handleToggleCart("", program?.title, 29.99)
-                        }
-                        className={`w-full py-3 rounded-xl text-sm font-semibold transition-all ${
-                          isAdded
-                            ? "bg-slate-800 text-white hover:bg-slate-700"
-                            : "bg-blue-600 hover:bg-blue-700 text-white"
-                        }`}
-                      >
-                        {isAdded ? "Remove from cart" : "Add to Cart"}
-                      </button>
+                      ))}
                     </div>
                   </div>
-                );
-              })}
+
+                  <div className="pt-8">
+                    <div className="mb-4">
+                      <span className="text-white text-2xl font-bold">
+                        ${program.price}
+                      </span>
+                      <span className="text-slate-500 text-xs ml-1">
+                        /month
+                      </span>
+                    </div>
+                    <button
+                      onClick={() =>
+                        handleToggleCart(program.id, program.name, price)
+                      }
+                      className={`w-full py-3 rounded-xl text-sm font-semibold transition-all ${isAdded
+                          ? "bg-slate-800 text-white hover:bg-slate-700"
+                          : "bg-blue-600 hover:bg-blue-700 text-white"
+                        }`}
+                    >
+                      {isAdded ? "Remove from cart" : "Add to Cart"}
+                    </button>
+                  </div>
+                </div>
+              );
+            })
+            : programs.map((program, idx) => {
+              const Icon = program.icon;
+              const isAdded = cartTitles.includes(program.title);
+
+              return (
+                <div
+                  key={idx}
+                  className="relative p-8 bg-[#0F172A] rounded-2xl border border-[#155DFC] flex flex-col z-0"
+                >
+                  {/* Top-Left Corner Gradient */}
+                  <div className="absolute inset-0 overflow-hidden rounded-2xl -z-10 pointer-events-none">
+                    <div
+                      className="absolute -top-[100px] -left-[100px] w-[300px] h-[300px] rounded-full blur-[80px]"
+                      style={{ backgroundColor: "#185CA633" }}
+                    />
+                  </div>
+
+                  <div className="absolute -top-3 left-6 bg-blue-600 px-3 py-1 rounded-full text-[10px] font-bold text-white uppercase tracking-wider z-10">
+                    Recommended for You
+                  </div>
+
+                  <div className="flex gap-4">
+                    <div className={`size-10 shrink-0 ${program.iconColor}`}>
+                      <Icon size={40} strokeWidth={1.5} />
+                    </div>
+                    <div>
+                      <h3 className="text-white text-xl font-bold leading-7">
+                        {program.title}
+                      </h3>
+                      <p className="text-slate-400 text-sm mt-1">
+                        {program.desc}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="pt-6">
+                    <div className="p-4 bg-[#155DFC1A] rounded-lg border border-[#155DFC1A]/30">
+                      <h4 className="text-white text-sm font-semibold">
+                        Why This is Recommended
+                      </h4>
+                      <p className="text-slate-500 text-xs mt-1 leading-5">
+                        Based on your assessment responses, this program
+                        aligns well with your goals.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="pt-6 flex-grow">
+                    <h4 className="text-white text-sm font-semibold mb-3">
+                      Benefits
+                    </h4>
+                    <div className="space-y-2.5">
+                      {program.benefits.map((b, i) => (
+                        <div key={i} className="flex items-start gap-2.5">
+                          <Check className="text-blue-600 size-4 shrink-0 mt-0.5" />
+                          <span className="text-slate-400 text-xs">{b}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="pt-8">
+                    <div className="mb-4">
+                      <span className="text-white text-2xl font-bold">
+                        $29.99
+                      </span>
+                      <span className="text-slate-500 text-xs ml-1">
+                        /month
+                      </span>
+                    </div>
+                    <button
+                      onClick={() =>
+                        handleToggleCart("", program.title, 29.99)
+                      }
+                      className={`w-full py-3 rounded-xl text-sm font-semibold transition-all ${isAdded
+                          ? "bg-slate-800 text-white hover:bg-slate-700"
+                          : "bg-blue-600 hover:bg-blue-700 text-white"
+                        }`}
+                    >
+                      {isAdded ? "Remove from cart" : "Add to Cart"}
+                    </button>
+                  </div>
+                </div>
+              );
+            })}
         </div>
       </div>
     </div>

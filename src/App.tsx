@@ -62,6 +62,7 @@ import NotFoundPage from "./pages/NotFoundPage";
 import PrivacyMain from "./pages/privacyPolicy/PrivacyMain";
 import TermsMain from "./pages/termsCondition/TermsMain";
 import GraphEarnignList from "./pages/dashboard/experts/overView/components/GraphEarnignList";
+import AllPrograms from "./pages/AllPrograms/AllPrograms";
 
 export const App = () => {
   return (
@@ -80,6 +81,7 @@ export const App = () => {
           element={<EducationServicePage />}
         />
         <Route path="/programs/career" element={<CareerPage />} />
+        <Route path="/programs/all-programs" element={<AllPrograms />} />
         <Route path="/experts" element={<ExpertsMain />} />
         <Route path="/about" element={<AboutUsMain />} />
         <Route path="/founder-story" element={<FounderStoryPage />} />
