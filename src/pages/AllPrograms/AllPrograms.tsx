@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Check, ShoppingCart } from "lucide-react";
 import { Link } from "react-router";
 import { useAllProgramsQuery } from "@/redux/features/programs/program.api";
@@ -192,8 +193,8 @@ export default function AllPrograms() {
                       handleToggleCart(program.id, program.name, price)
                     }
                     className={`w-full py-3 rounded-xl text-sm font-semibold transition-all ${isAdded
-                        ? "bg-slate-800 text-white hover:bg-slate-700"
-                        : "bg-blue-600 hover:bg-blue-700 text-white"
+                      ? "bg-slate-800 text-white hover:bg-slate-700"
+                      : "bg-blue-600 hover:bg-blue-700 text-white"
                       }`}
                   >
                     {isAdded ? "Remove from cart" : "Add to Cart"}

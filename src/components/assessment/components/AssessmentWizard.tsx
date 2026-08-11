@@ -35,8 +35,12 @@ export default function AssessmentWizard({
           state: { assessmentResponse: responseData.data },
         });
       }
-    } catch (error) {
+    } catch (error:any) {
       console.log(error);
+      toast.error(
+        error?.data?.details?.answers ||
+          "An error occurred while submitting the assessment.",
+      );
     }
   };
   const stepBackgrounds = [
@@ -188,4 +192,3 @@ export default function AssessmentWizard({
     </div>
   );
 }
-
