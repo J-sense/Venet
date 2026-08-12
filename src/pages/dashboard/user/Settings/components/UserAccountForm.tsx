@@ -26,11 +26,19 @@ import * as z from "zod";
 
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
+import { FormSelect } from "@/components/ui/FormSelect";
 import { ProfileInput } from "@/components/ui/profileInput";
 import {
   useGetUserProfileQuery,
   useUpdateUserProfileMutation,
 } from "@/redux/features/userDashboard/userProfile.api";
+
+// Choices matching backend class OPEN_TO(models.TextChoices)
+const OPEN_TO_OPTIONS = [
+  { value: "AVAILABLE", label: "Available" },
+  { value: "BUSY", label: "Busy" },
+  { value: "NOT_AVAILABLE", label: "Not Available" },
+];
 
 // Validation Schema matching Postman API profile shape
 const profileSchema = z.object({
@@ -477,11 +485,11 @@ export default function UserAccountForm() {
                 type="number"
                 placeholder="e.g. 25.50"
               />
-              <ProfileInput
-                className="!bg-[#101E2D] placeholder:text-[#6a768a]"
+              <FormSelect
                 label="Open To / Availability (open_to)"
                 name="open_to"
-                placeholder="e.g. FULL_TIME"
+                placeholder="Select availability status"
+                options={OPEN_TO_OPTIONS}
               />
             </div>
           </div>

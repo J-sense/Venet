@@ -8,13 +8,19 @@ import {
   FormControl,
   FormMessage,
 } from "@/components/ui/form";
-import { ChevronDown } from "lucide-react"; // Using lucide for consistency
+import { ChevronDown } from "lucide-react";
+
+export interface FormSelectOption {
+  label: string;
+  value: string;
+}
 
 interface FormSelectProps {
   name: string;
-  label: string;
+  label?: string;
   placeholder?: string;
-  options: string[];
+  options: (string | FormSelectOption)[];
+  className?: string;
 }
 
 export const FormSelect = ({
@@ -22,6 +28,7 @@ export const FormSelect = ({
   label,
   placeholder,
   options,
+  className = "",
 }: FormSelectProps) => {
   const { control } = useFormContext();
 
@@ -30,42 +37,49 @@ export const FormSelect = ({
       control={control}
       name={name}
       render={({ field }) => (
-        <FormItem className="space-y-1.5">
-          <FormLabel className="text-white text-[12px] font-regular mb-1">
-            {label}
-          </FormLabel>
+        <FormItem className="space-y-2">
+          {label && (
+            <FormLabel className="!text-[#94A3B8] !text-[16px] font-medium">
+              {label}
+            </FormLabel>
+          )}
           <FormControl>
             <div className="relative group">
               <select
                 {...field}
-                className={[
-                  "w-full h-11 rounded text-sm text-white bg-transparent",
-                  "border border-[#334155] appearance-none cursor-pointer",
-                  "focus-visible:ring-0 focus-visible:ring-offset-0",
-                  "focus-visible:border-blue-500/60 focus-visible:bg-blue-500/[0.05]",
-                  "transition-all duration-200 pl-4 pr-10",
-                  "[&:focus]:shadow-[0_0_0_3px_rgba(59,130,246,0.13)]",
-                ].join(" ")}
+                className={`
+                  w-full h-12 rounded-xl text-[14px] text-white !bg-[#101E2D]
+                  border border-zinc-700 appearance-none cursor-pointer
+                  focus:border-blue-500 focus:ring-1 focus:ring-blue-500/30
+                  transition-all duration-200 pl-4 pr-10 py-3
+                  ${className}
+                `.trim()}
               >
-                <option value="" disabled className="bg-[#0f1221]">
-                  {placeholder}
-                </option>
-                {options.map((s) => (
-                  <option key={s} value={s} className="bg-[#0f1221]">
-                    {s}
+                {placeholder && (
+                  <option value="" disabled className="bg-[#101E2D] text-zinc-400">
+                    {placeholder}
                   </option>
-                ))}
+                )}
+                {options.map((opt) => {
+                  const val = typeof opt === "string" ? opt : opt.value;
+                  const lbl = typeof opt === "string" ? opt : opt.label;
+                  return (
+                    <option key={val} value={val} className="bg-[#101E2D] text-white">
+                      {lbl}
+                    </option>
+                  );
+                })}
               </select>
 
-              {/* Chevron Icon - Matches your input's icon positioning */}
-              <div className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-600 pointer-events-none group-focus-within:text-blue-400 transition-colors">
-                <ChevronDown size={16} />
+              <div className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-400 pointer-events-none group-focus-within:text-blue-400 transition-colors">
+                <ChevronDown size={18} />
               </div>
             </div>
           </FormControl>
-          <FormMessage className="text-[11.5px] text-red-400 font-medium" />
+          <FormMessage className="text-red-400 text-sm" />
         </FormItem>
       )}
     />
   );
 };
+

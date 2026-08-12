@@ -5,6 +5,11 @@ import { useRef, useState, useEffect } from "react";
 import { Outlet, useLocation } from "react-router";
 import { ExpertsSidebar } from "./ExpertsSidebar";
 import { ScrollToTop } from "@/components/ui/ScrollToTop";
+import { useMyProfileQuery } from "@/redux/features/auth/auth.api";
+import { useExpertProfileQuery } from "@/redux/features/expertDashboard/expertProfile.api";
+import { useAppSelector } from "@/redux/hooks";
+import { selectCurrentUser } from "@/redux/features/auth/authSlice";
+import { ProfileDropdown } from "@/components/ui/layouts/ProfileDropdown";
 
 type UserLayoutProps = {
   navItems: any[];
@@ -30,7 +35,7 @@ const getHeaderContent = (pathname: string) => {
 const SIDEBAR_WIDTH = 260;
 const DESKTOP_BREAKPOINT = 1024; // lg
 
-const ExpertsLayout = ({ navItems }: UserLayoutProps) => {
+const ExpertsLayout = ({ navItems, user }: UserLayoutProps) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(
     () => window.innerWidth >= DESKTOP_BREAKPOINT
   );
@@ -39,6 +44,11 @@ const ExpertsLayout = ({ navItems }: UserLayoutProps) => {
   const location = useLocation();
   const mainRef = useRef<HTMLElement>(null);
   const headerContent = getHeaderContent(location.pathname);
+
+  const { data: expertProfileResponse } = useExpertProfileQuery(undefined);
+  const { data: myProfileResponse } = useMyProfileQuery(undefined);
+  const userFromRedux = useAppSelector(selectCurrentUser);
+  const userData = expertProfileResponse?.data || myProfileResponse?.data || user?.data || userFromRedux;
 
   // Sync sidebar state on window resize
   useEffect(() => {
@@ -103,19 +113,17 @@ const ExpertsLayout = ({ navItems }: UserLayoutProps) => {
             </div>
           </div>
 
-          {/* Right: Notifications & Avatar */}
+          {/* Right: Notifications & Profile */}
           <div className="flex items-center gap-2 sm:gap-4 shrink-0">
             <button className="relative p-2 text-zinc-400 hover:text-white hover:bg-zinc-800 rounded-full transition-all">
               <Bell className="w-4 h-4 sm:w-5 sm:h-5" />
               <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 bg-red-500 rounded-full border border-black" />
             </button>
-            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full border-2 border-zinc-700 overflow-hidden cursor-pointer hover:border-zinc-500 transition-colors">
-              <img
-                src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?q=80&w=200&auto=format&fit=crop"
-                alt="Expert Profile"
-                className="w-full h-full object-cover"
-              />
-            </div>
+            {userData ? (
+              <ProfileDropdown user={userData} isDashboard={true} />
+            ) : (
+              <div className="w-8 h-8 rounded-full bg-zinc-800 animate-pulse" />
+            )}
           </div>
         </header>
 
