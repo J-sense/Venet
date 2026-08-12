@@ -74,6 +74,7 @@ interface ProfileInputProps {
   rows?: number;
   className?: string;
   showLeftIcon?: boolean;
+  disabled?: boolean;
 }
 
 // ── Component ──────────────────────────────────────────────────────────────────
@@ -86,6 +87,7 @@ export const ProfileInput = ({
   rows = 5,
   className = "",
   showLeftIcon = false,
+  disabled = false,
 }: ProfileInputProps) => {
   const { control } = useFormContext();
   const [showPassword, setShowPassword] = useState(false);
@@ -121,6 +123,7 @@ export const ProfileInput = ({
                 {...field}
                 type={resolvedType}
                 placeholder={placeholder}
+                disabled={disabled}
                 rows={as === "textarea" ? rows : undefined}
                 className={`
                   !bg-[#334155] border border-zinc-700 
@@ -129,6 +132,7 @@ export const ProfileInput = ({
                   h-12 py-3
                   ${LeadIcon ? "pl-11" : "pl-4"}
                   ${isPassword ? "pr-11" : "pr-4"}
+                  ${disabled ? "opacity-60 cursor-not-allowed" : ""}
                   ${className}
                 `.trim()}
               />
