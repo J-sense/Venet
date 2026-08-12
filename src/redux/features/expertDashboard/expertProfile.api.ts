@@ -1,26 +1,23 @@
 import { baseApi } from "@/redux/baseApi";
 
-
-
-const expertProfile = baseApi.injectEndpoints({
-    endpoints: (builder) => ({
-        expertProfile: builder.query({
-            query: () => ({
-                url: "/auth/expert-profile/",
-                method: "GET",
-            }),
-            providesTags: ["User"],
-        }),
-        updateUserProfile: builder.mutation({
-            query: (data) => ({
-                url: "/auth/profile/update/",
-                method: "PATCH",
-                data,
-            }),
-            invalidatesTags: ["User"],
-        }),
+const expertProfileApi = baseApi.injectEndpoints({
+  endpoints: (builder) => ({
+    expertProfile: builder.query({
+      query: () => ({
+        url: "/auth/expert-profile/",
+        method: "GET",
+      }),
+      providesTags: ["ExpertProfile"],
     }),
+    updateExpertProfile: builder.mutation({
+      query: (data) => ({
+        url: "/auth/expert-profile/update/",
+        method: "PATCH",
+        data,
+      }),
+      invalidatesTags: ["ExpertProfile", "User"],
+    }),
+  }),
 });
 
-export const { useExpertProfileQuery } = expertProfile;
-
+export const { useExpertProfileQuery, useUpdateExpertProfileMutation } = expertProfileApi;

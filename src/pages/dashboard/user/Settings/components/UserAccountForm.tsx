@@ -425,20 +425,20 @@ export default function UserAccountForm() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10">
               <ProfileInput
                 className="!bg-[#101E2D] placeholder:text-[#6a768a]"
-                label="First Name (first_name)"
+                label="First Name"
                 name="first_name"
                 placeholder="e.g. Asib"
               />
               <ProfileInput
                 className="!bg-[#101E2D] placeholder:text-[#6a768a]"
-                label="Last Name (last_name)"
+                label="Last Name"
                 name="last_name"
                 placeholder="e.g. Ahmed"
               />
 
               <ProfileInput
                 className="!bg-[#101E2D] placeholder:text-[#6a768a]"
-                label="Email Address (email)"
+                label="Email Address"
                 name="email"
                 type="email"
                 placeholder="e.g. jishan1873@gmail.com"
@@ -446,33 +446,33 @@ export default function UserAccountForm() {
               />
               <ProfileInput
                 className="!bg-[#101E2D] placeholder:text-[#6a768a]"
-                label="Phone Number (phone1)"
+                label="Phone Number"
                 name="phone1"
                 placeholder="e.g. 01712345678"
               />
 
               <ProfileInput
                 className="!bg-[#101E2D] placeholder:text-[#6a768a]"
-                label="Street Address (address1)"
+                label="Street Address"
                 name="address1"
                 placeholder="e.g. House 12, Road 5, Dhanmondi, Dhaka"
               />
               <ProfileInput
                 className="!bg-[#101E2D] placeholder:text-[#6a768a]"
-                label="Location (location)"
+                label="Location"
                 name="location"
                 placeholder="e.g. Dhaka, Bangladesh"
               />
 
               <ProfileInput
                 className="!bg-[#101E2D] placeholder:text-[#6a768a]"
-                label="Specialty (specialty)"
+                label="Specialty"
                 name="specialty"
                 placeholder="e.g. Backend Development"
               />
               <ProfileInput
                 className="!bg-[#101E2D] placeholder:text-[#6a768a]"
-                label="Years of Experience (years_of_experience)"
+                label="Years of Experience"
                 name="years_of_experience"
                 type="number"
                 placeholder="e.g. 4"
@@ -480,13 +480,13 @@ export default function UserAccountForm() {
 
               <ProfileInput
                 className="!bg-[#101E2D] placeholder:text-[#6a768a]"
-                label="Hourly Rate ($) (hourly_rate)"
+                label="Hourly Rate ($)"
                 name="hourly_rate"
                 type="number"
                 placeholder="e.g. 25.50"
               />
               <FormSelect
-                label="Open To / Availability (open_to)"
+                label="Open To / Availability"
                 name="open_to"
                 placeholder="Select availability status"
                 options={OPEN_TO_OPTIONS}

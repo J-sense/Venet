@@ -18,15 +18,31 @@ type UserLayoutProps = {
 
 const getHeaderContent = (pathname: string) => {
   if (pathname.includes("/availability")) {
-    return { title: "Weekly Availability", subtitle: "Set your available hours for each day of the week" };
+    return {
+      title: "Weekly Availability",
+      subtitle: "Set your available hours for each day of the week",
+    };
   } else if (pathname.includes("/profile")) {
-    return { title: "Expert Profile", subtitle: "Ensure Your Profile Is Always Up to Date" };
+    return {
+      title: "Expert Profile",
+      subtitle: "Ensure Your Profile Is Always Up to Date",
+    };
   } else if (pathname.includes("/Reviews")) {
-    return { title: "What Clients Are Saying", subtitle: "Read reviews, ratings, and success stories from clients you've helped." };
+    return {
+      title: "What Clients Are Saying",
+      subtitle:
+        "Read reviews, ratings, and success stories from clients you've helped.",
+    };
   } else if (pathname.includes("/settings")) {
-    return { title: "Settings", subtitle: "Manage your account and preferences" };
+    return {
+      title: "Settings",
+      subtitle: "Manage your account and preferences",
+    };
   } else if (pathname.includes("/consultation")) {
-    return { title: "Consultations", subtitle: "Manage your upcoming and past sessions" };
+    return {
+      title: "Consultations",
+      subtitle: "Manage your upcoming and past sessions",
+    };
   } else {
     return { title: "Expert Dashboard", subtitle: "Welcome back" };
   }
@@ -37,7 +53,7 @@ const DESKTOP_BREAKPOINT = 1024; // lg
 
 const ExpertsLayout = ({ navItems, user }: UserLayoutProps) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(
-    () => window.innerWidth >= DESKTOP_BREAKPOINT
+    () => window.innerWidth >= DESKTOP_BREAKPOINT,
   );
   const isDesktop = () => window.innerWidth >= DESKTOP_BREAKPOINT;
 
@@ -48,8 +64,12 @@ const ExpertsLayout = ({ navItems, user }: UserLayoutProps) => {
   const { data: expertProfileResponse } = useExpertProfileQuery(undefined);
   const { data: myProfileResponse } = useMyProfileQuery(undefined);
   const userFromRedux = useAppSelector(selectCurrentUser);
-  const userData = expertProfileResponse?.data || myProfileResponse?.data || user?.data || userFromRedux;
-
+  const userData =
+    expertProfileResponse?.data ||
+    myProfileResponse?.data ||
+    user?.data ||
+    userFromRedux;
+  console.log(userData, "user data");
   // Sync sidebar state on window resize
   useEffect(() => {
     const handleResize = () => {
@@ -120,14 +140,17 @@ const ExpertsLayout = ({ navItems, user }: UserLayoutProps) => {
               <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 bg-red-500 rounded-full border border-black" />
             </button>
             {userData ? (
-              <ProfileDropdown user={userData} isDashboard={true} />
+              <ProfileDropdown user={userData?.user} isDashboard={true} />
             ) : (
               <div className="w-8 h-8 rounded-full bg-zinc-800 animate-pulse" />
             )}
           </div>
         </header>
 
-        <main ref={mainRef} className="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto bg-[#000000]">
+        <main
+          ref={mainRef}
+          className="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto bg-[#000000]"
+        >
           <ScrollToTop scrollRef={mainRef} />
           <Outlet />
         </main>
