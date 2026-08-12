@@ -1,32 +1,29 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { toast } from "sonner";
 import {
-  User,
-  Plus,
-  X,
+  AlertCircle,
+  Award,
   Briefcase,
-  MapPin,
-  Mail,
-  Phone,
+  Camera,
+  CheckCircle2,
   Clock,
   DollarSign,
   Loader2,
-  CheckCircle2,
-  AlertCircle,
+  Mail,
+  MapPin,
+  Plus,
   Sparkles,
-  Award,
-  Camera,
-  Upload,
-  Globe,
   Trash2,
+  Upload,
+  User,
+  X
 } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import * as z from "zod";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { ProfileInput } from "@/components/ui/profileInput";
@@ -101,7 +98,7 @@ export default function UserAccountForm() {
         specialty: user.specialty || "",
         years_of_experience:
           user.years_of_experience !== null &&
-          user.years_of_experience !== undefined
+            user.years_of_experience !== undefined
             ? String(user.years_of_experience)
             : "",
         hourly_rate:
@@ -177,8 +174,8 @@ export default function UserAccountForm() {
       console.error("Failed to update profile:", err);
       toast.error(
         err?.data?.details ||
-          err?.message ||
-          "Failed to update profile. Please try again.",
+        err?.message ||
+        "Failed to update profile. Please try again.",
       );
     }
   };
@@ -195,7 +192,7 @@ export default function UserAccountForm() {
         specialty: user.specialty || "",
         years_of_experience:
           user.years_of_experience !== null &&
-          user.years_of_experience !== undefined
+            user.years_of_experience !== undefined
             ? String(user.years_of_experience)
             : "",
         hourly_rate:
@@ -309,9 +306,8 @@ export default function UserAccountForm() {
                 />
               ) : null}
               <span
-                className={`avatar-fallback-text font-bold text-2xl text-white ${
-                  currentAvatar ? "hidden" : "flex"
-                }`}
+                className={`avatar-fallback-text font-bold text-2xl text-white ${currentAvatar ? "hidden" : "flex"
+                  }`}
               >
                 {initials}
               </span>

@@ -17,8 +17,11 @@ import {
 } from "react-hook-form";
 
 import { profileSchema, type ProfileFormData } from "../schemas/profileSchema";
+import { useExpertProfileQuery } from "@/redux/features/expertDashboard/expertProfile.api";
 
 export default function ProfileForm() {
+  const { data: expertProfileData } = useExpertProfileQuery(undefined)
+  console.log(expertProfileData)
   const [profilePic, setProfilePic] = React.useState<string | null>(null);
   const [certFiles, setCertFiles] = useState<Record<number, File>>({});
   const [achievementFiles, setAchievementFiles] = useState<
