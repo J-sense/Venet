@@ -15,17 +15,35 @@ type UserLayoutProps = {
 
 const getHeaderContent = (pathname: string) => {
   if (pathname.includes("/program")) {
-    return { title: "Program Details", subtitle: "Track your progress and milestones" };
+    return {
+      title: "Program Details",
+      subtitle: "Track your progress and milestones",
+    };
   } else if (pathname.includes("/certificates")) {
-    return { title: "My Certificates", subtitle: "View and download your earned certificates" };
-  } else if (pathname.includes("/talent-portal") || pathname.includes("/manual-input")) {
-    return { title: "Talent Portal", subtitle: "Manage your resume and career opportunities" };
+    return {
+      title: "My Certificates",
+      subtitle: "View and download your earned certificates",
+    };
+  } else if (
+    pathname.includes("/talent-portal") ||
+    pathname.includes("/manual-input")
+  ) {
+    return {
+      title: "Talent Portal",
+      subtitle: "Manage your resume and career opportunities",
+    };
   } else if (pathname.includes("/settings")) {
-    return { title: "Settings", subtitle: "Manage your account and preferences" };
+    return {
+      title: "Settings",
+      subtitle: "Manage your account and preferences",
+    };
   } else if (pathname.includes("/consultation")) {
     return { title: "Consultations", subtitle: "Manage your expert sessions" };
   } else {
-    return { title: "User Dashboard", subtitle: "Welcome back to your learning journey!" };
+    return {
+      title: "User Dashboard",
+      subtitle: "Welcome back to your learning journey!",
+    };
   }
 };
 
@@ -34,7 +52,7 @@ const DESKTOP_BREAKPOINT = 1024; // lg
 
 const UserLayout = ({ navItems, user }: UserLayoutProps) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(
-    () => window.innerWidth >= DESKTOP_BREAKPOINT
+    () => window.innerWidth >= DESKTOP_BREAKPOINT,
   );
   const isDesktop = () => window.innerWidth >= DESKTOP_BREAKPOINT;
 
@@ -43,6 +61,7 @@ const UserLayout = ({ navItems, user }: UserLayoutProps) => {
   const headerContent = getHeaderContent(location.pathname);
 
   const { data: myProfile } = useMyProfileQuery(undefined);
+  console.log(myProfile);
   const userFromRedux = useAppSelector(selectCurrentUser);
   const userData = myProfile?.data || user?.data || userFromRedux;
 
@@ -116,14 +135,17 @@ const UserLayout = ({ navItems, user }: UserLayoutProps) => {
               <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 bg-blue-500 rounded-full border border-black" />
             </button>
             {userData ? (
-              <ProfileDropdown user={userData} />
+              <ProfileDropdown user={userData} isDashboard={true} />
             ) : (
               <div className="w-8 h-8 rounded-full bg-zinc-800 animate-pulse" />
             )}
           </div>
         </header>
 
-        <main ref={mainRef} className="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto bg-[#000000]">
+        <main
+          ref={mainRef}
+          className="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto bg-[#000000]"
+        >
           <ScrollToTop scrollRef={mainRef} />
           <Outlet />
         </main>

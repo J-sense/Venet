@@ -6,7 +6,7 @@ import {
   LayoutDashboard,
   LogOut,
   Settings,
-  Shield
+  Shield,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router";
@@ -14,9 +14,13 @@ import { toast } from "sonner";
 
 interface ProfileDropdownProps {
   user: IUser | null | undefined;
+  isDashboard?: boolean;
 }
 
-export const ProfileDropdown = ({ user }: ProfileDropdownProps) => {
+export const ProfileDropdown = ({
+  user,
+  isDashboard,
+}: ProfileDropdownProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const dispatch = useAppDispatch();
@@ -66,7 +70,11 @@ export const ProfileDropdown = ({ user }: ProfileDropdownProps) => {
       : (user.email?.[0] || "U").toUpperCase();
 
   const isExpert = user.role?.toUpperCase() === "EXPERT";
-  const dashboardLink = isExpert ? "/dashboard/experts" : "/dashboard/user";
+  const dashboardLink = isExpert
+    ? "/dashboard/experts"
+    : isDashboard
+      ? "/"
+      : "/dashboard/user";
   const settingsLink = isExpert
     ? "/dashboard/experts/settings"
     : "/dashboard/user/settings";
@@ -94,8 +102,9 @@ export const ProfileDropdown = ({ user }: ProfileDropdownProps) => {
           {firstName || fullName}
         </span>
         <ChevronDown
-          className={`w-4 h-4 text-gray-400 transition-transform duration-200 ${isOpen ? "rotate-180 text-blue-400" : ""
-            }`}
+          className={`w-4 h-4 text-gray-400 transition-transform duration-200 ${
+            isOpen ? "rotate-180 text-blue-400" : ""
+          }`}
         />
       </button>
 
@@ -136,8 +145,8 @@ export const ProfileDropdown = ({ user }: ProfileDropdownProps) => {
               onClick={() => setIsOpen(false)}
               className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-300 hover:text-white hover:bg-white/5 transition-colors"
             >
-              <LayoutDashboard className="w-4 h-4 text-blue-400" />
-              <span>Dashboard</span>
+              <LayoutDashboard className="w-4 h-4" />
+              {isDashboard ? <span>Home</span> : <span>Dashboard</span>}
             </Link>
 
             <Link
