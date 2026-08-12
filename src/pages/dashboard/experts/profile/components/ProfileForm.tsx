@@ -82,15 +82,15 @@ export default function ProfileForm() {
         userObj?.hourly_rate !== undefined && userObj?.hourly_rate !== null
           ? String(userObj.hourly_rate)
           : responseData?.hourly_rate !== undefined &&
-              responseData?.hourly_rate !== null
+            responseData?.hourly_rate !== null
             ? String(responseData.hourly_rate)
             : "";
       const yearsVal =
         userObj?.years_of_experience !== undefined &&
-        userObj?.years_of_experience !== null
+          userObj?.years_of_experience !== null
           ? String(userObj.years_of_experience)
           : responseData?.years_of_experience !== undefined &&
-              responseData?.years_of_experience !== null
+            responseData?.years_of_experience !== null
             ? String(responseData.years_of_experience)
             : "";
       const titleVal =
@@ -104,29 +104,29 @@ export default function ProfileForm() {
 
       const parsedCerts = Array.isArray(responseData?.certifications)
         ? responseData.certifications.map((c: any) => ({
-            name: c.name || "Certificate",
-            fileName: c.name || "Certificate",
-            fileUrl: getImageUrl(c.file),
-          }))
+          name: c.name || "Certificate",
+          fileName: c.name || "Certificate",
+          fileUrl: getImageUrl(c.file),
+        }))
         : [];
 
       const parsedAch = Array.isArray(responseData?.achievements)
         ? responseData.achievements.map((a: any) => ({
-            name: a.name || "Achievement",
-            fileName: a.name || "Achievement",
-            fileUrl: getImageUrl(a.file),
-          }))
+          name: a.name || "Achievement",
+          fileName: a.name || "Achievement",
+          fileUrl: getImageUrl(a.file),
+        }))
         : [];
 
       const rawEdu = responseData?.education || responseData?.educations;
       const parsedEdu = Array.isArray(rawEdu)
         ? rawEdu.map((e: any) => ({
-            degree: e.degree || "",
-            institution: e.institution || "",
-            year: e.year !== undefined && e.year !== null ? String(e.year) : "",
-            fileName: e.certificate ? "Uploaded Certificate" : "",
-            fileUrl: getImageUrl(e.certificate),
-          }))
+          degree: e.degree || "",
+          institution: e.institution || "",
+          year: e.year !== undefined && e.year !== null ? String(e.year) : "",
+          fileName: e.certificate ? "Uploaded Certificate" : "",
+          fileUrl: getImageUrl(e.certificate),
+        }))
         : [];
 
       form.reset({
@@ -140,11 +140,11 @@ export default function ProfileForm() {
         aboutMe: bioVal,
         specializations:
           Array.isArray(responseData?.specializations) &&
-          responseData.specializations.length > 0
+            responseData.specializations.length > 0
             ? responseData.specializations.map((s: any) => ({
-                title: s.title || "",
-                description: s.description || "",
-              }))
+              title: s.title || "",
+              description: s.description || "",
+            }))
             : titleVal
               ? [{ title: titleVal, description: "" }]
               : [{ title: "", description: "" }],
@@ -518,9 +518,8 @@ export default function ProfileForm() {
                           />
                         ) : null}
                         <div
-                          className={`avatar-fallback-text w-full h-full items-center justify-center bg-gradient-to-b from-zinc-700 to-zinc-900 text-[#90A1B9] text-xl font-bold font-sora ${
-                            currentAvatar ? "hidden" : "flex"
-                          }`}
+                          className={`avatar-fallback-text w-full h-full items-center justify-center bg-gradient-to-b from-zinc-700 to-zinc-900 text-[#90A1B9] text-xl font-bold font-sora ${currentAvatar ? "hidden" : "flex"
+                            }`}
                         >
                           {initials}
                         </div>
@@ -947,8 +946,8 @@ export default function ProfileForm() {
                   const fileUrl = uploadedFile
                     ? null
                     : getImageUrl(
-                        currentEdu?.fileUrl || currentEdu?.certificate,
-                      );
+                      currentEdu?.fileUrl || currentEdu?.certificate,
+                    );
                   const fileName =
                     uploadedFile?.name ||
                     currentEdu?.fileName ||
@@ -1049,96 +1048,7 @@ export default function ProfileForm() {
               </CardContent>
             </Card>
 
-            <div className="flex justify-end gap-4 pt-4">
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => {
-                  if (responseData || userObj) {
-                    const fName =
-                      userObj?.first_name ||
-                      userObj?.firstName ||
-                      responseData?.first_name ||
-                      "";
-                    const lName =
-                      userObj?.last_name ||
-                      userObj?.lastName ||
-                      responseData?.last_name ||
-                      "";
-                    const emailVal =
-                      userObj?.email || responseData?.email || "";
-                    const phoneVal =
-                      userObj?.phone1 ||
-                      userObj?.phone ||
-                      responseData?.phone1 ||
-                      responseData?.phone ||
-                      "";
-                    const hourlyVal =
-                      userObj?.hourly_rate !== undefined &&
-                      userObj?.hourly_rate !== null
-                        ? String(userObj.hourly_rate)
-                        : responseData?.hourly_rate !== undefined &&
-                            responseData?.hourly_rate !== null
-                          ? String(responseData.hourly_rate)
-                          : "";
-                    const yearsVal =
-                      userObj?.years_of_experience !== undefined &&
-                      userObj?.years_of_experience !== null
-                        ? String(userObj.years_of_experience)
-                        : responseData?.years_of_experience !== undefined &&
-                            responseData?.years_of_experience !== null
-                          ? String(responseData.years_of_experience)
-                          : "";
-                    const titleVal =
-                      responseData?.professional_title ||
-                      userObj?.specialty ||
-                      "";
-                    const bioVal =
-                      userObj?.bio ||
-                      responseData?.bio ||
-                      responseData?.about_me ||
-                      responseData?.aboutMe ||
-                      "";
-
-                    form.reset({
-                      firstName: fName,
-                      lastName: lName,
-                      email: emailVal,
-                      phone: phoneVal,
-                      hourlyRate: hourlyVal,
-                      yearsOfExperience: yearsVal,
-                      professionalTitle: titleVal,
-                      aboutMe: bioVal,
-                      specializations:
-                        Array.isArray(responseData?.specializations) &&
-                        responseData.specializations.length > 0
-                          ? responseData.specializations
-                          : titleVal
-                            ? [{ title: titleVal, description: "" }]
-                            : [{ title: "", description: "" }],
-                      certifications: Array.isArray(
-                        responseData?.certifications,
-                      )
-                        ? responseData.certifications
-                        : [],
-                      achievements: Array.isArray(responseData?.achievements)
-                        ? responseData.achievements
-                        : [],
-                      educations: Array.isArray(responseData?.education)
-                        ? responseData.education
-                        : Array.isArray(responseData?.educations)
-                          ? responseData.educations
-                          : [],
-                    });
-                    setProfilePicFile(null);
-                    toast.info("Form reset to saved profile data");
-                  }
-                }}
-                className="border-white/10 hover:bg-white/5 text-white bg-transparent h-12 rounded-xl px-8 font-semibold transition-colors"
-              >
-                Cancel
-              </Button>
-
+            <div className="flex justify-end pt-4">
               <Button
                 type="submit"
                 disabled={isUpdating}
