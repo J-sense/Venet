@@ -63,6 +63,7 @@ import PrivacyMain from "./pages/privacyPolicy/PrivacyMain";
 import TermsMain from "./pages/termsCondition/TermsMain";
 import GraphEarnignList from "./pages/dashboard/experts/overView/components/GraphEarnignList";
 import AllPrograms from "./pages/AllPrograms/AllPrograms";
+import PrivateRoute from "./routes/PrivateRoute";
 
 export const App = () => {
   return (
@@ -101,7 +102,11 @@ export const App = () => {
       </Route>
       <Route
         path="/dashboard/user"
-        element={<UserLayout navItems={navItemsForUser} />}
+        element={
+          <PrivateRoute allowedRole="USER">
+            <UserLayout navItems={navItemsForUser} />
+          </PrivateRoute>
+        }
       >
         <Route index element={<UserHome />} />
         <Route path="program/:id" element={<ProgramDetails />} />
@@ -137,7 +142,11 @@ export const App = () => {
       </Route>
       <Route
         path="/dashboard/experts"
-        element={<ExpertsLayout navItems={navItemsForExperts} />}
+        element={
+          <PrivateRoute allowedRole="EXPERT">
+            <ExpertsLayout navItems={navItemsForExperts} />
+          </PrivateRoute>
+        }
       >
         <Route index element={<ExpertsOverview />} />
         <Route path="overview" element={<ExpertsOverview />} />
