@@ -1,6 +1,4 @@
-// /home/workdir/artifacts/ProfileForm.tsx
-"use client";
-
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ProfileInput } from "@/components/ui/profileInput";
@@ -20,6 +18,7 @@ import {
   useUpdateExpertProfileMutation,
 } from "@/redux/features/expertDashboard/expertProfile.api";
 import { profileSchema, type ProfileFormData } from "../schemas/profileSchema";
+import { formatApiErrorMessage, getImageUrl } from "../utils/profileUtils";
 
 export default function ProfileForm() {
   const { data: expertProfileData, isLoading } =
@@ -29,7 +28,7 @@ export default function ProfileForm() {
 
   const responseData = expertProfileData?.data;
   const userObj = responseData?.user;
-
+  console.log(userObj, "all response");
   const [profilePic, setProfilePic] = React.useState<string | null>(null);
   const [profilePicFile, setProfilePicFile] = useState<File | null>(null);
   const [certFiles, setCertFiles] = useState<Record<number, File>>({});
@@ -61,72 +60,53 @@ export default function ProfileForm() {
   // Hydrate form fields when expertProfileData is fetched from API
   useEffect(() => {
     if (responseData || userObj) {
-      const fName =
-        userObj?.first_name ||
-        userObj?.firstName ||
-        responseData?.first_name ||
-        "";
-      const lName =
-        userObj?.last_name ||
-        userObj?.lastName ||
-        responseData?.last_name ||
-        "";
-      const emailVal = userObj?.email || responseData?.email || "";
-      const phoneVal =
-        userObj?.phone1 ||
-        userObj?.phone ||
-        responseData?.phone1 ||
-        responseData?.phone ||
-        "";
+      const fName = userObj?.first_name || "";
+      const lName = userObj?.last_name || "";
+      const emailVal = userObj?.email || "";
+      const phoneVal = userObj?.phone1 || "";
       const hourlyVal =
         userObj?.hourly_rate !== undefined && userObj?.hourly_rate !== null
           ? String(userObj.hourly_rate)
           : responseData?.hourly_rate !== undefined &&
-            responseData?.hourly_rate !== null
+              responseData?.hourly_rate !== null
             ? String(responseData.hourly_rate)
             : "";
       const yearsVal =
         userObj?.years_of_experience !== undefined &&
-          userObj?.years_of_experience !== null
+        userObj?.years_of_experience !== null
           ? String(userObj.years_of_experience)
           : responseData?.years_of_experience !== undefined &&
-            responseData?.years_of_experience !== null
+              responseData?.years_of_experience !== null
             ? String(responseData.years_of_experience)
             : "";
-      const titleVal =
-        responseData?.professional_title || userObj?.specialty || "";
-      const bioVal =
-        userObj?.bio ||
-        responseData?.bio ||
-        responseData?.about_me ||
-        responseData?.aboutMe ||
-        "";
+      const titleVal = userObj?.specialty || "";
+      const bioVal = userObj?.bio || "";
 
       const parsedCerts = Array.isArray(responseData?.certifications)
         ? responseData.certifications.map((c: any) => ({
-          name: c.name || "Certificate",
-          fileName: c.name || "Certificate",
-          fileUrl: getImageUrl(c.file),
-        }))
+            name: c.name || "Certificate",
+            fileName: c.name || "Certificate",
+            fileUrl: getImageUrl(c.file),
+          }))
         : [];
 
       const parsedAch = Array.isArray(responseData?.achievements)
         ? responseData.achievements.map((a: any) => ({
-          name: a.name || "Achievement",
-          fileName: a.name || "Achievement",
-          fileUrl: getImageUrl(a.file),
-        }))
+            name: a.name || "Achievement",
+            fileName: a.name || "Achievement",
+            fileUrl: getImageUrl(a.file),
+          }))
         : [];
 
       const rawEdu = responseData?.education || responseData?.educations;
       const parsedEdu = Array.isArray(rawEdu)
         ? rawEdu.map((e: any) => ({
-          degree: e.degree || "",
-          institution: e.institution || "",
-          year: e.year !== undefined && e.year !== null ? String(e.year) : "",
-          fileName: e.certificate ? "Uploaded Certificate" : "",
-          fileUrl: getImageUrl(e.certificate),
-        }))
+            degree: e.degree || "",
+            institution: e.institution || "",
+            year: e.year !== undefined && e.year !== null ? String(e.year) : "",
+            fileName: e.certificate ? "Uploaded Certificate" : "",
+            fileUrl: getImageUrl(e.certificate),
+          }))
         : [];
 
       form.reset({
@@ -140,11 +120,11 @@ export default function ProfileForm() {
         aboutMe: bioVal,
         specializations:
           Array.isArray(responseData?.specializations) &&
-            responseData.specializations.length > 0
+          responseData.specializations.length > 0
             ? responseData.specializations.map((s: any) => ({
-              title: s.title || "",
-              description: s.description || "",
-            }))
+                title: s.title || "",
+                description: s.description || "",
+              }))
             : titleVal
               ? [{ title: titleVal, description: "" }]
               : [{ title: "", description: "" }],
@@ -188,49 +168,9 @@ export default function ProfileForm() {
     remove: removeEdu,
   } = useFieldArray({ control, name: "educations" });
 
-  const formatApiErrorMessage = (err: any): string => {
-    if (!err) return "Failed to update profile. Please check your inputs.";
-
-    const rawDetails =
-      err?.data?.details ?? err?.details ?? err?.data?.message ?? err?.message;
-
-    if (!rawDetails) return "Failed to update profile. Please try again.";
-
-    let strVal = "";
-    if (typeof rawDetails === "string") {
-      strVal = rawDetails;
-    } else if (typeof rawDetails === "object") {
-      strVal = JSON.stringify(rawDetails);
-    }
-
-    if (
-      strVal.includes("hourly_rate") &&
-      (strVal.includes("valid number") || strVal.includes("invalid"))
-    ) {
-      return "A valid number is required for Hourly Rate (e.g. 45.00).";
-    }
-    if (strVal.includes("years_of_experience")) {
-      return "A valid number is required for Years of Experience.";
-    }
-
-    if (typeof rawDetails === "string") {
-      return rawDetails;
-    }
-
-    if (typeof rawDetails === "object" && rawDetails !== null) {
-      const errorMessages: string[] = [];
-      Object.entries(rawDetails).forEach(([k, v]) => {
-        const valText = typeof v === "string" ? v : JSON.stringify(v);
-        errorMessages.push(`${k}: ${valText}`);
-      });
-      if (errorMessages.length > 0) return errorMessages.join(" | ");
-    }
-
-    return "Failed to update profile. Please try again.";
-  };
-
   const onSubmit: SubmitHandler<ProfileFormData> = async (data) => {
     try {
+      console.log(data, "get form data");
       const formData = new FormData();
 
       // 1. professional_title
@@ -241,6 +181,7 @@ export default function ProfileForm() {
       // 2. user[...] keys as specified in Postman
       if (data.firstName) formData.append("user[first_name]", data.firstName);
       if (data.lastName) formData.append("user[last_name]", data.lastName);
+      if (data.phone) formData.append("user[phone1]", data.phone);
       if (profilePicFile) {
         formData.append("user[image]", profilePicFile);
       }
@@ -428,19 +369,6 @@ export default function ProfileForm() {
     setValue(`educations.${index}.fileName`, "");
   };
 
-  // Helper to format image URLs and fix mixed-content HTTP/HTTPS issues
-  const getImageUrl = (url?: string | null) => {
-    if (!url) return undefined;
-    if (
-      typeof window !== "undefined" &&
-      window.location.protocol === "https:" &&
-      url.startsWith("http://")
-    ) {
-      return url.replace("http://", "https://");
-    }
-    return url;
-  };
-
   // Display derived helper values
   const fName =
     userObj?.first_name || userObj?.firstName || responseData?.first_name || "";
@@ -518,8 +446,9 @@ export default function ProfileForm() {
                           />
                         ) : null}
                         <div
-                          className={`avatar-fallback-text w-full h-full items-center justify-center bg-gradient-to-b from-zinc-700 to-zinc-900 text-[#90A1B9] text-xl font-bold font-sora ${currentAvatar ? "hidden" : "flex"
-                            }`}
+                          className={`avatar-fallback-text w-full h-full items-center justify-center bg-gradient-to-b from-zinc-700 to-zinc-900 text-[#90A1B9] text-xl font-bold font-sora ${
+                            currentAvatar ? "hidden" : "flex"
+                          }`}
                         >
                           {initials}
                         </div>
@@ -946,8 +875,8 @@ export default function ProfileForm() {
                   const fileUrl = uploadedFile
                     ? null
                     : getImageUrl(
-                      currentEdu?.fileUrl || currentEdu?.certificate,
-                    );
+                        currentEdu?.fileUrl || currentEdu?.certificate,
+                      );
                   const fileName =
                     uploadedFile?.name ||
                     currentEdu?.fileName ||

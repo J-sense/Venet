@@ -1,5 +1,3 @@
-"use client";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   AlertCircle,
@@ -17,12 +15,11 @@ import {
   Trash2,
   Upload,
   User,
-  X
+  X,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import * as z from "zod";
 
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
@@ -33,33 +30,10 @@ import {
   useUpdateUserProfileMutation,
 } from "@/redux/features/userDashboard/userProfile.api";
 
-// Choices matching backend class OPEN_TO(models.TextChoices)
-const OPEN_TO_OPTIONS = [
-  { value: "AVAILABLE", label: "Available" },
-  { value: "BUSY", label: "Busy" },
-  { value: "NOT_AVAILABLE", label: "Not Available" },
-];
-
-// Validation Schema matching Postman API profile shape
-const profileSchema = z.object({
-  first_name: z.string().min(1, "First name is required"),
-  last_name: z.string().min(1, "Last name is required"),
-  email: z.string().email("Invalid email address"),
-  phone1: z.string().optional().nullable(),
-  address1: z.string().optional().nullable(),
-  location: z.string().optional().nullable(),
-  specialty: z.string().optional().nullable(),
-  years_of_experience: z.string().optional().nullable(),
-  hourly_rate: z.string().optional().nullable(),
-  open_to: z.string().optional().nullable(),
-  bio: z
-    .string()
-    .max(500, "Bio must be under 500 characters")
-    .optional()
-    .nullable(),
-});
-
-type ProfileFormData = z.infer<typeof profileSchema>;
+import { OPEN_TO_OPTIONS } from "../data/userAccountData";
+import { profileSchema } from "../schemas/userAccountSchema";
+import type { ProfileFormData } from "../schemas/userAccountSchema";
+import { getImageUrl } from "../utils/userAccountUtils";
 
 export default function UserAccountForm() {
   const { data: profileResponse, isLoading } =
@@ -106,7 +80,7 @@ export default function UserAccountForm() {
         specialty: user.specialty || "",
         years_of_experience:
           user.years_of_experience !== null &&
-            user.years_of_experience !== undefined
+          user.years_of_experience !== undefined
             ? String(user.years_of_experience)
             : "",
         hourly_rate:
@@ -171,6 +145,7 @@ export default function UserAccountForm() {
       }
 
       const res = await updateProfile(formData).unwrap();
+      console.log(res, "update profile");
       if (res?.success) {
         toast.success(res.details || "Profile updated successfully!");
         setImageFile(null);
@@ -182,41 +157,12 @@ export default function UserAccountForm() {
       console.error("Failed to update profile:", err);
       toast.error(
         err?.data?.details ||
-        err?.message ||
-        "Failed to update profile. Please try again.",
+          err?.message ||
+          "Failed to update profile. Please try again.",
       );
     }
   };
 
-  const handleCancel = () => {
-    if (user) {
-      form.reset({
-        first_name: user.first_name || "",
-        last_name: user.last_name || "",
-        email: user.email || "",
-        phone1: user.phone1 || "",
-        address1: user.address1 || "",
-        location: user.location || "",
-        specialty: user.specialty || "",
-        years_of_experience:
-          user.years_of_experience !== null &&
-            user.years_of_experience !== undefined
-            ? String(user.years_of_experience)
-            : "",
-        hourly_rate:
-          user.hourly_rate !== null && user.hourly_rate !== undefined
-            ? String(user.hourly_rate)
-            : "",
-        open_to: user.open_to || "FULL_TIME",
-        bio: user.bio || "",
-      });
-      if (user.skills && Array.isArray(user.skills)) {
-        setSkills(user.skills);
-      }
-      removeSelectedImage();
-      toast.info("Form reset to saved profile data");
-    }
-  };
 
   const addSkill = () => {
     if (newSkill.trim() && !skills.includes(newSkill.trim())) {
@@ -251,19 +197,6 @@ export default function UserAccountForm() {
       </div>
     );
   }
-
-  // Helper to format image URLs and fix mixed-content HTTP/HTTPS issues
-  const getImageUrl = (url?: string | null) => {
-    if (!url) return undefined;
-    if (
-      typeof window !== "undefined" &&
-      window.location.protocol === "https:" &&
-      url.startsWith("http://")
-    ) {
-      return url.replace("http://", "https://");
-    }
-    return url;
-  };
 
   // Display derived helper values
   const displayName =
@@ -314,8 +247,9 @@ export default function UserAccountForm() {
                 />
               ) : null}
               <span
-                className={`avatar-fallback-text font-bold text-2xl text-white ${currentAvatar ? "hidden" : "flex"
-                  }`}
+                className={`avatar-fallback-text font-bold text-2xl text-white ${
+                  currentAvatar ? "hidden" : "flex"
+                }`}
               >
                 {initials}
               </span>
@@ -569,14 +503,6 @@ export default function UserAccountForm() {
 
           {/* Action Buttons */}
           <div className="flex flex-col sm:flex-row justify-end gap-4 pt-2">
-            <Button
-              type="button"
-              variant="outline"
-              onClick={handleCancel}
-              className="border-white/10 hover:bg-white/5 text-white bg-transparent h-12 rounded-xl w-full sm:w-32 font-semibold transition-colors"
-            >
-              Reset
-            </Button>
             <Button
               type="submit"
               disabled={isUpdating}

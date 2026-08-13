@@ -7,7 +7,7 @@ const expertProfileApi = baseApi.injectEndpoints({
         url: "/auth/expert-profile/",
         method: "GET",
       }),
-      providesTags: ["ExpertProfile"],
+      providesTags: ["ExpertProfile",],
     }),
     updateExpertProfile: builder.mutation({
       query: (data) => ({
