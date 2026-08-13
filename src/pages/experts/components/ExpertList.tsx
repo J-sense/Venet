@@ -43,10 +43,10 @@ export default function ExpertList({
               onChange={(e) => onSortChange(e.target.value)}
               className="bg-[#070C15] border border-slate-800 text-white text-sm font-semibold rounded-xl px-4 py-2.5 pr-10 cursor-pointer outline-none focus:border-[#3B82F6] hover:border-slate-700 transition-all appearance-none"
             >
-              <option value="most-popular">Most Popular</option>
-              <option value="rating">Top Rated</option>
-              <option value="price-low">Price: Low to High</option>
-              <option value="price-high">Price: High to Low</option>
+              <option value="most_popular">Most Popular</option>
+              <option value="top_rated">Top Rated</option>
+              <option value="price_low_to_high">Price: Low to High</option>
+              <option value="price_high_to_low">Price: High to Low</option>
             </select>
             <span className="absolute inset-y-0 right-3.5 flex items-center pointer-events-none text-gray-400">
               <ChevronDown className="w-4 h-4" />

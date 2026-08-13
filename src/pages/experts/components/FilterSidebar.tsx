@@ -7,6 +7,7 @@ interface FilterSidebarProps {
   onReset: () => void;
   isOpen?: boolean;
   onClose?: () => void;
+  availableSpecialties?: string[];
 }
 
 const SPECIALTIES = [
@@ -30,7 +31,12 @@ export default function FilterSidebar({
   onReset,
   isOpen = false,
   onClose,
+  availableSpecialties,
 }: FilterSidebarProps) {
+  const specialtyOptions =
+    availableSpecialties && availableSpecialties.length > 0
+      ? availableSpecialties
+      : SPECIALTIES;
   const handleSpecialtyChange = (specialty: string) => {
     const isSelected = filters.specialties.includes(specialty);
     const newSpecialties = isSelected
@@ -107,7 +113,7 @@ export default function FilterSidebar({
             Specialty
           </label>
           <div className="space-y-2.5">
-            {SPECIALTIES.map((specialty) => {
+            {specialtyOptions.map((specialty) => {
               const isChecked = filters.specialties.includes(specialty);
               return (
                 <label

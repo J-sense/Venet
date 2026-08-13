@@ -1,9 +1,11 @@
-import { useState, useMemo } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useMemo, useState } from "react";
 import { SlidersHorizontal } from "lucide-react";
-import { mockExperts } from "../data/expertsData";
-import type { FilterState } from "../data/expertsData";
+import type { Expert, FilterState } from "../data/expertsData";
 import FilterSidebar from "./FilterSidebar";
 import ExpertList from "./ExpertList";
+import { useGetAllExpertsQuery } from "@/redux/features/expertsRoute/expertRoute.api";
+import type { GetExpertsQueryParams } from "@/redux/features/expertsRoute/expertRoute.api";
 
 const INITIAL_FILTERS: FilterState = {
   search: "",
@@ -11,12 +13,71 @@ const INITIAL_FILTERS: FilterState = {
   rating: null,
   minPrice: 0,
   maxPrice: 500,
-  sortBy: "most-popular",
+  sortBy: "most_popular",
+};
+
+// Helper to format image URLs and handle HTTP/HTTPS mixed-content
+const getImageUrl = (url?: string | null) => {
+  if (!url) return undefined;
+  if (
+    typeof window !== "undefined" &&
+    window.location.protocol === "https:" &&
+    url.startsWith("http://")
+  ) {
+    return url.replace("http://", "https://");
+  }
+  return url;
+};
+
+// Maps frontend sortBy values to backend query parameter values
+const getBackendSortBy = (sortBy: string) => {
+  switch (sortBy) {
+    case "rating":
+    case "top_rated":
+      return "top_rated";
+    case "price-low":
+    case "price_low_to_high":
+      return "price_low_to_high";
+    case "price-high":
+    case "price_high_to_low":
+      return "price_high_to_low";
+    case "most-popular":
+    case "most_popular":
+    default:
+      return "most_popular";
+  }
 };
 
 export default function ExpertDirectoryPage() {
   const [filters, setFilters] = useState<FilterState>(INITIAL_FILTERS);
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
+
+  // Construct query parameters for backend API request (sort_by, search, price_min, price_max)
+  const queryParams = useMemo(() => {
+    const params: GetExpertsQueryParams = {};
+
+    const backendSortBy = getBackendSortBy(filters.sortBy);
+    if (backendSortBy) {
+      params.sort_by = backendSortBy;
+    }
+
+    if (filters.search.trim()) {
+      params.search = filters.search.trim();
+    }
+
+    if (filters.minPrice > 0) {
+      params.price_min = filters.minPrice;
+    }
+
+    if (filters.maxPrice < 500) {
+      params.price_max = filters.maxPrice;
+    }
+
+    return params;
+  }, [filters.sortBy, filters.search, filters.minPrice, filters.maxPrice]);
+
+  // Fetch experts from RTK Query API passing query parameters
+  const { data: allExperts, isLoading } = useGetAllExpertsQuery(queryParams);
 
   const handleFilterChange = (newFilters: Partial<FilterState>) => {
     setFilters((prev) => ({
@@ -29,59 +90,77 @@ export default function ExpertDirectoryPage() {
     setFilters(INITIAL_FILTERS);
   };
 
-  // Filter and sort the experts list memoized for performance
+  // Standardize and map API data to clean Expert UI model
+  const expertsList: Expert[] = useMemo(() => {
+    const rawList = Array.isArray(allExperts)
+      ? allExperts
+      : Array.isArray(allExperts?.data)
+        ? allExperts.data
+        : Array.isArray(allExperts?.results)
+          ? allExperts.results
+          : [];
+
+    return rawList.map((item: any) => {
+      const name =
+        [item.first_name, item.last_name].filter(Boolean).join(" ") ||
+        "Expert Profile";
+      const avatarUrl = getImageUrl(item.image);
+      const fallbackAvatar = `https://ui-avatars.com/api/?name=${encodeURIComponent(
+        name,
+      )}&background=1E293B&color=3B82F6`;
+
+      const tags =
+        Array.isArray(item.skills) && item.skills.length > 0
+          ? item.skills
+          : item.specialty
+            ? [item.specialty]
+            : [];
+
+      return {
+        id: item.id,
+        name,
+        avatar: avatarUrl || fallbackAvatar,
+        title: item.professional_title || item.specialty || "Expert",
+        specialty: item.specialty || "General Expert",
+        rating: item.average_rating ? Number(item.average_rating) : 5.0,
+        reviewsCount: item.review_count ? Number(item.review_count) : 0,
+        tags,
+        pricePerHour: item.hourly_rate ? Number(item.hourly_rate) : 0,
+        availability:
+          item.open_to === "AVAILABLE"
+            ? "Available This Week"
+            : item.open_to === "BUSY"
+              ? "Busy"
+              : "Not Available",
+      };
+    });
+  }, [allExperts]);
+
+  // Extract unique specialties from API response
+  const availableSpecialties = useMemo(() => {
+    return Array.from(
+      new Set(expertsList.map((e) => e.specialty).filter(Boolean)),
+    );
+  }, [expertsList]);
+
+  // Filter the experts list (Backend handles search, sorting, and price range filtering)
   const filteredExperts = useMemo(() => {
-    let result = [...mockExperts];
+    let result = [...expertsList];
 
-    // Search query match (name, title, or tags)
-    if (filters.search.trim()) {
-      const searchLower = filters.search.toLowerCase();
-      result = result.filter(
-        (expert) =>
-          expert.name.toLowerCase().includes(searchLower) ||
-          expert.title.toLowerCase().includes(searchLower) ||
-          expert.tags.some((tag) => tag.toLowerCase().includes(searchLower))
-      );
-    }
-
-    // Specialty filter (multiple match)
+    // Specialty filter
     if (filters.specialties.length > 0) {
       result = result.filter((expert) =>
-        filters.specialties.includes(expert.specialty)
+        filters.specialties.includes(expert.specialty),
       );
     }
 
-    // Rating filter (minimum rating check)
+    // Rating filter
     if (filters.rating !== null) {
       result = result.filter((expert) => expert.rating >= (filters.rating as number));
     }
 
-    // Price range filter
-    result = result.filter(
-      (expert) =>
-        expert.pricePerHour >= filters.minPrice &&
-        expert.pricePerHour <= filters.maxPrice
-    );
-
-    // Sorting
-    switch (filters.sortBy) {
-      case "rating":
-        result.sort((a, b) => b.rating - a.rating);
-        break;
-      case "price-low":
-        result.sort((a, b) => a.pricePerHour - b.pricePerHour);
-        break;
-      case "price-high":
-        result.sort((a, b) => b.pricePerHour - a.pricePerHour);
-        break;
-      case "most-popular":
-      default:
-        result.sort((a, b) => b.reviewsCount - a.reviewsCount);
-        break;
-    }
-
     return result;
-  }, [filters]);
+  }, [expertsList, filters]);
 
   return (
     <div className="bg-[#030303] min-h-screen text-slate-100 font-inter">
@@ -90,7 +169,9 @@ export default function ExpertDirectoryPage() {
         {/* Mobile Filter Trigger */}
         <div className="flex lg:hidden justify-between items-center mb-6 bg-[#0B1220]/60 border border-[#1E293B]/60 rounded-2xl px-6 py-4">
           <span className="text-gray-400 text-sm font-semibold">
-            <strong className="text-white text-base mr-1">{filteredExperts.length}</strong> 
+            <strong className="text-white text-base mr-1">
+              {filteredExperts.length}
+            </strong>
             {filteredExperts.length === 1 ? "expert" : "experts"} found
           </span>
           <button
@@ -110,6 +191,7 @@ export default function ExpertDirectoryPage() {
             onReset={handleResetFilters}
             isOpen={isMobileFilterOpen}
             onClose={() => setIsMobileFilterOpen(false)}
+            availableSpecialties={availableSpecialties}
           />
 
           {/* Mobile Overlay Background */}
@@ -126,6 +208,7 @@ export default function ExpertDirectoryPage() {
             sortBy={filters.sortBy}
             onSortChange={(val) => handleFilterChange({ sortBy: val })}
             onClearFilters={handleResetFilters}
+            isLoading={isLoading}
           />
         </div>
       </div>
