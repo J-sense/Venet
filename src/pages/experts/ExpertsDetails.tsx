@@ -59,8 +59,8 @@ export default function ExpertsDetails() {
         userObj?.open_to === "AVAILABLE"
           ? "Available This Week"
           : userObj?.open_to === "BUSY"
-            ? "Busy"
-            : "Not Available",
+            ? "Fully Booked"
+            : "Available Next Week",
     };
   }, [singExpert?.data, id]);
 
