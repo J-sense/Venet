@@ -56,7 +56,7 @@ export const ProfileDropdown = ({
     dispatch(baseApi.util.resetApiState());
     toast.success("Logged out successfully");
     setIsOpen(false);
-    navigate("/auth/login");
+    navigate("/");
   };
 
   if (!user) return null;

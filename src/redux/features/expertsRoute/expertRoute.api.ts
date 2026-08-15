@@ -22,7 +22,30 @@ const expertRouteApi = baseApi.injectEndpoints({
         method: "GET",
       }),
     }),
+    getSingleExpertDurationAndTime: builder.query({
+      query: (id) => ({
+        url: `/session-durations/?expert_id=${id}`,
+        method: "GET",
+      }),
+    }),
+    getSingleExpertAvailability: builder.query({
+      query: (id) => ({
+        url: `/experts/${id}/availability/`,
+        method: "GET",
+      }),
+    }),
+    getSingleExpertSlots: builder.query({
+      query: ({ id, date, duration_minutes }) => ({
+        url: `/experts/${id}/available-slots/?date=${date}&duration_minutes=${duration_minutes}`,
+        method: "GET",
+      }),
+    }),
   }),
 });
-export const { useGetAllExpertsQuery, useGetSingleExpertQuery } =
-  expertRouteApi;
+export const {
+  useGetAllExpertsQuery,
+  useGetSingleExpertQuery,
+  useGetSingleExpertDurationAndTimeQuery,
+  useGetSingleExpertAvailabilityQuery,
+  useGetSingleExpertSlotsQuery,
+} = expertRouteApi;

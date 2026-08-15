@@ -1,7 +1,10 @@
 import { type ReactNode } from "react";
 import { Navigate, useLocation, Outlet } from "react-router";
 import { useAppSelector } from "@/redux/hooks";
-import { selectCurrentToken, selectCurrentUser } from "@/redux/features/auth/authSlice";
+import {
+  selectCurrentToken,
+  selectCurrentUser,
+} from "@/redux/features/auth/authSlice";
 
 interface PrivateRouteProps {
   children?: ReactNode;
@@ -9,13 +12,15 @@ interface PrivateRouteProps {
 }
 
 export const PrivateRoute = ({ children, allowedRole }: PrivateRouteProps) => {
-  const token = useAppSelector(selectCurrentToken) || localStorage.getItem("token");
+  const token =
+    useAppSelector(selectCurrentToken) || localStorage.getItem("token");
   const user = useAppSelector(selectCurrentUser);
   const location = useLocation();
 
   // 1. Check Authentication Status
   if (!token) {
-    const loginRedirect = allowedRole === "EXPERT" ? "/auth/experts-login" : "/auth/login";
+    const loginRedirect =
+      allowedRole === "EXPERT" ? "/auth/login" : "/auth/login";
     return <Navigate to={loginRedirect} state={{ from: location }} replace />;
   }
 

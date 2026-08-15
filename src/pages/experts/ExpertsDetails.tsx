@@ -5,7 +5,11 @@ import { ChevronLeft } from "lucide-react";
 import type { Expert } from "./data/expertsData";
 import ExpertProfileDetails from "./components/profile/ExpertProfileDetails";
 import CustomBooking from "./components/booking/CustomBooking";
-import { useGetSingleExpertQuery } from "@/redux/features/expertsRoute/expertRoute.api";
+import {
+  useGetSingleExpertAvailabilityQuery,
+  useGetSingleExpertDurationAndTimeQuery,
+  useGetSingleExpertQuery,
+} from "@/redux/features/expertsRoute/expertRoute.api";
 
 // Helper to format image URLs and handle HTTP/HTTPS mixed content
 const getImageUrl = (url?: string | null) => {
@@ -22,8 +26,21 @@ const getImageUrl = (url?: string | null) => {
 
 export default function ExpertsDetails() {
   const { id } = useParams();
+  console.log(id, "idddddd");
   const { data: singExpert, isLoading } = useGetSingleExpertQuery(id);
+  const { data: getExpertAvailability } = useGetSingleExpertAvailabilityQuery(
+    id,
+    {
+      skip: !id,
+    },
+  );
+  const { data: getExpertDurationAndTime } =
+    useGetSingleExpertDurationAndTimeQuery(id, {
+      skip: !id,
+    });
 
+  console.log(getExpertAvailability, "get my availability");
+  console.log(getExpertDurationAndTime, "get my derutaion");
   // Dynamically map API response data for CustomBooking & ProfileDetails (NO mock data)
   const expert: Expert = useMemo(() => {
     const apiData = singExpert?.data;
@@ -116,7 +133,11 @@ export default function ExpertsDetails() {
               </div>
 
               {/* Booking Component */}
-              <CustomBooking expert={expert} />
+              <CustomBooking
+                expert={expert}
+                availabilityData={getExpertAvailability?.data?.availabilities}
+                durationAndCost={getExpertDurationAndTime?.data}
+              />
             </div>
           </div>
         </div>

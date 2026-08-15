@@ -1,6 +1,13 @@
 /* eslint-disable react-hooks/purity */
-import React, { useState } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import React, { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight, Clock, Plus, Trash2 } from "lucide-react";
+import { useBookingSocket } from "@/providers/BookingSocketProvider";
+import {
+  useCreateExpertAvailabilityMutation,
+  useGetExpertAvailabiltiyQuery,
+} from "@/redux/features/expertDashboard/expertAvailability.api";
+import { toast } from "sonner";
 
 export type Day =
   | "Monday"
@@ -60,10 +67,62 @@ const TIME_OPTIONS = Array.from({ length: 288 }, (_, i) => {
 });
 
 const WeeklyAvailability: React.FC = () => {
+  const [createAvailability] = useCreateExpertAvailabilityMutation();
+  const { data: getAvailability } = useGetExpertAvailabiltiyQuery(undefined);
+  console.log(getAvailability);
   const [availability, setAvailability] =
     useState<WeeklyAvailabilityState>(INITIAL_AVAILABILITY);
   const [bufferTime, setBufferTime] = useState(15);
+  console.log(availability);
 
+  // Load initial availability data when API response changes
+  useEffect(() => {
+    const rawData = getAvailability?.data;
+    if (rawData && Array.isArray(rawData.availabilities)) {
+      if (rawData.buffer_time_minutes !== undefined) {
+        setBufferTime(rawData.buffer_time_minutes);
+      }
+
+      // Initialize all days as disabled with empty slots
+      const mappedAvailability = DAYS.reduce((acc, day) => {
+        acc[day] = {
+          enabled: false,
+          slots: [],
+        };
+        return acc;
+      }, {} as WeeklyAvailabilityState);
+
+      // Populate slots from backend data
+      rawData.availabilities.forEach((item: any) => {
+        const weekdayIndex = item.weekday;
+        const day = DAYS[weekdayIndex];
+        if (day) {
+          mappedAvailability[day].enabled = true;
+          // Extract HH:MM from HH:MM:SS format
+          const startTime = item.start_time ? item.start_time.substring(0, 5) : "09:00";
+          const endTime = item.end_time ? item.end_time.substring(0, 5) : "17:00";
+
+          mappedAvailability[day].slots.push({
+            id: item.id || Date.now() + Math.random(),
+            start_time: startTime,
+            end_time: endTime,
+          });
+        }
+      });
+
+      // Ensure every day (even if disabled or empty) has at least one default slot so toggling works nicely
+      DAYS.forEach((day) => {
+        if (mappedAvailability[day].slots.length === 0) {
+          mappedAvailability[day].slots.push({
+            id: Date.now() + Math.random(),
+            ...DEFAULT_TIME_SLOT,
+          });
+        }
+      });
+
+      setAvailability(mappedAvailability);
+    }
+  }, [getAvailability]);
   const toggleDay = (day: Day) => {
     setAvailability((prev) => ({
       ...prev,
@@ -121,6 +180,48 @@ const WeeklyAvailability: React.FC = () => {
       return updated;
     });
   };
+  const { isConnected, lastMessage, sendMessage } = useBookingSocket();
+  console.log(isConnected, lastMessage, sendMessage);
+
+  const handleSaveAvailability = async () => {
+    const availabilities: Array<{
+      weekday: number;
+      start_time: string;
+      end_time: string;
+    }> = [];
+
+    DAYS.forEach((day, index) => {
+      const dayData = availability[day];
+      if (dayData.enabled) {
+        dayData.slots.forEach((slot) => {
+          if (slot.start_time && slot.end_time) {
+            availabilities.push({
+              weekday: index, // Monday = 0, Tuesday = 1, etc.
+              start_time: slot.start_time,
+              end_time: slot.end_time,
+            });
+          }
+        });
+      }
+    });
+
+    const payload = {
+      buffer_time_minutes: bufferTime,
+      availabilities,
+    };
+
+    try {
+      console.log("Saving availability with payload:", payload);
+      await createAvailability(payload).unwrap();
+      toast.success("Availability updated successfully!");
+    } catch (error: any) {
+      console.error("Failed to save availability:", error);
+      toast.error(
+        error?.data?.details ||
+          "Failed to save availability. Please try again.",
+      );
+    }
+  };
 
   return (
     <div className="min-h-screen bg-[#0A1324] text-white p-4 sm:p-6 select-none">
@@ -136,7 +237,7 @@ const WeeklyAvailability: React.FC = () => {
                 Today
               </button>
             </div>
-            
+
             <div className="flex items-center gap-2 bg-[#1E2A44] px-4 py-2.5 rounded-2xl text-sm">
               <button className="text-gray-400 hover:text-white transition-colors">
                 <ChevronLeft size={18} />
@@ -304,7 +405,10 @@ const WeeklyAvailability: React.FC = () => {
           <button className="w-full sm:w-auto px-10 py-4 text-gray-400 hover:bg-gray-800 rounded-2xl font-medium transition-colors">
             Cancel
           </button>
-          <button className="w-full sm:w-auto px-10 py-4 bg-blue-600 hover:bg-blue-700 rounded-2xl font-semibold transition-colors">
+          <button
+            onClick={handleSaveAvailability}
+            className="w-full sm:w-auto px-10 py-4 bg-blue-600 hover:bg-blue-700 rounded-2xl font-semibold transition-colors"
+          >
             Save Availability
           </button>
         </div>

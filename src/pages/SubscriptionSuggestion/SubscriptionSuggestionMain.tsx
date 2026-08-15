@@ -107,11 +107,18 @@ export const SubscriptionSuggestionMain = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {recommendations && recommendations?.length > 0
-            ? recommendations.map((item: any, idx: number) => {
-                const program = item.program || item;
-                const isRecommended = Boolean(
-                  item?.is_recommended ?? program?.is_recommended ?? true,
-                );
+            ? recommendations
+                .filter((item: any) => {
+                  const program = item.program || item;
+                  return Boolean(
+                    item?.is_recommended ?? program?.is_recommended ?? false,
+                  );
+                })
+                .map((item: any, idx: number) => {
+                  const program = item.program || item;
+                  const isRecommended = Boolean(
+                    item?.is_recommended ?? program?.is_recommended ?? true,
+                  );
                 const reasonText = item?.reason ?? program?.reason;
                 const price = parseFloat(program?.price) || 29.99;
                 console.log(item);
@@ -304,6 +311,14 @@ export const SubscriptionSuggestionMain = () => {
                   </div>
                 );
               })}
+        </div>
+        {/* Explore All Programs Button */}
+        <div className="mt-12 flex justify-center">
+          <Link to="/programs/all-programs">
+            <button className="px-8 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold rounded-xl shadow-lg hover:shadow-blue-500/20 transition-all select-none hover:scale-105 active:scale-95">
+              Explore All Programs
+            </button>
+          </Link>
         </div>
       </div>
     </div>

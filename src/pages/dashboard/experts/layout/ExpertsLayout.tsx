@@ -69,7 +69,7 @@ const ExpertsLayout = ({ navItems, user }: UserLayoutProps) => {
     myProfileResponse?.data ||
     user?.data ||
     userFromRedux;
-  console.log(userData, "user data");
+
   // Sync sidebar state on window resize
   useEffect(() => {
     const handleResize = () => {

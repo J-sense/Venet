@@ -8,6 +8,7 @@ export const profileSchema = z.object({
   hourlyRate: z.string().optional().nullable(),
   yearsOfExperience: z.string().optional().nullable(),
   professionalTitle: z.string().optional().nullable(),
+  specialty: z.string().optional().nullable(),
   aboutMe: z
     .string()
     .max(500, "About me must be less than 500 characters")
@@ -17,6 +18,7 @@ export const profileSchema = z.object({
   specializations: z
     .array(
       z.object({
+        id: z.number().optional().nullable(),
         title: z.string().optional().nullable(),
         description: z.string().optional().nullable(),
       }),
@@ -27,6 +29,8 @@ export const profileSchema = z.object({
   certifications: z
     .array(
       z.object({
+        id: z.number().optional().nullable(),
+        name: z.string().optional().nullable(),
         fileName: z.string().optional(),
         file: z.any().optional(),
         fileUrl: z.string().optional().nullable(),
@@ -38,6 +42,8 @@ export const profileSchema = z.object({
   achievements: z
     .array(
       z.object({
+        id: z.number().optional().nullable(),
+        name: z.string().optional().nullable(),
         fileName: z.string().optional(),
         file: z.any().optional(),
         fileUrl: z.string().optional().nullable(),
@@ -49,6 +55,7 @@ export const profileSchema = z.object({
   educations: z
     .array(
       z.object({
+        id: z.number().optional().nullable(),
         degree: z.string().optional().nullable(),
         institution: z.string().optional().nullable(),
         year: z.string().optional().nullable(),
