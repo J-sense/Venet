@@ -8,7 +8,7 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { useAppSelector } from "@/redux/hooks";
+import { useAppSelector, useAppDispatch } from "@/redux/hooks";
 import { selectCurrentToken } from "@/redux/features/auth/authSlice";
 import { baseApi } from "@/redux/baseApi";
 
@@ -29,7 +29,7 @@ export const BookingSocketProvider: React.FC<{ children: React.ReactNode }> = ({
   const [isConnected, setIsConnected] = useState(false);
   const [lastMessage, setLastMessage] = useState<any>(null);
   const socketRef = useRef<WebSocket | null>(null);
-
+  const dispatch = useAppDispatch();
   useEffect(() => {
     if (!token) {
       setIsConnected(false);
@@ -51,8 +51,8 @@ export const BookingSocketProvider: React.FC<{ children: React.ReactNode }> = ({
         const parseSocketData = JSON.parse(event.data);
         console.log(parseSocketData, "parse socket data");
         if (parseSocketData?.event === "availability_updated") {
-          baseApi.util.invalidateTags(["Availability"]);
-          console.log("triggered")
+          dispatch(baseApi.util.invalidateTags(["Availability"]));
+          console.log("Availability cache invalidated");
         }
         setLastMessage(JSON.parse(event.data));
       } catch {
