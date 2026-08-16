@@ -51,7 +51,13 @@ export const BookingSocketProvider: React.FC<{ children: React.ReactNode }> = ({
         const parseSocketData = JSON.parse(event.data);
         console.log(parseSocketData, "parse socket data");
         if (parseSocketData?.event === "availability_updated") {
-          dispatch(baseApi.util.invalidateTags(["Availability"]));
+          dispatch(
+            baseApi.util.invalidateTags([
+              {
+                type: "Availability",
+              },
+            ]),
+          );
           console.log("Availability cache invalidated");
         }
         setLastMessage(JSON.parse(event.data));
