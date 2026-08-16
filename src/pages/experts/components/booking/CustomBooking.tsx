@@ -205,6 +205,7 @@ export default function CustomBooking({
       },
       {
         skip: !expert.id || !dateStr || !selectedDuration,
+        refetchOnMountOrArgChange: true,
       },
     );
   console.log(slotsResponse, "slotResponse");

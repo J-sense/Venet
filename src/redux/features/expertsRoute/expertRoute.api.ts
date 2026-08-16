@@ -21,24 +21,28 @@ const expertRouteApi = baseApi.injectEndpoints({
         url: `/experts/${id}/`,
         method: "GET",
       }),
+      providesTags: ["ExpertProfile"],
     }),
     getSingleExpertDurationAndTime: builder.query({
       query: (id) => ({
         url: `/session-durations/?expert_id=${id}`,
         method: "GET",
       }),
+      providesTags: ["ExpertProfile"],
     }),
     getSingleExpertAvailability: builder.query({
       query: (id) => ({
         url: `/experts/${id}/availability/`,
         method: "GET",
       }),
+      providesTags: ["ExpertProfile", "Availability"],
     }),
     getSingleExpertSlots: builder.query({
       query: ({ id, date, duration_minutes }) => ({
         url: `/experts/${id}/available-slots/?date=${date}&duration_minutes=${duration_minutes}`,
         method: "GET",
       }),
+      providesTags: ["Availability"],
     }),
   }),
 });

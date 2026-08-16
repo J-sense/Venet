@@ -1,3 +1,6 @@
+/* eslint-disable react-refresh/only-export-components */
+/* eslint-disable react-hooks/set-state-in-effect */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, {
   createContext,
   useContext,
@@ -7,6 +10,7 @@ import React, {
 } from "react";
 import { useAppSelector } from "@/redux/hooks";
 import { selectCurrentToken } from "@/redux/features/auth/authSlice";
+import { baseApi } from "@/redux/baseApi";
 
 interface BookingSocketContextType {
   isConnected: boolean;
@@ -46,6 +50,10 @@ export const BookingSocketProvider: React.FC<{ children: React.ReactNode }> = ({
       try {
         const parseSocketData = JSON.parse(event.data);
         console.log(parseSocketData, "parse socket data");
+        if (parseSocketData?.event === "availability_updated") {
+          baseApi.util.invalidateTags(["Availability"]);
+          console.log("triggered")
+        }
         setLastMessage(JSON.parse(event.data));
       } catch {
         setLastMessage(event.data);

@@ -8,7 +8,7 @@ const expertAvailabilityApi = baseApi.injectEndpoints({
         method: "POST",
         data,
       }),
-      invalidatesTags: ["ExpertProfile"],
+      invalidatesTags: ["ExpertProfile", "Availability"],
     }),
     getExpertAvailabiltiy: builder.query({
       query: (data) => ({
@@ -16,7 +16,14 @@ const expertAvailabilityApi = baseApi.injectEndpoints({
         method: "GET",
         data,
       }),
-      providesTags: ["ExpertProfile"],
+      providesTags: ["ExpertProfile", "Availability"],
+    }),
+    getSingleExpertAvailability: builder.query({
+      query: (id) => ({
+        url: `/experts/${id}/availability/`,
+        method: "GET",
+      }),
+      providesTags: ["ExpertProfile", "Availability"],
     }),
   }),
 });
@@ -24,4 +31,5 @@ const expertAvailabilityApi = baseApi.injectEndpoints({
 export const {
   useCreateExpertAvailabilityMutation,
   useGetExpertAvailabiltiyQuery,
+  useGetSingleExpertAvailabilityQuery,
 } = expertAvailabilityApi;
