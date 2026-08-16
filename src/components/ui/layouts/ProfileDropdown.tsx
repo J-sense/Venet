@@ -71,7 +71,7 @@ export const ProfileDropdown = ({
 
   const isExpert = user.role?.toUpperCase() === "EXPERT";
   const dashboardLink = isExpert
-    ? "/dashboard/experts"
+    ? "/"
     : isDashboard
       ? "/"
       : "/dashboard/user";

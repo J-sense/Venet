@@ -38,7 +38,7 @@ export default function UserCertificates() {
   };
 
   return (
-    <div className="space-y-8 p-6">
+    <div className="space-y-8 p-1">
       {/* Header */}
       <div>
         <h2 className="text-2xl font-bold text-white">
@@ -63,7 +63,7 @@ export default function UserCertificates() {
                   src={cert.image}
                   alt={cert.program}
                   className="w-full h-full object-cover"
-                // Fallback if image doesn't exist
+                  // Fallback if image doesn't exist
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
 

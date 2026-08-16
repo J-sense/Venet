@@ -11,6 +11,7 @@ import React, {
 import { useAppSelector, useAppDispatch } from "@/redux/hooks";
 import { selectCurrentToken } from "@/redux/features/auth/authSlice";
 import { baseApi } from "@/redux/baseApi";
+import { useGetSingleExpertAvailabilityQuery } from "@/redux/features/expertDashboard/expertAvailability.api";
 
 interface BookingSocketContextType {
   isConnected: boolean;
@@ -29,6 +30,7 @@ export const BookingSocketProvider: React.FC<{ children: React.ReactNode }> = ({
   const [isConnected, setIsConnected] = useState(false);
   const [lastMessage, setLastMessage] = useState<any>(null);
   const socketRef = useRef<WebSocket | null>(null);
+  
   const dispatch = useAppDispatch();
   useEffect(() => {
     if (!token) {

@@ -163,7 +163,6 @@ export default function UserAccountForm() {
     }
   };
 
-
   const addSkill = () => {
     if (newSkill.trim() && !skills.includes(newSkill.trim())) {
       setSkills([...skills, newSkill.trim()]);
@@ -219,7 +218,7 @@ export default function UserAccountForm() {
       />
 
       {/* Profile Header Card */}
-      <div className="bg-[#0D1526] rounded-2xl p-6 md:p-8 flex flex-col md:flex-row items-center md:items-start justify-between text-center md:text-left gap-6 border border-white/5 shadow-xl shadow-black/40 relative overflow-hidden group">
+      <div className="bg-[#0D1526] rounded-2xl p-2 md:p-8 flex flex-col md:flex-row items-center md:items-start justify-between text-center md:text-left gap-6 border border-white/5 shadow-xl shadow-black/40 relative overflow-hidden group">
         <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-transparent to-purple-500/5 opacity-80 pointer-events-none" />
 
         <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 relative z-10">
@@ -349,7 +348,7 @@ export default function UserAccountForm() {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           {/* Profile Information Card */}
-          <div className="bg-[#0D1526] p-6 md:p-8 rounded-2xl border border-white/5 shadow-xl shadow-black/40 relative overflow-hidden group">
+          <div className="bg-[#0D1526] p-3 md:p-8 rounded-2xl border border-white/5 shadow-xl shadow-black/40 relative overflow-hidden group">
             <div className="absolute inset-0 bg-gradient-to-br from-white/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
             <h2 className="text-white text-xl font-bold mb-6 flex gap-2.5 items-center tracking-tight">
               <User className="text-blue-400 w-6 h-6" />

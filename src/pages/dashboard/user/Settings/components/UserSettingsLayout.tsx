@@ -1,5 +1,13 @@
 import { SidebarItem } from "@/pages/dashboard/experts/Setting/components/ExpertsSideBarItem";
-import { Bell, ChevronDown, Menu, ReceiptText, Shield, User, X } from "lucide-react";
+import {
+  Bell,
+  ChevronDown,
+  Menu,
+  ReceiptText,
+  Shield,
+  User,
+  X,
+} from "lucide-react";
 
 import { useState } from "react";
 import { Outlet } from "react-router";
@@ -8,13 +16,13 @@ export const UserSettingsLayout = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="flex flex-col md:flex-row gap-6 md:gap-8 min-h-screen bg-[#030712] text-white w-full relative overflow-hidden p-4 md:p-8">
+    <div className="flex flex-col md:flex-row gap-6 md:gap-8 min-h-screen bg-[#030712] text-white w-full relative overflow-hidden p-0 md:p-8">
       {/* Ambient Background Glows */}
       <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-purple-600/10 rounded-full blur-[120px] pointer-events-none" />
 
       {/* Mobile Toggle Button */}
-      <div 
+      <div
         className="md:hidden flex justify-between items-center bg-[#0D1526] border border-white/5 p-4 rounded-2xl shadow-xl cursor-pointer relative z-20"
         onClick={() => setIsOpen(!isOpen)}
       >
@@ -23,7 +31,11 @@ export const UserSettingsLayout = () => {
           Settings Menu
         </span>
         <button className="text-zinc-400 hover:text-white transition-colors">
-          {isOpen ? <X className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
+          {isOpen ? (
+            <X className="w-5 h-5" />
+          ) : (
+            <ChevronDown className="w-5 h-5" />
+          )}
         </button>
       </div>
 

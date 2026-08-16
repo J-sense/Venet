@@ -15,7 +15,7 @@ export default function ExpertOverview() {
       subtitle: "All time",
       icon: <DollarSign className="w-6 h-6" />,
       trend: "+18% this month",
-      href: "earnings"
+      href: "earnings",
     },
     {
       title: "Total Clients",
@@ -38,7 +38,7 @@ export default function ExpertOverview() {
   ];
   return (
     <>
-      <div className="min-h-screen bg-zinc-950 text-white p-6">
+      <div className="min-h-screen bg-zinc-950 text-white ">
         <div className="max-w-full  space-y-8">
           {/* Header */}
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-[#0F172A] p-6 rounded-2xl">

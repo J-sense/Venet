@@ -1,13 +1,15 @@
 import { ActionButton } from "@/components/ui/ActionButton";
 import { BlackActionButton } from "@/components/ui/BlackActionButton";
+import { useNavigate } from "react-router";
 
 export const AboutUsHero = () => {
+  const navigate = useNavigate()
   return (
     <section className="bg-[#030303] text-white py-20 px-6 md:px-12 lg:px-24 flex items-center min-h-[600px]">
       <div className="max-w-[1600px] mx-auto flex flex-col lg:flex-row items-center gap-16">
         {/* Left: Content */}
         <div className="flex-1 space-y-6 i">
-          <h1 className="text-[48px] md:text-[48px] font-extrabold leading-[1.2] tracking-tight text-white">
+          <h1 className="text-[28px] md:text-[48px] font-extrabold leading-[1.2] tracking-tight text-white">
             Transforming Lives Through{" "}
             <span className="text-blue-500">
               Health & Fitness, Mental Health, Education, and Career
@@ -19,9 +21,9 @@ export const AboutUsHero = () => {
             programs, and career development tools to help people achieve
             meaningful life transformation.
           </p>
-          <div className="flex gap-4 pt-4">
+          <div className="flex md:flex-row flex-col gap-4 pt-4">
             <ActionButton label="Start Your Journey" />
-            <BlackActionButton label="Explore Programs" />
+            <BlackActionButton label="Explore Programs" onClick={() => navigate("/programs/all-programs")} />
           </div>
         </div>
 

@@ -11,6 +11,7 @@ import {
   useGetSingleExpertQuery,
 } from "@/redux/features/expertsRoute/expertRoute.api";
 import { useGetSingleExpertAvailabilityQuery } from "@/redux/features/expertDashboard/expertAvailability.api";
+import { useBookingSocket } from "@/providers/BookingSocketProvider";
 
 // Helper to format image URLs and handle HTTP/HTTPS mixed content
 const getImageUrl = (url?: string | null) => {
@@ -27,7 +28,8 @@ const getImageUrl = (url?: string | null) => {
 
 export default function ExpertsDetails() {
   const { id } = useParams();
-  console.log(id, "idddddd");
+  const { lastMessage } = useBookingSocket();
+  console.log(lastMessage, "booking detailsss");
   const { data: singExpert, isLoading } = useGetSingleExpertQuery(id, {
     skip: !id,
     refetchOnMountOrArgChange: true,

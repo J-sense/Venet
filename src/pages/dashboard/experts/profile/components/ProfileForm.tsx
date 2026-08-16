@@ -62,49 +62,50 @@ export default function ProfileForm() {
         userObj?.hourly_rate !== undefined && userObj?.hourly_rate !== null
           ? String(userObj.hourly_rate)
           : responseData?.hourly_rate !== undefined &&
-            responseData?.hourly_rate !== null
+              responseData?.hourly_rate !== null
             ? String(responseData.hourly_rate)
             : "";
       const yearsVal =
         userObj?.years_of_experience !== undefined &&
-          userObj?.years_of_experience !== null
+        userObj?.years_of_experience !== null
           ? String(userObj.years_of_experience)
           : responseData?.years_of_experience !== undefined &&
-            responseData?.years_of_experience !== null
+              responseData?.years_of_experience !== null
             ? String(responseData.years_of_experience)
             : "";
-      const titleVal = responseData?.professional_title || userObj?.professional_title || "";
+      const titleVal =
+        responseData?.professional_title || userObj?.professional_title || "";
       const specialtyVal = userObj?.specialty || responseData?.specialty || "";
       const bioVal = userObj?.bio || responseData?.bio || "";
 
       const parsedCerts = Array.isArray(responseData?.certifications)
         ? responseData.certifications.map((c: any) => ({
-          id: c.id,
-          name: c.name || "Certificate",
-          fileName: c.name || "Certificate",
-          fileUrl: getImageUrl(c.file),
-        }))
+            id: c.id,
+            name: c.name || "Certificate",
+            fileName: c.name || "Certificate",
+            fileUrl: getImageUrl(c.file),
+          }))
         : [];
 
       const parsedAch = Array.isArray(responseData?.achievements)
         ? responseData.achievements.map((a: any) => ({
-          id: a.id,
-          name: a.name || "Achievement",
-          fileName: a.name || "Achievement",
-          fileUrl: getImageUrl(a.file),
-        }))
+            id: a.id,
+            name: a.name || "Achievement",
+            fileName: a.name || "Achievement",
+            fileUrl: getImageUrl(a.file),
+          }))
         : [];
 
       const rawEdu = responseData?.education || responseData?.educations;
       const parsedEdu = Array.isArray(rawEdu)
         ? rawEdu.map((e: any) => ({
-          id: e.id,
-          degree: e.degree || "",
-          institution: e.institution || "",
-          year: e.year !== undefined && e.year !== null ? String(e.year) : "",
-          fileName: e.certificate ? "Uploaded Certificate" : "",
-          fileUrl: getImageUrl(e.certificate),
-        }))
+            id: e.id,
+            degree: e.degree || "",
+            institution: e.institution || "",
+            year: e.year !== undefined && e.year !== null ? String(e.year) : "",
+            fileName: e.certificate ? "Uploaded Certificate" : "",
+            fileUrl: getImageUrl(e.certificate),
+          }))
         : [];
 
       form.reset({
@@ -119,10 +120,10 @@ export default function ProfileForm() {
         aboutMe: bioVal,
         specializations: Array.isArray(responseData?.specializations)
           ? responseData.specializations.map((s: any) => ({
-            id: s.id,
-            title: s.title || "",
-            description: s.description || "",
-          }))
+              id: s.id,
+              title: s.title || "",
+              description: s.description || "",
+            }))
           : [],
         certifications: parsedCerts,
         achievements: parsedAch,
@@ -252,7 +253,7 @@ export default function ProfileForm() {
   }
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-white p-8">
+    <div className="min-h-screen bg-zinc-950 text-white ">
       <div className="max-w-4xl mx-auto space-y-8">
         {/* Header */}
 
@@ -304,8 +305,9 @@ export default function ProfileForm() {
                           />
                         ) : null}
                         <div
-                          className={`avatar-fallback-text w-full h-full items-center justify-center bg-gradient-to-b from-zinc-700 to-zinc-900 text-[#90A1B9] text-xl font-bold font-sora ${currentAvatar ? "hidden" : "flex"
-                            }`}
+                          className={`avatar-fallback-text w-full h-full items-center justify-center bg-gradient-to-b from-zinc-700 to-zinc-900 text-[#90A1B9] text-xl font-bold font-sora ${
+                            currentAvatar ? "hidden" : "flex"
+                          }`}
                         >
                           {initials}
                         </div>
