@@ -39,7 +39,7 @@ export const BookingSocketProvider: React.FC<{ children: React.ReactNode }> = ({
       return;
     }
 
-    const socketUrl = `wss://midlands-pros-fairfield-depend.trycloudflare.com/ws/booking/?token=${token}&expert_id=${expertId}`;
+    const socketUrl = `wss://asib.checkall.org/ws/booking/?token=${token}&expert_id=${expertId}`;
     const ws = new WebSocket(socketUrl);
     socketRef.current = ws;
 
