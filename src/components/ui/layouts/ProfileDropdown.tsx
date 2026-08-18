@@ -73,7 +73,7 @@ export const ProfileDropdown = ({
   const dashboardLink = isExpert
     ? "/"
     : isDashboard
-      ? "/"
+      ? "//dashboard/experts"
       : "/dashboard/user";
   const settingsLink = isExpert
     ? "/dashboard/experts/settings"
@@ -102,9 +102,8 @@ export const ProfileDropdown = ({
           {firstName || fullName}
         </span>
         <ChevronDown
-          className={`w-4 h-4 text-gray-400 transition-transform duration-200 ${
-            isOpen ? "rotate-180 text-blue-400" : ""
-          }`}
+          className={`w-4 h-4 text-gray-400 transition-transform duration-200 ${isOpen ? "rotate-180 text-blue-400" : ""
+            }`}
         />
       </button>
 

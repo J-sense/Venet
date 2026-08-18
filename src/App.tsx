@@ -13,6 +13,8 @@ import { ShoppingCartPage } from "./pages/SubscriptionSuggestion/ShoppingCart";
 import { SubscriptionSuggestionMain } from "./pages/SubscriptionSuggestion/SubscriptionSuggestionMain";
 import { PaymentSuccessPage } from "./pages/SubscriptionSuggestion/PaymentSuccessPage";
 import { PaymentCancelPage } from "./pages/SubscriptionSuggestion/PaymentCancelPage";
+import { BookingSuccessPage } from "./pages/experts/components/booking/BookingSuccessPage";
+import { BookingCancelPage } from "./pages/experts/components/booking/BookingCancelPage";
 
 import { navItemsForExperts, navItemsForUser } from "./components/ui/navitems";
 import {
@@ -92,6 +94,8 @@ export const App = () => {
         <Route path="/payment-cancel" element={<PaymentCancelPage />} />
         <Route path="/checkout/success" element={<PaymentSuccessPage />} />
         <Route path="/checkout/cancel" element={<PaymentCancelPage />} />
+        <Route path="/booking/success" element={<BookingSuccessPage />} />
+        <Route path="/booking/cancel" element={<BookingCancelPage />} />
         <Route path="/disclaimer" element={<DisclaimerMain />} />
         <Route path="/privacy" element={<PrivacyMain />} />
         <Route path="/terms" element={<TermsMain />} />
