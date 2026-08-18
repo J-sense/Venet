@@ -42,7 +42,20 @@ const expertRouteApi = baseApi.injectEndpoints({
         url: `/experts/${id}/available-slots/?date=${date}&duration_minutes=${duration_minutes}`,
         method: "GET",
       }),
-      providesTags: ["Availability"],
+      providesTags: ({ id }) => [
+        {
+          type: "Availability",
+          id,
+        },
+      ],
+    }),
+    bookSession: builder.mutation({
+      query: (data) => ({
+        url: `/experts/sessions/checkout/`,
+        method: "POST",
+        data,
+      }),
+      invalidatesTags: ["Availability"],
     }),
   }),
 });
@@ -52,4 +65,5 @@ export const {
   useGetSingleExpertDurationAndTimeQuery,
   useGetSingleExpertAvailabilityQuery,
   useGetSingleExpertSlotsQuery,
+  useBookSessionMutation,
 } = expertRouteApi;

@@ -25,6 +25,19 @@ const expertAvailabilityApi = baseApi.injectEndpoints({
       }),
       providesTags: ["ExpertProfile", "Availability"],
     }),
+    expertOnBoarding: builder.mutation({
+      query: () => ({
+        url: `/experts/payout/onboard/`,
+        method: "POST",
+      }),
+    }),
+    getExpertStripeAccount: builder.query({
+      query: () => ({
+        url: `/experts/payout/dashboard/`,
+        method: "GET",
+      }),
+      providesTags: ["ExpertProfile", "Availability"],
+    }),
   }),
 });
 
@@ -32,4 +45,6 @@ export const {
   useCreateExpertAvailabilityMutation,
   useGetExpertAvailabiltiyQuery,
   useGetSingleExpertAvailabilityQuery,
+  useExpertOnBoardingMutation,
+  useGetExpertStripeAccountQuery,
 } = expertAvailabilityApi;

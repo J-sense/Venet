@@ -1,6 +1,9 @@
 /* eslint-disable react-refresh/only-export-components */
 /* eslint-disable react-hooks/set-state-in-effect */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { baseApi } from "@/redux/baseApi";
+import { selectCurrentToken } from "@/redux/features/auth/authSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import React, {
   createContext,
   useContext,
@@ -8,15 +11,12 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { useAppSelector, useAppDispatch } from "@/redux/hooks";
-import { selectCurrentToken } from "@/redux/features/auth/authSlice";
-import { baseApi } from "@/redux/baseApi";
-import { useGetSingleExpertAvailabilityQuery } from "@/redux/features/expertDashboard/expertAvailability.api";
 
 interface BookingSocketContextType {
   isConnected: boolean;
   lastMessage: any;
   sendMessage: (data: any) => void;
+  setExpertId: (id: string | null) => void;
 }
 
 const BookingSocketContext = createContext<
@@ -27,23 +27,26 @@ export const BookingSocketProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const token = useAppSelector(selectCurrentToken);
+  const [expertId, setExpertId] = useState<string | null>(null);
   const [isConnected, setIsConnected] = useState(false);
   const [lastMessage, setLastMessage] = useState<any>(null);
   const socketRef = useRef<WebSocket | null>(null);
-  
+
   const dispatch = useAppDispatch();
   useEffect(() => {
-    if (!token) {
+    if (!token || !expertId) {
       setIsConnected(false);
       return;
     }
 
-    const socketUrl = `wss://midlands-pros-fairfield-depend.trycloudflare.com/ws/booking/?token=${token}`;
+    const socketUrl = `wss://midlands-pros-fairfield-depend.trycloudflare.com/ws/booking/?token=${token}&expert_id=${expertId}`;
     const ws = new WebSocket(socketUrl);
     socketRef.current = ws;
 
     ws.onopen = () => {
-      console.log("[WebSocket] Booking socket connected.");
+      console.log(
+        `[WebSocket] Booking socket connected for expert: ${expertId}`,
+      );
       setIsConnected(true);
     };
 
@@ -51,7 +54,10 @@ export const BookingSocketProvider: React.FC<{ children: React.ReactNode }> = ({
       console.log(event);
       try {
         const parseSocketData = JSON.parse(event.data);
-        console.log(parseSocketData, "parse socket data");
+        console.log(
+          parseSocketData.event,
+          "parse socket data,647382463278478327467234632",
+        );
         if (parseSocketData?.event === "availability_updated") {
           dispatch(
             baseApi.util.invalidateTags([
@@ -60,7 +66,27 @@ export const BookingSocketProvider: React.FC<{ children: React.ReactNode }> = ({
               },
             ]),
           );
-          console.log("Availability cache invalidated");
+        } else if (parseSocketData?.event === "slot_locked") {
+          dispatch(
+            baseApi.util.invalidateTags([
+              {
+                type: "Availability",
+                id: parseSocketData.expert_id,
+              },
+            ]),
+          );
+        } else if (
+          parseSocketData?.event === "slot_available" ||
+          parseSocketData?.event === "payment_success"
+        ) {
+          dispatch(
+            baseApi.util.invalidateTags([
+              {
+                type: "Availability",
+                id: parseSocketData.expert_id,
+              },
+            ]),
+          );
         }
         setLastMessage(JSON.parse(event.data));
       } catch {
@@ -82,7 +108,7 @@ export const BookingSocketProvider: React.FC<{ children: React.ReactNode }> = ({
       socketRef.current = null;
       setIsConnected(false);
     };
-  }, [token]);
+  }, [token, expertId, dispatch]);
 
   const sendMessage = (data: any) => {
     if (socketRef.current?.readyState === WebSocket.OPEN) {
@@ -92,7 +118,7 @@ export const BookingSocketProvider: React.FC<{ children: React.ReactNode }> = ({
 
   return (
     <BookingSocketContext.Provider
-      value={{ isConnected, lastMessage, sendMessage }}
+      value={{ isConnected, lastMessage, sendMessage, setExpertId }}
     >
       {children}
     </BookingSocketContext.Provider>

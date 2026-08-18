@@ -5,9 +5,37 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { StatCard } from "@/components/ui/StatCard";
+import {
+  useExpertOnBoardingMutation,
+  useGetExpertStripeAccountQuery,
+} from "@/redux/features/expertDashboard/expertAvailability.api";
 import { Calendar, DollarSign, Star, Users } from "lucide-react";
+import { toast } from "sonner";
+import { StripeSetupCard } from "./components/StripeSetupCard";
 
 export default function ExpertOverview() {
+  const { data: getStripe, isLoading: isLoadingStripe } =
+    useGetExpertStripeAccountQuery(undefined);
+  console.log(getStripe);
+  const [createOnboarding, { isLoading: isOnboarding }] =
+    useExpertOnBoardingMutation();
+
+  const handleStripeConnect = async () => {
+    try {
+      const res = await createOnboarding(undefined).unwrap();
+      const onboardingUrl =
+        res?.data?.onboarding_url || res?.onboarding_url || res?.url;
+      if (onboardingUrl) {
+        window.open(onboardingUrl, "_blank", "noopener,noreferrer");
+      } else {
+        toast.error("Failed to get Stripe onboarding URL.");
+      }
+    } catch (err: any) {
+      console.error("Stripe onboarding error:", err);
+      toast.error(err?.data?.message || "Failed to trigger Stripe onboarding.");
+    }
+  };
+
   const stats = [
     {
       title: "Total Earnings",
@@ -40,26 +68,13 @@ export default function ExpertOverview() {
     <>
       <div className="min-h-screen bg-zinc-950 text-white ">
         <div className="max-w-full  space-y-8">
-          {/* Header */}
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-[#0F172A] p-6 rounded-2xl">
-            <div>
-              <div className="flex  flex-col items-start gap-3">
-                <Badge className="bg-emerald-500 hover:bg-emerald-600 text-white px-3 py-1">
-                  LIVE
-                </Badge>
-                <h1 className="text-3xl font-bold">Stripe Connected</h1>
-              </div>
-              <p className="text-zinc-400 mt-1">
-                Payouts active for john@example.com
-              </p>
-            </div>
-            <Button
-              variant="outline"
-              className="border-white/20 hover:bg-white/5 bg-[#62FF9CC2]"
-            >
-              Manage Account →
-            </Button>
-          </div>
+          {/* Stripe Setup Banner */}
+          <StripeSetupCard
+            getStripe={getStripe}
+            isLoadingStripe={isLoadingStripe}
+            handleStripeConnect={handleStripeConnect}
+            isOnboarding={isOnboarding}
+          />
 
           {/* Stats Grid */}
 

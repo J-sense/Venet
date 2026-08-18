@@ -8,6 +8,7 @@ import {
   useCreateExpertAvailabilityMutation,
   useGetExpertAvailabiltiyQuery,
 } from "@/redux/features/expertDashboard/expertAvailability.api";
+import { useExpertProfileQuery } from "@/redux/features/expertDashboard/expertProfile.api";
 import { toast } from "sonner";
 
 export type Day =
@@ -70,11 +71,10 @@ const TIME_OPTIONS = Array.from({ length: 288 }, (_, i) => {
 const WeeklyAvailability: React.FC = () => {
   const [createAvailability] = useCreateExpertAvailabilityMutation();
   const { data: getAvailability } = useGetExpertAvailabiltiyQuery(undefined);
-  console.log(getAvailability);
+
   const [availability, setAvailability] =
     useState<WeeklyAvailabilityState>(INITIAL_AVAILABILITY);
   const [bufferTime, setBufferTime] = useState(15);
-  console.log(availability);
 
   // Load initial availability data when API response changes
   useEffect(() => {
@@ -100,8 +100,12 @@ const WeeklyAvailability: React.FC = () => {
         if (day) {
           mappedAvailability[day].enabled = true;
           // Extract HH:MM from HH:MM:SS format
-          const startTime = item.start_time ? item.start_time.substring(0, 5) : "09:00";
-          const endTime = item.end_time ? item.end_time.substring(0, 5) : "17:00";
+          const startTime = item.start_time
+            ? item.start_time.substring(0, 5)
+            : "09:00";
+          const endTime = item.end_time
+            ? item.end_time.substring(0, 5)
+            : "17:00";
 
           mappedAvailability[day].slots.push({
             id: item.id || Date.now() + Math.random(),
@@ -181,7 +185,21 @@ const WeeklyAvailability: React.FC = () => {
       return updated;
     });
   };
-  const { isConnected, lastMessage, sendMessage } = useBookingSocket();
+  const { data: expertProfile } = useExpertProfileQuery(undefined);
+  const expertId = expertProfile?.data?.user?.id;
+
+  const { isConnected, lastMessage, sendMessage, setExpertId } =
+    useBookingSocket();
+
+  useEffect(() => {
+    if (expertId) {
+      setExpertId(expertId);
+    }
+    return () => {
+      setExpertId(null);
+    };
+  }, [expertId, setExpertId]);
+
   console.log(isConnected, lastMessage, sendMessage);
 
   const handleSaveAvailability = async () => {

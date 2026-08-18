@@ -1,15 +1,13 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useMemo, useEffect } from "react";
-import {
-  Clock,
-  Check,
-  ChevronLeft,
-  ChevronRight,
-  ShieldCheck,
-  Info,
-} from "lucide-react";
+import { Clock, Check, ChevronLeft, ChevronRight, Info } from "lucide-react";
 import type { Expert } from "../../data/expertsData";
-import { Link } from "react-router";
-import { useGetSingleExpertSlotsQuery } from "@/redux/features/expertsRoute/expertRoute.api";
+import {
+  useBookSessionMutation,
+  useGetSingleExpertSlotsQuery,
+} from "@/redux/features/expertsRoute/expertRoute.api";
+import { useBookingSocket } from "@/providers/BookingSocketProvider";
+import { toast } from "sonner";
 
 interface CustomBookingProps {
   expert: Expert;
@@ -17,7 +15,7 @@ interface CustomBookingProps {
   durationAndCost?: any[];
 }
 
-type Step = 1 | 2 | 3 | 4 | 5; // 1: Date, 2: Duration, 3: Time, 4: Confirm, 5: Success
+type Step = 1 | 2 | 3 | 4; // 1: Date, 2: Duration, 3: Time, 4: Confirm
 
 export default function CustomBooking({
   expert,
@@ -25,7 +23,8 @@ export default function CustomBooking({
   durationAndCost,
 }: CustomBookingProps) {
   const [currentStep, setCurrentStep] = useState<Step>(1);
-  console.log(durationAndCost, "");
+  const { sendMessage } = useBookingSocket();
+
   const isDateAvailable = (date: Date) => {
     // 0 is Sunday, 1 is Monday, ..., 6 is Saturday in JS
     const jsDay = date.getDay();
@@ -35,13 +34,13 @@ export default function CustomBooking({
     if (!Array.isArray(availabilityData)) return false;
     return availabilityData.some((item: any) => item.weekday === backendDay);
   };
-  console.log(availabilityData);
+
   // Selection States
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [selectedDuration, setSelectedDuration] = useState<number>(30); // default to 30 mins
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
   const [agreeToTerms, setAgreeToTerms] = useState<boolean>(false);
-
+  const [createBooking, { isLoading: isBooking }] = useBookSessionMutation();
   const durations = useMemo(() => {
     if (Array.isArray(durationAndCost) && durationAndCost.length > 0) {
       return durationAndCost.filter((item: any) => item.is_active);
@@ -84,6 +83,11 @@ export default function CustomBooking({
         (item: any) => item.duration_minutes === selectedDuration,
       );
       if (match) {
+        if (typeof match.cost === "object" && match.cost !== null) {
+          return Number(
+            match.cost.session_fee !== undefined ? match.cost.session_fee : 0,
+          );
+        }
         return Number(match.cost);
       }
     }
@@ -92,10 +96,39 @@ export default function CustomBooking({
     return Math.round(expert.pricePerHour * factor * 100) / 100;
   }, [selectedDuration, durationAndCost, expert.pricePerHour]);
 
-  const platformFee = 5.0;
+  const platformFee = useMemo(() => {
+    if (Array.isArray(durationAndCost) && durationAndCost.length > 0) {
+      const match = durationAndCost.find(
+        (item: any) => item.duration_minutes === selectedDuration,
+      );
+      if (
+        match &&
+        typeof match.cost === "object" &&
+        match.cost !== null &&
+        match.cost.platform_fee !== undefined
+      ) {
+        return Number(match.cost.platform_fee);
+      }
+    }
+    return 5.0;
+  }, [selectedDuration, durationAndCost]);
+
   const totalCost = useMemo(() => {
+    if (Array.isArray(durationAndCost) && durationAndCost.length > 0) {
+      const match = durationAndCost.find(
+        (item: any) => item.duration_minutes === selectedDuration,
+      );
+      if (
+        match &&
+        typeof match.cost === "object" &&
+        match.cost !== null &&
+        match.cost.total_amount !== undefined
+      ) {
+        return Number(match.cost.total_amount);
+      }
+    }
     return Math.round((sessionCost + platformFee) * 100) / 100;
-  }, [sessionCost]);
+  }, [sessionCost, platformFee, selectedDuration, durationAndCost]);
 
   // Calendar logic
   const year = calendarDate.getFullYear();
@@ -208,7 +241,7 @@ export default function CustomBooking({
         refetchOnMountOrArgChange: true,
       },
     );
-  console.log(slotsResponse, "slotResponse");
+
   const timeSlots = useMemo(() => {
     const rawSlots = slotsResponse?.data?.slots;
     if (Array.isArray(rawSlots)) {
@@ -218,6 +251,10 @@ export default function CustomBooking({
           return {
             raw: timeStr,
             formatted: formatTimeTo12Hour(timeStr),
+            isLocked:
+              typeof item === "object" && item !== null
+                ? !!item.is_locked
+                : false,
           };
         })
         .filter((slot) => slot.raw);
@@ -227,6 +264,19 @@ export default function CustomBooking({
 
   const handleDateSelect = (date: Date) => {
     setSelectedDate(date);
+  };
+
+  const handleNextStep = () => {
+    if (currentStep === 3 && selectedTime) {
+      sendMessage({
+        event: "select_slot",
+        expert_id: expert.id,
+        date: dateStr,
+        start_time: selectedTime,
+        duration_minutes: selectedDuration,
+      });
+    }
+    setCurrentStep((prev) => (prev + 1) as Step);
   };
 
   // Helper to format date nicely
@@ -245,18 +295,68 @@ export default function CustomBooking({
     return "upcoming";
   };
 
-  const handleBookNow = () => {
-    if (agreeToTerms) {
-      setCurrentStep(5); // Success step
+  const handleBookNow = async () => {
+    if (!agreeToTerms || !selectedDate || !selectedTime) return;
+    console.log(selectedTime, "selected time");
+    try {
+      const [hour, minute] = selectedTime.split(":").map(Number);
+      const localDateTime = new Date(selectedDate);
+      localDateTime.setHours(hour, minute, 0, 0);
+
+      const utcYear = localDateTime.getUTCFullYear();
+      const utcMonth = String(localDateTime.getUTCMonth() + 1).padStart(2, "0");
+      const utcDate = String(localDateTime.getUTCDate()).padStart(2, "0");
+      const formattedUtcDate = `${utcYear}-${utcMonth}-${utcDate}`;
+
+      const utcHours = String(localDateTime.getUTCHours()).padStart(2, "0");
+      const utcMinutes = String(localDateTime.getUTCMinutes()).padStart(2, "0");
+      const utcSeconds = String(localDateTime.getUTCSeconds()).padStart(2, "0");
+      const utcStartTime = `${utcHours}:${utcMinutes}:${utcSeconds}`;
+      console.log(utcStartTime);
+      const payload = {
+        expert: expert.id,
+        date: formattedUtcDate,
+        start_time: selectedTime,
+        duration_minutes: selectedDuration,
+        agree_terms: agreeToTerms,
+      };
+
+      const res = await createBooking(payload).unwrap();
+
+      const responseData = res?.data || res;
+      const checkoutUrl = responseData?.checkout_url;
+      if (checkoutUrl) {
+        window.open(checkoutUrl, "_blank", "noopener,noreferrer");
+      }
+      // handleReset();
+    } catch (err: any) {
+      console.error("Booking error:", err);
+      let errorMessage = "An error occurred while booking. Please try again.";
+      if (err?.data?.details) {
+        if (typeof err.data.details === "object") {
+          errorMessage = Object.entries(err.data.details)
+            .map(([field, msg]) => `${field}: ${msg}`)
+            .join("\n");
+        } else {
+          errorMessage = String(err.data.details);
+        }
+      } else if (err?.data?.detail) {
+        errorMessage = err.data.detail;
+      } else if (err?.data?.message) {
+        errorMessage = err.data.message;
+      } else if (err?.message) {
+        errorMessage = err.message;
+      }
+      toast.error(errorMessage);
     }
   };
 
-  const handleReset = () => {
-    setSelectedDate(null);
-    setSelectedTime(null);
-    setAgreeToTerms(false);
-    setCurrentStep(1);
-  };
+  // const handleReset = () => {
+  //   setSelectedDate(null);
+  //   setSelectedTime(null);
+  //   setAgreeToTerms(false);
+  //   setCurrentStep(1);
+  // };
 
   return (
     <div className="w-full bg-[#0B1220]/60 border border-[#1E293B]/60 rounded-3xl p-6 md:p-8 backdrop-blur-md relative overflow-hidden shadow-2xl">
@@ -483,6 +583,12 @@ export default function CustomBooking({
                 const dur = item.duration_minutes;
                 const isSel = selectedDuration === dur;
                 const cost = item.cost;
+                const displayCost =
+                  cost && typeof cost === "object"
+                    ? cost.session_fee !== undefined
+                      ? cost.session_fee
+                      : cost.total_amount
+                    : cost;
 
                 return (
                   <button
@@ -511,7 +617,7 @@ export default function CustomBooking({
                     </div>
                     <div className="flex items-center gap-3">
                       <span className="font-extrabold text-sm md:text-base">
-                        ${cost}
+                        ${displayCost}
                       </span>
                       <div
                         className={`w-5 h-5 rounded-full border flex items-center justify-center ${
@@ -553,14 +659,22 @@ export default function CustomBooking({
                   return (
                     <button
                       key={slot.raw}
+                      disabled={slot.isLocked}
                       onClick={() => setSelectedTime(slot.raw)}
                       className={`py-3 px-4 rounded-xl text-xs font-bold text-center border transition-all ${
-                        isSel
-                          ? "bg-[#007AFF] border-[#007AFF] text-white shadow-lg shadow-blue-500/15"
-                          : "bg-slate-950/40 border-slate-800 text-slate-300 hover:border-slate-700 hover:text-white"
+                        slot.isLocked
+                          ? "bg-amber-500/10 border-amber-500/30 text-amber-500/50 cursor-not-allowed"
+                          : isSel
+                            ? "bg-[#007AFF] border-[#007AFF] text-white shadow-lg shadow-blue-500/15"
+                            : "bg-slate-950/40 border-slate-800 text-slate-300 hover:border-slate-700 hover:text-white"
                       }`}
                     >
-                      {slot.formatted}
+                      <span>{slot.formatted}</span>
+                      {slot.isLocked && (
+                        <span className="block text-[9px] text-amber-500/70 font-semibold uppercase mt-0.5">
+                          Pending
+                        </span>
+                      )}
                     </button>
                   );
                 })
@@ -615,71 +729,6 @@ export default function CustomBooking({
                   </span>
                 </div>
               </div>
-            </div>
-          </div>
-        )}
-
-        {/* STEP 5: SUCCESS STATE */}
-        {currentStep === 5 && (
-          <div className="flex flex-col items-center justify-center text-center py-6 space-y-5 animate-fadeIn">
-            <div className="w-16 h-16 bg-emerald-500/10 border-2 border-emerald-500 rounded-full flex items-center justify-center text-emerald-500 animate-scaleUp">
-              <ShieldCheck className="w-8 h-8" />
-            </div>
-
-            <div className="space-y-2">
-              <h2 className="text-xl md:text-2xl font-black text-white">
-                Booking Confirmed!
-              </h2>
-              <p className="text-slate-400 text-xs md:text-sm max-w-xs mx-auto leading-relaxed">
-                Your consultation session with{" "}
-                <strong className="text-white">{expert.name}</strong> has been
-                successfully booked.
-              </p>
-            </div>
-
-            <div className="bg-slate-950/60 border border-slate-800/80 rounded-2xl p-4 w-full text-left space-y-2.5 text-xs text-slate-300">
-              <div className="flex justify-between">
-                <span className="text-slate-500">Expert:</span>
-                <span className="font-bold text-white">{expert.name}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-slate-500">Scheduled Date:</span>
-                <span className="font-bold text-white">
-                  {formatDateString(selectedDate)}
-                </span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-slate-500">Time / Duration:</span>
-                <span className="font-bold text-white">
-                  {selectedTime ? formatTimeTo12Hour(selectedTime) : ""} (
-                  {selectedDuration} min)
-                </span>
-              </div>
-              <div className="flex justify-between border-t border-slate-800/80 pt-2.5">
-                <span className="text-slate-500">Reference ID:</span>
-                <span className="font-mono text-blue-400 uppercase font-bold">
-                  VNT-{Math.floor(100000 + Math.random() * 900000)}
-                </span>
-              </div>
-            </div>
-
-            <p className="text-[10px] text-slate-500 font-medium">
-              A calendar invite and joining details have been dispatched to your
-              registered email address.
-            </p>
-
-            <div className="flex gap-3 w-full pt-2">
-              <button
-                onClick={handleReset}
-                className="flex-1 py-3 border border-slate-800 hover:border-slate-700 text-slate-300 hover:text-white rounded-xl text-xs font-bold transition-all"
-              >
-                Book Another
-              </button>
-              <Link to="/experts" className="flex-1">
-                <button className="w-full py-3 bg-[#007AFF] hover:bg-[#0066FF] text-white rounded-xl text-xs font-bold transition-all shadow-md shadow-blue-500/10">
-                  Done
-                </button>
-              </Link>
             </div>
           </div>
         )}
@@ -756,7 +805,7 @@ export default function CustomBooking({
                     (currentStep === 2 && !selectedDuration) ||
                     (currentStep === 3 && !selectedTime)
                   }
-                  onClick={() => setCurrentStep((prev) => (prev + 1) as Step)}
+                  onClick={handleNextStep}
                   className="flex-1 py-3 bg-[#007AFF] hover:bg-[#0066FF] disabled:bg-slate-900 disabled:text-slate-600 disabled:cursor-not-allowed text-white rounded-xl text-xs font-extrabold transition-all active:scale-[0.98] shadow-md shadow-blue-500/10 flex items-center justify-center gap-1.5"
                 >
                   Next Step
@@ -764,11 +813,11 @@ export default function CustomBooking({
               ) : (
                 <button
                   type="button"
-                  disabled={!agreeToTerms}
+                  disabled={!agreeToTerms || isBooking}
                   onClick={handleBookNow}
-                  className="flex-1 py-3 bg-[#007AFF] hover:bg-[#0066FF] disabled:bg-slate-900 disabled:text-slate-600 disabled:cursor-not-allowed text-white rounded-xl text-xs font-extrabold transition-all active:scale-[0.98] shadow-md shadow-blue-500/10"
+                  className="flex-1 py-3 bg-[#007AFF] hover:bg-[#0066FF] disabled:bg-slate-900 disabled:text-slate-600 disabled:cursor-not-allowed text-white rounded-xl text-xs font-extrabold transition-all active:scale-[0.98] shadow-md shadow-blue-500/10 flex items-center justify-center gap-2"
                 >
-                  Book Now
+                  {isBooking ? "Booking..." : "Book Now"}
                 </button>
               )}
             </div>

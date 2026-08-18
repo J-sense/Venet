@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useMemo } from "react";
+import { useMemo, useEffect } from "react";
 import { useParams, Link } from "react-router";
 import { ChevronLeft } from "lucide-react";
 import type { Expert } from "./data/expertsData";
@@ -28,7 +28,17 @@ const getImageUrl = (url?: string | null) => {
 
 export default function ExpertsDetails() {
   const { id } = useParams();
-  const { lastMessage } = useBookingSocket();
+  const { lastMessage, setExpertId } = useBookingSocket();
+
+  useEffect(() => {
+    if (id) {
+      setExpertId(id);
+    }
+    return () => {
+      setExpertId(null);
+    };
+  }, [id, setExpertId]);
+
   console.log(lastMessage, "booking detailsss");
   const { data: singExpert, isLoading } = useGetSingleExpertQuery(id, {
     skip: !id,
