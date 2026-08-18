@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // src/components/consultation/ChatWindow.tsx
 import { Calendar, Clock, Hourglass, Search, Users, Video } from "lucide-react";
 import { useNavigate, useParams, useLocation } from "react-router";

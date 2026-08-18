@@ -83,12 +83,17 @@ export default function CustomBooking({
         (item: any) => item.duration_minutes === selectedDuration,
       );
       if (match) {
-        if (typeof match.cost === "object" && match.cost !== null) {
+        if (match.cost && typeof match.cost === "object") {
           return Number(
             match.cost.session_fee !== undefined ? match.cost.session_fee : 0,
           );
         }
-        return Number(match.cost);
+        if (match.session_fee !== undefined) {
+          return Number(match.session_fee);
+        }
+        if (match.cost !== undefined) {
+          return Number(match.cost);
+        }
       }
     }
     // Proportional pricing fallback based on expert's price per hour
@@ -101,13 +106,17 @@ export default function CustomBooking({
       const match = durationAndCost.find(
         (item: any) => item.duration_minutes === selectedDuration,
       );
-      if (
-        match &&
-        typeof match.cost === "object" &&
-        match.cost !== null &&
-        match.cost.platform_fee !== undefined
-      ) {
-        return Number(match.cost.platform_fee);
+      if (match) {
+        if (
+          match.cost &&
+          typeof match.cost === "object" &&
+          match.cost.platform_fee !== undefined
+        ) {
+          return Number(match.cost.platform_fee);
+        }
+        if (match.platform_fee !== undefined) {
+          return Number(match.platform_fee);
+        }
       }
     }
     return 5.0;
@@ -118,13 +127,17 @@ export default function CustomBooking({
       const match = durationAndCost.find(
         (item: any) => item.duration_minutes === selectedDuration,
       );
-      if (
-        match &&
-        typeof match.cost === "object" &&
-        match.cost !== null &&
-        match.cost.total_amount !== undefined
-      ) {
-        return Number(match.cost.total_amount);
+      if (match) {
+        if (
+          match.cost &&
+          typeof match.cost === "object" &&
+          match.cost.total_amount !== undefined
+        ) {
+          return Number(match.cost.total_amount);
+        }
+        if (match.total_amount !== undefined) {
+          return Number(match.total_amount);
+        }
       }
     }
     return Math.round((sessionCost + platformFee) * 100) / 100;
@@ -582,13 +595,27 @@ export default function CustomBooking({
               {durations.map((item) => {
                 const dur = item.duration_minutes;
                 const isSel = selectedDuration === dur;
-                const cost = item.cost;
-                const displayCost =
-                  cost && typeof cost === "object"
-                    ? cost.session_fee !== undefined
-                      ? cost.session_fee
-                      : cost.total_amount
-                    : cost;
+                
+                const getDisplayCost = (itemObj: any) => {
+                  if (!itemObj) return "0.00";
+                  if (itemObj.cost && typeof itemObj.cost === "object") {
+                    const c = itemObj.cost;
+                    if (c.session_fee !== undefined) return String(c.session_fee);
+                    if (c.total_amount !== undefined) return String(c.total_amount);
+                  }
+                  if (itemObj.session_fee !== undefined) {
+                    return String(itemObj.session_fee);
+                  }
+                  if (itemObj.total_amount !== undefined) {
+                    return String(itemObj.total_amount);
+                  }
+                  if (itemObj.cost !== undefined) {
+                    return String(itemObj.cost);
+                  }
+                  return "0.00";
+                };
+
+                const displayCost = getDisplayCost(item);
 
                 return (
                   <button
