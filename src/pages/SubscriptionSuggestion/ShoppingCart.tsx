@@ -125,8 +125,8 @@ export const ShoppingCartPage = () => {
       console.error("Checkout Error:", error);
       toast.error(
         error?.data?.message ||
-          error?.data?.details ||
-          "Failed to initiate checkout. Please try again.",
+        error?.data?.details ||
+        "Failed to initiate checkout. Please try again.",
       );
     }
   };
@@ -157,16 +157,16 @@ export const ShoppingCartPage = () => {
   return (
     // 'relative' is required here so the absolute gradient stays anchored to this div
     <div className="bg-[#030303] min-h-screen text-white py-30 relative overflow-hidden">
-      <div className="relative z-10 p-8 md:p-12 max-w-[1600px] mx-auto">
+      <div className="relative z-10 p-2 md:p-12 max-w-[1600px] mx-auto">
         {/* Blue Gradient Corner Effect */}
         <div className="absolute top-60 left-0 w-[500px] h-[500px] blur-[100px] rounded-full pointer-events-none -translate-x-1/2 -translate-y-1/2 bg-gradient-to-br from-[#0B60BD]/70 to-transparent -z-10" />
         <div className="flex justify-between items-center mb-8 relative z-10">
-          <h1 className="text-3xl font-bold">Shopping Cart</h1>
+          <h1 className="text-xl md:text-3xl font-bold">Shopping Cart</h1>
           {totalItemCount > 0 && (
             <button
               onClick={handleClearAll}
               disabled={isClearing}
-              className="px-4 py-2 bg-red-600/20 border border-red-500/30 hover:bg-red-600/30 text-red-400 rounded-lg text-sm font-semibold transition-colors flex items-center gap-2 cursor-pointer disabled:opacity-50"
+              className="px-4 py-2 bg-red-600/20 border border-red-500/30 hover:bg-red-600/30 text-red-400 rounded-lg text-[12px] md:text-sm font-semibold transition-colors flex items-center gap-2 cursor-pointer disabled:opacity-50"
             >
               {isClearing ? (
                 <>
@@ -328,11 +328,10 @@ export const ShoppingCartPage = () => {
                 <button
                   onClick={handleProceedToCheckout}
                   disabled={totalItemCount === 0 || isCheckoutLoading}
-                  className={`w-full h-14 flex items-center justify-center bg-blue-600 hover:bg-blue-700 transition-colors rounded-[32px] text-white text-xl font-medium font-['Inter'] ${
-                    totalItemCount === 0 || isCheckoutLoading
-                      ? "opacity-50 cursor-not-allowed"
-                      : ""
-                  }`}
+                  className={`w-full h-14 flex items-center justify-center bg-blue-600 hover:bg-blue-700 transition-colors rounded-[32px] text-white text-xl font-medium font-['Inter'] ${totalItemCount === 0 || isCheckoutLoading
+                    ? "opacity-50 cursor-not-allowed"
+                    : ""
+                    }`}
                 >
                   {isCheckoutLoading
                     ? "Redirecting to Payment..."

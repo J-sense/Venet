@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Menu, Bell } from "lucide-react";
 import { useRef, useState, useEffect } from "react";
 import { Outlet, useLocation } from "react-router";
@@ -61,7 +62,7 @@ const UserLayout = ({ navItems, user }: UserLayoutProps) => {
   const headerContent = getHeaderContent(location.pathname);
 
   const { data: myProfile } = useMyProfileQuery(undefined);
-  console.log(myProfile);
+
   const userFromRedux = useAppSelector(selectCurrentUser);
   const userData = myProfile?.data || user?.data || userFromRedux;
 

@@ -23,6 +23,13 @@ const BookingSocketContext = createContext<
   BookingSocketContextType | undefined
 >(undefined);
 
+// Toggle between local development (true) and production deployment (false)
+const IS_LOCAL = false;
+
+const SOCKET_URL_LOCAL =
+  "wss://midlands-pros-fairfield-depend.trycloudflare.com/ws/booking/";
+const SOCKET_URL_PROD = "wss://asib.checkall.org/ws/booking/";
+
 export const BookingSocketProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
@@ -39,7 +46,13 @@ export const BookingSocketProvider: React.FC<{ children: React.ReactNode }> = ({
       return;
     }
 
-    const socketUrl = `wss://asib.checkall.org/ws/booking/?token=${token}&expert_id=${expertId}`;
+    const wsBaseUrl =
+      import.meta.env.VITE_SOCKET_URL ||
+      (IS_LOCAL ? SOCKET_URL_LOCAL : SOCKET_URL_PROD);
+    const cleanWsBaseUrl = wsBaseUrl.endsWith("/")
+      ? wsBaseUrl
+      : `${wsBaseUrl}/`;
+    const socketUrl = `${cleanWsBaseUrl}?token=${token}&expert_id=${expertId}`;
     const ws = new WebSocket(socketUrl);
     socketRef.current = ws;
 
@@ -75,10 +88,16 @@ export const BookingSocketProvider: React.FC<{ children: React.ReactNode }> = ({
               },
             ]),
           );
-        } else if (
-          parseSocketData?.event === "slot_available" ||
-          parseSocketData?.event === "payment_success"
-        ) {
+        } else if (parseSocketData?.event === "slot_available") {
+          dispatch(
+            baseApi.util.invalidateTags([
+              {
+                type: "Availability",
+                id: parseSocketData.expert_id,
+              },
+            ]),
+          );
+        } else if (parseSocketData?.event === "payment_success") {
           dispatch(
             baseApi.util.invalidateTags([
               {
