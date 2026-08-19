@@ -25,7 +25,6 @@ const BookingSocketContext = createContext<
 
 // Toggle between local development (true) and production deployment (false)
 const IS_LOCAL = false;
-
 const SOCKET_URL_LOCAL =
   "wss://midlands-pros-fairfield-depend.trycloudflare.com/ws/booking/";
 const SOCKET_URL_PROD = "wss://asib.checkall.org/ws/booking/";
