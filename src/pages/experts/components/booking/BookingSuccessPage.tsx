@@ -52,7 +52,7 @@ export const BookingSuccessPage = () => {
         )}
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Link to="/consultation/upcoming" className="w-full sm:w-auto flex-1">
+          <Link to="/dashboard/user/consultation/upcoming" className="w-full sm:w-auto flex-1">
             <button className="w-full px-8 py-3.5 bg-emerald-600 hover:bg-emerald-500 transition rounded-full text-white font-semibold text-lg font-['Inter'] flex items-center justify-center gap-2 cursor-pointer shadow-[0_12px_30px_rgba(16,185,129,0.2)]">
               <Calendar size={20} />
               <span>My Sessions</span>
