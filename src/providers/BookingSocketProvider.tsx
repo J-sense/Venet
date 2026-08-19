@@ -45,9 +45,7 @@ export const BookingSocketProvider: React.FC<{ children: React.ReactNode }> = ({
       return;
     }
 
-    const wsBaseUrl =
-      import.meta.env.VITE_SOCKET_URL ||
-      (!IS_LOCAL ? SOCKET_URL_LOCAL : SOCKET_URL_PROD);
+    const wsBaseUrl = IS_LOCAL ? SOCKET_URL_LOCAL : SOCKET_URL_PROD;
     const cleanWsBaseUrl = wsBaseUrl.endsWith("/")
       ? wsBaseUrl
       : `${wsBaseUrl}/`;
