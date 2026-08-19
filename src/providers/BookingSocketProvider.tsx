@@ -24,7 +24,7 @@ const BookingSocketContext = createContext<
 >(undefined);
 
 // Toggle between local development (true) and production deployment (false)
-const IS_LOCAL = false;
+const IS_LOCAL = true;
 const SOCKET_URL_LOCAL =
   "wss://midlands-pros-fairfield-depend.trycloudflare.com/ws/booking/";
 const SOCKET_URL_PROD = "wss://asib.checkall.org/ws/booking/";
@@ -68,7 +68,12 @@ export const BookingSocketProvider: React.FC<{ children: React.ReactNode }> = ({
           parseSocketData.event,
           "parse socket data,647382463278478327467234632",
         );
-        if (parseSocketData?.event === "availability_updated") {
+        if (
+          parseSocketData?.event === "availability_updated" ||
+          parseSocketData?.event === "slot_locked" ||
+          parseSocketData?.event === "slot_available" ||
+          parseSocketData?.event === "payment_success"
+        ) {
           dispatch(
             baseApi.util.invalidateTags([
               {
@@ -76,33 +81,33 @@ export const BookingSocketProvider: React.FC<{ children: React.ReactNode }> = ({
               },
             ]),
           );
-        } else if (parseSocketData?.event === "slot_locked") {
-          dispatch(
-            baseApi.util.invalidateTags([
-              {
-                type: "Availability",
-                id: parseSocketData.expert_id,
-              },
-            ]),
-          );
-        } else if (parseSocketData?.event === "slot_available") {
-          dispatch(
-            baseApi.util.invalidateTags([
-              {
-                type: "Availability",
-                id: parseSocketData.expert_id,
-              },
-            ]),
-          );
-        } else if (parseSocketData?.event === "payment_success") {
-          dispatch(
-            baseApi.util.invalidateTags([
-              {
-                type: "Availability",
-                id: parseSocketData.expert_id,
-              },
-            ]),
-          );
+          // } else if (parseSocketData?.event === "slot_locked") {
+          //   dispatch(
+          //     baseApi.util.invalidateTags([
+          //       {
+          //         type: "Availability",
+          //         id: parseSocketData.expert_id,
+          //       },
+          //     ]),
+          //   );
+          // } else if (parseSocketData?.event === "slot_available") {
+          //   dispatch(
+          //     baseApi.util.invalidateTags([
+          //       {
+          //         type: "Availability",
+          //         id: parseSocketData.expert_id,
+          //       },
+          //     ]),
+          //   );
+          // } else if (parseSocketData?.event === "payment_success") {
+          // dispatch(
+          //   baseApi.util.invalidateTags([
+          //     {
+          //       type: "Availability",
+          //       id: parseSocketData.expert_id,
+          //     },
+          //   ]),
+          // );
         }
         setLastMessage(JSON.parse(event.data));
       } catch {
