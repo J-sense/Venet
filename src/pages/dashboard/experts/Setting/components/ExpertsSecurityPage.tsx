@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -33,8 +34,7 @@ export default function ExpertsSecurityPage() {
       confirmPassword: "",
     },
   });
-  const [userSecurityChanagePassword, { isLoading }] =
-    useUserSecurityPasswordChangeMutation();
+  const [userSecurityChanagePassword] = useUserSecurityPasswordChangeMutation();
   // 3. Submit Handler
   async function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
