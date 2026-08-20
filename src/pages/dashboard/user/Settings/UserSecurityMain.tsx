@@ -53,7 +53,7 @@ export default function UserSecurityMain() {
         );
       } else {
         console.log(response);
-        toast.error((response?.error as any)?.data?.details);
+        toast.error((response?.error as any)?.data?.details?.password);
       }
     } catch (error) {
       console.log(error);

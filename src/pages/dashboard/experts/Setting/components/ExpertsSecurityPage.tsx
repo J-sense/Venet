@@ -8,6 +8,8 @@ import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { FormInput } from "@/components/ui/FormInput";
+import { toast } from "sonner";
+import { useUserSecurityPasswordChangeMutation } from "@/redux/features/auth/auth.api";
 
 // 1. Zod Schema
 const formSchema = z
@@ -22,7 +24,7 @@ const formSchema = z
   });
 
 export default function ExpertsSecurityPage() {
-  // 2. Form Initialization
+  // 3. Submit Handler
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -31,13 +33,31 @@ export default function ExpertsSecurityPage() {
       confirmPassword: "",
     },
   });
-
+  const [userSecurityChanagePassword, { isLoading }] =
+    useUserSecurityPasswordChangeMutation();
   // 3. Submit Handler
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
     // Add your API call here
+    try {
+      const response = await userSecurityChanagePassword({
+        password: values.currentPassword,
+        new_password: values.newPassword,
+        confirm_password: values.confirmPassword,
+      });
+      console.log(response);
+      if (response?.data?.success) {
+        toast.success(
+          response?.data?.details || "Password changed successfully!",
+        );
+      } else {
+        console.log(response);
+        toast.error((response?.error as any)?.data?.details?.password);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
-
   return (
     <div className="text-white max-w-full space-y-8">
       <div>
@@ -98,10 +118,7 @@ export default function ExpertsSecurityPage() {
           Permanently delete your account and all associated data. This action
           cannot be undone.
         </p>
-        <Button
-          variant="outline"
-          className="border-red-500 text-red-500"
-        >
+        <Button variant="outline" className="border-red-500 text-red-500">
           Delete Account
         </Button>
       </div>

@@ -70,11 +70,15 @@ export const ProfileDropdown = ({
       : (user.email?.[0] || "U").toUpperCase();
 
   const isExpert = user.role?.toUpperCase() === "EXPERT";
-  const dashboardLink = isExpert
+
+  const dashboardLabel = isDashboard ? "Home" : "Dashboard";
+
+  const dashboardLink = isDashboard
     ? "/"
-    : isDashboard
-      ? "//dashboard/experts"
+    : isExpert
+      ? "/dashboard/experts"
       : "/dashboard/user";
+
   const settingsLink = isExpert
     ? "/dashboard/experts/settings"
     : "/dashboard/user/settings";
@@ -102,8 +106,9 @@ export const ProfileDropdown = ({
           {firstName || fullName}
         </span>
         <ChevronDown
-          className={`w-4 h-4 text-gray-400 transition-transform duration-200 ${isOpen ? "rotate-180 text-blue-400" : ""
-            }`}
+          className={`w-4 h-4 text-gray-400 transition-transform duration-200 ${
+            isOpen ? "rotate-180 text-blue-400" : ""
+          }`}
         />
       </button>
 
@@ -145,7 +150,7 @@ export const ProfileDropdown = ({
               className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-300 hover:text-white hover:bg-white/5 transition-colors"
             >
               <LayoutDashboard className="w-4 h-4" />
-              {isDashboard ? <span>Home</span> : <span>Dashboard</span>}
+              <span>{dashboardLabel}</span>
             </Link>
 
             <Link
