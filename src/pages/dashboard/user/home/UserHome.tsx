@@ -15,13 +15,17 @@ import {
 } from "lucide-react";
 import { useNavigate } from "react-router";
 
-import { myPrograms, trainers, upcomingTasks } from "./data/userHomeData";
+import { trainers, upcomingTasks } from "./data/userHomeData";
+import { useMyPurchaseProgrammeQuery } from "@/redux/features/userDashboard/userProfile.api";
 
 export default function UserHome() {
   const navigate = useNavigate();
-
-  const handleStartProgram = (title: string) => {
-    const slug = title.toLowerCase().replace(/\s+/g, "-");
+  const { data: myPurchaseProgramme } = useMyPurchaseProgrammeQuery(undefined);
+  console.log(
+    myPurchaseProgramme,
+    "jfdskljfdsjkdfkdljfdklfjkdsjfdsjfksdjfldjfklsf",
+  );
+  const handleStartProgram = (slug: string) => {
     navigate(`/dashboard/user/program/${slug}`);
   };
 
@@ -97,7 +101,7 @@ export default function UserHome() {
                 </div>
 
                 <div className="space-y-4 relative z-10">
-                  {!myPrograms || myPrograms.length === 0 ? (
+                  {!myPurchaseProgramme?.data || myPurchaseProgramme.data.length === 0 ? (
                     <div className="flex flex-col items-center justify-center py-16 px-4 border border-dashed border-white/10 rounded-2xl bg-gradient-to-b from-white/[0.02] to-transparent">
                       <div className="w-16 h-16 bg-[#1A2333] rounded-full flex items-center justify-center mb-4 border border-white/5 shadow-lg">
                         <BookOpen className="w-8 h-8 text-zinc-500" />
@@ -114,17 +118,17 @@ export default function UserHome() {
                       </Button>
                     </div>
                   ) : (
-                    myPrograms.map((program, index) => (
+                    myPurchaseProgramme.data.map((item: any, index: number) => (
                       <div
-                        key={index}
-                        onClick={() => handleStartProgram(program.title)}
+                        key={item.id || index}
+                        onClick={() => handleStartProgram(item.program.slug || item.program.name.toLowerCase().replace(/\s+/g, "-"))}
                         className="cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-blue-900/10 rounded-2xl"
                       >
                         <STartProgramCard
-                          title={program.title}
-                          status={program.status}
-                          progress={program.progress}
-                          icon={program.icon}
+                          title={item.program.name}
+                          status="In Progress"
+                          progress={50}
+                          icon={<BookOpen className="w-6 h-6 text-blue-400" />}
                         />
                       </div>
                     ))

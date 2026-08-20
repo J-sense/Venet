@@ -35,7 +35,10 @@ const userProfileApi = baseApi.injectEndpoints({
       }),
       providesTags: ["User"],
     }),
-    updateUserProfile: builder.mutation<UserProfileResponse, FormData | Partial<UserProfile>>({
+    updateUserProfile: builder.mutation<
+      UserProfileResponse,
+      FormData | Partial<UserProfile>
+    >({
       query: (data) => ({
         url: "/auth/profile/update/",
         method: "PATCH",
@@ -43,8 +46,18 @@ const userProfileApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["User"],
     }),
+    myPurchaseProgramme: builder.query({
+      query: (data) => ({
+        url: "/my-programs/",
+        method: "GET",
+        data,
+      }),
+    }),
   }),
 });
 
-export const { useGetUserProfileQuery, useUpdateUserProfileMutation } = userProfileApi;
-
+export const {
+  useGetUserProfileQuery,
+  useUpdateUserProfileMutation,
+  useMyPurchaseProgrammeQuery,
+} = userProfileApi;
