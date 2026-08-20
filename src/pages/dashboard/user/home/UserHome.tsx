@@ -13,7 +13,7 @@ import {
   Sparkles,
   TrendingUp,
 } from "lucide-react";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 import { trainers, upcomingTasks } from "./data/userHomeData";
 import { useMyPurchaseProgrammeQuery } from "@/redux/features/userDashboard/userProfile.api";
@@ -101,7 +101,8 @@ export default function UserHome() {
                 </div>
 
                 <div className="space-y-4 relative z-10">
-                  {!myPurchaseProgramme?.data || myPurchaseProgramme.data.length === 0 ? (
+                  {!myPurchaseProgramme?.data ||
+                  myPurchaseProgramme.data.length === 0 ? (
                     <div className="flex flex-col items-center justify-center py-16 px-4 border border-dashed border-white/10 rounded-2xl bg-gradient-to-b from-white/[0.02] to-transparent">
                       <div className="w-16 h-16 bg-[#1A2333] rounded-full flex items-center justify-center mb-4 border border-white/5 shadow-lg">
                         <BookOpen className="w-8 h-8 text-zinc-500" />
@@ -113,15 +114,24 @@ export default function UserHome() {
                         You haven't enrolled in any programs yet. Explore our
                         catalog to find the perfect fit for your goals.
                       </p>
-                      <Button className="bg-white text-[#0D1526] hover:bg-zinc-200 font-bold px-8 rounded-xl shadow-xl transition-transform hover:scale-105 active:scale-95">
-                        Browse Catalog
-                      </Button>
+                      <Link to={"/programs/all-programs"}>
+                        <Button className="bg-white text-[#0D1526] hover:bg-zinc-200 font-bold px-8 rounded-xl shadow-xl transition-transform hover:scale-105 active:scale-95">
+                          Browse Catalog
+                        </Button>
+                      </Link>
                     </div>
                   ) : (
                     myPurchaseProgramme.data.map((item: any, index: number) => (
                       <div
                         key={item.id || index}
-                        onClick={() => handleStartProgram(item.program.slug || item.program.name.toLowerCase().replace(/\s+/g, "-"))}
+                        onClick={() =>
+                          handleStartProgram(
+                            item.program.slug ||
+                              item.program.name
+                                .toLowerCase()
+                                .replace(/\s+/g, "-"),
+                          )
+                        }
                         className="cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-blue-900/10 rounded-2xl"
                       >
                         <STartProgramCard
