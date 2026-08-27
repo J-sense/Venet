@@ -23,7 +23,7 @@ export const ChatWindow = () => {
     );
   }
 
-  if (section === "previous" && id) {
+  if (section === "previous") {
     return <PreviousSessionChat isExpert={isExpert} id={id} />;
   }
 

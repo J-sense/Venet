@@ -42,6 +42,14 @@ const userSessionApi = baseApi.injectEndpoints({
         data: formData,
       }),
     }),
+    createReview: builder.mutation({
+      query: (data: { session: string; rating: number; comment?: string }) => ({
+        url: "/experts/reviews/",
+        method: "POST",
+        data,
+      }),
+      invalidatesTags: ["UserSession"],
+    }),
   }),
 });
 
@@ -51,4 +59,5 @@ export const {
   useGetChatHistoryQuery,
   useSendFileMutation,
   useGetChatContactsQuery,
+  useCreateReviewMutation,
 } = userSessionApi;

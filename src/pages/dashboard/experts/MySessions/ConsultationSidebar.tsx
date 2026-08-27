@@ -1,23 +1,8 @@
 // src/pages/experts/ConsultationSidebar.tsx
 import { useNavigate, useParams, useLocation } from "react-router";
 import { Search } from "lucide-react";
+import { useGetChatContactsQuery } from "@/redux/features/userDashboard/userSession.api";
 
-const MOCK_HISTORY_LIST = [
-  {
-    id: "1",
-    name: "Henry Dholi",
-    avatar:
-      "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=150",
-    message: "I came across your profile and...",
-  },
-  {
-    id: "2",
-    name: "Mariya Desoja",
-    avatar:
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150",
-    message: "I like your confidence 💪",
-  },
-];
 interface ConsultationSidebarProps {
   onClose?: () => void;
 }
@@ -27,6 +12,10 @@ export const ConsultationSidebar = ({ onClose }: ConsultationSidebarProps) => {
   const location = useLocation();
   const { section, id } = useParams();
   const activeSection = section || "upcoming";
+  const { data: contactsData, isLoading: isLoadingContacts } =
+    useGetChatContactsQuery(undefined);
+
+  const contactsList = Array.isArray(contactsData?.data) ? contactsData.data : [];
 
   const basePath = location.pathname.includes("/dashboard/user")
     ? "/dashboard/user"
@@ -72,32 +61,66 @@ export const ConsultationSidebar = ({ onClose }: ConsultationSidebarProps) => {
                 />
               </div>
               <div className="flex-1 overflow-y-auto space-y-3 px-2">
-                {MOCK_HISTORY_LIST.map((item) => (
-                  <div
-                    key={item.id}
-                    onClick={() => {
-                      navigate(`${basePath}/consultation/previous/${item.id}`);
-                      onClose?.();
-                    }}
-                    className={`flex gap-3 p-3 rounded-3xl cursor-pointer transition-all hover:bg-white/5 ${id === item.id ? "bg-white/10" : ""
-                      }`}
-                  >
-                    <img
-                      src={item.avatar}
-                      alt={item.name}
-                      className="w-12 h-12 rounded-2xl object-cover flex-shrink-0"
-                    />
-
-                    <div className="flex-1 min-w-0">
-                      <div className="font-semibold text-white">
-                        {item.name}
-                      </div>
-                      <p className="text-sm text-zinc-400 line-clamp-1 mt-0.5">
-                        {item.message}
-                      </p>
-                    </div>
+                {isLoadingContacts ? (
+                  <div className="text-center py-6 text-xs text-zinc-400">
+                    Loading contacts...
                   </div>
-                ))}
+                ) : contactsList.length > 0 ? (
+                  contactsList.map((item: any) => {
+                    const name =
+                      item.name ||
+                      item.expert_name ||
+                      item.user_name ||
+                      "User";
+                    const avatar =
+                      item.profile_image ||
+                      item.avatar ||
+                      item.expert_profile_image ||
+                      item.user_profile_image ||
+                      `https://ui-avatars.com/api/?name=${encodeURIComponent(
+                        name
+                      )}&background=1E293B&color=3B82F6`;
+                    const message = item.last_message_is_file
+                      ? "Sent an attachment 📎"
+                      : item.last_message || item.message || "No messages yet";
+
+                    const targetId = item.session_id || item.id;
+                    const isSelected =
+                      id === String(item.session_id) || id === String(item.id);
+
+                    return (
+                      <div
+                        key={item.id}
+                        onClick={() => {
+                          navigate(`${basePath}/consultation/previous/${targetId}`);
+                          onClose?.();
+                        }}
+                        className={`flex gap-3 p-3 rounded-3xl cursor-pointer transition-all hover:bg-white/5 ${
+                          isSelected ? "bg-white/10" : ""
+                        }`}
+                      >
+                        <img
+                          src={avatar}
+                          alt={name}
+                          className="w-12 h-12 rounded-2xl object-cover flex-shrink-0"
+                        />
+
+                        <div className="flex-1 min-w-0">
+                          <div className="font-semibold text-white truncate">
+                            {name}
+                          </div>
+                          <p className="text-sm text-zinc-400 line-clamp-1 mt-0.5">
+                            {message}
+                          </p>
+                        </div>
+                      </div>
+                    );
+                  })
+                ) : (
+                  <div className="text-center py-6 text-xs text-zinc-500">
+                    No chat contacts found
+                  </div>
+                )}
               </div>
             </div>
           ) : (
