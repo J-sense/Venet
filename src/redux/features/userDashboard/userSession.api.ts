@@ -4,10 +4,10 @@ const userSessionApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getUserSession: builder.query({
       query: () => ({
-        url: "experts/sessions/?status=SCHEDULED",
+        url: "experts/sessions/",
         method: "GET",
       }),
-      providesTags: ["User"],
+      providesTags: ["User", "UserSession"],
     }),
     updateUserProfile: builder.mutation({
       query: (data) => ({
@@ -17,7 +17,38 @@ const userSessionApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["User"],
     }),
+    getServerTime: builder.query({
+      query: () => ({
+        url: "/server-time/",
+        method: "GET",
+      }),
+    }),
+    getChatHistory: builder.query({
+      query: (sessionId: string) => ({
+        url: `sessions/${sessionId}/chat-history/`,
+        method: "GET",
+      }),
+    }),
+    getChatContacts: builder.query({
+      query: () => ({
+        url: `/chat/contacts/`,
+        method: "GET",
+      }),
+    }),
+    sendFile: builder.mutation({
+      query: (formData: FormData) => ({
+        url: "chat/send-file/",
+        method: "POST",
+        data: formData,
+      }),
+    }),
   }),
 });
 
-export const { useGetUserSessionQuery } = userSessionApi;
+export const {
+  useGetUserSessionQuery,
+  useGetServerTimeQuery,
+  useGetChatHistoryQuery,
+  useSendFileMutation,
+  useGetChatContactsQuery,
+} = userSessionApi;

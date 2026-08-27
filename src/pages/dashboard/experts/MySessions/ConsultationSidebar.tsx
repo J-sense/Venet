@@ -49,11 +49,10 @@ export const ConsultationSidebar = ({ onClose }: ConsultationSidebarProps) => {
                 navigate(`${basePath}/consultation/${s}`);
                 onClose?.(); // Close sidebar on mobile after navigation
               }}
-              className={`flex-1 py-3 rounded-full text-sm font-medium transition-all ${
-                activeSection === s
+              className={`flex-1 py-3 rounded-full text-sm font-medium transition-all ${activeSection === s
                   ? "bg-[#0A66C2] text-white"
                   : "bg-[#1E2937] text-gray-400 hover:bg-[#2D3748]"
-              }`}
+                }`}
             >
               {s === "upcoming" ? "Upcoming" : "History"}
             </button>
@@ -80,9 +79,8 @@ export const ConsultationSidebar = ({ onClose }: ConsultationSidebarProps) => {
                       navigate(`${basePath}/consultation/previous/${item.id}`);
                       onClose?.();
                     }}
-                    className={`flex gap-3 p-3 rounded-3xl cursor-pointer transition-all hover:bg-white/5 ${
-                      id === item.id ? "bg-white/10" : ""
-                    }`}
+                    className={`flex gap-3 p-3 rounded-3xl cursor-pointer transition-all hover:bg-white/5 ${id === item.id ? "bg-white/10" : ""
+                      }`}
                   >
                     <img
                       src={item.avatar}

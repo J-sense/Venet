@@ -68,6 +68,52 @@ const TIME_OPTIONS = Array.from({ length: 288 }, (_, i) => {
   return { value, label: `${hour12}:${m.toString().padStart(2, "0")} ${ampm}` };
 });
 
+// Helper to convert Local Weekday (0=Mon..6=Sun) and Local HH:MM into UTC Weekday and UTC HH:MM
+const convertLocalToUtcSlot = (weekdayIndex: number, timeStr: string) => {
+  if (!timeStr) return { weekday: weekdayIndex, time: timeStr };
+  const [hours, minutes] = timeStr.split(":").map(Number);
+  // Base Date: 2026-08-24 is Monday (weekday 0)
+  const baseDate = new Date(2026, 7, 24 + weekdayIndex, hours, minutes, 0);
+
+  const utcHours = baseDate.getUTCHours();
+  const utcMinutes = baseDate.getUTCMinutes();
+  const utcJsDay = baseDate.getUTCDay(); // 0 is Sun, 1 is Mon...
+  const utcWeekdayIndex = utcJsDay === 0 ? 6 : utcJsDay - 1;
+
+  const utcTimeStr = `${String(utcHours).padStart(2, "0")}:${String(
+    utcMinutes
+  ).padStart(2, "0")}`;
+
+  return {
+    weekday: utcWeekdayIndex,
+    time: utcTimeStr,
+  };
+};
+
+// Helper to convert UTC Weekday (0=Mon..6=Sun) and UTC HH:MM into Local Weekday and Local HH:MM
+const convertUtcToLocalSlot = (utcWeekdayIndex: number, utcTimeStr: string) => {
+  if (!utcTimeStr) return { weekday: utcWeekdayIndex, time: utcTimeStr };
+  const [utcHours, utcMinutes] = utcTimeStr.split(":").map(Number);
+  // Base Date in UTC: 2026-08-24 is Monday (weekday 0)
+  const baseDate = new Date(
+    Date.UTC(2026, 7, 24 + utcWeekdayIndex, utcHours, utcMinutes, 0)
+  );
+
+  const localHours = baseDate.getHours();
+  const localMinutes = baseDate.getMinutes();
+  const localJsDay = baseDate.getDay(); // 0 is Sun, 1 is Mon...
+  const localWeekdayIndex = localJsDay === 0 ? 6 : localJsDay - 1;
+
+  const localTimeStr = `${String(localHours).padStart(2, "0")}:${String(
+    localMinutes
+  ).padStart(2, "0")}`;
+
+  return {
+    weekday: localWeekdayIndex,
+    time: localTimeStr,
+  };
+};
+
 const WeeklyAvailability: React.FC = () => {
   const [createAvailability] = useCreateExpertAvailabilityMutation();
   const { data: getAvailability } = useGetExpertAvailabiltiyQuery(undefined);
@@ -93,24 +139,23 @@ const WeeklyAvailability: React.FC = () => {
         return acc;
       }, {} as WeeklyAvailabilityState);
 
-      // Populate slots from backend data
+      // Populate slots from backend UTC data into local display time
       rawData.availabilities.forEach((item: any) => {
-        const weekdayIndex = item.weekday;
-        const day = DAYS[weekdayIndex];
+        const utcStart = item.start_time ? item.start_time.substring(0, 5) : "09:00";
+        const utcEnd = item.end_time ? item.end_time.substring(0, 5) : "17:00";
+
+        const { weekday: localWeekdayIndex, time: localStartTime } =
+          convertUtcToLocalSlot(item.weekday, utcStart);
+        const { time: localEndTime } =
+          convertUtcToLocalSlot(item.weekday, utcEnd);
+
+        const day = DAYS[localWeekdayIndex];
         if (day) {
           mappedAvailability[day].enabled = true;
-          // Extract HH:MM from HH:MM:SS format
-          const startTime = item.start_time
-            ? item.start_time.substring(0, 5)
-            : "09:00";
-          const endTime = item.end_time
-            ? item.end_time.substring(0, 5)
-            : "17:00";
-
           mappedAvailability[day].slots.push({
             id: item.id || Date.now() + Math.random(),
-            start_time: startTime,
-            end_time: endTime,
+            start_time: localStartTime,
+            end_time: localEndTime,
           });
         }
       });
@@ -128,6 +173,7 @@ const WeeklyAvailability: React.FC = () => {
       setAvailability(mappedAvailability);
     }
   }, [getAvailability]);
+
   const toggleDay = (day: Day) => {
     setAvailability((prev) => ({
       ...prev,
@@ -214,10 +260,13 @@ const WeeklyAvailability: React.FC = () => {
       if (dayData.enabled) {
         dayData.slots.forEach((slot) => {
           if (slot.start_time && slot.end_time) {
+            const utcStart = convertLocalToUtcSlot(index, slot.start_time);
+            const utcEnd = convertLocalToUtcSlot(index, slot.end_time);
+
             availabilities.push({
-              weekday: index, // Monday = 0, Tuesday = 1, etc.
-              start_time: slot.start_time,
-              end_time: slot.end_time,
+              weekday: utcStart.weekday,
+              start_time: `${utcStart.time}:00`,
+              end_time: `${utcEnd.time}:00`,
             });
           }
         });

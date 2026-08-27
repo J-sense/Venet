@@ -6,7 +6,7 @@ import {
   useBookSessionMutation,
   useGetSingleExpertSlotsQuery,
 } from "@/redux/features/expertsRoute/expertRoute.api";
-import { useBookingSocket } from "@/providers/BookingSocketProvider";
+import { useGetServerTimeQuery } from "@/redux/features/userDashboard/userSession.api";
 import { toast } from "sonner";
 
 interface CustomBookingProps {
@@ -15,7 +15,7 @@ interface CustomBookingProps {
   durationAndCost?: any[];
 }
 
-type Step = 1 | 2 | 3 | 4; // 1: Date, 2: Duration, 3: Time, 4: Confirm
+type Step = 1 | 2 | 3 | 4;
 
 export default function CustomBooking({
   expert,
@@ -23,7 +23,19 @@ export default function CustomBooking({
   durationAndCost,
 }: CustomBookingProps) {
   const [currentStep, setCurrentStep] = useState<Step>(1);
-  const { sendMessage } = useBookingSocket();
+
+  const { data: serverTimeData } = useGetServerTimeQuery(undefined);
+
+  // Compute current timestamp in ms based on server time or fallback
+  const nowMs = useMemo(() => {
+    if (serverTimeData?.data?.timestamp) {
+      return serverTimeData.data.timestamp * 1000;
+    }
+    if (serverTimeData?.data?.server_time) {
+      return new Date(serverTimeData.data.server_time).getTime();
+    }
+    return Date.now();
+  }, [serverTimeData]);
 
   const isDateAvailable = (date: Date) => {
     // 0 is Sunday, 1 is Monday, ..., 6 is Saturday in JS
@@ -211,9 +223,11 @@ export default function CustomBooking({
   };
 
   const isPastDate = (date: Date) => {
-    const today = new Date();
+    const today = new Date(nowMs);
     today.setHours(0, 0, 0, 0);
-    return date < today;
+    const checkDate = new Date(date);
+    checkDate.setHours(0, 0, 0, 0);
+    return checkDate < today;
   };
 
   // Helper to format 24h time to 12h AM/PM
@@ -255,40 +269,64 @@ export default function CustomBooking({
       },
     );
 
+  // Helper to convert UTC date string (YYYY-MM-DD) and UTC time string (HH:MM) to local Date object
+  const parseUtcTimeToLocalDate = (dStr: string, tStr: string) => {
+    if (!dStr || !tStr) return null;
+    const parts = tStr.trim().split(":");
+    if (parts.length < 2) return null;
+    const [hours, minutes] = parts.map(Number);
+
+    const dateParts = dStr.trim().split("-").map(Number);
+    if (dateParts.length < 3) return null;
+    const [year, month, day] = dateParts;
+
+    const utcMs = Date.UTC(year, month - 1, day, hours, minutes, 0);
+    return new Date(utcMs);
+  };
+
   const timeSlots = useMemo(() => {
     const rawSlots = slotsResponse?.data?.slots;
-    if (Array.isArray(rawSlots)) {
-      return rawSlots
-        .map((item: any) => {
-          const timeStr = typeof item === "string" ? item : item?.time || "";
-          return {
-            raw: timeStr,
-            formatted: formatTimeTo12Hour(timeStr),
-            isLocked:
-              typeof item === "object" && item !== null
-                ? !!item.is_locked
-                : false,
-          };
-        })
-        .filter((slot) => slot.raw);
-    }
-    return [];
-  }, [slotsResponse]);
+    if (!Array.isArray(rawSlots) || !dateStr) return [];
+
+    return rawSlots
+      .map((item: any) => {
+        const utcTimeStr = typeof item === "string" ? item : item?.time || "";
+        if (!utcTimeStr) return null;
+
+        const isLocked =
+          typeof item === "object" && item !== null
+            ? !!item.is_locked
+            : false;
+
+        // Convert UTC slot time to local Date object
+        const localSlotDate = parseUtcTimeToLocalDate(dateStr, utcTimeStr);
+        if (!localSlotDate) return null;
+
+        const slotMs = localSlotDate.getTime();
+        const isPast = slotMs <= nowMs;
+
+        const localHours = localSlotDate.getHours();
+        const localMinutes = localSlotDate.getMinutes();
+        const localTimeStr = `${String(localHours).padStart(2, "0")}:${String(
+          localMinutes
+        ).padStart(2, "0")}`;
+
+        return {
+          raw: utcTimeStr, // UTC time string for backend API / Socket payload
+          localTimeStr,
+          formatted: formatTimeTo12Hour(localTimeStr), // Local 12h display string
+          isLocked: isLocked || isPast,
+          isPast,
+        };
+      })
+      .filter((slot): slot is NonNullable<typeof slot> => slot !== null && !slot.isPast);
+  }, [slotsResponse, dateStr, nowMs]);
 
   const handleDateSelect = (date: Date) => {
     setSelectedDate(date);
   };
 
   const handleNextStep = () => {
-    if (currentStep === 3 && selectedTime) {
-      sendMessage({
-        event: "select_slot",
-        expert_id: expert.id,
-        date: dateStr,
-        start_time: selectedTime,
-        duration_minutes: selectedDuration,
-      });
-    }
     setCurrentStep((prev) => (prev + 1) as Step);
   };
 
@@ -310,29 +348,22 @@ export default function CustomBooking({
 
   const handleBookNow = async () => {
     if (!agreeToTerms || !selectedDate || !selectedTime) return;
-    console.log(selectedTime, "selected time");
+    console.log(selectedTime, "selected time (UTC)");
     try {
-      const [hour, minute] = selectedTime.split(":").map(Number);
-      const localDateTime = new Date(selectedDate);
-      localDateTime.setHours(hour, minute, 0, 0);
+      const formattedUtcStartTime = selectedTime.includes(":")
+        ? selectedTime.split(":").length === 2
+          ? `${selectedTime}:00`
+          : selectedTime
+        : selectedTime;
 
-      const utcYear = localDateTime.getUTCFullYear();
-      const utcMonth = String(localDateTime.getUTCMonth() + 1).padStart(2, "0");
-      const utcDate = String(localDateTime.getUTCDate()).padStart(2, "0");
-      const formattedUtcDate = `${utcYear}-${utcMonth}-${utcDate}`;
-
-      const utcHours = String(localDateTime.getUTCHours()).padStart(2, "0");
-      const utcMinutes = String(localDateTime.getUTCMinutes()).padStart(2, "0");
-      const utcSeconds = String(localDateTime.getUTCSeconds()).padStart(2, "0");
-      const utcStartTime = `${utcHours}:${utcMinutes}:${utcSeconds}`;
-      console.log(utcStartTime);
       const payload = {
         expert: expert.id,
-        date: formattedUtcDate,
-        start_time: selectedTime,
+        date: dateStr,
+        start_time: formattedUtcStartTime,
         duration_minutes: selectedDuration,
         agree_terms: agreeToTerms,
       };
+      console.log("Submitting booking payload:", payload);
 
       const res = await createBooking(payload).unwrap();
 
@@ -364,12 +395,26 @@ export default function CustomBooking({
     }
   };
 
-  // const handleReset = () => {
-  //   setSelectedDate(null);
-  //   setSelectedTime(null);
-  //   setAgreeToTerms(false);
-  //   setCurrentStep(1);
-  // };
+  // Memoized helper to format selected UTC time slot to local display time on Step 4 review
+  const displaySelectedTime = useMemo(() => {
+    if (!selectedTime) return "";
+    const match = timeSlots.find((s) => s.raw === selectedTime);
+    if (match) return match.formatted;
+
+    if (dateStr) {
+      const localDate = parseUtcTimeToLocalDate(dateStr, selectedTime);
+      if (localDate) {
+        const h = localDate.getHours();
+        const m = localDate.getMinutes();
+        const localTimeStr = `${String(h).padStart(2, "0")}:${String(m).padStart(
+          2,
+          "0"
+        )}`;
+        return formatTimeTo12Hour(localTimeStr);
+      }
+    }
+    return formatTimeTo12Hour(selectedTime);
+  }, [selectedTime, timeSlots, dateStr]);
 
   return (
     <div className="w-full bg-[#0B1220]/60 border border-[#1E293B]/60 rounded-3xl p-6 md:p-8 backdrop-blur-md relative overflow-hidden shadow-2xl">
@@ -385,15 +430,14 @@ export default function CustomBooking({
               <div
                 className="h-full bg-[#007AFF] transition-all duration-300"
                 style={{
-                  width: `${
-                    currentStep === 1
-                      ? "0%"
-                      : currentStep === 2
-                        ? "33%"
-                        : currentStep === 3
-                          ? "66%"
-                          : "100%"
-                  }`,
+                  width: `${currentStep === 1
+                    ? "0%"
+                    : currentStep === 2
+                      ? "33%"
+                      : currentStep === 3
+                        ? "66%"
+                        : "100%"
+                    }`,
                 }}
               />
             </div>
@@ -403,13 +447,12 @@ export default function CustomBooking({
               <button
                 onClick={() => selectedDate && setCurrentStep(1)}
                 disabled={currentStep === 1}
-                className={`w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold transition-all ${
-                  getStepStatus(1) === "completed"
-                    ? "bg-[#007AFF] text-white hover:bg-[#0066FF] cursor-pointer"
-                    : getStepStatus(1) === "active"
-                      ? "bg-[#007AFF] text-white ring-4 ring-blue-500/20"
-                      : "bg-slate-900 border-2 border-slate-800 text-slate-500"
-                }`}
+                className={`w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold transition-all ${getStepStatus(1) === "completed"
+                  ? "bg-[#007AFF] text-white hover:bg-[#0066FF] cursor-pointer"
+                  : getStepStatus(1) === "active"
+                    ? "bg-[#007AFF] text-white ring-4 ring-blue-500/20"
+                    : "bg-slate-900 border-2 border-slate-800 text-slate-500"
+                  }`}
               >
                 {getStepStatus(1) === "completed" ? (
                   <Check className="w-4 h-4 text-white" />
@@ -429,13 +472,12 @@ export default function CustomBooking({
               <button
                 onClick={() => selectedDate && setCurrentStep(2)}
                 disabled={!selectedDate || currentStep === 2}
-                className={`w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold transition-all ${
-                  getStepStatus(2) === "completed"
-                    ? "bg-[#007AFF] text-white hover:bg-[#0066FF] cursor-pointer"
-                    : getStepStatus(2) === "active"
-                      ? "bg-[#007AFF] text-white ring-4 ring-blue-500/20"
-                      : "bg-slate-900 border-2 border-slate-800 text-slate-500"
-                }`}
+                className={`w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold transition-all ${getStepStatus(2) === "completed"
+                  ? "bg-[#007AFF] text-white hover:bg-[#0066FF] cursor-pointer"
+                  : getStepStatus(2) === "active"
+                    ? "bg-[#007AFF] text-white ring-4 ring-blue-500/20"
+                    : "bg-slate-900 border-2 border-slate-800 text-slate-500"
+                  }`}
               >
                 {getStepStatus(2) === "completed" ? (
                   <Check className="w-4 h-4 text-white" />
@@ -455,13 +497,12 @@ export default function CustomBooking({
               <button
                 onClick={() => selectedDate && setCurrentStep(3)}
                 disabled={!selectedDate || currentStep === 3}
-                className={`w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold transition-all ${
-                  getStepStatus(3) === "completed"
-                    ? "bg-[#007AFF] text-white hover:bg-[#0066FF] cursor-pointer"
-                    : getStepStatus(3) === "active"
-                      ? "bg-[#007AFF] text-white ring-4 ring-blue-500/20"
-                      : "bg-slate-900 border-2 border-slate-800 text-slate-500"
-                }`}
+                className={`w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold transition-all ${getStepStatus(3) === "completed"
+                  ? "bg-[#007AFF] text-white hover:bg-[#0066FF] cursor-pointer"
+                  : getStepStatus(3) === "active"
+                    ? "bg-[#007AFF] text-white ring-4 ring-blue-500/20"
+                    : "bg-slate-900 border-2 border-slate-800 text-slate-500"
+                  }`}
               >
                 {getStepStatus(3) === "completed" ? (
                   <Check className="w-4 h-4 text-white" />
@@ -479,11 +520,10 @@ export default function CustomBooking({
             {/* Step 4: Confirm */}
             <div className="flex flex-col items-center gap-1.5 flex-1">
               <div
-                className={`w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold transition-all ${
-                  getStepStatus(4) === "active"
-                    ? "bg-[#007AFF] text-white ring-4 ring-blue-500/20"
-                    : "bg-slate-900 border-2 border-slate-800 text-slate-500"
-                }`}
+                className={`w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold transition-all ${getStepStatus(4) === "active"
+                  ? "bg-[#007AFF] text-white ring-4 ring-blue-500/20"
+                  : "bg-slate-900 border-2 border-slate-800 text-slate-500"
+                  }`}
               >
                 4
               </div>
@@ -557,15 +597,14 @@ export default function CustomBooking({
                       key={cell.toISOString()}
                       disabled={disabled}
                       onClick={() => handleDateSelect(cell)}
-                      className={`aspect-square w-full rounded-xl text-xs font-semibold transition-all flex items-center justify-center ${
-                        active
-                          ? "bg-[#007AFF] text-white shadow-lg shadow-blue-500/20 scale-105"
-                          : currentDay
-                            ? "border-2 border-[#007AFF] text-white bg-blue-950/20"
-                            : disabled
-                              ? "text-slate-700 cursor-not-allowed opacity-30"
-                              : "text-slate-300 hover:bg-slate-800/60 hover:text-white"
-                      }`}
+                      className={`aspect-square w-full rounded-xl text-xs font-semibold transition-all flex items-center justify-center ${active
+                        ? "bg-[#007AFF] text-white shadow-lg shadow-blue-500/20 scale-105"
+                        : currentDay
+                          ? "border-2 border-[#007AFF] text-white bg-blue-950/20"
+                          : disabled
+                            ? "text-slate-700 cursor-not-allowed opacity-30"
+                            : "text-slate-300 hover:bg-slate-800/60 hover:text-white"
+                        }`}
                     >
                       {cell.getDate()}
                     </button>
@@ -595,7 +634,7 @@ export default function CustomBooking({
               {durations.map((item) => {
                 const dur = item.duration_minutes;
                 const isSel = selectedDuration === dur;
-                
+
                 const getDisplayCost = (itemObj: any) => {
                   if (!itemObj) return "0.00";
                   if (itemObj.cost && typeof itemObj.cost === "object") {
@@ -621,11 +660,10 @@ export default function CustomBooking({
                   <button
                     key={dur}
                     onClick={() => setSelectedDuration(dur)}
-                    className={`w-full flex items-center justify-between bg-slate-950/40 border p-4 rounded-2xl text-left transition-all ${
-                      isSel
-                        ? "border-[#007AFF] bg-[#007AFF]/5 text-white ring-1 ring-[#007AFF]"
-                        : "border-slate-800 hover:border-slate-700 text-slate-300 hover:text-white"
-                    }`}
+                    className={`w-full flex items-center justify-between bg-slate-950/40 border p-4 rounded-2xl text-left transition-all ${isSel
+                      ? "border-[#007AFF] bg-[#007AFF]/5 text-white ring-1 ring-[#007AFF]"
+                      : "border-slate-800 hover:border-slate-700 text-slate-300 hover:text-white"
+                      }`}
                   >
                     <div className="flex items-center gap-3">
                       <div
@@ -647,11 +685,10 @@ export default function CustomBooking({
                         ${displayCost}
                       </span>
                       <div
-                        className={`w-5 h-5 rounded-full border flex items-center justify-center ${
-                          isSel
-                            ? "bg-[#007AFF] border-[#007AFF]"
-                            : "border-slate-700"
-                        }`}
+                        className={`w-5 h-5 rounded-full border flex items-center justify-center ${isSel
+                          ? "bg-[#007AFF] border-[#007AFF]"
+                          : "border-slate-700"
+                          }`}
                       >
                         {isSel && (
                           <Check className="w-3 h-3 text-white fill-white" />
@@ -688,13 +725,12 @@ export default function CustomBooking({
                       key={slot.raw}
                       disabled={slot.isLocked}
                       onClick={() => setSelectedTime(slot.raw)}
-                      className={`py-3 px-4 rounded-xl text-xs font-bold text-center border transition-all ${
-                        slot.isLocked
-                          ? "bg-amber-500/10 border-amber-500/30 text-amber-500/50 cursor-not-allowed"
-                          : isSel
-                            ? "bg-[#007AFF] border-[#007AFF] text-white shadow-lg shadow-blue-500/15"
-                            : "bg-slate-950/40 border-slate-800 text-slate-300 hover:border-slate-700 hover:text-white"
-                      }`}
+                      className={`py-3 px-4 rounded-xl text-xs font-bold text-center border transition-all ${slot.isLocked
+                        ? "bg-amber-500/10 border-amber-500/30 text-amber-500/50 cursor-not-allowed"
+                        : isSel
+                          ? "bg-[#007AFF] border-[#007AFF] text-white shadow-lg shadow-blue-500/15"
+                          : "bg-slate-950/40 border-slate-800 text-slate-300 hover:border-slate-700 hover:text-white"
+                        }`}
                     >
                       <span>{slot.formatted}</span>
                       {slot.isLocked && (
@@ -751,8 +787,7 @@ export default function CustomBooking({
                     Time & Duration
                   </span>
                   <span className="text-white font-bold">
-                    {selectedTime ? formatTimeTo12Hour(selectedTime) : ""} (
-                    {selectedDuration} Min)
+                    {displaySelectedTime} ({selectedDuration} Min)
                   </span>
                 </div>
               </div>

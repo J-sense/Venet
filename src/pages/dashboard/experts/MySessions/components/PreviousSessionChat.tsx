@@ -1,3 +1,4 @@
+import { useGetChatContactsQuery } from "@/redux/features/userDashboard/userSession.api";
 import { ConsultationReview } from "../ConsultationReview";
 
 interface PreviousSessionChatProps {
@@ -6,6 +7,8 @@ interface PreviousSessionChatProps {
 }
 
 export const PreviousSessionChat = ({ isExpert }: PreviousSessionChatProps) => {
+  const { data: previousChatData } = useGetChatContactsQuery(undefined)
+  console.log(previousChatData, "preioushfsd chat dta")
   return (
     <div className="flex flex-col flex-1 min-h-0 bg-[#0A0F1C]">
       {/* Chat Header */}

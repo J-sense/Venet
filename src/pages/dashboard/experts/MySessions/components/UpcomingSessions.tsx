@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { useGetServerTimeQuery } from "@/redux/features/userDashboard/userSession.api";
 import { Calendar, Clock, Hourglass, Loader2, Search, Video } from "lucide-react";
 import { useNavigate } from "react-router";
 
@@ -8,15 +9,88 @@ interface UpcomingSessionsProps {
   isExpert: boolean;
 }
 
-const formatTimeTo12Hour = (timeStr: string) => {
-  if (!timeStr) return "";
-  const parts = timeStr.split(":");
-  if (parts.length < 2) return timeStr;
-  const hour = parseInt(parts[0], 10);
-  const minute = parts[1];
-  const ampm = hour >= 12 ? "PM" : "AM";
-  const displayHour = hour % 12 || 12;
-  return `${displayHour}:${minute} ${ampm}`;
+const getSessionLocalDateTimes = (session: any) => {
+  if (!session?.date || !session?.start_time) {
+    return { formattedDate: session?.date || "", formattedTime: "" };
+  }
+
+  const cleanDate = session.date.trim();
+  const cleanStartTime = session.start_time.trim();
+  const cleanEndTime = session.end_time ? session.end_time.trim() : null;
+
+  const startIso = `${cleanDate}T${cleanStartTime.length === 5 ? `${cleanStartTime}:00` : cleanStartTime}Z`;
+  const startDateObj = new Date(startIso);
+
+  let endDateObj: Date | null = null;
+  if (cleanEndTime) {
+    const endIso = `${cleanDate}T${cleanEndTime.length === 5 ? `${cleanEndTime}:00` : cleanEndTime}Z`;
+    endDateObj = new Date(endIso);
+  } else if (session.duration_minutes) {
+    endDateObj = new Date(
+      startDateObj.getTime() + session.duration_minutes * 60 * 1000
+    );
+  }
+
+  const localYear = startDateObj.getFullYear();
+  const localMonth = String(startDateObj.getMonth() + 1).padStart(2, "0");
+  const localDay = String(startDateObj.getDate()).padStart(2, "0");
+  const formattedDate = `${localYear}-${localMonth}-${localDay}`;
+
+  const format12h = (d: Date) => {
+    if (isNaN(d.getTime())) return "";
+    const h = d.getHours();
+    const m = String(d.getMinutes()).padStart(2, "0");
+    const ampm = h >= 12 ? "PM" : "AM";
+    const displayH = h % 12 || 12;
+    return `${displayH}:${m} ${ampm}`;
+  };
+
+  const startTime12h = format12h(startDateObj);
+  const endTime12h = endDateObj ? format12h(endDateObj) : "";
+
+  const formattedTime = endTime12h
+    ? `${startTime12h} - ${endTime12h}`
+    : startTime12h;
+
+  return { formattedDate, formattedTime };
+};
+
+const checkCanJoinSession = (session: any, serVerTimeData: any) => {
+  if (!session) return false;
+  // If backend marked status as ONGOING, session is active and joinable
+  if (session.status === "ONGOING") return true;
+  if (session.status !== "SCHEDULED") return false;
+
+  // Get current timestamp in ms (server time or fallback to Date.now())
+  let nowMs = Date.now();
+  if (serVerTimeData?.data?.timestamp) {
+    nowMs = serVerTimeData.data.timestamp * 1000;
+  } else if (serVerTimeData?.data?.server_time) {
+    nowMs = new Date(serVerTimeData.data.server_time).getTime();
+  }
+
+  if (!session.date || !session.start_time) return true;
+
+  const cleanDate = session.date.trim();
+  const cleanStartTime = session.start_time.trim();
+  const cleanEndTime = session.end_time ? session.end_time.trim() : null;
+
+  const startIso = `${cleanDate}T${cleanStartTime.length === 5 ? `${cleanStartTime}:00` : cleanStartTime}Z`;
+  const startMs = new Date(startIso).getTime();
+
+  let endMs: number;
+  if (cleanEndTime) {
+    const endIso = `${cleanDate}T${cleanEndTime.length === 5 ? `${cleanEndTime}:00` : cleanEndTime}Z`;
+    endMs = new Date(endIso).getTime();
+  } else {
+    const durationMs = (session.duration_minutes || 30) * 60 * 1000;
+    endMs = startMs + durationMs;
+  }
+
+  // Allow joining strictly from start_time up until 5 minutes after end_time
+  const preBufferMs = 0; // Set to 0 so button enables strictly at start_time
+  const postBufferMs = 5 * 60 * 1000;
+  return nowMs >= startMs - preBufferMs && nowMs <= endMs + postBufferMs;
 };
 
 export const UpcomingSessions = ({
@@ -25,6 +99,60 @@ export const UpcomingSessions = ({
   isExpert,
 }: UpcomingSessionsProps) => {
   const navigate = useNavigate();
+  const { data: serVerTime } = useGetServerTimeQuery(undefined);
+  console.log(serVerTime, "server time");
+
+  const handleJoinCall = (session: any) => {
+    const agora = session.agora || {};
+    const channel = agora.channel || `session-${session.id}`;
+    const userId = session?.id
+    const token = isExpert
+      ? agora.expert_token || agora.token
+      : agora.user_token || agora.token;
+
+    const uid = isExpert
+      ? agora.expert_uid || session.expert
+      : agora.user_uid || session.user;
+
+    const localName = isExpert
+      ? session.expert_name || "Expert"
+      : session.user_name || "User";
+
+    const remoteName = isExpert
+      ? session.user_name || "User"
+      : session.expert_name || "Expert";
+
+    const localAvatar = isExpert
+      ? session.expert_profile_image
+      : session.user_profile_image;
+
+    const remoteAvatar = isExpert
+      ? session.user_profile_image
+      : session.expert_profile_image;
+
+    const role = isExpert ? "expert" : "user";
+
+    navigate(
+      `/video-call/${channel}?remoteName=${encodeURIComponent(
+        remoteName
+      )}&localName=${encodeURIComponent(localName)}&role=${role}${token ? `&token=${encodeURIComponent(token)}` : ""
+      }${uid ? `&uid=${encodeURIComponent(uid)}` : ""}${localAvatar ? `&localAvatar=${encodeURIComponent(localAvatar)}` : ""}${remoteAvatar ? `&remoteAvatar=${encodeURIComponent(remoteAvatar)}` : ""}`,
+      {
+        state: {
+          session,
+          agora,
+          token,
+          uid,
+          localName,
+          remoteName,
+          localAvatar,
+          remoteAvatar,
+          role,
+          userId
+        },
+      }
+    );
+  };
 
   return (
     <div className="flex-1 overflow-y-auto bg-[#0F172A] text-white">
@@ -63,13 +191,20 @@ export const UpcomingSessions = ({
           </div>
         ) : (
           sessionsList.map((session: any) => {
-            const avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(
-              !isExpert
-                ? session.expert_name
-                : session?.user_name || "Expert",
-            )}&background=1E293B&color=3B82F6`;
-            const formattedTime = `${formatTimeTo12Hour(session.start_time)} - ${formatTimeTo12Hour(session.end_time)}`;
-            const isScheduled = session.status === "SCHEDULED";
+            const rawAvatar = !isExpert
+              ? session.expert_profile_image
+              : session.user_profile_image;
+
+            const avatarUrl =
+              rawAvatar ||
+              `https://ui-avatars.com/api/?name=${encodeURIComponent(
+                !isExpert
+                  ? session.expert_name
+                  : session?.user_name || "User",
+              )}&background=1E293B&color=3B82F6`;
+            const { formattedDate, formattedTime } =
+              getSessionLocalDateTimes(session);
+            const canJoin = checkCanJoinSession(session, serVerTime);
 
             return (
               <div
@@ -99,26 +234,23 @@ export const UpcomingSessions = ({
                   </div>
 
                   {/* Status Badge */}
-                  {isScheduled && (
+                  {canJoin ? (
                     <span className="hidden sm:flex shrink-0 bg-red-500/10 text-red-400 text-[10px] uppercase font-bold px-2.5 py-1 rounded-full items-center gap-1.5 whitespace-nowrap">
                       <span className="w-1.5 h-1.5 bg-red-400 rounded-full animate-pulse" />
-                      Live
+                      {session.status === "ONGOING" ? "Ongoing" : "Live"}
+                    </span>
+                  ) : (
+                    <span className="hidden sm:flex shrink-0 bg-blue-500/10 text-blue-400 text-[10px] uppercase font-bold px-2.5 py-1 rounded-full items-center gap-1.5 whitespace-nowrap">
+                      {session.status}
                     </span>
                   )}
 
                   {/* Action Button — visible on md+ inline */}
                   <div className="hidden md:block shrink-0 ml-2">
-                    {isScheduled ? (
+                    {canJoin ? (
                       <button
-                        onClick={() =>
-                          navigate(
-                            `/video-call/${session.id}?remoteName=${encodeURIComponent(
-                              session.expert_name,
-                            )}&localName=${encodeURIComponent("User")}&role=${isExpert ? "expert" : "user"
-                            }`,
-                          )
-                        }
-                        className="bg-[#0066fe] hover:bg-[#0057d9] text-white font-semibold py-2.5 px-5 rounded-xl flex items-center gap-2 transition-all active:scale-[0.98] shadow-lg shadow-blue-600/20 ring-1 ring-blue-500/40 whitespace-nowrap text-sm"
+                        onClick={() => handleJoinCall(session)}
+                        className="bg-[#0066fe] hover:bg-[#0057d9] text-white font-semibold py-2.5 px-5 rounded-xl flex items-center gap-2 transition-all active:scale-[0.98] shadow-lg shadow-blue-600/20 ring-1 ring-blue-500/40 whitespace-nowrap text-sm cursor-pointer"
                       >
                         <Video size={15} />
                         Join Now
@@ -127,6 +259,7 @@ export const UpcomingSessions = ({
                       <button
                         disabled
                         className="bg-white/5 text-zinc-400 font-semibold py-2.5 px-5 rounded-xl flex items-center gap-2 border border-white/10 cursor-not-allowed whitespace-nowrap text-sm"
+                        title="Join button will activate when session start time is reached"
                       >
                         <Clock size={15} />
                         Scheduled
@@ -147,7 +280,7 @@ export const UpcomingSessions = ({
                         Date
                       </span>
                       <div className="text-white text-xs sm:text-sm font-semibold truncate">
-                        {session.date}
+                        {formattedDate}
                       </div>
                     </div>
                   </div>
@@ -185,17 +318,10 @@ export const UpcomingSessions = ({
 
                 {/* Mobile-only Action Button */}
                 <div className="md:hidden px-4 pb-4">
-                  {isScheduled ? (
+                  {canJoin ? (
                     <button
-                      onClick={() =>
-                        navigate(
-                          `/video-call/${session.id}?remoteName=${encodeURIComponent(
-                            session.expert_name,
-                          )}&localName=${encodeURIComponent("User")}&role=${isExpert ? "expert" : "user"
-                          }`,
-                        )
-                      }
-                      className="w-full bg-[#0066fe] hover:bg-[#0057d9] text-white font-bold py-3 px-6 rounded-xl flex items-center justify-center gap-2 transition-all active:scale-[0.98] shadow-lg shadow-blue-600/20 ring-1 ring-blue-500/40"
+                      onClick={() => handleJoinCall(session)}
+                      className="w-full bg-[#0066fe] hover:bg-[#0057d9] text-white font-bold py-3 px-6 rounded-xl flex items-center justify-center gap-2 transition-all active:scale-[0.98] shadow-lg shadow-blue-600/20 ring-1 ring-blue-500/40 cursor-pointer"
                     >
                       <Video size={16} />
                       Join Now
