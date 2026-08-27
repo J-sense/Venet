@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Star, Loader2, CheckCircle2 } from "lucide-react";
+import { Star, Loader2, CheckCircle2, ThumbsUp, ThumbsDown } from "lucide-react";
 import { useCreateReviewMutation } from "@/redux/features/userDashboard/userSession.api";
 import { toast } from "sonner";
 
@@ -15,6 +15,7 @@ export const ConsultationReview: React.FC<ConsultationReviewProps> = ({
   const [rating, setRating] = useState(5);
   const [hoverRating, setHoverRating] = useState(0);
   const [comment, setComment] = useState("");
+  const [isRecommended, setIsRecommended] = useState<boolean | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
@@ -27,11 +28,15 @@ export const ConsultationReview: React.FC<ConsultationReviewProps> = ({
     }
 
     try {
-      const payload = {
+      const payload: any = {
         session: sessionId,
         rating,
         comment: comment.trim() || undefined,
       };
+
+      if (isRecommended !== null) {
+        payload.is_recommended = isRecommended;
+      }
 
       await createReview(payload).unwrap();
       toast.success("Thank you for your feedback! Review submitted.");
@@ -43,6 +48,7 @@ export const ConsultationReview: React.FC<ConsultationReviewProps> = ({
       toast.error(
         err?.data?.detail ||
           err?.data?.message ||
+          err?.data?.details?.session ||
           "Failed to submit review. Please try again."
       );
     }
@@ -116,6 +122,44 @@ export const ConsultationReview: React.FC<ConsultationReviewProps> = ({
       {/* Expandable Form Body */}
       {isOpen && (
         <div className="px-5 sm:px-6 pb-6 pt-2 border-t border-white/5 space-y-4 animate-fadeIn">
+          {/* Recommendation Toggle */}
+          <div>
+            <label className="block text-xs font-semibold text-zinc-300 mb-2">
+              Would you recommend this expert?
+            </label>
+            <div className="flex items-center gap-3">
+              <button
+                type="button"
+                onClick={() =>
+                  setIsRecommended((prev) => (prev === true ? null : true))
+                }
+                className={`px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-2 border transition-all cursor-pointer ${
+                  isRecommended === true
+                    ? "bg-emerald-500/20 border-emerald-500/50 text-emerald-400"
+                    : "bg-[#111723] border-white/10 text-zinc-400 hover:text-white"
+                }`}
+              >
+                <ThumbsUp size={14} />
+                Yes, I recommend
+              </button>
+
+              <button
+                type="button"
+                onClick={() =>
+                  setIsRecommended((prev) => (prev === false ? null : false))
+                }
+                className={`px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-2 border transition-all cursor-pointer ${
+                  isRecommended === false
+                    ? "bg-rose-500/20 border-rose-500/50 text-rose-400"
+                    : "bg-[#111723] border-white/10 text-zinc-400 hover:text-white"
+                }`}
+              >
+                <ThumbsDown size={14} />
+                No
+              </button>
+            </div>
+          </div>
+
           <div>
             <label className="block text-xs font-semibold text-zinc-300 mb-2">
               Comment (Optional)

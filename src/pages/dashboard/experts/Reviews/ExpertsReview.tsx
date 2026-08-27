@@ -1,8 +1,61 @@
 import { StarRating } from "@/components/ui/StarRating";
 
 import { ratingData, reviews } from "./data/reviewData";
+import { useGetAllReviewsQuery } from "@/redux/features/userDashboard/userSession.api";
+import { useExpertProfileQuery } from "@/redux/features/expertDashboard/expertProfile.api";
 
 export const ExpertsReview = () => {
+  const { data: expertProfileData } = useExpertProfileQuery(undefined);
+
+  // Extract Expert ID safely from profile response
+  const expertId =
+    expertProfileData?.data?.user?.id || expertProfileData?.user?.id;
+
+  // Execute reviews query only when expertId is available
+  const { data: reviewsResponse, isLoading: isLoadingReviews } =
+    useGetAllReviewsQuery(expertId, {
+      skip: !expertId,
+      refetchOnMountOrArgChange: true,
+    });
+
+  const apiData = reviewsResponse?.data;
+  const stats = apiData?.stats;
+
+  // Extract reviews list
+  const reviewsList = Array.isArray(apiData?.reviews)
+    ? apiData.reviews
+    : Array.isArray(apiData)
+    ? apiData
+    : [];
+
+  const averageRating =
+    stats?.average_rating !== undefined ? stats.average_rating : 5;
+  const totalReviewCount =
+    stats?.review_count !== undefined ? stats.review_count : reviewsList.length;
+  const recommendedPercentage =
+    stats?.recommended_percentage !== null &&
+    stats?.recommended_percentage !== undefined
+      ? `${stats.recommended_percentage}%`
+      : "100%";
+
+  const ratingBreakdown = stats?.rating_breakdown || {};
+
+  // Build rating bars data dynamically (5 stars to 1 star)
+  const dynamicRatingData = [5, 4, 3, 2, 1].map((stars) => {
+    const starInfo = ratingBreakdown[String(stars)] || {
+      count: 0,
+      percentage: 0,
+    };
+    return {
+      stars,
+      count: starInfo.count,
+      width: `${starInfo.percentage}%`,
+    };
+  });
+
+  const displayRatingData =
+    stats?.rating_breakdown ? dynamicRatingData : ratingData;
+  const displayReviewsList = reviewsList.length > 0 ? reviewsList : reviews;
 
   return (
     <div className="w-full md:p-10">
@@ -16,15 +69,15 @@ export const ExpertsReview = () => {
           {/* Rating Bars */}
           <div className="flex-1">
             <div className="space-y-5">
-              {ratingData.map((item) => (
+              {displayRatingData.map((item) => (
                 <div key={item.stars} className="flex items-center gap-4">
-                  <span className="text-sm text-gray-400 w-10 ">
+                  <span className="text-sm text-gray-400 w-10">
                     {item.stars} stars
                   </span>
 
                   <div className="flex-1 h-3 bg-[#1E2937] rounded-full overflow-hidden">
                     <div
-                      className="h-full bg-[#FFAB00] transition-all"
+                      className="h-full bg-[#FFAB00] transition-all duration-300"
                       style={{ width: item.width }}
                     />
                   </div>
@@ -41,47 +94,88 @@ export const ExpertsReview = () => {
           <div className="lg:w-80 flex-shrink-0 flex flex-col items-center lg:items-start">
             <div className="flex items-baseline gap-3">
               <span className="text-6xl font-bold text-white tracking-tighter">
-                4.5
+                {averageRating}
               </span>
               <span className="text-5xl text-yellow-400">★</span>
             </div>
 
-            <div className="text-gray-400 mt-1">17 Reviews</div>
+            <div className="text-gray-400 mt-1">
+              {totalReviewCount} {totalReviewCount === 1 ? "Review" : "Reviews"}
+            </div>
 
             <div className="mt-6 bg-emerald-500/10 text-emerald-400 text-sm font-medium px-6 py-2.5 rounded-2xl inline-flex items-center gap-2">
-              <span>88%</span>
+              <span>{recommendedPercentage}</span>
               <span className="text-emerald-500">Recommended</span>
             </div>
           </div>
         </div>
       </div>
 
-      {/* ==================== Reviews List Section (No background color) ==================== */}
+      {/* ==================== Reviews List Section ==================== */}
       <div>
-        <h3 className="text-xl font-semibold text-white mb-6">Reviews (103)</h3>
+        <h3 className="text-xl font-semibold text-white mb-6">
+          Reviews ({totalReviewCount})
+        </h3>
 
-        <div className="space-y-6">
-          {reviews.map((review, index) => (
-            <div
-              key={index}
-              className="bg-[#0F172A] rounded-2xl p-6 transition-all hover:bg-[#25344A]"
-            >
-              <div className="flex justify-between items-start mb-4">
-                <div>
-                  <div className="font-semibold text-white">{review.name}</div>
-                  <StarRating rating={review.rating} />
+        {isLoadingReviews ? (
+          <div className="py-12 text-center text-sm text-zinc-400">
+            Loading reviews...
+          </div>
+        ) : displayReviewsList.length === 0 ? (
+          <div className="py-12 text-center text-sm text-zinc-500">
+            No reviews yet.
+          </div>
+        ) : (
+          <div className="space-y-6">
+            {displayReviewsList.map((review: any, index: number) => {
+              const reviewerName =
+                review.reviewer_name || review.name || "Anonymous User";
+              const avatarUrl =
+                review.reviewer_image ||
+                `https://ui-avatars.com/api/?name=${encodeURIComponent(
+                  reviewerName
+                )}&background=1E293B&color=3B82F6`;
+
+              const timeStr = review.created_at
+                ? new Date(review.created_at).toLocaleDateString("en-US", {
+                    month: "short",
+                    day: "numeric",
+                    year: "numeric",
+                  })
+                : review.time || "";
+
+              return (
+                <div
+                  key={review.id || index}
+                  className="bg-[#0F172A] rounded-2xl p-6 transition-all hover:bg-[#25344A]"
+                >
+                  <div className="flex justify-between items-start mb-4">
+                    <div className="flex items-center gap-3">
+                      <img
+                        src={avatarUrl}
+                        alt={reviewerName}
+                        className="w-10 h-10 rounded-full object-cover border border-white/10 shrink-0"
+                      />
+                      <div>
+                        <div className="font-semibold text-white">
+                          {reviewerName}
+                        </div>
+                        <StarRating rating={review.rating} />
+                      </div>
+                    </div>
+                    <span className="text-xs text-gray-500 whitespace-nowrap">
+                      {timeStr}
+                    </span>
+                  </div>
+
+                  <p className="text-gray-300 leading-relaxed text-[15px]">
+                    {review.comment || "No written comment provided."}
+                  </p>
                 </div>
-                <span className="text-xs text-gray-500 whitespace-nowrap">
-                  {review.time}
-                </span>
-              </div>
-
-              <p className="text-gray-300 leading-relaxed text-[15px]">
-                {review.comment}
-              </p>
-            </div>
-          ))}
-        </div>
+              );
+            })}
+          </div>
+        )}
       </div>
     </div>
   );
