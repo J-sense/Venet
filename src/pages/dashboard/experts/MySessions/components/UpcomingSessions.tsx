@@ -1,6 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useGetServerTimeQuery } from "@/redux/features/userDashboard/userSession.api";
-import { Calendar, Clock, Hourglass, Loader2, Search, Video } from "lucide-react";
+import {
+  Calendar,
+  Clock,
+  Hourglass,
+  Loader2,
+  Search,
+  Video,
+} from "lucide-react";
 import { useNavigate } from "react-router";
 
 interface UpcomingSessionsProps {
@@ -27,7 +34,7 @@ const getSessionLocalDateTimes = (session: any) => {
     endDateObj = new Date(endIso);
   } else if (session.duration_minutes) {
     endDateObj = new Date(
-      startDateObj.getTime() + session.duration_minutes * 60 * 1000
+      startDateObj.getTime() + session.duration_minutes * 60 * 1000,
     );
   }
 
@@ -105,7 +112,7 @@ export const UpcomingSessions = ({
   const handleJoinCall = (session: any) => {
     const agora = session.agora || {};
     const channel = agora.channel || `session-${session.id}`;
-    const userId = session?.id
+    const userId = session?.id;
     const token = isExpert
       ? agora.expert_token || agora.token
       : agora.user_token || agora.token;
@@ -134,8 +141,9 @@ export const UpcomingSessions = ({
 
     navigate(
       `/video-call/${channel}?remoteName=${encodeURIComponent(
-        remoteName
-      )}&localName=${encodeURIComponent(localName)}&role=${role}${token ? `&token=${encodeURIComponent(token)}` : ""
+        remoteName,
+      )}&localName=${encodeURIComponent(localName)}&role=${role}${
+        token ? `&token=${encodeURIComponent(token)}` : ""
       }${uid ? `&uid=${encodeURIComponent(uid)}` : ""}${localAvatar ? `&localAvatar=${encodeURIComponent(localAvatar)}` : ""}${remoteAvatar ? `&remoteAvatar=${encodeURIComponent(remoteAvatar)}` : ""}`,
       {
         state: {
@@ -148,9 +156,9 @@ export const UpcomingSessions = ({
           localAvatar,
           remoteAvatar,
           role,
-          userId
+          userId,
         },
-      }
+      },
     );
   };
 
@@ -166,7 +174,7 @@ export const UpcomingSessions = ({
             Manage and join your scheduled voice sessions
           </p>
         </div>
-        <div className="relative w-full sm:w-64 lg:w-72 shrink-0">
+        <div className="relative w-full sm:w-64 lg:w-72 shrink-0 hidden">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400" />
           <input
             type="text"
@@ -198,9 +206,7 @@ export const UpcomingSessions = ({
             const avatarUrl =
               rawAvatar ||
               `https://ui-avatars.com/api/?name=${encodeURIComponent(
-                !isExpert
-                  ? session.expert_name
-                  : session?.user_name || "User",
+                !isExpert ? session.expert_name : session?.user_name || "User",
               )}&background=1E293B&color=3B82F6`;
             const { formattedDate, formattedTime } =
               getSessionLocalDateTimes(session);
