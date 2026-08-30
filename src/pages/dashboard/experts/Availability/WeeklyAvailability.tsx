@@ -114,6 +114,34 @@ const convertUtcToLocalSlot = (utcWeekdayIndex: number, utcTimeStr: string) => {
   };
 };
 
+// Helper to get the Monday date of any given week
+const getMondayOfCurrentWeek = (d: Date = new Date()) => {
+  const date = new Date(d);
+  const day = date.getDay(); // 0 = Sun, 1 = Mon...
+  const diff = day === 0 ? -6 : 1 - day;
+  date.setDate(date.getDate() + diff);
+  date.setHours(0, 0, 0, 0);
+  return date;
+};
+
+// Helper to format week range string dynamically (e.g., Aug 31 - Sep 6, 2026)
+const formatWeekRange = (monday: Date, sunday: Date) => {
+  const monMonth = monday.toLocaleDateString("en-US", { month: "short" });
+  const sunMonth = sunday.toLocaleDateString("en-US", { month: "short" });
+  const monDay = monday.getDate();
+  const sunDay = sunday.getDate();
+  const monYear = monday.getFullYear();
+  const sunYear = sunday.getFullYear();
+
+  if (monYear !== sunYear) {
+    return `${monMonth} ${monDay}, ${monYear} - ${sunMonth} ${sunDay}, ${sunYear}`;
+  }
+  if (monMonth !== sunMonth) {
+    return `${monMonth} ${monDay} - ${sunMonth} ${sunDay}, ${monYear}`;
+  }
+  return `${monMonth} ${monDay} - ${sunDay}, ${monYear}`;
+};
+
 const WeeklyAvailability: React.FC = () => {
   const [createAvailability] = useCreateExpertAvailabilityMutation();
   const { data: getAvailability } = useGetExpertAvailabiltiyQuery(undefined);
@@ -121,6 +149,47 @@ const WeeklyAvailability: React.FC = () => {
   const [availability, setAvailability] =
     useState<WeeklyAvailabilityState>(INITIAL_AVAILABILITY);
   const [bufferTime, setBufferTime] = useState(15);
+
+  // Dynamic state for current selected week
+  const [currentMonday, setCurrentMonday] = useState(() =>
+    getMondayOfCurrentWeek(new Date()),
+  );
+
+  const currentSunday = React.useMemo(() => {
+    const sunday = new Date(currentMonday);
+    sunday.setDate(currentMonday.getDate() + 6);
+    return sunday;
+  }, [currentMonday]);
+
+  const weekDatesForDays = React.useMemo(() => {
+    const dates: Record<Day, Date> = {} as any;
+    DAYS.forEach((day, index) => {
+      const d = new Date(currentMonday);
+      d.setDate(currentMonday.getDate() + index);
+      dates[day] = d;
+    });
+    return dates;
+  }, [currentMonday]);
+
+  const handlePrevWeek = () => {
+    setCurrentMonday((prev) => {
+      const d = new Date(prev);
+      d.setDate(d.getDate() - 7);
+      return d;
+    });
+  };
+
+  const handleNextWeek = () => {
+    setCurrentMonday((prev) => {
+      const d = new Date(prev);
+      d.setDate(d.getDate() + 7);
+      return d;
+    });
+  };
+
+  const handleTodayWeek = () => {
+    setCurrentMonday(getMondayOfCurrentWeek(new Date()));
+  };
 
   // Load initial availability data when API response changes
   useEffect(() => {
@@ -290,7 +359,7 @@ const WeeklyAvailability: React.FC = () => {
       console.error("Failed to save availability:", error);
       toast.error(
         error?.data?.details ||
-          "Failed to save availability. Please try again.",
+        "Failed to save availability. Please try again.",
       );
     }
   };
@@ -302,22 +371,30 @@ const WeeklyAvailability: React.FC = () => {
         <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4 mb-8">
           <div className="bg-[#1E2A44] rounded-2xl px-4 py-3 flex flex-wrap items-center gap-3 w-full lg:w-auto justify-between sm:justify-start">
             <div className="flex items-center gap-2">
-              <button className="p-2 hover:bg-[#25344A] rounded-xl transition-colors hidden">
-                <ChevronLeft size={22} className="text-gray-400" />
-              </button>
-              <button className="bg-[#25344A] hover:bg-zinc-700 px-5 py-2.5 rounded-2xl text-sm font-medium whitespace-nowrap transition-colors">
+              <button
+                onClick={handleTodayWeek}
+                className="bg-[#25344A] hover:bg-zinc-700 px-5 py-2.5 rounded-2xl text-sm font-medium whitespace-nowrap transition-colors"
+              >
                 Today
               </button>
             </div>
 
             <div className="flex items-center gap-2 bg-[#1E2A44] px-4 py-2.5 rounded-2xl text-sm">
-              <button className="text-gray-400 hover:text-white transition-colors hidden">
+              <button
+                onClick={handlePrevWeek}
+                title="Previous week"
+                className="hidden text-gray-400 hover:text-white transition-colors flex items-center justify-center p-1 rounded-lg hover:bg-[#25344A]"
+              >
                 <ChevronLeft size={18} />
               </button>
               <span className="font-medium whitespace-nowrap">
-                Jul 13 - 18, 2026
+                {formatWeekRange(currentMonday, currentSunday)}
               </span>
-              <button className="text-gray-400 hover:text-white transition-colors hidden">
+              <button
+                onClick={handleNextWeek}
+                title="Next week"
+                className="hidden text-gray-400 hover:text-white transition-colors flex items-center justify-center p-1 rounded-lg hover:bg-[#25344A]"
+              >
                 <ChevronRight size={18} />
               </button>
             </div>
@@ -352,6 +429,7 @@ const WeeklyAvailability: React.FC = () => {
         <div className="space-y-4">
           {DAYS.map((day) => {
             const dayData = availability[day];
+            const dayDate = weekDatesForDays[day];
             return (
               <div
                 key={day}
@@ -363,19 +441,23 @@ const WeeklyAvailability: React.FC = () => {
                     <div className="flex items-center gap-4">
                       <button
                         onClick={() => toggleDay(day)}
-                        className={`relative inline-flex h-9 w-16 items-center rounded-full transition-all ${
-                          dayData.enabled ? "bg-blue-600" : "bg-gray-600"
-                        }`}
+                        className={`relative inline-flex h-9 w-16 items-center rounded-full transition-all ${dayData.enabled ? "bg-blue-600" : "bg-gray-600"
+                          }`}
                       >
                         <span
-                          className={`inline-block h-7 w-7 transform rounded-full bg-white shadow transition-transform ${
-                            dayData.enabled ? "translate-x-8" : "translate-x-1"
-                          }`}
+                          className={`inline-block h-7 w-7 transform rounded-full bg-white shadow transition-transform ${dayData.enabled ? "translate-x-8" : "translate-x-1"
+                            }`}
                         />
                       </button>
                       <div>
                         <div className="font-semibold text-lg">{day}</div>
-                        <div className="text-gray-500 text-sm">16 Jun 2025</div>
+                        <div className="text-gray-500 text-sm">
+                          {dayDate.toLocaleDateString("en-US", {
+                            day: "numeric",
+                            month: "short",
+                            year: "numeric",
+                          })}
+                        </div>
                       </div>
                     </div>
                   </div>
