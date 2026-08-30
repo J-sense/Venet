@@ -2,7 +2,7 @@
 /* eslint-disable react-hooks/purity */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect } from "react";
-import { ChevronLeft, ChevronRight, Clock, Plus, Trash2 } from "lucide-react";
+import { ChevronLeft, ChevronRight, Clock, Plus, Trash2, Loader2 } from "lucide-react";
 import { useBookingSocket } from "@/providers/BookingSocketProvider";
 import {
   useCreateExpertAvailabilityMutation,
@@ -143,7 +143,8 @@ const formatWeekRange = (monday: Date, sunday: Date) => {
 };
 
 const WeeklyAvailability: React.FC = () => {
-  const [createAvailability] = useCreateExpertAvailabilityMutation();
+  const [createAvailability, { isLoading: isSaving }] =
+    useCreateExpertAvailabilityMutation();
   const { data: getAvailability } = useGetExpertAvailabiltiyQuery(undefined);
 
   const [availability, setAvailability] =
@@ -561,9 +562,11 @@ const WeeklyAvailability: React.FC = () => {
           </button>
           <button
             onClick={handleSaveAvailability}
-            className="w-full sm:w-auto px-10 py-4 bg-blue-600 hover:bg-blue-700 rounded-2xl font-semibold transition-colors"
+            disabled={isSaving}
+            className="w-full sm:w-auto px-10 py-4 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed rounded-2xl font-semibold transition-colors flex items-center justify-center gap-2"
           >
-            Save Availability
+            {isSaving && <Loader2 className="w-5 h-5 animate-spin text-white" />}
+            {isSaving ? "Saving..." : "Save Availability"}
           </button>
         </div>
       </div>
