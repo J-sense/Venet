@@ -73,8 +73,18 @@ export default function ExpertDirectoryPage() {
       params.price_max = filters.maxPrice;
     }
 
+    if (filters.rating !== null && filters.rating !== undefined) {
+      params.min_rating = filters.rating;
+    }
+
     return params;
-  }, [filters.sortBy, filters.search, filters.minPrice, filters.maxPrice]);
+  }, [
+    filters.sortBy,
+    filters.search,
+    filters.minPrice,
+    filters.maxPrice,
+    filters.rating,
+  ]);
 
   // Fetch experts from RTK Query API passing query parameters
   const { data: allExperts, isLoading } = useGetAllExpertsQuery(queryParams);

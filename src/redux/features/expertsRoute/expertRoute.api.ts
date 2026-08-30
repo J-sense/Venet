@@ -5,6 +5,7 @@ export interface GetExpertsQueryParams {
   search?: string;
   price_min?: number;
   price_max?: number;
+  min_rating?: number;
 }
 
 const expertRouteApi = baseApi.injectEndpoints({
