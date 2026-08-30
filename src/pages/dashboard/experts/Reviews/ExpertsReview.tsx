@@ -1,6 +1,5 @@
 import { StarRating } from "@/components/ui/StarRating";
 
-import { ratingData, reviews } from "./data/reviewData";
 import { useGetAllReviewsQuery } from "@/redux/features/userDashboard/userSession.api";
 import { useExpertProfileQuery } from "@/redux/features/expertDashboard/expertProfile.api";
 
@@ -17,31 +16,31 @@ export const ExpertsReview = () => {
       skip: !expertId,
       refetchOnMountOrArgChange: true,
     });
-
+  console.log(reviewsResponse);
   const apiData = reviewsResponse?.data;
   const stats = apiData?.stats;
 
   // Extract reviews list
-  const reviewsList = Array.isArray(apiData?.reviews)
+  const reviewsList: any[] = Array.isArray(apiData?.reviews)
     ? apiData.reviews
     : Array.isArray(apiData)
-    ? apiData
-    : [];
+      ? apiData
+      : [];
 
   const averageRating =
-    stats?.average_rating !== undefined ? stats.average_rating : 5;
+    stats?.average_rating !== undefined ? stats.average_rating : 0;
   const totalReviewCount =
     stats?.review_count !== undefined ? stats.review_count : reviewsList.length;
   const recommendedPercentage =
     stats?.recommended_percentage !== null &&
     stats?.recommended_percentage !== undefined
       ? `${stats.recommended_percentage}%`
-      : "100%";
+      : "0%";
 
   const ratingBreakdown = stats?.rating_breakdown || {};
 
   // Build rating bars data dynamically (5 stars to 1 star)
-  const dynamicRatingData = [5, 4, 3, 2, 1].map((stars) => {
+  const displayRatingData = [5, 4, 3, 2, 1].map((stars) => {
     const starInfo = ratingBreakdown[String(stars)] || {
       count: 0,
       percentage: 0,
@@ -53,9 +52,7 @@ export const ExpertsReview = () => {
     };
   });
 
-  const displayRatingData =
-    stats?.rating_breakdown ? dynamicRatingData : ratingData;
-  const displayReviewsList = reviewsList.length > 0 ? reviewsList : reviews;
+  const displayReviewsList = reviewsList;
 
   return (
     <div className="w-full md:p-10">
@@ -133,7 +130,7 @@ export const ExpertsReview = () => {
               const avatarUrl =
                 review.reviewer_image ||
                 `https://ui-avatars.com/api/?name=${encodeURIComponent(
-                  reviewerName
+                  reviewerName,
                 )}&background=1E293B&color=3B82F6`;
 
               const timeStr = review.created_at

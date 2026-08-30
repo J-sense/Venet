@@ -81,7 +81,7 @@ const convertLocalToUtcSlot = (weekdayIndex: number, timeStr: string) => {
   const utcWeekdayIndex = utcJsDay === 0 ? 6 : utcJsDay - 1;
 
   const utcTimeStr = `${String(utcHours).padStart(2, "0")}:${String(
-    utcMinutes
+    utcMinutes,
   ).padStart(2, "0")}`;
 
   return {
@@ -96,7 +96,7 @@ const convertUtcToLocalSlot = (utcWeekdayIndex: number, utcTimeStr: string) => {
   const [utcHours, utcMinutes] = utcTimeStr.split(":").map(Number);
   // Base Date in UTC: 2026-08-24 is Monday (weekday 0)
   const baseDate = new Date(
-    Date.UTC(2026, 7, 24 + utcWeekdayIndex, utcHours, utcMinutes, 0)
+    Date.UTC(2026, 7, 24 + utcWeekdayIndex, utcHours, utcMinutes, 0),
   );
 
   const localHours = baseDate.getHours();
@@ -105,7 +105,7 @@ const convertUtcToLocalSlot = (utcWeekdayIndex: number, utcTimeStr: string) => {
   const localWeekdayIndex = localJsDay === 0 ? 6 : localJsDay - 1;
 
   const localTimeStr = `${String(localHours).padStart(2, "0")}:${String(
-    localMinutes
+    localMinutes,
   ).padStart(2, "0")}`;
 
   return {
@@ -141,13 +141,17 @@ const WeeklyAvailability: React.FC = () => {
 
       // Populate slots from backend UTC data into local display time
       rawData.availabilities.forEach((item: any) => {
-        const utcStart = item.start_time ? item.start_time.substring(0, 5) : "09:00";
+        const utcStart = item.start_time
+          ? item.start_time.substring(0, 5)
+          : "09:00";
         const utcEnd = item.end_time ? item.end_time.substring(0, 5) : "17:00";
 
         const { weekday: localWeekdayIndex, time: localStartTime } =
           convertUtcToLocalSlot(item.weekday, utcStart);
-        const { time: localEndTime } =
-          convertUtcToLocalSlot(item.weekday, utcEnd);
+        const { time: localEndTime } = convertUtcToLocalSlot(
+          item.weekday,
+          utcEnd,
+        );
 
         const day = DAYS[localWeekdayIndex];
         if (day) {
@@ -298,7 +302,7 @@ const WeeklyAvailability: React.FC = () => {
         <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4 mb-8">
           <div className="bg-[#1E2A44] rounded-2xl px-4 py-3 flex flex-wrap items-center gap-3 w-full lg:w-auto justify-between sm:justify-start">
             <div className="flex items-center gap-2">
-              <button className="p-2 hover:bg-[#25344A] rounded-xl transition-colors">
+              <button className="p-2 hover:bg-[#25344A] rounded-xl transition-colors hidden">
                 <ChevronLeft size={22} className="text-gray-400" />
               </button>
               <button className="bg-[#25344A] hover:bg-zinc-700 px-5 py-2.5 rounded-2xl text-sm font-medium whitespace-nowrap transition-colors">
@@ -307,13 +311,13 @@ const WeeklyAvailability: React.FC = () => {
             </div>
 
             <div className="flex items-center gap-2 bg-[#1E2A44] px-4 py-2.5 rounded-2xl text-sm">
-              <button className="text-gray-400 hover:text-white transition-colors">
+              <button className="text-gray-400 hover:text-white transition-colors hidden">
                 <ChevronLeft size={18} />
               </button>
               <span className="font-medium whitespace-nowrap">
                 Jul 13 - 18, 2026
               </span>
-              <button className="text-gray-400 hover:text-white transition-colors">
+              <button className="text-gray-400 hover:text-white transition-colors hidden">
                 <ChevronRight size={18} />
               </button>
             </div>
