@@ -551,7 +551,7 @@ export default function CustomBooking({
               <div className="flex items-center gap-1">
                 <button
                   onClick={handlePrevMonth}
-                  className="p-1.5 rounded-lg hover:bg-slate-800 text-slate-400 hover:text-white transition-colors"
+                  className="hidden p-1.5 rounded-lg hover:bg-slate-800 text-slate-400 hover:text-white transition-colors"
                 >
                   <ChevronLeft className="w-4 h-4" />
                 </button>
@@ -560,7 +560,7 @@ export default function CustomBooking({
                 </span>
                 <button
                   onClick={handleNextMonth}
-                  className="p-1.5 rounded-lg hover:bg-slate-800 text-slate-400 hover:text-white transition-colors"
+                  className="hidden p-1.5 rounded-lg hover:bg-slate-800 text-slate-400 hover:text-white transition-colors"
                 >
                   <ChevronRight className="w-4 h-4" />
                 </button>
