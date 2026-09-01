@@ -14,10 +14,10 @@ import {
   useGetMyPurchaseTalentPortalQuery,
 } from "@/redux/features/userDashboard/userProfile.api";
 import { Download, History, Receipt, Sparkles } from "lucide-react";
-import { useNavigate } from "react-router";
+
 
 export default function UserBillingMain() {
-  const navigate = useNavigate();
+
   const { data: billingData } = useGetBillingDataQuery(undefined);
   const historyItems = Array.isArray(billingData?.data) ? billingData.data : [];
   const { data: MySubscriptionData, refetch: refetchSubscriptions } =
@@ -83,22 +83,22 @@ export default function UserBillingMain() {
                       </div>
                       <div
                         className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium border ${isActive
-                            ? "bg-emerald-500/10 border-emerald-500/20 text-emerald-400"
-                            : isIncomplete
-                              ? "bg-amber-500/10 border-amber-500/20 text-amber-400"
-                              : isCanceled
-                                ? "bg-rose-500/10 border-rose-500/20 text-rose-400"
-                                : "bg-zinc-500/10 border-zinc-500/20 text-zinc-400"
+                          ? "bg-emerald-500/10 border-emerald-500/20 text-emerald-400"
+                          : isIncomplete
+                            ? "bg-amber-500/10 border-amber-500/20 text-amber-400"
+                            : isCanceled
+                              ? "bg-rose-500/10 border-rose-500/20 text-rose-400"
+                              : "bg-zinc-500/10 border-zinc-500/20 text-zinc-400"
                           }`}
                       >
                         <div
                           className={`w-1.5 h-1.5 rounded-full ${isActive
-                              ? "bg-emerald-400"
-                              : isIncomplete
-                                ? "bg-amber-400"
-                                : isCanceled
-                                  ? "bg-rose-400"
-                                  : "bg-zinc-400"
+                            ? "bg-emerald-400"
+                            : isIncomplete
+                              ? "bg-amber-400"
+                              : isCanceled
+                                ? "bg-rose-400"
+                                : "bg-zinc-400"
                             }`}
                         />
                         {sub.status}
