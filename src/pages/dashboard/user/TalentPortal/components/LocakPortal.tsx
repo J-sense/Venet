@@ -1,8 +1,16 @@
-"use client";
+import { usePurchaseTalentPortalMutation, useRetryPurchaseAfterCancelTalentPortalMutation, useRetryPurchaseTalentPortalMutation } from "@/redux/features/userDashboard/userProfile.api";
+import { Check, Loader2 } from "lucide-react";
+import { toast } from "sonner";
 
-import { Check } from "lucide-react";
+export default function LockPortal({ portalDAta, isInCompleteTalentPortal, isInCancelledTalentPortal, idForRetry }: { portalDAta?: any, isInCompleteTalentPortal?: boolean, isInCancelledTalentPortal?: boolean, idForRetry?: string }) {
+  const currentPortal = Array.isArray(portalDAta) && portalDAta.length > 0 ? portalDAta[0] : undefined;
+  const price = currentPortal?.price ?? "$0";
+  const [purchaseTalentPortal, { isLoading }] = usePurchaseTalentPortalMutation();
+  const [retryPurchaseTalentPortal, { isLoading: retryLoading }] = useRetryPurchaseTalentPortalMutation();
+  const [retryPurchaseAfterCancelTalentPortal, { isLoading: retryCancelledLoading }] = useRetryPurchaseAfterCancelTalentPortalMutation();
 
-export default function LockPortal({ onUnlock }: { onUnlock?: () => void }) {
+  const isAnyLoading = isLoading || retryLoading || retryCancelledLoading;
+
   const benefits = [
     "Professional profile builder with certificate showcase",
     "AI-powered job recommendations based on your completed programs",
@@ -10,7 +18,29 @@ export default function LockPortal({ onUnlock }: { onUnlock?: () => void }) {
     "Networking community with other graduates",
     "Direct messaging with recruiters and hiring managers",
   ];
-
+  console.log(portalDAta)
+  const onUnlock = async (id: string) => {
+    try {
+      let res: any;
+      if (isInCompleteTalentPortal && idForRetry) {
+        res = await retryPurchaseTalentPortal(idForRetry).unwrap();
+      } else if (isInCancelledTalentPortal && idForRetry) {
+        res = await retryPurchaseAfterCancelTalentPortal(idForRetry).unwrap();
+      } else {
+        res = await purchaseTalentPortal(id).unwrap();
+      }
+      console.log(res);
+      const redirectUrl = res?.data?.checkout_url || res?.data?.url;
+      if (redirectUrl) {
+        window.location.href = redirectUrl;
+      } else if (res?.success) {
+        toast.success(res?.details || "Talent Portal reactivated successfully!");
+      }
+    } catch (error: any) {
+      console.log(error);
+      toast.error(error?.data?.details || "Failed to process subscription request");
+    }
+  };
   return (
     // 'p-8' provides the extra outer margin/padding on all sides
     // 'flex items-center justify-center' ensures perfect centering
@@ -50,7 +80,11 @@ export default function LockPortal({ onUnlock }: { onUnlock?: () => void }) {
           {/* Heading */}
           <div className="text-center space-y-3">
             <h1 className="text-4xl font-bold text-white tracking-tight">
-              Unlock the Talent Portal
+              {isInCancelledTalentPortal
+                ? "Reactivate the Talent Portal"
+                : isInCompleteTalentPortal
+                ? "Complete your Subscription"
+                : "Unlock the Talent Portal"}
             </h1>
             <p className="text-base text-white/80 max-w-sm mx-auto leading-relaxed">
               Get matched with opportunities and showcase your achievements to
@@ -77,7 +111,7 @@ export default function LockPortal({ onUnlock }: { onUnlock?: () => void }) {
 
           {/* Pricing */}
           <div className="text-center space-y-0.5">
-            <div className="text-5xl font-extrabold text-white">$9.99</div>
+            <div className="text-5xl font-extrabold text-white">{price}</div>
             <p className="text-white/70 text-xs font-medium uppercase tracking-widest">
               Per Month • Cancel Anytime
             </p>
@@ -85,16 +119,32 @@ export default function LockPortal({ onUnlock }: { onUnlock?: () => void }) {
 
           {/* Subscribe Button */}
           <button
-            onClick={onUnlock}
-            className="w-full bg-white text-blue-900 font-bold py-4 px-6 rounded-xl hover:bg-blue-50 active:scale-[0.98] transition-all duration-200 shadow-lg text-center"
+            disabled={isAnyLoading || !currentPortal?.id}
+            onClick={() => currentPortal?.id && onUnlock(currentPortal.id)}
+            className="w-full bg-white text-blue-900 font-bold py-4 px-6 rounded-xl hover:bg-blue-50 active:scale-[0.98] transition-all duration-200 shadow-lg text-center flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed cursor-pointer"
           >
-            Subscribe to Talent Portal
+            {isAnyLoading ? (
+              <>
+                <Loader2 className="w-5 h-5 animate-spin text-blue-900" />
+                <span>
+                  {isInCancelledTalentPortal
+                    ? "Reactivating..."
+                    : "Redirecting..."}
+                </span>
+              </>
+            ) : isInCancelledTalentPortal ? (
+              "Reactivate Talent Portal"
+            ) : isInCompleteTalentPortal ? (
+              "Complete Talent Portal Subscription"
+            ) : (
+              "Subscribe to Talent Portal"
+            )}
           </button>
 
           {/* Disclaimer */}
           <p className="text-center text-xs text-white/50 max-w-sm">
-            $9.99 charged monthly. No refunds for unused portion in current
-            billing period.
+            {`    ${price} charged monthly. No refunds for unused portion in current
+            billing period.`}
           </p>
         </div>
       </div>

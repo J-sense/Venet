@@ -2,11 +2,13 @@
 import { useGetServerTimeQuery } from "@/redux/features/userDashboard/userSession.api";
 import {
   Calendar,
+  CheckCircle2,
   Clock,
   Hourglass,
   Loader2,
   Search,
   Video,
+  XCircle,
 } from "lucide-react";
 import { useNavigate } from "react-router";
 
@@ -15,6 +17,68 @@ interface UpcomingSessionsProps {
   sessionsList: any[];
   isExpert: boolean;
 }
+
+const renderSessionActionButton = (
+  session: any,
+  canJoin: boolean,
+  onJoin: (s: any) => void,
+  isMobile = false
+) => {
+  const baseStyle = isMobile
+    ? "w-full font-bold py-3 px-6 rounded-xl flex items-center justify-center gap-2 text-sm transition-all whitespace-nowrap"
+    : "font-semibold py-2.5 px-5 rounded-xl flex items-center gap-2 text-sm transition-all whitespace-nowrap";
+
+  if (canJoin) {
+    return (
+      <button
+        onClick={() => onJoin(session)}
+        className={`${baseStyle} bg-[#0066fe] hover:bg-[#0057d9] text-white active:scale-[0.98] shadow-lg shadow-blue-600/20 ring-1 ring-blue-500/40 cursor-pointer`}
+      >
+        <Video size={isMobile ? 16 : 15} />
+        <span>Join Now</span>
+      </button>
+    );
+  }
+
+  const status = session?.status?.toUpperCase();
+
+  if (status === "COMPLETED") {
+    return (
+      <button
+        disabled
+        className={`${baseStyle} bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 cursor-not-allowed`}
+        title="Session has been completed"
+      >
+        <CheckCircle2 size={isMobile ? 16 : 15} />
+        <span>Completed</span>
+      </button>
+    );
+  }
+
+  if (status === "CANCELLED" || status === "CANCELED") {
+    return (
+      <button
+        disabled
+        className={`${baseStyle} bg-rose-500/10 text-rose-400 border border-rose-500/20 cursor-not-allowed`}
+        title="Session was canceled"
+      >
+        <XCircle size={isMobile ? 16 : 15} />
+        <span>Canceled</span>
+      </button>
+    );
+  }
+
+  return (
+    <button
+      disabled
+      className={`${baseStyle} bg-white/5 text-zinc-400 border border-white/10 cursor-not-allowed`}
+      title="Join button will activate when session start time is reached"
+    >
+      <Clock size={isMobile ? 16 : 15} />
+      <span>Scheduled</span>
+    </button>
+  );
+};
 
 const getSessionLocalDateTimes = (session: any) => {
   if (!session?.date || !session?.start_time) {
@@ -241,36 +305,29 @@ export const UpcomingSessions = ({
 
                   {/* Status Badge */}
                   {canJoin ? (
-                    <span className="hidden sm:flex shrink-0 bg-red-500/10 text-red-400 text-[10px] uppercase font-bold px-2.5 py-1 rounded-full items-center gap-1.5 whitespace-nowrap">
+                    <span className="hidden sm:flex shrink-0 bg-red-500/10 text-red-400 text-[10px] uppercase font-bold px-2.5 py-1 rounded-full items-center gap-1.5 whitespace-nowrap border border-red-500/20">
                       <span className="w-1.5 h-1.5 bg-red-400 rounded-full animate-pulse" />
                       {session.status === "ONGOING" ? "Ongoing" : "Live"}
                     </span>
+                  ) : session.status?.toUpperCase() === "COMPLETED" ? (
+                    <span className="hidden sm:flex shrink-0 bg-emerald-500/10 text-emerald-400 text-[10px] uppercase font-bold px-2.5 py-1 rounded-full items-center gap-1.5 whitespace-nowrap border border-emerald-500/20">
+                      <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full" />
+                      Completed
+                    </span>
+                  ) : session.status?.toUpperCase() === "CANCELLED" || session.status?.toUpperCase() === "CANCELED" ? (
+                    <span className="hidden sm:flex shrink-0 bg-rose-500/10 text-rose-400 text-[10px] uppercase font-bold px-2.5 py-1 rounded-full items-center gap-1.5 whitespace-nowrap border border-rose-500/20">
+                      <span className="w-1.5 h-1.5 bg-rose-400 rounded-full" />
+                      Canceled
+                    </span>
                   ) : (
-                    <span className="hidden sm:flex shrink-0 bg-blue-500/10 text-blue-400 text-[10px] uppercase font-bold px-2.5 py-1 rounded-full items-center gap-1.5 whitespace-nowrap">
-                      {session.status}
+                    <span className="hidden sm:flex shrink-0 bg-blue-500/10 text-blue-400 text-[10px] uppercase font-bold px-2.5 py-1 rounded-full items-center gap-1.5 whitespace-nowrap border border-blue-500/20">
+                      {session.status || "Scheduled"}
                     </span>
                   )}
 
                   {/* Action Button — visible on md+ inline */}
                   <div className="hidden md:block shrink-0 ml-2">
-                    {canJoin ? (
-                      <button
-                        onClick={() => handleJoinCall(session)}
-                        className="bg-[#0066fe] hover:bg-[#0057d9] text-white font-semibold py-2.5 px-5 rounded-xl flex items-center gap-2 transition-all active:scale-[0.98] shadow-lg shadow-blue-600/20 ring-1 ring-blue-500/40 whitespace-nowrap text-sm cursor-pointer"
-                      >
-                        <Video size={15} />
-                        Join Now
-                      </button>
-                    ) : (
-                      <button
-                        disabled
-                        className="bg-white/5 text-zinc-400 font-semibold py-2.5 px-5 rounded-xl flex items-center gap-2 border border-white/10 cursor-not-allowed whitespace-nowrap text-sm"
-                        title="Join button will activate when session start time is reached"
-                      >
-                        <Clock size={15} />
-                        Scheduled
-                      </button>
-                    )}
+                    {renderSessionActionButton(session, canJoin, handleJoinCall, false)}
                   </div>
                 </div>
 
@@ -324,23 +381,7 @@ export const UpcomingSessions = ({
 
                 {/* Mobile-only Action Button */}
                 <div className="md:hidden px-4 pb-4">
-                  {canJoin ? (
-                    <button
-                      onClick={() => handleJoinCall(session)}
-                      className="w-full bg-[#0066fe] hover:bg-[#0057d9] text-white font-bold py-3 px-6 rounded-xl flex items-center justify-center gap-2 transition-all active:scale-[0.98] shadow-lg shadow-blue-600/20 ring-1 ring-blue-500/40 cursor-pointer"
-                    >
-                      <Video size={16} />
-                      Join Now
-                    </button>
-                  ) : (
-                    <button
-                      disabled
-                      className="w-full bg-white/5 text-zinc-400 font-bold py-3 px-6 rounded-xl flex items-center justify-center gap-2 border border-white/10 cursor-not-allowed"
-                    >
-                      <Clock size={16} />
-                      Scheduled
-                    </button>
-                  )}
+                  {renderSessionActionButton(session, canJoin, handleJoinCall, true)}
                 </div>
               </div>
             );

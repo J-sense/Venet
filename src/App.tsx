@@ -36,7 +36,12 @@ import { UserLayout } from "./pages/dashboard/user/layout";
 import ProgramAssessment from "./pages/dashboard/user/ProgramAssessment";
 import ProgramDetails from "./pages/dashboard/user/ProgramDetails";
 import ProgramRoadmap from "./pages/dashboard/user/ProgramRoadmap";
-import { TalentPortal } from "./pages/dashboard/user/TalentPortal";
+import {
+  TalentPortal,
+  TalentPortalSuccessPage,
+  TalentPortalCancelPage,
+  ResumeBuildForm,
+} from "./pages/dashboard/user/TalentPortal";
 
 import { ChatWindow } from "./pages/dashboard/experts/MySessions/ChatWindow";
 import EXpertsMySession from "./pages/dashboard/experts/MySessions/EXpertsMySession";
@@ -54,7 +59,7 @@ import {
   UserSecurityMain,
   UserSettingsMain,
 } from "./pages/dashboard/user/Settings";
-import { ResumeBuildForm } from "./pages/dashboard/user/TalentPortal";
+// import { ResumeBuildForm } from "./pages/dashboard/user/TalentPortal";
 import UserInvoiceMain from "./pages/dashboard/user/Invoice/UserInvoiceMain";
 import AgoraVideoCallPage from "./pages/video/AgoraVideoCallPage";
 
@@ -96,6 +101,8 @@ export const App = () => {
         <Route path="/checkout/cancel" element={<PaymentCancelPage />} />
         <Route path="/booking/success" element={<BookingSuccessPage />} />
         <Route path="/booking/cancel" element={<BookingCancelPage />} />
+        <Route path="/talent-portal/success" element={<TalentPortalSuccessPage />} />
+        <Route path="/talent-portal/cancel" element={<TalentPortalCancelPage />} />
         <Route path="/disclaimer" element={<DisclaimerMain />} />
         <Route path="/privacy" element={<PrivacyMain />} />
         <Route path="/terms" element={<TermsMain />} />
@@ -118,6 +125,8 @@ export const App = () => {
         <Route path="program/:id/roadmap" element={<ProgramRoadmap />} />
         <Route path="certificates" element={<UserCertificates />} />
         <Route path="talent-portal" element={<TalentPortal />} />
+        <Route path="talent-portal/success" element={<TalentPortalSuccessPage />} />
+        <Route path="talent-portal/cancel" element={<TalentPortalCancelPage />} />
         <Route path="manual-input" element={<ResumeBuildForm />} />
         <Route path="consultation" element={<EXpertsMySession />}>
           {/* Remove the hardcoded div and point to ChatWindow */}
