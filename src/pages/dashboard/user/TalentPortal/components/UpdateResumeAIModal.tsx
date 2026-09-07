@@ -1,13 +1,16 @@
-import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
-  DialogHeader,
-  DialogTitle,
 } from "@/components/ui/dialog";
-import { Upload, X } from "lucide-react";
+import {
+  useGeneretateResumeByMutation,
+  useUploadPdfForAiGenerateMutation,
+} from "@/redux/features/userDashboard/userProfile.api";
+import { X } from "lucide-react";
 import { useState } from "react";
-import { Link } from "react-router";
+import { toast } from "sonner";
+import { AIResumeResultView } from "./resume/AIResumeResultView";
+import { AIResumeUploadDropzone } from "./resume/AIResumeUploadDropzone";
 
 interface UpdateProfileAIModalProps {
   isOpen: boolean;
@@ -19,6 +22,19 @@ export default function UpdateResumeAIModal({
   onClose,
 }: UpdateProfileAIModalProps) {
   const [isDragging, setIsDragging] = useState(false);
+  const [generatedResult, setGeneratedResult] = useState<any>(null);
+
+  const [uploadPdf, { isLoading: isUploadingPdf }] =
+    useUploadPdfForAiGenerateMutation();
+  const [generetateResumeByAi, { isLoading: isGenerating }] =
+    useGeneretateResumeByMutation();
+
+  const isLoading = isUploadingPdf || isGenerating;
+
+  const handleClose = () => {
+    setGeneratedResult(null);
+    onClose();
+  };
 
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
@@ -29,90 +45,110 @@ export default function UpdateResumeAIModal({
     setIsDragging(false);
   };
 
+  const handleUpload = async (file: File) => {
+    if (!file) return;
+
+    if (!file.name.toLowerCase().endsWith(".pdf")) {
+      toast.error("Please upload a valid PDF file.");
+      return;
+    }
+
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+
+      console.log("Uploading PDF FormData:", file.name);
+      // Step 1: Upload PDF
+      const uploadRes = await uploadPdf(formData).unwrap();
+      console.log("PDF upload response:", uploadRes);
+
+      const resumeId = uploadRes?.data?.id;
+
+      if (resumeId) {
+        toast.success("Resume uploaded! Generating AI resume...");
+
+        // Step 2: Post object with id to generetateResumeBy mutation
+        const generateRes = await generetateResumeByAi({ id: resumeId }).unwrap();
+        console.log("Generate by ID response:", generateRes);
+
+        if (generateRes?.data) {
+          setGeneratedResult(generateRes.data);
+          toast.success(
+            generateRes?.details || "AI Resume generated successfully!",
+          );
+        } else {
+          toast.success(
+            generateRes?.details || "Resume generated successfully!",
+          );
+          handleClose();
+        }
+      } else {
+        toast.success(
+          uploadRes?.details || "Resume uploaded and analyzed successfully!",
+        );
+        handleClose();
+      }
+    } catch (error: any) {
+      console.error("PDF processing error:", error);
+      toast.error(
+        error?.data?.details ||
+          error?.data?.message ||
+          error?.message ||
+          "Failed to process resume PDF.",
+      );
+    }
+  };
+
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
     setIsDragging(false);
-    console.log("File dropped:", e.dataTransfer.files);
+    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+      handleUpload(e.dataTransfer.files[0]);
+    }
   };
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      console.log("File selected:", e.target.files[0]);
+    if (e.target.files && e.target.files[0]) {
+      handleUpload(e.target.files[0]);
     }
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="bg-[#242B2D] border border-[#0E141680] text-white max-w-[420px] p-0 rounded-2xl overflow-hidden font-['Inter']">
+    <Dialog open={isOpen} onOpenChange={(open) => { if (!open) return; }}>
+      <DialogContent
+        onInteractOutside={(e) => e.preventDefault()}
+        onPointerDownOutside={(e) => e.preventDefault()}
+        className={`bg-[#12191B] border border-white/10 text-white p-0 rounded-3xl overflow-hidden font-['Inter'] shadow-2xl transition-all duration-300 ${
+          generatedResult ? "max-w-[620px]" : "max-w-[420px]"
+        }`}
+      >
         <div className="relative">
           {/* Close Button */}
           <button
-            onClick={onClose}
-            className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors z-10"
+            onClick={handleClose}
+            disabled={isLoading}
+            className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors z-10 disabled:opacity-50 p-1.5 rounded-full hover:bg-white/10"
           >
             <X className="w-5 h-5" />
           </button>
 
-          <div className="p-8">
-            {/* Header */}
-            <DialogHeader className="mb-6">
-              <DialogTitle className="text-2xl font-semibold text-white text-center">
-                Update your resume with AI
-              </DialogTitle>
-              <p className="text-center text-gray-400 text-[15px] mt-2">
-                Upload your resume and get the input fields ready for you.
-              </p>
-            </DialogHeader>
-
-            {/* Upload Area */}
-            <div
+          {generatedResult ? (
+            <AIResumeResultView
+              generatedResult={generatedResult}
+              onClose={handleClose}
+            />
+          ) : (
+            <AIResumeUploadDropzone
+              isLoading={isLoading}
+              isGenerating={isGenerating}
+              isDragging={isDragging}
               onDragOver={handleDragOver}
               onDragLeave={handleDragLeave}
               onDrop={handleDrop}
-              onClick={() => document.getElementById("resume-upload")?.click()}
-              className={`border-2 border-dashed rounded-2xl p-10 bg-[#0E141680] text-center cursor-pointer transition-all duration-200
-                ${
-                  isDragging
-                    ? "border-blue-500 bg-blue-500/10"
-                    : "border-gray-600 hover:border-blue-500/50 hover:bg-gray-800/50"
-                }`}
-            >
-              <input
-                id="resume-upload"
-                type="file"
-                accept=".pdf"
-                className="hidden"
-                onChange={handleFileSelect}
-              />
-
-              <div className="mx-auto w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center mb-4">
-                <Upload className="w-6 h-6 text-blue-400" />
-              </div>
-
-              <p className="text-white font-medium mb-1">
-                Click to upload or drag and drop
-              </p>
-              <p className="text-gray-500 text-sm">PDF (max. 2MB)</p>
-            </div>
-
-            {/* OR Divider */}
-            <div className="flex items-center gap-4 my-6">
-              <div className="h-px flex-1 bg-gray-700" />
-              <span className="text-gray-500 text-sm font-medium">OR</span>
-              <div className="h-px flex-1 bg-gray-700" />
-            </div>
-
-            {/* Manual Input Button */}
-            <Link to={"/dashboard/user/manual-input"}>
-              <Button
-                variant="ghost"
-                className="w-full text-blue-400 hover:text-blue-300 hover:bg-blue-500/10 py-6 text-base font-medium"
-                onClick={onClose}
-              >
-                Input data manually
-              </Button>
-            </Link>
-          </div>
+              onFileSelect={handleFileSelect}
+              onClose={handleClose}
+            />
+          )}
         </div>
       </DialogContent>
     </Dialog>

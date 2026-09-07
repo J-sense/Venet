@@ -66,7 +66,7 @@ const userProfileApi = baseApi.injectEndpoints({
         method: "GET",
         data,
       }),
-      providesTags: ["TalentPortal"]
+      providesTags: ["TalentPortal"],
     }),
     purchaseTalentPortal: builder.mutation({
       query: (plan_id) => ({
@@ -80,7 +80,7 @@ const userProfileApi = baseApi.injectEndpoints({
         url: "/subscriptions/billing-history/",
         method: "GET",
       }),
-      providesTags: ["TalentPortal"]
+      providesTags: ["TalentPortal"],
     }),
     cancelSubscription: builder.mutation({
       query: (subscriptionId: string) => ({
@@ -102,7 +102,61 @@ const userProfileApi = baseApi.injectEndpoints({
         method: "POST",
       }),
       invalidatesTags: ["TalentPortal"],
-    })
+    }),
+    getTalentPortalUserProfile: builder.query({
+      query: (data) => ({
+        url: "/talent-portal/profile/",
+        method: "GET",
+        data,
+      }),
+      providesTags: ["TalentPortal"],
+    }),
+    manualResumeForm: builder.mutation({
+      query: (data) => ({
+        url: `/resume/generate/manual/`,
+        method: "POST",
+        data,
+      }),
+      invalidatesTags: ["Resume", "TalentPortal"],
+    }),
+    generatePdfAfterManualSubmit: builder.mutation({
+      query: (resumeId) => ({
+        url: `/resume/${resumeId}/pdf/`,
+        method: "POST",
+      }),
+      invalidatesTags: ["Resume", "TalentPortal"],
+    }),
+    uploadPdfForAiGenerate: builder.mutation({
+      query: (data) => ({
+        url: `/resume/upload/`,
+        method: "POST",
+        data,
+      }),
+      invalidatesTags: ["Resume", "TalentPortal"],
+    }),
+    generetateResumeBy: builder.mutation({
+      query: (data) => ({
+        url: `/resume/generate/`,
+        method: "POST",
+        data,
+      }),
+      invalidatesTags: ["Resume", "TalentPortal"],
+    }),
+    generetateCoverLetterBy: builder.mutation({
+      query: (data) => ({
+        url: `/cover-letters/generate/`,
+        method: "POST",
+        data,
+      }),
+      invalidatesTags: ["Resume", "TalentPortal"],
+    }),
+    getAllResumeList: builder.query({
+      query: () => ({
+        url: "/resume/list/",
+        method: "GET",
+      }),
+      providesTags: ["Resume", "TalentPortal"],
+    }),
   }),
 });
 
@@ -116,5 +170,12 @@ export const {
   useGetBillingDataQuery,
   useCancelSubscriptionMutation,
   useRetryPurchaseTalentPortalMutation,
-  useRetryPurchaseAfterCancelTalentPortalMutation
+  useRetryPurchaseAfterCancelTalentPortalMutation,
+  useGetTalentPortalUserProfileQuery,
+  useManualResumeFormMutation,
+  useGeneratePdfAfterManualSubmitMutation,
+  useUploadPdfForAiGenerateMutation,
+  useGeneretateResumeByMutation,
+  useGeneretateCoverLetterByMutation,
+  useGetAllResumeListQuery
 } = userProfileApi;

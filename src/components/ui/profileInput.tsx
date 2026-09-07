@@ -1,6 +1,3 @@
-// components/ui/ProfileInput.tsx
-"use client";
-
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import {
@@ -69,7 +66,7 @@ interface ProfileInputProps {
   name: string;
   label?: string;
   placeholder?: string;
-  type?: "text" | "email" | "password" | "tel" | "number";
+  type?: "text" | "email" | "password" | "tel" | "number" | "date" | "url";
   as?: "input" | "textarea";
   rows?: number;
   className?: string;
@@ -129,7 +126,7 @@ export const ProfileInput = ({
                   !bg-[#334155] border border-zinc-700 
                   text-white text-[14px] placeholder:text-zinc-400
                   focus:border-blue-500 focus:ring-blue-500/30
-                  h-12 py-3
+                  ${as === "textarea" ? "h-auto min-h-[180px] py-4" : "h-12 py-3"}
                   ${LeadIcon ? "pl-11" : "pl-4"}
                   ${isPassword ? "pr-11" : "pr-4"}
                   ${disabled ? "opacity-60 cursor-not-allowed" : ""}
