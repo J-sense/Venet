@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // ============================================================
 //  AgoraVideoCallPage.tsx  – Professional Video Call
 //  Uses agora-rtc-react LocalUser + RemoteUser (no simulation)
@@ -238,7 +239,7 @@ function CallRoom() {
       if (!endedSessionId || String(endedSessionId) === String(sessionId)) {
         console.log(
           "[AgoraVideoCallPage] Received session_ended event. Leaving call...",
-          lastMessage
+          lastMessage,
         );
         toast.info("Session has ended.");
         handleLeave();

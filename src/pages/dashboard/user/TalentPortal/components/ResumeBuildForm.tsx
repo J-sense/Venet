@@ -199,21 +199,21 @@ export default function ResumeBuildForm() {
           employments: hasNoEmployment
             ? []
             : (values.employments || []).slice(0, 3).map((emp: any) => ({
-                companyName: emp.companyName || "",
-                designation: emp.designation || "",
-                department: emp.department || "",
-                startDate: emp.startDate || "",
-                endDate: emp.endDate || "",
-                currentlyWorking: Boolean(emp.currentlyWorking),
-                responsibilities: Array.isArray(emp.responsibilities)
+              companyName: emp.companyName || "",
+              designation: emp.designation || "",
+              department: emp.department || "",
+              startDate: emp.startDate || "",
+              endDate: emp.endDate || "",
+              currentlyWorking: Boolean(emp.currentlyWorking),
+              responsibilities: Array.isArray(emp.responsibilities)
+                ? emp.responsibilities
+                : typeof emp.responsibilities === "string"
                   ? emp.responsibilities
-                  : typeof emp.responsibilities === "string"
-                    ? emp.responsibilities
-                        .split("\n")
-                        .map((line: string) => line.trim())
-                        .filter((line: string) => line.length > 0)
-                    : [],
-              })),
+                    .split("\n")
+                    .map((line: string) => line.trim())
+                    .filter((line: string) => line.length > 0)
+                  : [],
+            })),
           education: (values.education || []).slice(0, 3).map((edu: any) => ({
             degree: edu.degree || "",
             institute: edu.institute || "",
@@ -224,23 +224,23 @@ export default function ResumeBuildForm() {
             languagesFrameworks:
               typeof values.skills?.languagesFrameworks === "string"
                 ? values.skills.languagesFrameworks
-                    .split(",")
-                    .map((s: string) => s.trim())
-                    .filter(Boolean)
+                  .split(",")
+                  .map((s: string) => s.trim())
+                  .filter(Boolean)
                 : values.skills?.languagesFrameworks || [],
             tools:
               typeof values.skills?.tools === "string"
                 ? values.skills.tools
-                    .split(",")
-                    .map((s: string) => s.trim())
-                    .filter(Boolean)
+                  .split(",")
+                  .map((s: string) => s.trim())
+                  .filter(Boolean)
                 : values.skills?.tools || [],
             practices:
               typeof values.skills?.practices === "string"
                 ? values.skills.practices
-                    .split(",")
-                    .map((s: string) => s.trim())
-                    .filter(Boolean)
+                  .split(",")
+                  .map((s: string) => s.trim())
+                  .filter(Boolean)
                 : values.skills?.practices || [],
           },
           projects: (values.projects || []).slice(0, 3).map((proj: any) => ({
@@ -249,9 +249,9 @@ export default function ResumeBuildForm() {
             techStack:
               typeof proj.techStack === "string"
                 ? proj.techStack
-                    .split(",")
-                    .map((s: string) => s.trim())
-                    .filter(Boolean)
+                  .split(",")
+                  .map((s: string) => s.trim())
+                  .filter(Boolean)
                 : proj.techStack || [],
             liveLink: proj.liveLink || "",
           })),
@@ -280,9 +280,9 @@ export default function ResumeBuildForm() {
       console.error("Failed to submit resume:", error);
       toast.error(
         error?.data?.details ||
-          error?.data?.message ||
-          error?.message ||
-          "Failed to submit resume form.",
+        error?.data?.message ||
+        error?.message ||
+        "Failed to submit resume form.",
       );
     }
   };

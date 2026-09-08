@@ -19,7 +19,8 @@ import {
   GraduationCap,
   Mail,
   MapPin,
-  Phone
+  Phone,
+  Sparkles
 } from "lucide-react";
 import { useState } from "react";
 import CoverLetterGeneratorCard from "./CoverLetterGeneratorCard";
@@ -45,86 +46,27 @@ export default function TalentPortalUnlocked() {
         <div className="grid grid-cols-1 xl:grid-cols-12 gap-6">
           {/* LEFT SIDE - 70% */}
           <div className="xl:col-span-8 space-y-6">
-            {/* Profile Header with Abstract Wave Aesthetic Cover */}
-            <Card className="bg-[#0D1526] border-[#FFFFFF0F] overflow-hidden p-0">
-              {/* Full-width Abstract Wave Cover Header */}
-              <div className="h-32 bg-[#091322] relative rounded-t-xl">
-                {/* Background Layer with Overflow Hidden */}
-                <div className="absolute inset-0 overflow-hidden rounded-t-xl pointer-events-none">
-                  {/* Abstract Geometric Wave SVG */}
-                  <svg
-                    className="w-full h-full object-cover opacity-40"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 1440 320"
-                    preserveAspectRatio="none"
-                  >
-                    <defs>
-                      <linearGradient
-                        id="wave-grad-1"
-                        x1="0%"
-                        y1="0%"
-                        x2="100%"
-                        y2="100%"
-                      >
-                        <stop
-                          offset="0%"
-                          stopColor="#3B82F6"
-                          stopOpacity="0.8"
-                        />
-                        <stop
-                          offset="50%"
-                          stopColor="#8B5CF6"
-                          stopOpacity="0.6"
-                        />
-                        <stop
-                          offset="100%"
-                          stopColor="#06B6D4"
-                          stopOpacity="0.8"
-                        />
-                      </linearGradient>
-                      <linearGradient
-                        id="wave-grad-2"
-                        x1="100%"
-                        y1="0%"
-                        x2="0%"
-                        y2="100%"
-                      >
-                        <stop
-                          offset="0%"
-                          stopColor="#1E40AF"
-                          stopOpacity="0.9"
-                        />
-                        <stop
-                          offset="100%"
-                          stopColor="#3B82F6"
-                          stopOpacity="0.3"
-                        />
-                      </linearGradient>
-                    </defs>
-                    <path
-                      fill="url(#wave-grad-1)"
-                      d="M0,192L48,176C96,160,192,128,288,138.7C384,149,480,203,576,208C672,213,768,171,864,149.3C960,128,1056,128,1152,149.3C1248,171,1344,213,1392,234.7L1440,256L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"
-                    />
-                    <path
-                      fill="url(#wave-grad-2)"
-                      d="M0,96L60,112C120,128,240,160,360,165.3C480,171,600,149,720,138.7C840,128,960,128,1080,144C1200,160,1320,192,1380,208L1440,224L1440,0L1380,0C1320,0,1200,0,1080,0C960,0,840,0,720,0C600,0,480,0,360,0C240,0,120,0,60,0L0,0Z"
-                    />
-                  </svg>
-
-                  {/* Subtle Ambient Glow */}
-                  <div className="absolute top-0 right-10 w-64 h-64 bg-blue-500/20 rounded-full blur-3xl" />
-
-                  {/* Dark Glass Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0D1526] via-transparent to-black/20" />
+            {/* Profile Header with Glassmorphic Aesthetic */}
+            <Card className="bg-white/[0.03] backdrop-blur-2xl border border-white/10 hover:border-blue-500/30 rounded-3xl overflow-hidden p-0 shadow-2xl transition-all duration-300 relative">
+              {/* Fully Transparent Sleek Cover Header */}
+              <div className="h-32 sm:h-36 bg-gradient-to-b from-blue-500/10 via-transparent to-transparent relative">
+                {/* Cover Content Text (Right Side / Main Area) */}
+                <div className="absolute top-4 sm:top-6 right-4 sm:right-8 text-right z-10 max-w-[200px] xs:max-w-[260px] sm:max-w-md">
+                  <div className="inline-flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[10px] sm:text-xs font-semibold mb-1 backdrop-blur-md">
+                    <Sparkles className="w-3 sm:w-3.5 h-3 sm:h-3.5" />
+                    <span>vNET Career Portal</span>
+                  </div>
+                  <h2 className="text-xs xs:text-sm sm:text-lg font-bold text-white tracking-tight">
+                    AI Talent & Career Hub
+                  </h2>
+                  <p className="text-[11px] sm:text-xs text-gray-400 mt-0.5 sm:mt-1 leading-relaxed line-clamp-2 hidden xs:block">
+                    Showcase certified skills, generate AI resumes, and connect with top tech opportunities.
+                  </p>
                 </div>
 
-                {/* Glassmorphic Floating Profile Avatar Frame */}
-                <div className="absolute -bottom-14 left-8 w-28 h-28 sm:w-32 sm:h-32 rounded-3xl p-[3px] bg-gradient-to-b from-white/40 via-blue-500/40 to-indigo-600/50 shadow-2xl backdrop-blur-xl transition-all duration-300 hover:scale-105 z-20 group">
-                  {/* Glowing Ambient Halo behind avatar */}
-                  <div className="absolute -inset-2 bg-gradient-to-tr from-blue-500/30 via-cyan-400/20 to-purple-500/30 rounded-3xl blur-xl opacity-70 group-hover:opacity-100 transition-opacity pointer-events-none" />
-
-                  {/* Inner Glass Container */}
-                  <div className="w-full h-full bg-[#0B132B]/90 rounded-[21px] overflow-hidden relative flex items-center justify-center border border-white/10 shadow-inner">
+                {/* Simple & Clean Rounded Profile Picture Avatar with Glass Transparency */}
+                <div className="absolute -bottom-10 sm:-bottom-12 left-4 sm:left-8 w-24 h-24 sm:w-32 sm:h-32 rounded-full border-4 border-white/15 bg-white/5 backdrop-blur-xl shadow-2xl z-20 relative">
+                  <div className="w-full h-full rounded-full overflow-hidden bg-black/40 backdrop-blur-sm flex items-center justify-center border border-white/10">
                     {profileData?.image ? (
                       <img
                         src={profileData.image}
@@ -133,102 +75,106 @@ export default function TalentPortalUnlocked() {
                             .filter(Boolean)
                             .join(" ") || "Profile"
                         }
-                        className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                        className="w-full h-full object-cover object-center"
                       />
                     ) : (
-                      <span className="text-5xl select-none">👨‍💼</span>
+                      <span className="text-4xl sm:text-5xl select-none">👨‍💼</span>
                     )}
                   </div>
 
-                  {/* Floating Verified Status Badge */}
+                  {/* Verified Candidate Badge Overlay */}
                   <div
-                    className="absolute -bottom-1 -right-1 w-8 h-8 rounded-full bg-[#0D1526] p-1 shadow-xl z-30 flex items-center justify-center ring-2 ring-[#0D1526]"
+                    className="absolute bottom-0 right-0 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#0D1526]/80 backdrop-blur-md p-0.5 border border-white/15 shadow-md z-30 flex items-center justify-center"
                     title="Verified Candidate"
                   >
-                    <div className="w-full h-full rounded-full bg-gradient-to-r from-emerald-500 to-teal-400 flex items-center justify-center text-white shadow-md">
-                      <CheckCircle2 className="w-4 h-4 text-white stroke-[2.5]" />
+                    <div className="w-full h-full rounded-full bg-gradient-to-r from-emerald-500 to-teal-400 flex items-center justify-center text-white">
+                      <CheckCircle2 className="w-3.5 sm:w-4 h-3.5 sm:h-4 text-white stroke-[2.5]" />
                     </div>
                   </div>
                 </div>
               </div>
 
-              <CardContent className="pt-20 pb-8 px-8">
-                <div className="pl-2">
-                  <h1 className="text-3xl font-bold text-white">
-                    {[profileData?.first_name, profileData?.last_name]
-                      .filter(Boolean)
-                      .join(" ") || "User Profile"}
-                  </h1>
+              <CardContent className="pt-12 sm:pt-16 pb-6 sm:pb-8 px-4 sm:px-8">
+                <div className="pl-2 space-y-6">
+                  <div>
+                    <h1 className="text-3xl font-bold text-white tracking-tight">
+                      {[profileData?.first_name, profileData?.last_name]
+                        .filter(Boolean)
+                        .join(" ") || "User Profile"}
+                    </h1>
 
-                  <p className="text-blue-400 text-lg mt-1">
-                    {profileData?.specialty || "Professional"}
-                    {profileData?.years_of_experience
-                      ? ` • ${profileData.years_of_experience} Years Experience`
-                      : ""}
-                  </p>
+                    <p className="text-blue-400 text-lg font-semibold mt-1">
+                      {profileData?.specialty || "Professional"}
+                      {profileData?.years_of_experience
+                        ? ` • ${profileData.years_of_experience} Years Experience`
+                        : ""}
+                    </p>
+                  </div>
 
                   {/* Location, Open to & Hourly Rate */}
-                  <div className="flex flex-wrap gap-x-6 gap-y-2 mt-4 text-sm">
+                  <div className="flex flex-wrap gap-3 text-xs sm:text-sm">
                     {(profileData?.location || profileData?.address1) && (
-                      <div className="flex items-center gap-1.5 text-zinc-400">
+                      <div className="flex items-center gap-1.5 bg-white/5 backdrop-blur-md border border-white/10 px-3.5 py-2 rounded-xl text-gray-300">
                         <MapPin className="w-4 h-4 text-blue-400" />
-                        {profileData?.location || profileData?.address1}
+                        <span>{profileData?.location || profileData?.address1}</span>
                       </div>
                     )}
 
                     {profileData?.open_to && (
-                      <div className="flex items-center gap-1.5 text-emerald-400">
+                      <div className="flex items-center gap-1.5 bg-emerald-500/10 border border-emerald-500/20 px-3.5 py-2 rounded-xl text-emerald-400 font-semibold">
                         <Briefcase className="w-4 h-4" />
-                        {profileData.open_to === "AVAILABLE"
-                          ? "Open to opportunities"
-                          : profileData.open_to}
+                        <span>
+                          {profileData.open_to === "AVAILABLE"
+                            ? "Open to opportunities"
+                            : profileData.open_to}
+                        </span>
                       </div>
                     )}
 
                     {profileData?.hourly_rate && (
-                      <div className="flex items-center gap-1.5 text-amber-400">
-                        <DollarSign className="w-4 h-4" />$
-                        {profileData.hourly_rate} / hr
+                      <div className="flex items-center gap-1.5 bg-amber-500/10 border border-amber-500/20 px-3.5 py-2 rounded-xl text-amber-400 font-semibold">
+                        <DollarSign className="w-4 h-4" />
+                        <span>${profileData.hourly_rate} / hr</span>
                       </div>
                     )}
 
                     {profileData?.email && (
-                      <div className="flex items-center gap-1.5 text-zinc-400">
+                      <div className="flex items-center gap-1.5 bg-white/5 backdrop-blur-md border border-white/10 px-3.5 py-2 rounded-xl text-gray-300">
                         <Mail className="w-4 h-4 text-blue-400" />
-                        {profileData.email}
+                        <span>{profileData.email}</span>
                       </div>
                     )}
 
                     {(profileData?.phone1 || profileData?.phone_number) && (
-                      <div className="flex items-center gap-1.5 text-zinc-400">
+                      <div className="flex items-center gap-1.5 bg-white/5 backdrop-blur-md border border-white/10 px-3.5 py-2 rounded-xl text-gray-300">
                         <Phone className="w-4 h-4 text-blue-400" />
-                        {profileData?.phone1 || profileData?.phone_number}
+                        <span>{profileData?.phone1 || profileData?.phone_number}</span>
                       </div>
                     )}
                   </div>
 
                   {/* Skills & Certifications */}
                   {profileData?.skills && profileData.skills.length > 0 && (
-                    <div className="mt-8">
-                      <h3 className="text-[11px] text-[#62748E] font-semibold mb-3 uppercase tracking-widest">
+                    <div className="pt-2">
+                      <h3 className="text-[11px] text-gray-400 font-semibold mb-3 uppercase tracking-widest">
                         SKILLS & CERTIFICATIONS
                       </h3>
                       <div className="flex flex-wrap gap-2">
                         {profileData.skills.map(
                           (skill: string, index: number) => {
                             const badgeStyles = [
-                              "bg-[#8E51FF26] hover:bg-[#8E51FF30] text-[#C4B4FF] border-[#8E51FF40]",
-                              "bg-[#F59E0B26] hover:bg-[#F59E0B30] text-[#FCD34D] border-[#F59E0B40]",
-                              "bg-[#EA580C26] hover:bg-[#EA580C30] text-[#FDBA74] border-[#EA580C40]",
-                              "bg-[#3B82F626] hover:bg-[#3B82F630] text-[#93C5FD] border-[#3B82F640]",
-                              "bg-[#10B98126] hover:bg-[#10B98130] text-[#6EE7B7] border-[#10B98140]",
+                              "bg-purple-500/15 hover:bg-purple-500/25 text-purple-300 border-purple-500/30",
+                              "bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 border-amber-500/30",
+                              "bg-orange-500/15 hover:bg-orange-500/25 text-orange-300 border-orange-500/30",
+                              "bg-blue-500/15 hover:bg-blue-500/25 text-blue-300 border-blue-500/30",
+                              "bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-300 border-emerald-500/30",
                             ];
                             const style =
                               badgeStyles[index % badgeStyles.length];
                             return (
                               <Badge
                                 key={index}
-                                className={`${style} border px-4 py-1.5 text-sm transition-colors`}
+                                className={`${style} border px-4 py-1.5 text-xs font-semibold rounded-xl transition-all shadow-sm`}
                               >
                                 {skill}
                               </Badge>
@@ -241,11 +187,11 @@ export default function TalentPortalUnlocked() {
 
                   {/* About */}
                   {profileData?.bio && (
-                    <div className="mt-8">
-                      <h3 className="text-[11px] text-[#62748E] font-semibold mb-3 uppercase tracking-widest">
+                    <div className="pt-2">
+                      <h3 className="text-[11px] text-gray-400 font-semibold mb-3 uppercase tracking-widest">
                         ABOUT
                       </h3>
-                      <p className="text-[#CAD5E2] leading-relaxed text-[15px]">
+                      <p className="text-gray-300 leading-relaxed text-[15px]">
                         {profileData.bio}
                       </p>
                     </div>
@@ -254,28 +200,30 @@ export default function TalentPortalUnlocked() {
                   {/* Education & Current Organization */}
                   {(profileData?.educational_institute ||
                     profileData?.current_organization) && (
-                      <div className="mt-8 flex flex-wrap gap-6 text-sm text-[#CAD5E2]">
+                      <div className="pt-2 grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
                         {profileData.current_organization && (
-                          <div>
-                            <span className="text-[11px] text-[#62748E] font-semibold block uppercase tracking-widest mb-1">
+                          <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-4 sm:p-5 space-y-1">
+                            <span className="text-[11px] text-gray-400 font-semibold block uppercase tracking-widest">
                               CURRENT ORGANIZATION
                             </span>
-                            <div className="flex items-center gap-2">
+                            <div className="flex items-center gap-2 text-white font-medium">
                               <Building2 className="w-4 h-4 text-blue-400" />
-                              {profileData.current_organization}
+                              <span>{profileData.current_organization}</span>
                             </div>
                           </div>
                         )}
                         {profileData.educational_institute && (
-                          <div>
-                            <span className="text-[11px] text-[#62748E] font-semibold block uppercase tracking-widest mb-1">
+                          <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-4 sm:p-5 space-y-1">
+                            <span className="text-[11px] text-gray-400 font-semibold block uppercase tracking-widest">
                               EDUCATION
                             </span>
-                            <div className="flex items-center gap-2">
+                            <div className="flex items-center gap-2 text-white font-medium">
                               <GraduationCap className="w-4 h-4 text-blue-400" />
-                              {profileData.educational_institute}
-                              {profileData.program_degree &&
-                                ` (${profileData.program_degree})`}
+                              <span>
+                                {profileData.educational_institute}
+                                {profileData.program_degree &&
+                                  ` (${profileData.program_degree})`}
+                              </span>
                             </div>
                           </div>
                         )}
@@ -286,17 +234,17 @@ export default function TalentPortalUnlocked() {
             </Card>
 
             {/* Recommended Jobs */}
-
-            <CardContent className="px-0 sm:px-6">
-              <div className="flex justify-between items-center mb-6 w-full">
-                <h2 className="text-xl sm:text-2xl font-semibold">
+            <div className="space-y-6 pt-2">
+              <div className="flex justify-between items-center w-full">
+                <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
                   Recommended Jobs
                 </h2>
                 <Button
                   variant="link"
-                  className="text-blue-400 hover:text-blue-300 px-0"
+                  className="text-blue-400 hover:text-blue-300 px-0 font-semibold flex items-center gap-1 group/btn"
                 >
-                  View All <ArrowRight className="ml-1 w-4 h-4" />
+                  <span>View All</span>
+                  <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
                 </Button>
               </div>
 
@@ -304,86 +252,103 @@ export default function TalentPortalUnlocked() {
                 {recommendedJobs.map((job, i) => (
                   <div
                     key={i}
-                    className="bg-[#0D1526] border border-[#FFFFFF0F] rounded-2xl p-4 sm:p-5 flex flex-col gap-4 sm:gap-5"
+                    className="bg-[#0D1526]/60 backdrop-blur-xl border border-white/10 hover:border-blue-500/30 rounded-3xl p-5 sm:p-6 flex flex-col gap-4 sm:gap-5 transition-all duration-300 group relative overflow-hidden shadow-xl"
                   >
-                    <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 sm:gap-4">
+                    {/* Ambient Glow */}
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-blue-600/10 rounded-full blur-2xl pointer-events-none group-hover:bg-blue-600/20 transition-all" />
+
+                    <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 sm:gap-4 relative z-10">
                       <div className="flex gap-3 sm:gap-4">
-                        {/* Avatar Placeholder */}
-                        <div className="w-10 h-10 sm:w-12 sm:h-12 shrink-0 bg-[#0F1C2E] rounded-lg flex items-center justify-center font-bold text-emerald-400 border border-[#1E293B]">
+                        {/* Company Logo Avatar */}
+                        <div className="w-11 h-11 sm:w-12 sm:h-12 shrink-0 bg-gradient-to-br from-emerald-500/20 to-teal-500/20 rounded-xl flex items-center justify-center font-bold text-emerald-400 border border-emerald-500/30 shadow-md">
                           TC
                         </div>
                         <div>
-                          <h3 className="text-white font-semibold text-base sm:text-lg">
+                          <h3 className="text-white font-bold text-base sm:text-lg tracking-tight group-hover:text-blue-400 transition-colors">
                             {job.title}
                           </h3>
-                          <p className="text-[#90A1B9] text-xs sm:text-sm">
+                          <p className="text-gray-400 text-xs sm:text-sm font-medium">
                             {job.company}
                           </p>
                         </div>
                       </div>
 
                       {/* Match Pill */}
-                      <div className="self-start sm:self-auto flex items-center gap-1.5 px-3 py-1 rounded-full border border-[#1E293B] text-emerald-400 text-xs font-medium">
+                      <div className="self-start sm:self-auto flex items-center gap-1.5 px-3 py-1 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 text-xs font-semibold shadow-sm">
                         <CheckCircle2 className="w-3.5 h-3.5 shrink-0" />
-                        {job.match} match
+                        <span>{job.match} match</span>
                       </div>
                     </div>
 
                     {/* Metadata Row */}
-                    <div className="flex flex-wrap items-center gap-x-5 gap-y-3 text-[#90A1B9] text-xs sm:text-sm">
+                    <div className="flex flex-wrap items-center gap-x-5 gap-y-3 text-gray-400 text-xs sm:text-sm relative z-10">
                       <div className="flex items-center gap-1.5 shrink-0">
-                        <MapPin className="w-4 h-4" /> {job.location}
+                        <MapPin className="w-4 h-4 text-blue-400" /> {job.location}
                       </div>
                       <div className="flex items-center gap-1.5 shrink-0">
-                        <DollarSign className="w-4 h-4" /> {job.salary}
+                        <DollarSign className="w-4 h-4 text-amber-400" /> {job.salary}
                       </div>
                       <div className="flex items-center gap-1.5 shrink-0">
-                        <Clock className="w-4 h-4" /> {job.time}
+                        <Clock className="w-4 h-4 text-purple-400" /> {job.time}
                       </div>
-                      <span className="px-3 py-1 bg-[#1E293B] rounded-full text-[11px] sm:text-xs text-white/80 shrink-0">
+                      <span className="px-3 py-1 bg-blue-500/10 border border-blue-500/20 rounded-full text-[11px] sm:text-xs text-blue-300 font-semibold shrink-0">
                         {job.type}
                       </span>
                     </div>
 
                     {/* Action Button */}
-                    <Button className="bg-[#1E3A8A] hover:bg-[#1E3A8A]/90 text-white w-full sm:w-fit px-6 flex items-center justify-center gap-2 mt-1 sm:mt-0">
-                      Apply Now <ChevronRight className="w-4 h-4" />
-                    </Button>
+                    <div className="relative z-10 pt-1">
+                      <Button className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold rounded-xl px-6 py-5 flex items-center justify-center gap-2 shadow-lg shadow-blue-600/20 hover:shadow-blue-600/35 transition-all group/btn w-full sm:w-fit">
+                        <span>Apply Now</span>
+                        <ChevronRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                      </Button>
+                    </div>
                   </div>
                 ))}
               </div>
-            </CardContent>
+            </div>
           </div>
 
           {/* RIGHT SIDE - 30% */}
           <div className="xl:col-span-4 space-y-6">
             {/* Resume Builder */}
-            <Card className="bg-[#0D1526] border-[#FFFFFF0F] p-5">
-              <CardContent className="p-0">
-                {/* Icon at the top */}
-                <div className="w-12 h-12 bg-[#0A1A14] border border-[#10B981]/20 rounded-xl flex items-center justify-center mb-4">
-                  <FileText className="w-6 h-6 text-[#10B981]" />
+            <Card className="bg-gradient-to-b from-[#0D1526] via-[#091322] to-[#0D1526] border border-blue-500/20 hover:border-blue-500/40 rounded-2xl p-6 relative overflow-hidden transition-all duration-300 group shadow-xl shadow-black/30">
+              {/* Subtle Ambient Background Glows */}
+              <div className="absolute top-0 right-0 w-32 h-32 bg-blue-600/10 rounded-full blur-2xl pointer-events-none group-hover:bg-blue-600/20 transition-all" />
+              <div className="absolute bottom-0 left-0 w-32 h-32 bg-purple-600/10 rounded-full blur-2xl pointer-events-none group-hover:bg-purple-600/20 transition-all" />
+
+              <CardContent className="p-0 relative z-10 space-y-5">
+                {/* Header Row: Icon & AI Badge */}
+                <div className="flex items-center justify-between">
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 via-indigo-500/20 to-purple-500/20 border border-blue-500/30 flex items-center justify-center shadow-md shadow-blue-950/40 group-hover:scale-105 transition-transform">
+                    <FileText className="w-6 h-6 text-blue-400" />
+                  </div>
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-semibold">
+                    <Sparkles className="w-3.5 h-3.5" />
+                    <span>AI Powered</span>
+                  </span>
                 </div>
 
-                {/* Text content */}
-                <div className="mb-6">
-                  <h3 className="font-semibold text-white text-lg">
+                {/* Text Content */}
+                <div className="space-y-1.5">
+                  <h3 className="font-bold text-white text-lg tracking-tight">
                     Resume Builder
                   </h3>
-                  <p className="text-sm text-[#90A1B9] mt-1 leading-relaxed">
-                    Create a professional resume showcasing your vNET
-                    certifications and achievements.
+                  <p className="text-sm text-gray-400 leading-relaxed">
+                    Create a professional resume showcasing your vNET certifications and achievements.
                   </p>
                 </div>
 
                 {/* Button */}
                 <Button
                   onClick={() => setIsOpenAiModal(true)}
-                  className="w-full rounded-full py-6 bg-[#194BFB] hover:bg-[#1D4ED8] text-white font-medium flex items-center justify-center gap-2"
+                  className="w-full rounded-xl py-6 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold flex items-center justify-center gap-2 shadow-lg shadow-blue-600/20 hover:shadow-blue-600/35 transition-all group/btn"
                 >
-                  <Building2 className="w-4 h-4" />
-                  Build Resume
+                  <Sparkles className="w-4 h-4 text-blue-200" />
+                  <span>Build Resume</span>
+                  <ArrowRight className="w-4 h-4 text-blue-200 group-hover/btn:translate-x-1 transition-transform" />
                 </Button>
+
                 {isOpenAiModal && (
                   <UpdateResumeAIModal
                     isOpen={isOpenAiModal}

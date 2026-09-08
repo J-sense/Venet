@@ -6,7 +6,6 @@ import {
   useGeneretateResumeByMutation,
   useUploadPdfForAiGenerateMutation,
 } from "@/redux/features/userDashboard/userProfile.api";
-import { X } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { AIResumeResultView } from "./resume/AIResumeResultView";
@@ -92,9 +91,9 @@ export default function UpdateResumeAIModal({
       console.error("PDF processing error:", error);
       toast.error(
         error?.data?.details ||
-          error?.data?.message ||
-          error?.message ||
-          "Failed to process resume PDF.",
+        error?.data?.message ||
+        error?.message ||
+        "Failed to process resume PDF.",
       );
     }
   };
@@ -114,24 +113,15 @@ export default function UpdateResumeAIModal({
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={(open) => { if (!open) return; }}>
+    <Dialog open={isOpen} onOpenChange={(open) => { if (!open) handleClose(); }}>
       <DialogContent
+        showCloseButton={false}
         onInteractOutside={(e) => e.preventDefault()}
         onPointerDownOutside={(e) => e.preventDefault()}
-        className={`bg-[#12191B] border border-white/10 text-white p-0 rounded-3xl overflow-hidden font-['Inter'] shadow-2xl transition-all duration-300 ${
-          generatedResult ? "max-w-[620px]" : "max-w-[420px]"
-        }`}
+        className={`bg-gradient-to-b from-[#0D1526] via-[#091322] to-[#0D1526] border border-blue-500/20 text-white p-0 rounded-3xl overflow-hidden font-['Inter'] shadow-[0_0_50px_rgba(13,21,38,0.8)] transition-all duration-300 ${generatedResult ? "max-w-[620px]" : "max-w-[440px]"
+          }`}
       >
         <div className="relative">
-          {/* Close Button */}
-          <button
-            onClick={handleClose}
-            disabled={isLoading}
-            className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors z-10 disabled:opacity-50 p-1.5 rounded-full hover:bg-white/10"
-          >
-            <X className="w-5 h-5" />
-          </button>
-
           {generatedResult ? (
             <AIResumeResultView
               generatedResult={generatedResult}
