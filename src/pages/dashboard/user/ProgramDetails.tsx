@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button } from "@/components/ui/button";
-import { useGetProgramPlanQuery, useStartProgrameQuestionsQuery } from "@/redux/features/userDashboard/userProfile.api";
-import { ArrowLeft, Brain, HeartPulse, Briefcase, GraduationCap } from "lucide-react";
+import { useGetProgramPlanQuery } from "@/redux/features/userDashboard/userProfile.api";
+import { ArrowLeft, Brain, Briefcase, GraduationCap, HeartPulse } from "lucide-react";
 import { useNavigate, useParams } from "react-router";
 
 const programData: Record<string, any> = {

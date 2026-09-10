@@ -15,7 +15,6 @@ import {
 import { Link, useNavigate } from "react-router";
 
 import {
-  useGetAllCertificateQuery,
   useGetUserDashboardQuery,
   useGetUserProfileQuery,
   useMyPurchaseProgrammeQuery
@@ -27,7 +26,7 @@ export default function UserHome() {
   const { data: userProfileData } = useGetUserProfileQuery(undefined);
   const { data: myPurchaseProgramme } = useMyPurchaseProgrammeQuery(undefined);
   const { data: dashboadData } = useGetUserDashboardQuery(undefined);
-  const { data: getAllCertificate } = useGetAllCertificateQuery(undefined);
+  // const { data: getAllCertificate } = useGetAllCertificateQuery(undefined);
 
   const userName = userProfileData?.data?.first_name
     ? `${userProfileData.data.first_name} ${userProfileData.data.last_name || ""}`.trim()

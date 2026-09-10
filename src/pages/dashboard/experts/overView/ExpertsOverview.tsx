@@ -19,7 +19,7 @@ export default function ExpertOverview() {
   console.log(getStripe);
   const [createOnboarding, { isLoading: isOnboarding }] =
     useExpertOnBoardingMutation();
-  const { data: expertsOverView, isLoading: isLoadingOverView } =
+  const { data: expertsOverView, } =
     useExpertsOverViewQuery(undefined);
   console.log(expertsOverView?.data?.summary?.total_earnings, "expertsOverView")
   const handleStripeConnect = async () => {
