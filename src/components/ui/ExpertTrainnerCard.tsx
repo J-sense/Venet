@@ -2,8 +2,10 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Star } from "lucide-react";
+import { useNavigate } from "react-router";
 
 interface ExpertTrainerProps {
+  id?: string;
   name: string;
   title: string;
   rating: number;
@@ -11,9 +13,12 @@ interface ExpertTrainerProps {
   price: string;
   specialties: string[];
   category: string; // Added for the top-right badge
+  image?: string | null;
+  onViewProfile?: () => void;
 }
 
 export function ExpertTrainerCard({
+  id,
   name,
   title,
   rating,
@@ -21,13 +26,25 @@ export function ExpertTrainerCard({
   price,
   specialties,
   category,
+  image,
+  onViewProfile,
 }: ExpertTrainerProps) {
+  const navigate = useNavigate();
+
+  const handleViewProfile = () => {
+    if (onViewProfile) {
+      onViewProfile();
+    } else if (id) {
+      navigate(`/experts/${id}`);
+    }
+  };
+
   return (
     <Card className="bg-[#0D1526] border-[#FFFFFF0F] p-5">
       {/* Header section with image and name */}
       <div className="flex flex-col sm:flex-row items-start gap-4 mb-4">
         <img
-          src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=150"
+          src={image || "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=150"}
           alt={name}
           className="w-16 h-16 rounded-full object-cover shrink-0"
         />
@@ -63,9 +80,12 @@ export function ExpertTrainerCard({
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pt-4 border-t border-[#1E293B]">
         <span className="text-white font-bold text-2xl">
           {price}
-          <span className="text-sm text-[#62748E] font-normal ml-1">/hour</span>
+          <span className="text-[#62748E] text-sm font-normal ml-1">/hour</span>
         </span>
-        <Button className="bg-[#2563EB] hover:bg-[#1D4ED8] text-white rounded-xl px-6 w-full sm:w-auto">
+        <Button
+          onClick={handleViewProfile}
+          className="bg-[#2563EB] hover:bg-[#1D4ED8] text-white rounded-xl px-6 w-full sm:w-auto cursor-pointer"
+        >
           View Profile
         </Button>
       </div>

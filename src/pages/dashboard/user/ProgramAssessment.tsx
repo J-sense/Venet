@@ -1,83 +1,52 @@
 import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router";
 import { Button } from "@/components/ui/button";
-
-const assessmentData: Record<string, string[]> = {
-  "mental-health": [
-    "How would you rate your current stress level?",
-    "Do you practice any mindfulness or meditation?",
-    "What mental health goals would you like to achieve?",
-    "How often do you feel anxious or overwhelmed?",
-    "Describe your current sleep patterns.",
-    "What activities help you relax?",
-    "Do you have a support system of friends or family?",
-    "What is your primary trigger for stress?",
-  ],
-  "health-&-fitness": [
-    "What are your primary health goals?",
-    "Do you have any injuries or medical conditions?",
-    "How many days per week can you physically exercise?",
-    "What is your current diet like?",
-    "How many hours of sleep do you get on average?",
-    "Do you have access to gym equipment?",
-    "How much water do you drink daily?",
-    "What is your biggest obstacle to staying fit?",
-  ],
-  "career-accelerator": [
-    "What is your ultimate career goal?",
-    "How satisfied are you with your current role?",
-    "What skills would you most like to develop?",
-    "How comfortable are you with public speaking and networking?",
-    "When was the last time you updated your resume?",
-    "Do you have an active LinkedIn profile?",
-    "What is your biggest challenge in job searching?",
-    "Are you looking to change industries or stay in your current field?",
-  ],
-  "education-services": [
-    "What subjects or skills are you most interested in learning?",
-    "What is your preferred learning style (e.g., visual, auditory, hands-on)?",
-    "How many hours per week can you dedicate to studying?",
-    "What is your highest level of completed education?",
-    "Do you prefer self-paced courses or live instruction?",
-    "What are your main obstacles to learning new things?",
-    "Are you learning for career advancement or personal interest?",
-    "Do you need a certificate of completion for your goals?",
-  ],
-};
-
-const programTitles: Record<string, string> = {
-  "mental-health": "Mental Health Program",
-  "health-&-fitness": "Health & Fitness Program",
-  "career-accelerator": "Career Accelerator",
-  "education-services": "Education Services",
-};
+import {
+  useStartProgrameQuestionsQuery,
+  useSubmitProgramPlanMutation,
+} from "@/redux/features/userDashboard/userProfile.api";
+import { Loader2 } from "lucide-react";
 
 export default function ProgramAssessment() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const questions = assessmentData[id || ""] || assessmentData["mental-health"];
-  const programTitle = programTitles[id || ""] || "Program Assessment";
+  const { data: questionsResponse, isLoading } = useStartProgrameQuestionsQuery(id);
+  const [submitProgramPlan, { isLoading: isSubmitting }] = useSubmitProgramPlanMutation();
+
+  // Dynamic questions directly from API response
+  const questions: Array<{ id: number; text: string; is_required?: boolean }> =
+    questionsResponse?.data || [];
+
   const totalSteps = questions.length;
 
   const [currentStep, setCurrentStep] = useState(1);
   const [answers, setAnswers] = useState<Record<number, string>>({});
   const [agreedToDisclaimer, setAgreedToDisclaimer] = useState(false);
 
-  const handleNext = () => {
+  const currentQuestion = questions[currentStep - 1];
+
+  const handleNext = async () => {
     if (currentStep < totalSteps) {
       setCurrentStep(currentStep + 1);
     } else {
-      // Submit assessment
+      // Submission payload formatted exactly as expected by API
       const submissionPayload = {
-        programId: id,
-        programTitle: programTitle,
-        answers: answers,
-        agreedToDisclaimer: agreedToDisclaimer,
+        answers: questions.map((q, index) => ({
+          question_id: q.id,
+          answer: answers[index + 1] || "",
+        })),
       };
-      console.log("Submitting Assessment:", submissionPayload);
 
-      navigate(`/dashboard/user/program/${id || "mental-health"}/roadmap`);
+      try {
+        await submitProgramPlan({
+          program_id: id,
+          data: submissionPayload,
+        }).unwrap();
+        navigate(`/dashboard/user/program/${id}/roadmap`);
+      } catch (error) {
+        console.error("Failed to submit assessment:", error);
+      }
     }
   };
 
@@ -95,21 +64,51 @@ export default function ProgramAssessment() {
       [currentStep]: e.target.value,
     });
   };
-  console.log(answers);
+
   const isNextDisabled =
     !agreedToDisclaimer ||
     !(answers[currentStep] && answers[currentStep].trim().length > 0);
+
   const tooltipMessage = !agreedToDisclaimer
     ? "Please agree to the disclaimer before proceeding."
     : "Please answer the current question before proceeding.";
+
+  // Loading state
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center p-6">
+        <Loader2 className="w-10 h-10 text-blue-500 animate-spin mb-4" />
+        <p className="text-zinc-400 text-lg">Loading assessment questions...</p>
+      </div>
+    );
+  }
+
+  // Empty state
+  if (!questions || questions.length === 0) {
+    return (
+      <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center p-6 text-center">
+        <h2 className="text-2xl font-bold mb-2">No Questions Found</h2>
+        <p className="text-zinc-400 mb-6">
+          There are no assessment questions available for this program.
+        </p>
+        <Button
+          onClick={() => navigate(`/dashboard/user/program/${id}`)}
+          className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-full"
+        >
+          Go Back
+        </Button>
+      </div>
+    );
+  }
+
   return (
-    <div className="min-h-screen bg-black text-white p-6 md:p-10  max-w-7xl mx-auto">
+    <div className="min-h-screen bg-black text-white p-6 md:p-10 max-w-7xl mx-auto">
       {/* Header */}
       <div className="mb-10">
         <span className="text-blue-500 text-sm font-bold tracking-wider uppercase mb-2 block">
-          {programTitle}
+          Program Assessment
         </span>
-        <h1 className=" text-[#FFFFFF] text-5xl font-medium mb-2">
+        <h1 className="text-[#FFFFFF] text-5xl font-medium mb-2">
           Detailed Assessment
         </h1>
         <p className="text-[#9F9FA9] text-md font-['inter']">
@@ -165,7 +164,7 @@ export default function ProgramAssessment() {
 
         {/* Question */}
         <h2 className="text-xl font-semibold text-white mb-6">
-          {questions[currentStep - 1]}
+          {currentQuestion?.text}
         </h2>
 
         {/* Text Area */}
@@ -188,15 +187,24 @@ export default function ProgramAssessment() {
           <div className="relative flex-1 group">
             <Button
               onClick={handleNext}
-              disabled={isNextDisabled}
-              className="bg-blue-600 hover:bg-blue-700 text-white w-full py-6 rounded-full font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+              disabled={isNextDisabled || isSubmitting}
+              className="bg-blue-600 hover:bg-blue-700 text-white w-full py-6 rounded-full font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 cursor-pointer"
             >
-              {currentStep === totalSteps ? "Submit Assessment" : "Next"}
+              {isSubmitting ? (
+                <>
+                  <Loader2 className="w-5 h-5 animate-spin" />
+                  Submitting Assessment...
+                </>
+              ) : currentStep === totalSteps ? (
+                "Submit Assessment"
+              ) : (
+                "Next"
+              )}
             </Button>
 
-            {isNextDisabled && (
-              <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block">
-                <div className="bg-gray-500 text-white text-xs px-3 py-2 rounded-md whitespace-nowrap">
+            {isNextDisabled && !isSubmitting && (
+              <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block z-20">
+                <div className="bg-gray-800 text-white text-xs px-3 py-2 rounded-md whitespace-nowrap border border-white/10 shadow-lg">
                   {tooltipMessage}
                 </div>
               </div>

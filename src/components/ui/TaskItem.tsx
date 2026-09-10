@@ -28,30 +28,4 @@ export function TaskItem({ title, category, date }: TaskItemProps) {
   );
 }
 
-// Usage in your dashboard:
-export function UpcomingTasksList() {
-  const tasks = [
-    {
-      title: "Complete Health Assessment",
-      category: "Health & Fitness",
-      date: "Today",
-    },
-    {
-      title: "Watch Introduction Video",
-      category: "Career Preparation",
-      date: "Tomorrow",
-    },
-    { title: "Set Weekly Goals", category: "Mental Health", date: "Jun 12" },
-  ];
 
-  return (
-    <div className="bg-[#0D1526] border border-[#FFFFFF0F] rounded-2xl p-6">
-      <h2 className="text-xl font-semibold text-white mb-6">Upcoming Tasks</h2>
-      <div className="space-y-3">
-        {tasks.map((task, i) => (
-          <TaskItem key={i} {...task} />
-        ))}
-      </div>
-    </div>
-  );
-}

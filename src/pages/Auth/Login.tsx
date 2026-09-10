@@ -7,6 +7,7 @@ import { toast } from "sonner";
 
 import { AuthLayout } from "@/pages/Auth/components/AuthLayout";
 import { FormCard } from "@/pages/Auth/components/FormCard";
+import { GoogleAuthButton } from "@/pages/Auth/components/GoogleAuthButton";
 import { Form } from "@/components/ui/form";
 import { FormInput } from "@/components/ui/FormInput";
 import { useLoginUserMutation } from "@/redux/features/auth/auth.api";
@@ -193,13 +194,7 @@ export const Login = () => {
             </div>
 
             {/* Google Login */}
-            <button
-              type="button"
-              className="w-full flex items-center justify-center gap-3 bg-blue-600/10 border border-blue-600/20 text-white py-3 rounded-full hover:bg-blue-600/20 transition-all"
-            >
-              <img src="/Google.png" alt="Google" className="w-5 h-5" />
-              Google
-            </button>
+            <GoogleAuthButton />
 
             {/* Register Footer */}
             <p className="text-center text-gray-400 text-sm">

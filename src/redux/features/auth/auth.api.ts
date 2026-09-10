@@ -52,6 +52,13 @@ const authApi = baseApi.injectEndpoints({
       }),
     }),
 
+    googleLogin: builder.mutation({
+      query: (idToken: string) => ({
+        url: "/auth/login/google/",
+        method: "POST",
+        data: { id_token: idToken },
+      }),
+    }),
     myProfile: builder.query({
       query: () => ({
         url: "/auth/profile/",
@@ -65,6 +72,7 @@ export const {
   useVerifyOTPMutation,
   useResendOTPMutation,
   useLoginUserMutation,
+  useGoogleLoginMutation,
   useMyProfileQuery,
   useForgetPasswordUserMutation,
   useUserSecurityPasswordChangeMutation,

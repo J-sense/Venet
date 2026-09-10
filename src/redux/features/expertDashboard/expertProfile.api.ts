@@ -109,6 +109,13 @@ const expertProfileApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["ExpertProfile", "User"],
     }),
+    expertsOverView: builder.query({
+      query: () => ({
+        url: `/auth/expert-dashboard/`,
+        method: "GET",
+      }),
+
+    })
   }),
 });
 
@@ -127,4 +134,5 @@ export const {
   useAddCertificationMutation,
   useUpdateCertificationMutation,
   useDeleteCertificationMutation,
+  useExpertsOverViewQuery
 } = expertProfileApi;

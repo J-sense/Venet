@@ -157,6 +157,51 @@ const userProfileApi = baseApi.injectEndpoints({
       }),
       providesTags: ["Resume", "TalentPortal"],
     }),
+    startProgrameQuestions: builder.query({
+      query: (program_id) => ({
+        url: `/programs/${program_id}/plan/questions/`,
+        method: "GET",
+      }),
+    }),
+    submitProgramPlan: builder.mutation({
+      query: ({ program_id, data }) => ({
+        url: `/programs/${program_id}/plan/`,
+        method: "POST",
+        data,
+      }),
+      invalidatesTags: ["ProgramPlan"],
+    }),
+    getProgramPlan: builder.query({
+      query: (program_id) => ({
+        url: `/programs/${program_id}/plan/`,
+        method: "GET",
+      }),
+      providesTags: ["ProgramPlan"],
+    }),
+    toggleTaskCompletion: builder.mutation({
+      query: ({ program_id, data }) => ({
+        url: `/programs/${program_id}/plan/tasks/toggle/`,
+        method: "POST",
+        data,
+      }),
+      invalidatesTags: ["ProgramPlan"],
+    }),
+    getUserDashboard: builder.query({
+      query: () => ({
+        url: `/auth/dashboard/`,
+        method: "GET",
+
+      }),
+
+    }),
+    getAllCertificate: builder.query({
+      query: () => ({
+        url: "/certificates/",
+        method: "GET",
+      }),
+      providesTags: ["ProgramPlan"],
+    })
+
   }),
 });
 
@@ -177,5 +222,11 @@ export const {
   useUploadPdfForAiGenerateMutation,
   useGeneretateResumeByMutation,
   useGeneretateCoverLetterByMutation,
-  useGetAllResumeListQuery
+  useGetAllResumeListQuery,
+  useStartProgrameQuestionsQuery,
+  useSubmitProgramPlanMutation,
+  useGetProgramPlanQuery,
+  useToggleTaskCompletionMutation,
+  useGetUserDashboardQuery,
+  useGetAllCertificateQuery
 } = userProfileApi;

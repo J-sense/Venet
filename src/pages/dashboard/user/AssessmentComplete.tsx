@@ -6,11 +6,19 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 interface AssessmentCompleteModalProps {
   isOpen: boolean;
   onClose: () => void;
+  certificate?: {
+    certificate_number?: string;
+    pdf_url?: string;
+    program?: {
+      name?: string;
+    };
+  } | null;
 }
 
 export default function AssessmentCompleteModal({
   isOpen,
   onClose,
+  certificate,
 }: AssessmentCompleteModalProps) {
   const [showConfetti, setShowConfetti] = useState(false);
 
@@ -23,6 +31,13 @@ export default function AssessmentCompleteModal({
       setShowConfetti(false);
     }
   }, [isOpen]);
+
+  const handleViewCertificate = () => {
+    if (certificate?.pdf_url) {
+      window.open(certificate.pdf_url, "_blank", "noopener,noreferrer");
+    }
+    onClose();
+  };
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -76,29 +91,35 @@ export default function AssessmentCompleteModal({
 
             {/* Title */}
             <h1 className="text-[32px] font-bold text-white mb-2 tracking-tight">
-              Assessment Complete!
+              Roadmap Complete!
             </h1>
             <p className="text-[#94A3B8] text-[15px] mb-8 font-medium">
-              Review your mistakes and try again
+              Congratulations! You earned your certificate.
             </p>
 
-            {/* Leaderboard Card */}
+            {/* Certificate Summary Card */}
             <div className="bg-[#0F1423] w-full rounded-3xl p-6 mb-8 text-left shadow-lg border border-white/5">
-              <h3 className="text-white font-bold text-xl mb-8">Leaderboard</h3>
+              <h3 className="text-white font-bold text-xl mb-4">Official Certificate</h3>
 
-              <div className="flex justify-around items-center mb-8 px-2">
+              {certificate?.certificate_number && (
+                <div className="mb-4">
+                  <div className="text-xs text-[#64748B] uppercase tracking-wider mb-1">
+                    Certificate Number
+                  </div>
+                  <div className="text-sm font-mono font-semibold text-blue-400">
+                    {certificate.certificate_number}
+                  </div>
+                </div>
+              )}
+
+              <div className="flex justify-around items-center mb-6 px-2">
                 <div className="text-center">
-                  <div className="text-[34px] font-bold text-white mb-1 leading-none">
-                    100
+                  <div className="text-[28px] font-bold text-white mb-1 leading-none">
+                    100%
                   </div>
                   <div className="text-[13px] text-[#64748B]">Complete</div>
                 </div>
-                <div className="text-center">
-                  <div className="text-[34px] font-bold text-white mb-1 leading-none">
-                    100%
-                  </div>
-                  <div className="text-[13px] text-[#64748B]">Success Rate</div>
-                </div>
+
               </div>
 
               <div className="h-px bg-white/10 w-full mb-6" />
@@ -116,10 +137,10 @@ export default function AssessmentCompleteModal({
 
             {/* View Certificate Button */}
             <Button
-              onClick={onClose}
-              className="w-full bg-[#0070F3] hover:bg-[#0060df] text-white h-14 text-base font-semibold rounded-full shadow-[0_4px_14px_0_rgba(0,112,243,0.39)] transition-all"
+              onClick={handleViewCertificate}
+              className="w-full bg-[#0070F3] hover:bg-[#0060df] text-white h-14 text-base font-semibold rounded-full shadow-[0_4px_14px_0_rgba(0,112,243,0.39)] transition-all cursor-pointer"
             >
-              View Certificate
+              View Certificate PDF
             </Button>
           </div>
         </div>

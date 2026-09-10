@@ -1,7 +1,12 @@
 /* eslint-disable react-hooks/set-state-in-effect */
 import { Button } from "@/components/ui/button";
 import AssessmentCompleteModal from "@/pages/dashboard/user/AssessmentComplete";
-import { ChevronDown, ChevronUp, Trophy, Zap } from "lucide-react";
+import {
+  useGetProgramPlanQuery,
+  useSubmitProgramPlanMutation,
+  useToggleTaskCompletionMutation,
+} from "@/redux/features/userDashboard/userProfile.api";
+import { ChevronDown, ChevronUp, Loader2, Trophy, Zap } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 
@@ -10,115 +15,166 @@ const programTitles: Record<string, string> = {
   "health-&-fitness": "Health & Fitness",
 };
 
-const roadmapData = [
-  {
-    week: 1,
-    title: "Foundation & Baseline",
-    tasks: [
-      "Complete body composition assessment",
-      "Set up nutrition tracking app",
-      "Establish sleep schedule",
-      "Begin daily 20-min walks",
-      "Log baseline measurements",
-    ],
-  },
-  {
-    week: 2,
-    title: "Building Habits",
-    tasks: [
-      "Follow custom meal plan for 5 days",
-      "Complete 3 strength training sessions",
-      "Drink 2 liters of water daily",
-      "Read provided material on macros",
-      "End-of-week reflection journal",
-    ],
-  },
-  {
-    week: 3,
-    title: "Intensity Ramp-Up",
-    tasks: [
-      "Increase daily walk to 30 mins",
-      "Add 1 HIIT session",
-      "Meal prep for the entire week",
-      "Try one new healthy recipe",
-      "Check-in with expert coach",
-    ],
-  },
-  {
-    week: 4,
-    title: "Progress Evaluation",
-    tasks: [
-      "Retake body composition assessment",
-      "Compare baseline measurements",
-      "Review habit consistency",
-      "Set goals for next phase",
-      "Celebrate milestone completion!",
-    ],
-  },
-];
-
 export default function ProgramRoadmap() {
   const { id } = useParams();
-  // const navigate = useNavigate();
+  const { data: planResponse, isLoading } = useGetProgramPlanQuery(id);
+  const [submitProgramPlan, { isLoading: isRegenerating }] = useSubmitProgramPlanMutation();
+  const [toggleTaskCompletion] = useToggleTaskCompletionMutation();
+
+  // Handle both nested plan structure { data: { plan: {...}, certificate: {...} } } and flat structure
+  const rawData = planResponse?.data;
+  const planData = rawData?.plan || rawData;
+  const certificateData = rawData?.certificate;
+
   const title = programTitles[id || ""] || "Program";
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [expandedWeeks, setExpandedWeeks] = useState<Record<number, boolean>>({
     1: true,
   });
-  const [completedTasks, setCompletedTasks] = useState<Record<string, boolean>>(
-    {},
-  );
+  const [completedTasks, setCompletedTasks] = useState<Record<string, boolean>>({});
 
-  const totalTasks = roadmapData.reduce(
-    (acc, week) => acc + week.tasks.length,
-    0,
-  );
+  // Dynamic weeks from API response
+  const weeks: Array<{
+    week: number;
+    title?: string;
+    tasks: Array<{ index?: number; text: string; completed?: boolean }>;
+  }> = planData?.weeks || [];
+
+  // Initialize initial completed tasks state from API response when loaded
+  useEffect(() => {
+    if (planData?.weeks) {
+      const initialCompleted: Record<string, boolean> = {};
+      planData.weeks.forEach((weekItem: any) => {
+        weekItem.tasks?.forEach((task: any, idx: number) => {
+          const taskIdx = task.index !== undefined ? task.index : idx;
+          const taskId = `${weekItem.week}-${taskIdx}`;
+          if (task.completed) {
+            initialCompleted[taskId] = true;
+          }
+        });
+      });
+      setCompletedTasks(initialCompleted);
+    }
+  }, [planData]);
+
+  const totalTasks =
+    planData?.progress?.total_tasks ||
+    weeks.reduce((acc, week) => acc + (week.tasks?.length || 0), 0);
+
   const completedCount = Object.values(completedTasks).filter(Boolean).length;
-  const progressPercent = Math.round((completedCount / totalTasks) * 100);
 
-  const isFullyCompleted = completedCount === totalTasks;
+  const progressPercent =
+    planData?.progress?.percentage !== undefined
+      ? Math.round(planData.progress.percentage)
+      : totalTasks > 0
+        ? Math.round((completedCount / totalTasks) * 100)
+        : 0;
+
+  const isFullyCompleted =
+    planData?.progress?.is_complete ||
+    rawData?.is_complete ||
+    (totalTasks > 0 && completedCount === totalTasks);
 
   const toggleWeek = (week: number) => {
     setExpandedWeeks((prev) => ({ ...prev, [week]: !prev[week] }));
   };
 
-  const toggleTask = (week: number, taskIndex: number) => {
+  const toggleTask = async (week: number, taskIndex: number) => {
     const taskId = `${week}-${taskIndex}`;
-    setCompletedTasks((prev) => ({ ...prev, [taskId]: !prev[taskId] }));
+    const nextStatus = !completedTasks[taskId];
+
+    setCompletedTasks((prev) => ({ ...prev, [taskId]: nextStatus }));
+
+    try {
+      await toggleTaskCompletion({
+        program_id: id,
+        data: {
+          week: week,
+          task_index: taskIndex,
+          completed: nextStatus,
+        },
+      }).unwrap();
+    } catch (error) {
+      console.error("Failed to toggle task status:", error);
+      setCompletedTasks((prev) => ({ ...prev, [taskId]: !nextStatus }));
+    }
   };
 
-  // Auto-expand next week when current week is completed (optional nice touch)
+  const handleRegenerate = async () => {
+    if (!id) return;
+    try {
+      const formattedAnswers = planData?.answers
+        ? Array.isArray(planData.answers)
+          ? planData.answers
+          : Object.entries(planData.answers).map(([_, answer], index) => ({
+            question_id: index + 1,
+            answer: answer as string,
+          }))
+        : [];
+
+      await submitProgramPlan({
+        program_id: id,
+        data: { answers: formattedAnswers },
+      }).unwrap();
+    } catch (error) {
+      console.error("Failed to regenerate program plan:", error);
+    }
+  };
+
+  // Auto-expand next week when current week is completed
   useEffect(() => {
-    if (isFullyCompleted) return;
+    if (isFullyCompleted || totalTasks === 0) return;
 
     const currentWeek = Math.floor(completedCount / 5) + 1;
-    if (currentWeek <= 4 && !expandedWeeks[currentWeek]) {
+    if (currentWeek <= weeks.length && !expandedWeeks[currentWeek]) {
       setExpandedWeeks((prev) => ({ ...prev, [currentWeek]: true }));
     }
-  }, [completedCount, expandedWeeks, isFullyCompleted]);
+  }, [completedCount, expandedWeeks, isFullyCompleted, totalTasks, weeks.length]);
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center p-6">
+        <Loader2 className="w-10 h-10 text-blue-500 animate-spin mb-4" />
+        <p className="text-zinc-400 text-lg">Loading your personalized program roadmap...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-black text-white p-6 md:p-10 font-['Inter'] max-w-7xl mx-auto pb-32">
       {/* Header section */}
       <div className="mb-8">
-        <div className="flex items-center gap-2 text-blue-400 font-semibold text-sm mb-2 uppercase tracking-wider">
-          <Zap className="w-4 h-4 fill-blue-500 text-blue-500" />
-          Re-Generate
-        </div>
+        <button
+          onClick={handleRegenerate}
+          disabled={isRegenerating}
+          className="flex items-center gap-2 text-blue-400 font-semibold text-sm mb-2 uppercase tracking-wider hover:text-blue-300 transition-colors disabled:opacity-50"
+        >
+          {isRegenerating ? (
+            <Loader2 className="w-4 h-4 animate-spin text-blue-500" />
+          ) : (
+            <Zap className="w-4 h-4 fill-blue-500 text-blue-500" />
+          )}
+          {isRegenerating ? "Regenerating..." : "Re-Generate"}
+        </button>
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
           <div>
             <h1 className="text-4xl font-semibold mb-2">
               Your <span className="text-blue-500">{title}</span> Roadmap
             </h1>
             <p className="text-[#90A1B9] text-sm">
-              Personalized 4-week action plan tailored to your assessment
+              Personalized {planData?.duration_weeks || weeks.length || 4}-week action plan tailored to your assessment
               responses.
             </p>
           </div>
           <div className="flex items-center gap-6 text-sm font-medium">
-            <button className="text-blue-400 hover:text-blue-300 transition-colors">
-              Auto generate
+            <button
+              onClick={handleRegenerate}
+              disabled={isRegenerating}
+              className="text-blue-400 hover:text-blue-300 transition-colors disabled:opacity-50 flex items-center gap-1"
+            >
+              {isRegenerating && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
+              {isRegenerating ? "Generating..." : "Auto generate"}
             </button>
             <button className="text-blue-400 hover:text-blue-300 transition-colors">
               View Experts
@@ -156,7 +212,7 @@ export default function ProgramRoadmap() {
               <circle cx="12" cy="12" r="10" />
               <polyline points="12 6 12 12 16 14" />
             </svg>
-            4 weeks
+            {planData?.duration_weeks || weeks.length || 4} weeks
           </span>
           <span className="flex items-center gap-2">
             <svg
@@ -216,9 +272,10 @@ export default function ProgramRoadmap() {
 
       {/* Weekly Sections */}
       <div className="space-y-4">
-        {roadmapData.map((weekData) => {
+        {weeks.map((weekData) => {
           const isExpanded = expandedWeeks[weekData.week] ?? false;
-          const weekCompletedTasks = weekData.tasks.filter(
+          const weekTasks = weekData.tasks || [];
+          const weekCompletedTasks = weekTasks.filter(
             (_, idx) => completedTasks[`${weekData.week}-${idx}`],
           ).length;
 
@@ -238,11 +295,10 @@ export default function ProgramRoadmap() {
                   </div>
                   <div>
                     <h3 className="text-white font-medium text-[15px]">
-                      Week {weekData.week}: {weekData.title}
+                      Week {weekData.week} {weekData.title ? `: ${weekData.title}` : ""}
                     </h3>
                     <p className="text-[#62748E] text-xs mt-1">
-                      {weekCompletedTasks}/{weekData.tasks.length} tasks
-                      completed
+                      {weekCompletedTasks}/{weekTasks.length} tasks completed
                     </p>
                   </div>
                 </div>
@@ -259,9 +315,10 @@ export default function ProgramRoadmap() {
               {isExpanded && (
                 <div className="px-5 pb-6 pt-2 border-t border-[#1E293B]">
                   <div className="space-y-4 ml-14">
-                    {weekData.tasks.map((task, idx) => {
+                    {weekTasks.map((taskItem, idx) => {
                       const taskId = `${weekData.week}-${idx}`;
                       const isChecked = !!completedTasks[taskId];
+                      const taskText = typeof taskItem === "string" ? taskItem : taskItem.text;
 
                       return (
                         <label
@@ -291,7 +348,7 @@ export default function ProgramRoadmap() {
                           <span
                             className={`text-sm transition-colors ${isChecked ? "text-slate-400 line-through" : "text-slate-200 group-hover:text-white"}`}
                           >
-                            {task}
+                            {taskText}
                           </span>
                         </label>
                       );
@@ -312,20 +369,32 @@ export default function ProgramRoadmap() {
           </div>
           <h2 className="text-3xl font-medium mb-2">Roadmap Complete!</h2>
           <p className="text-[#90A1B9] mb-8 max-w-md mx-auto">
-            You've completed all tasks. Your certificate is ready.
+            You've completed all tasks. Your official certificate is ready to view and download.
           </p>
-          <Button
-            onClick={() => setIsModalOpen(true)}
-            className="bg-[#155DFC] hover:bg-blue-700 text-white px-10 py-6 rounded-2xl font-normal text-lg "
-          >
-            View Certificate
-          </Button>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Button
+              onClick={() => setIsModalOpen(true)}
+              className="bg-[#155DFC] hover:bg-blue-700 text-white px-8 py-6 rounded-2xl font-normal text-lg cursor-pointer"
+            >
+              View Certificate Details
+            </Button>
+            {certificateData?.pdf_url && (
+              <a
+                href={certificateData.pdf_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center bg-white/10 hover:bg-white/20 text-white px-8 py-4 rounded-2xl font-medium text-base transition-colors"
+              >
+                Open PDF Directly
+              </a>
+            )}
+          </div>
         </div>
       )}
 
       {/* Floating Save Button */}
       {!isFullyCompleted && (
-        <Button className="fixed bottom-8 right-8 bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-medium transition-all shadow-[0_0_20px_rgba(37,99,235,0.4)]">
+        <Button className=" hidden fixed bottom-8 right-8 bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-medium transition-all shadow-[0_0_20px_rgba(37,99,235,0.4)]">
           Save Progress
         </Button>
       )}
@@ -334,6 +403,7 @@ export default function ProgramRoadmap() {
       <AssessmentCompleteModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
+        certificate={certificateData}
       />
     </div>
   );

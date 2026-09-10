@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button } from "@/components/ui/button";
+import { useGetProgramPlanQuery, useStartProgrameQuestionsQuery } from "@/redux/features/userDashboard/userProfile.api";
 import { ArrowLeft, Brain, HeartPulse, Briefcase, GraduationCap } from "lucide-react";
 import { useNavigate, useParams } from "react-router";
 
@@ -118,11 +119,23 @@ const programData: Record<string, any> = {
   },
 };
 
+
 export default function ProgramDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
-
   const program = programData[id || ""] || programData["mental-health"];
+  const { data: getMyPlan } = useGetProgramPlanQuery(id);
+
+  const isGenerated = Boolean(getMyPlan?.data?.is_generated);
+  console.log("isGenerated:", isGenerated);
+
+  const handleStartOrContinue = () => {
+    if (isGenerated) {
+      navigate(`/dashboard/user/program/${id || "mental-health"}/roadmap`);
+    } else {
+      navigate(`/dashboard/user/program/${id || "mental-health"}/assessment`);
+    }
+  };
 
   return (
     // min-h-screen keeps it full height; padding scales from 4 to 12
@@ -130,7 +143,7 @@ export default function ProgramDetails() {
       {/* Back Button: Stays consistent, but maybe smaller on mobile */}
       <button
         onClick={() => navigate("/dashboard/user")}
-        className="flex items-center gap-2 bg-[#1E293B] hover:bg-[#334155] text-blue-400 px-4 py-2 rounded-full text-sm font-medium transition-colors mb-8"
+        className="flex items-center gap-2 bg-[#1E293B] hover:bg-[#334155] text-blue-400 px-4 py-2 rounded-full text-sm font-medium transition-colors mb-8 cursor-pointer"
       >
         <ArrowLeft className="w-4 h-4" /> Back
       </button>
@@ -172,16 +185,12 @@ export default function ProgramDetails() {
         ))}
       </div>
 
-      {/* Start Button: Full width on mobile, auto-width on tablet+ */}
+      {/* Start or Continue Button */}
       <Button
-        onClick={() => {
-          navigate(
-            `/dashboard/user/program/${id || "mental-health"}/assessment`,
-          );
-        }}
-        className="w-full md:w-auto bg-[#155DFC] hover:bg-blue-700 !px-10 sm:!px-14 text-white py-4 sm:py-6 rounded-full font-medium flex items-center justify-center gap-2 transition-all shadow-[0_0_20px_rgba(37,99,235,0.4)]"
+        onClick={handleStartOrContinue}
+        className="w-full md:w-auto bg-[#155DFC] hover:bg-blue-700 !px-10 sm:!px-14 text-white py-4 sm:py-6 rounded-full font-medium flex items-center justify-center gap-2 transition-all shadow-[0_0_20px_rgba(37,99,235,0.4)] cursor-pointer"
       >
-        Start Program <ArrowLeft className="w-4 h-4 rotate-180" />
+        {isGenerated ? "View Program Roadmap" : "Start Program"} <ArrowLeft className="w-4 h-4 rotate-180" />
       </Button>
     </div>
   );

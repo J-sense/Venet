@@ -11,6 +11,7 @@ import {
 import { Calendar, DollarSign, Star, Users } from "lucide-react";
 import { toast } from "sonner";
 import { StripeSetupCard } from "./components/StripeSetupCard";
+import { useExpertsOverViewQuery } from "@/redux/features/expertDashboard/expertProfile.api";
 
 export default function ExpertOverview() {
   const { data: getStripe, isLoading: isLoadingStripe } =
@@ -18,7 +19,9 @@ export default function ExpertOverview() {
   console.log(getStripe);
   const [createOnboarding, { isLoading: isOnboarding }] =
     useExpertOnBoardingMutation();
-
+  const { data: expertsOverView, isLoading: isLoadingOverView } =
+    useExpertsOverViewQuery(undefined);
+  console.log(expertsOverView?.data?.summary?.total_earnings, "expertsOverView")
   const handleStripeConnect = async () => {
     try {
       const res = await createOnboarding(undefined).unwrap();
@@ -38,27 +41,29 @@ export default function ExpertOverview() {
   const stats = [
     {
       title: "Total Earnings",
-      value: "$12,450",
+      value:
+        `$ ${expertsOverView?.data?.summary?.total_earnings}`
+      ,
       subtitle: "All time",
       icon: <DollarSign className="w-6 h-6" />,
-      trend: "+18% this month",
+
       href: "earnings",
     },
     {
       title: "Total Clients",
-      value: "127",
+      value: `${expertsOverView?.data?.summary?.total_clients}`,
       subtitle: "All time",
       icon: <Users className="w-6 h-6" />,
     },
     {
       title: "Rating",
-      value: "4.9",
+      value: `${expertsOverView?.data?.summary?.review_count}`,
       subtitle: "Based on 127 reviews",
       icon: <Star className="w-6 h-6" />,
     },
     {
       title: "This Week",
-      value: "9",
+      value: `${expertsOverView?.data?.summary?.this_week_consultations}`,
       subtitle: "Consultations",
       icon: <Calendar className="w-6 h-6" />,
     },
@@ -85,7 +90,7 @@ export default function ExpertOverview() {
                 value={stat.value}
                 subtitle={stat.subtitle}
                 icon={stat.icon}
-                trend={stat.trend}
+
                 href={stat?.href}
               />
             ))}
