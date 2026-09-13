@@ -68,6 +68,7 @@ import { ExpertsDetails, ExpertsMain } from "./pages/experts";
 import NotFoundPage from "./pages/NotFoundPage";
 import PrivacyMain from "./pages/privacyPolicy/PrivacyMain";
 import TermsMain from "./pages/termsCondition/TermsMain";
+import TalentPortalInfoPage from "./pages/TalentPortalInfoPage";
 import GraphEarnignList from "./pages/dashboard/experts/overView/components/GraphEarnignList";
 import AllPrograms from "./pages/AllPrograms/AllPrograms";
 import PrivateRoute from "./routes/PrivateRoute";
@@ -90,6 +91,7 @@ export const App = () => {
         />
         <Route path="/programs/career" element={<CareerPage />} />
         <Route path="/programs/all-programs" element={<AllPrograms />} />
+        <Route path="/talent-portal" element={<TalentPortalInfoPage />} />
         <Route path="/experts" element={<ExpertsMain />} />
         <Route path="/about" element={<AboutUsMain />} />
         <Route path="/founder-story" element={<FounderStoryPage />} />

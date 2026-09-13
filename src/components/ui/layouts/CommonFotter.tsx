@@ -48,22 +48,26 @@ export const Footer: React.FC = () => {
               </Link>
 
               {/* Instagram */}
-              <Link
-                to="#"
+              <a
+                href="https://www.instagram.com/vnet_karmalife8"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-9 h-9 flex items-center justify-center rounded-full bg-[#2B7FFF] hover:bg-[#1a5ed9] transition-all duration-200"
                 aria-label="Instagram"
               >
                 <Instagram className="w-5 h-5 text-white" />
-              </Link>
+              </a>
 
               {/* LinkedIn */}
-              <Link
-                to="#"
+              <a
+                href="https://www.linkedin.com/company/vnet-the-virtual-network-of-extreme-transformation/"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-9 h-9 flex items-center justify-center rounded-full bg-[#2B7FFF] hover:bg-[#1a5ed9] transition-all duration-200"
                 aria-label="LinkedIn"
               >
                 <Linkedin className="w-5 h-5 text-white" />
-              </Link>
+              </a>
             </div>
           </div>
 
@@ -189,10 +193,31 @@ export const Footer: React.FC = () => {
                   />
                 </svg>
                 <a
-                  href="mailto:privacy@vnet.com"
+                  href="mailto:support@vn4et.com"
                   className="hover:text-white transition-colors break-all"
                 >
-                  privacy@vnet.com
+                  support@vn4et.com
+                </a>
+              </li>
+              <li className="flex items-center gap-2.5">
+                <svg
+                  className="w-4 h-4 text-[#2B7FFF] shrink-0"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                  />
+                </svg>
+                <a
+                  href="mailto:info@vn4et.com"
+                  className="hover:text-white transition-colors break-all"
+                >
+                  info@vn4et.com
                 </a>
               </li>
               <li className="flex items-center gap-2.5">

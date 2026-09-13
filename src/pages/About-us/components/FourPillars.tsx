@@ -33,10 +33,10 @@ export const FourPillars = () => {
             <p className="self-stretch text-start py-3 text-slate-500 text-base font-normal leading-6">
               {pillar.desc}
             </p>
-            <Link to={"/shopping-cart"}>
-              <button className="w-36 px-2.5 py-2 bg-[#0A66C2] hover:bg-[#085299] rounded-[32px] inline-flex justify-center items-center transition-colors">
+            <Link to={pillar.link || "/programs/all-programs"}>
+              <button className="w-36 px-2.5 py-2 bg-[#0A66C2] hover:bg-[#085299] rounded-[32px] inline-flex justify-center items-center transition-colors cursor-pointer">
                 <span className="text-white text-base font-medium font-['Inter'] leading-6">
-                  Buy Now
+                  Learn More
                 </span>
               </button>
             </Link>

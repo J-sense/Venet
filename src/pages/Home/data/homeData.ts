@@ -105,7 +105,7 @@ export interface FeedbackItem {
 export const customerReviews: FeedbackItem[] = [
   {
     quote:
-      "Before joining FitFlex, I was stuck in a fitness rut. But the trainers here are amazing, and the community is so supportive! It's like a second home to me now.",
+      "Before joining vNET, I was stuck in a fitness rut. But the trainers here are amazing, and the community is so supportive! It's like a second home to me now.",
     rating: 5,
     author: "Joanne",
     image:
@@ -113,7 +113,7 @@ export const customerReviews: FeedbackItem[] = [
   },
   {
     quote:
-      "I used to dread going to the gym, but FitFlex changed that for me. This variety of classes ensures I never get bored, and I genuinely look forward to each workout session!",
+      "I used to dread going to the gym, but vNET changed that for me. This variety of classes ensures I never get bored, and I genuinely look forward to each workout session!",
     rating: 5,
     author: "Caleb",
     image:
@@ -121,7 +121,7 @@ export const customerReviews: FeedbackItem[] = [
   },
   {
     quote:
-      "Not only have I seen incredible physical results, but I've also gained a newfound confidence and sense of accomplishment. FitFlex Gym isn't just a place to work out!",
+      "Not only have I seen incredible physical results, but I've also gained a newfound confidence and sense of accomplishment. vNET isn't just a place to work out!",
     rating: 5,
     author: "Donna",
     image:

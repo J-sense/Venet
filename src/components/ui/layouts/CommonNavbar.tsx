@@ -122,6 +122,9 @@ export const CommonNavbar = () => {
               </div>
             </div>
 
+            <NavLink to="/talent-portal" className={navLinkStyles}>
+              Talent Portal
+            </NavLink>
             <NavLink to="/experts" className={navLinkStyles}>
               Experts
             </NavLink>
@@ -275,6 +278,15 @@ export const CommonNavbar = () => {
             </div>
           </div>
 
+          <NavLink
+            to="/talent-portal"
+            onClick={() => setMobileMenuOpen(false)}
+            className={({ isActive }) =>
+              `text-3xl font-extrabold tracking-tight transition-all duration-300 ${isActive ? "text-[#007AFF] pl-2 border-l-4 border-[#007AFF]" : "text-gray-200 hover:text-white"}`
+            }
+          >
+            Talent Portal
+          </NavLink>
           <NavLink
             to="/experts"
             onClick={() => setMobileMenuOpen(false)}

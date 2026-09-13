@@ -39,21 +39,16 @@ export default function BannerV2() {
               <Sparkles className="w-4 h-4 md:w-5 md:h-5" />
             </span>
             <span className="uppercase text-[10px] md:text-sm font-medium tracking-widest text-[#FFFFFFE5]">
-              TRANSFORM YOUR LIFE JOURNEY
+              TOTAL TRANSFORMATION JOURNEY
             </span>
           </div>
 
-          <h1 className="text-4xl md:text-6xl lg:text-[70px] font-bold leading-tight lg:leading-[1.1] text-white px-2">
-            Sacrifice Who You Are Today <br className="hidden md:block" />
-            For What You Can Become With{" "}
-            <span className="text-[#2B7FFF]">VNET</span>
+          <h1 className="text-4xl md:text-6xl lg:text-[70px] font-bold leading-tight lg:leading-[1.1] text-white px-2 capitalize">
+            Start Your Transformation <span className="text-[#2B7FFF]">Journey</span>
           </h1>
 
           <p className="text-sm md:text-base lg:text-lg text-[#FFFFFFB2] max-w-2xl text-center px-4 leading-relaxed">
-            Join the vNET community and take charge of your transformation
-            journey. We empower you with personalized programs across Health &
-            Fitness, Mental Health, Educational Services, and Career growth, all
-            backed by expert support.
+            And get your personalized transformation roadmap. Experience a holistic journey across Health & Fitness, Mental Health, Educational Services, and Career growth with expert guidance every step of the way.
           </p>
 
           <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-3 md:gap-4 w-full sm:w-auto px-6 sm:px-0 pt-2">
