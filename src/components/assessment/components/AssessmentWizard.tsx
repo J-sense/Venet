@@ -1,9 +1,14 @@
+import { useSubmitAssessmentMutation } from "@/redux/features/assessment/assessment.api";
+import { selectCurrentUser } from "@/redux/features/auth/authSlice";
+import { useAppSelector } from "@/redux/hooks";
+import { CheckCircle2, Sparkles } from "lucide-react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
+import { toast } from "sonner";
 import { assessmentSteps } from "../data/assessmentData";
 import { useAssessment } from "../hooks/useAssessment";
-import { useNavigate } from "react-router";
-import { useSubmitAssessmentMutation } from "@/redux/features/assessment/assessment.api";
-import { toast } from "sonner";
-import { Sparkles } from "lucide-react";
+
+export const GUEST_ASSESSMENT_COMPLETED_KEY = "vnet_free_assessment_submitted";
 
 export default function AssessmentWizard({
   onComplete,
@@ -11,6 +16,19 @@ export default function AssessmentWizard({
   onComplete: () => void;
 }) {
   const navigate = useNavigate();
+  const currentUser = useAppSelector(selectCurrentUser);
+  const [hasAlreadySubmitted, setHasAlreadySubmitted] = useState(false);
+
+  useEffect(() => {
+    // Only enforce 1-time browser limitation for non-logged-in (guest) users
+    if (!currentUser) {
+      const submitted = localStorage.getItem(GUEST_ASSESSMENT_COMPLETED_KEY);
+      if (submitted === "true") {
+        setHasAlreadySubmitted(true);
+      }
+    }
+  }, [currentUser]);
+
   const {
     currentStep,
     answers,
@@ -22,6 +40,12 @@ export default function AssessmentWizard({
   const [submitAssessment, { isLoading }] = useSubmitAssessmentMutation();
 
   const handleSubmit = async () => {
+    if (!currentUser && localStorage.getItem(GUEST_ASSESSMENT_COMPLETED_KEY) === "true") {
+      toast.error("You have already submitted the free assessment from this browser.");
+      setHasAlreadySubmitted(true);
+      return;
+    }
+
     const payload = getFormattedPayload();
     console.log("Submitting assessment payload:", payload);
 
@@ -29,17 +53,20 @@ export default function AssessmentWizard({
       const responseData = await submitAssessment(payload);
       console.log(responseData);
       if (responseData.data?.success) {
+        if (!currentUser) {
+          localStorage.setItem(GUEST_ASSESSMENT_COMPLETED_KEY, "true");
+        }
         toast.success(responseData.data.details);
         onComplete();
         navigate("/subscription-suggestions", {
           state: { assessmentResponse: responseData.data },
         });
       }
-    } catch (error:any) {
+    } catch (error: any) {
       console.log(error);
       toast.error(
         error?.data?.details?.answers ||
-          "An error occurred while submitting the assessment.",
+        "An error occurred while submitting the assessment.",
       );
     }
   };
@@ -63,6 +90,41 @@ export default function AssessmentWizard({
     "opacity-20", // 3. Educational Interests
     "opacity-20", // 4. Career Development
   ];
+
+  if (hasAlreadySubmitted) {
+    return (
+      <div className="relative w-full overflow-hidden min-h-[450px] flex items-center justify-center p-8 text-center bg-[#0B1120]">
+        <div className="relative z-10 max-w-md mx-auto flex flex-col items-center">
+          <div className="w-16 h-16 rounded-full bg-blue-500/10 border border-blue-500/30 flex items-center justify-center mb-5 text-blue-400">
+            <CheckCircle2 className="w-8 h-8" />
+          </div>
+          <h2 className="text-white text-2xl font-bold mb-3">
+            Assessment Already Completed
+          </h2>
+          <p className="text-slate-300 text-sm leading-relaxed mb-6">
+            You have already submitted the free assessment from this browser. Please log in or register an account to view recommendations or take new assessments.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-3 w-full justify-center">
+            <button
+              onClick={() => {
+                onComplete();
+                navigate("/auth/login");
+              }}
+              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-full transition-all text-sm"
+            >
+              Log In
+            </button>
+            <button
+              onClick={onComplete}
+              className="bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium py-3 px-6 rounded-full transition-all text-sm border border-slate-700"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="relative w-full overflow-hidden min-h-[600px] flex justify-center">
