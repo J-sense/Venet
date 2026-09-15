@@ -108,11 +108,11 @@ export default function AssessmentWizard({
             <button
               onClick={() => {
                 onComplete();
-                navigate("/auth/login");
+                navigate("/programs/all-programs");
               }}
               className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-full transition-all text-sm"
             >
-              Log In
+              You can explore all programs here!
             </button>
             <button
               onClick={onComplete}
