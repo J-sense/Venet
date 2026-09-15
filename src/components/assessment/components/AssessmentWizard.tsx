@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/set-state-in-effect */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useSubmitAssessmentMutation } from "@/redux/features/assessment/assessment.api";
 import { selectCurrentUser } from "@/redux/features/auth/authSlice";
 import { useAppSelector } from "@/redux/hooks";
@@ -40,8 +42,13 @@ export default function AssessmentWizard({
   const [submitAssessment, { isLoading }] = useSubmitAssessmentMutation();
 
   const handleSubmit = async () => {
-    if (!currentUser && localStorage.getItem(GUEST_ASSESSMENT_COMPLETED_KEY) === "true") {
-      toast.error("You have already submitted the free assessment from this browser.");
+    if (
+      !currentUser &&
+      localStorage.getItem(GUEST_ASSESSMENT_COMPLETED_KEY) === "true"
+    ) {
+      toast.error(
+        "You have already submitted the free assessment from this browser.",
+      );
       setHasAlreadySubmitted(true);
       return;
     }
@@ -51,7 +58,7 @@ export default function AssessmentWizard({
 
     try {
       const responseData = await submitAssessment(payload);
-      console.log(responseData);
+      // console.log(responseData);
       if (responseData.data?.success) {
         if (!currentUser) {
           localStorage.setItem(GUEST_ASSESSMENT_COMPLETED_KEY, "true");
@@ -61,12 +68,21 @@ export default function AssessmentWizard({
         navigate("/subscription-suggestions", {
           state: { assessmentResponse: responseData.data },
         });
+      } else if (
+        (responseData?.error as any)?.data?.code ===
+        "ASSESSMENT_ALREADY_SUBMITTED"
+      ) {
+        console.log(responseData);
+        setHasAlreadySubmitted(true);
       }
     } catch (error: any) {
-      console.log(error);
+      if (error?.data?.code === "ASSESSMENT_ALREADY_SUBMITTED") {
+        setHasAlreadySubmitted(true);
+      }
+      console.log(error.error);
       toast.error(
         error?.data?.details?.answers ||
-        "An error occurred while submitting the assessment.",
+          "An error occurred while submitting the assessment.",
       );
     }
   };
@@ -102,7 +118,9 @@ export default function AssessmentWizard({
             Assessment Already Completed
           </h2>
           <p className="text-slate-300 text-sm leading-relaxed mb-6">
-            You have already submitted the free assessment from this browser. Please log in or register an account to view recommendations or take new assessments.
+            You have already submitted the free assessment from this browser.
+            Please log in or register an account to view recommendations or take
+            new assessments.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 w-full justify-center">
             <button
