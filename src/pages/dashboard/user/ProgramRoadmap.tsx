@@ -6,9 +6,10 @@ import {
   useSubmitProgramPlanMutation,
   useToggleTaskCompletionMutation,
 } from "@/redux/features/userDashboard/userProfile.api";
-import { ChevronDown, ChevronUp, Loader2, Trophy, Zap } from "lucide-react";
+import { ChevronDown, ChevronUp, Clock, ClipboardList, Loader2, Trophy, Zap, MailCheck } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
+import { toast } from "sonner";
 
 const programTitles: Record<string, string> = {
   "mental-health": "Mental Health",
@@ -117,7 +118,10 @@ export default function ProgramRoadmap() {
         program_id: id,
         data: { answers: formattedAnswers },
       }).unwrap();
-    } catch (error) {
+    } catch (error: any) {
+      if (error?.status == 400 && error?.data?.code == 'PLAN_GENERATION_LIMIT_EXCEEDED') {
+        toast.error(error?.data?.details)
+      }
       console.error("Failed to regenerate program plan:", error);
     }
   };
@@ -198,57 +202,18 @@ export default function ProgramRoadmap() {
           />
         </div>
         <div className="flex flex-wrap gap-6 text-xs text-[#90A1B9]">
-          <span className="flex items-center gap-2">
-            <svg
-              width="14"
-              height="14"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <circle cx="12" cy="12" r="10" />
-              <polyline points="12 6 12 12 16 14" />
-            </svg>
+          <span className="flex items-center gap-1">
+            <Clock size={16} />
+
+
             {planData?.duration_weeks || weeks.length || 4} weeks
           </span>
-          <span className="flex items-center gap-2">
-            <svg
-              width="14"
-              height="14"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-              <polyline points="14 2 14 8 20 8" />
-              <line x1="16" y1="13" x2="8" y2="13" />
-              <line x1="16" y1="17" x2="8" y2="17" />
-              <polyline points="10 9 9 9 8 9" />
-            </svg>
+          <span className="flex items-center gap-1">
+            <ClipboardList size={16} />
             {totalTasks} tasks
           </span>
           <span className="flex items-center gap-2">
-            <svg
-              width="14"
-              height="14"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-              <line x1="16" y1="2" x2="16" y2="6" />
-              <line x1="8" y1="2" x2="8" y2="6" />
-              <line x1="3" y1="10" x2="21" y2="10" />
-            </svg>
+            <MailCheck size={16} />
             Daily check-ins
           </span>
           <span className="flex items-center gap-2">
@@ -362,42 +327,46 @@ export default function ProgramRoadmap() {
       </div>
 
       {/* Completion Section */}
-      {isFullyCompleted && (
-        <div className="mt-12 bg-[#155DFC1A] border border-[#155DFC4D] rounded-3xl p-10 text-center">
-          <div className="mx-auto w-20 h-20 rounded-full bg-gradient-to-br from-blue-500 to-cyan-400 flex items-center justify-center mb-6">
-            <Trophy className="w-12 h-12 text-white" />
-          </div>
-          <h2 className="text-3xl font-medium mb-2">Roadmap Complete!</h2>
-          <p className="text-[#90A1B9] mb-8 max-w-md mx-auto">
-            You've completed all tasks. Your official certificate is ready to view and download.
-          </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Button
-              onClick={() => setIsModalOpen(true)}
-              className="bg-[#155DFC] hover:bg-blue-700 text-white px-8 py-6 rounded-2xl font-normal text-lg cursor-pointer"
-            >
-              View Certificate Details
-            </Button>
-            {certificateData?.pdf_url && (
-              <a
-                href={certificateData.pdf_url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center bg-white/10 hover:bg-white/20 text-white px-8 py-4 rounded-2xl font-medium text-base transition-colors"
+      {
+        isFullyCompleted && (
+          <div className="mt-12 bg-[#155DFC1A] border border-[#155DFC4D] rounded-3xl p-10 text-center">
+            <div className="mx-auto w-20 h-20 rounded-full bg-gradient-to-br from-blue-500 to-cyan-400 flex items-center justify-center mb-6">
+              <Trophy className="w-12 h-12 text-white" />
+            </div>
+            <h2 className="text-3xl font-medium mb-2">Roadmap Complete!</h2>
+            <p className="text-[#90A1B9] mb-8 max-w-md mx-auto">
+              You've completed all tasks. Your official certificate is ready to view and download.
+            </p>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <Button
+                onClick={() => setIsModalOpen(true)}
+                className="bg-[#155DFC] hover:bg-blue-700 text-white px-8 py-6 rounded-2xl font-normal text-lg cursor-pointer"
               >
-                Open PDF Directly
-              </a>
-            )}
+                View Certificate Details
+              </Button>
+              {certificateData?.pdf_url && (
+                <a
+                  href={certificateData.pdf_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center bg-white/10 hover:bg-white/20 text-white px-8 py-4 rounded-2xl font-medium text-base transition-colors"
+                >
+                  Open PDF Directly
+                </a>
+              )}
+            </div>
           </div>
-        </div>
-      )}
+        )
+      }
 
       {/* Floating Save Button */}
-      {!isFullyCompleted && (
-        <Button className=" hidden fixed bottom-8 right-8 bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-medium transition-all shadow-[0_0_20px_rgba(37,99,235,0.4)]">
-          Save Progress
-        </Button>
-      )}
+      {
+        !isFullyCompleted && (
+          <Button className=" hidden fixed bottom-8 right-8 bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full font-medium transition-all shadow-[0_0_20px_rgba(37,99,235,0.4)]">
+            Save Progress
+          </Button>
+        )
+      }
 
       {/* Assessment Complete Modal */}
       <AssessmentCompleteModal
@@ -405,6 +374,6 @@ export default function ProgramRoadmap() {
         onClose={() => setIsModalOpen(false)}
         certificate={certificateData}
       />
-    </div>
+    </div >
   );
 }
