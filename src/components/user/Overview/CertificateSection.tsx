@@ -12,7 +12,8 @@ export function CertificateSection() {
   const navigate = useNavigate();
 
   const { data: certResponse, isLoading } = useGetAllCertificateQuery(undefined);
-  const certificates: any[] = certResponse?.data || [];
+  const rawData = certResponse?.data ?? certResponse;
+  const certificates: any[] = Array.isArray(rawData) ? rawData : [];
 
   useEffect(() => {
     if (searchParams.get("showCertificate") === "true") {

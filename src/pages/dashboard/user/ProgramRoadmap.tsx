@@ -122,6 +122,9 @@ export default function ProgramRoadmap() {
       if (error?.status == 400 && error?.data?.code == 'PLAN_GENERATION_LIMIT_EXCEEDED') {
         toast.error(error?.data?.details)
       }
+      else if (error?.details?.answers) {
+        toast.error(error?.details?.answers)
+      }
       console.error("Failed to regenerate program plan:", error);
     }
   };
