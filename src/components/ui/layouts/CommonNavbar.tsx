@@ -1,4 +1,6 @@
-import { AssessmentModal } from "@/components/assessment";
+import { StartFreeButton } from "@/components/assessment";
+import { GUEST_ASSESSMENT_COMPLETED_KEY } from "@/components/assessment/components/AssessmentWizard";
+import { AgreementModal } from "@/pages/Auth/components/AgreementModal";
 import { baseApi } from "@/redux/baseApi";
 import { useMyProfileQuery } from "@/redux/features/auth/auth.api";
 import {
@@ -11,17 +13,19 @@ import { selectCartCount } from "@/redux/features/cart/cartSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { ChevronDown, LogOut, Menu, ShoppingBag, X } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Link, NavLink } from "react-router";
+import { Link, NavLink, useNavigate } from "react-router";
 import { toast } from "sonner";
 import { ProfileDropdown } from "./ProfileDropdown";
-
 export const CommonNavbar = () => {
+
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [isAssessmentOpen, setIsAssessmentOpen] = useState(false);
+  const [isAgreementModalOpen, setIsAgreementModalOpen] = useState(false);
   const [programsOpen, setProgramsOpen] = useState(false); // Desktop hover
   const [mobileProgramsOpen, setMobileProgramsOpen] = useState(false); // Mobile accordion
-
+  const submitted = localStorage.getItem(GUEST_ASSESSMENT_COMPLETED_KEY);
+  console.log(submitted, "submitted")
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const userFromRedux = useAppSelector(selectCurrentUser);
   const token = useAppSelector(selectCurrentToken);
@@ -50,8 +54,7 @@ export const CommonNavbar = () => {
   };
 
   const navLinkStyles = ({ isActive }: { isActive: boolean }) =>
-    `font-inter text-base font-medium leading-6 transition-colors ${
-      isActive ? "text-[#3B82F6]" : "text-gray-300 hover:text-white"
+    `font-inter text-base font-medium leading-6 transition-colors ${isActive ? "text-[#3B82F6]" : "text-gray-300 hover:text-white"
     }`;
 
   return (
@@ -161,34 +164,40 @@ export const CommonNavbar = () => {
               {userProfile ? (
                 <>
                   <ProfileDropdown user={userProfile} />
-                  <button
-                    onClick={() => setIsAssessmentOpen(true)}
-                    className="bg-[#007AFF] text-white px-[24px] py-[10px] rounded-full font-bold text-sm hover:bg-blue-600 transition-colors"
-                  >
-                    Start Free
-                  </button>
+                  <StartFreeButton
+                    text="Start Free"
+                    className="px-[24px] py-[10px] text-sm"
+                  />
                 </>
               ) : (
                 <>
+                  <button
+                    onClick={() => setIsAgreementModalOpen(true)}
+                    className="px-[24px] py-[12px] rounded-full text-sm font-semibold text-white/90 border border-white/20 bg-white/5 hover:bg-white/10 hover:text-white hover:border-white/40 transition-all duration-300 cursor-pointer"
+                  >
+                    Join as Expert
+                  </button>
                   <Link
                     to="/auth/login"
                     className="px-[32px] py-[12px] rounded-full text-sm font-medium text-[#0A66C2] border border-[#0A66C2] bg-transparent hover:bg-white/5 transition-colors"
                   >
                     Log In
                   </Link>
-                  <button
-                    onClick={() => setIsAssessmentOpen(true)}
-                    className="bg-[#007AFF] text-white px-[32px] py-[12px] rounded-full font-bold"
-                  >
-                    Start Free
-                  </button>
+                  <StartFreeButton
+                    text="Start Free"
+                    className="px-[32px] py-[12px] text-sm"
+                  />
                 </>
               )}
             </div>
 
-            <AssessmentModal
-              isOpen={isAssessmentOpen}
-              onClose={() => setIsAssessmentOpen(false)}
+            <AgreementModal
+              isOpen={isAgreementModalOpen}
+              onClose={() => setIsAgreementModalOpen(false)}
+              onAccept={() => {
+                setIsAgreementModalOpen(false);
+                navigate("/auth/experts-register");
+              }}
             />
 
             <button
@@ -207,11 +216,10 @@ export const CommonNavbar = () => {
 
       {/* MOBILE DRAWER */}
       <div
-        className={`md:hidden absolute top-20 left-0 w-full h-[calc(100vh-80px)] overflow-y-auto px-6 py-10 flex flex-col justify-between transition-all duration-400 ease-[cubic-bezier(0.4,0,0.2,1)] origin-top ${
-          mobileMenuOpen
-            ? "opacity-100 scale-y-100 visible"
-            : "opacity-0 scale-y-95 invisible pointer-events-none"
-        }`}
+        className={`md:hidden absolute top-20 left-0 w-full h-[calc(100vh-80px)] overflow-y-auto px-6 py-10 flex flex-col justify-between transition-all duration-400 ease-[cubic-bezier(0.4,0,0.2,1)] origin-top ${mobileMenuOpen
+          ? "opacity-100 scale-y-100 visible"
+          : "opacity-0 scale-y-95 invisible pointer-events-none"
+          }`}
         style={{
           background:
             "linear-gradient(180deg, rgba(11,15,25,0.98) 0%, rgba(3,3,3,0.98) 100%)",
@@ -241,11 +249,10 @@ export const CommonNavbar = () => {
               />
             </button>
             <div
-              className={`flex flex-col gap-5 overflow-hidden transition-all duration-500 ease-in-out ${
-                mobileProgramsOpen
-                  ? "max-h-[400px] mt-6 opacity-100"
-                  : "max-h-0 mt-0 opacity-0"
-              }`}
+              className={`flex flex-col gap-5 overflow-hidden transition-all duration-500 ease-in-out ${mobileProgramsOpen
+                ? "max-h-[400px] mt-6 opacity-100"
+                : "max-h-0 mt-0 opacity-0"
+                }`}
             >
               <Link
                 to="/programs/health-fitness"
@@ -371,6 +378,15 @@ export const CommonNavbar = () => {
             </>
           ) : (
             <>
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  setIsAgreementModalOpen(true);
+                }}
+                className="w-full text-center px-8 py-4 rounded-full text-lg font-bold text-white border border-white/20 bg-white/5 hover:bg-white/10 transition-all duration-300 cursor-pointer"
+              >
+                Join as Expert
+              </button>
               <Link
                 to="/auth/login"
                 onClick={() => setMobileMenuOpen(false)}
@@ -378,15 +394,12 @@ export const CommonNavbar = () => {
               >
                 Log In
               </Link>
-              <button
-                onClick={() => {
-                  setIsAssessmentOpen(true);
-                  setMobileMenuOpen(false);
-                }}
-                className="w-full text-center px-8 py-4 rounded-full text-lg font-bold text-white bg-[#007AFF] hover:bg-[#0066FF] shadow-[0_0_20px_rgba(0,122,255,0.4)] active:scale-95 transition-all duration-300"
-              >
-                Start Free
-              </button>
+              <StartFreeButton
+
+                text="Start Free"
+                onClick={() => setMobileMenuOpen(false)}
+                className="w-full px-8 py-4 text-lg font-bold shadow-[0_0_20px_rgba(0,122,255,0.4)]"
+              />
             </>
           )}
         </div>

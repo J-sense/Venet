@@ -1,6 +1,5 @@
-import { ActionButton } from "@/components/ui/ActionButton";
+import { AssessmentModal, StartFreeButton } from "@/components/assessment";
 import { useState } from "react";
-import { AssessmentModal } from "@/components/assessment";
 
 interface AboutUsCTAProps {
   title?: string;
@@ -14,17 +13,17 @@ interface AboutUsCTAProps {
 export const AboutUsCTA = ({
   title = "Ready to Start Your Journey?",
   description = "Take the free assessment to get your personalized health & fitness program roadmap",
-  buttonText = "Start Free Assessment",
+  // buttonText = "Start Free Assessment",
   bgClass = "bg-[#1E3A8A]",
   bottomCurveColor = "#191C2B",
-  buttonTextClass = "!text-[#1E3A8A]",
+  // buttonTextClass = "!text-[#1E3A8A]",
 }: AboutUsCTAProps) => {
   const [isAssessmentOpen, setIsAssessmentOpen] = useState(false);
 
   return (
     <section className={`relative ${bgClass} py-16 md:py-24 overflow-hidden min-h-[500px] flex items-center`}>
       {/* Bottom Curve */}
-      <div 
+      <div
         className="absolute bottom-0 left-0 w-full z-0"
         style={{ color: bottomCurveColor }}
       >
@@ -53,10 +52,15 @@ export const AboutUsCTA = ({
         </p>
 
         <div className="flex justify-center">
-          <ActionButton
+          {/* <ActionButton
             label={buttonText}
             onClick={() => setIsAssessmentOpen(true)}
             className={`px-8 sm:px-10 py-3.5 text-base sm:text-lg font-semibold bg-white ${buttonTextClass} hover:bg-gray-100 transition-all`}
+          /> */}
+          <StartFreeButton
+            text="Start Free Assessment"
+            showIcon
+            className="px-6 py-3.5 md:px-8 md:py-4 text-base md:text-lg shadow-[#155DFC4D] w-full sm:w-auto"
           />
         </div>
       </div>

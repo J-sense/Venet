@@ -119,8 +119,8 @@ export const Login = () => {
         } else {
           toast.error(
             errorData?.data?.message ||
-              errorData?.data?.detail ||
-              "Invalid email or password. Please try again.",
+            errorData?.data?.detail ||
+            "Invalid email or password. Please try again.",
           );
         }
       }

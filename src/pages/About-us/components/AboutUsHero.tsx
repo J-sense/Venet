@@ -1,6 +1,6 @@
+import { StartFreeButton } from "@/components/assessment";
 import { BlackActionButton } from "@/components/ui/BlackActionButton";
 import { useNavigate } from "react-router";
-import { AboutUsCTA } from "./AboutUsCTA";
 
 export const AboutUsHero = () => {
   const navigate = useNavigate()
@@ -22,13 +22,10 @@ export const AboutUsHero = () => {
             meaningful life transformation.
           </p>
           <div className="flex md:flex-row flex-col gap-4 pt-4">
-            <AboutUsCTA
-              title="Your Story Isn't Over Yet"
-              description="No matter where you've been or what you've experienced, transformation is possible. Your next chapter begins today."
-              buttonText="Start Your Journey"
-              bgClass="bg-[#0B60BD]"
-              bottomCurveColor="#191C2B"
-              buttonTextClass="!text-[#1E3A8A]"
+            <StartFreeButton
+              text="Start Free Assessment"
+              showIcon
+              className="px-6 py-3.5 md:px-8 md:py-4 text-base md:text-lg shadow-[#155DFC4D] w-full sm:w-auto"
             />
             <BlackActionButton label="Explore Programs" onClick={() => navigate("/programs/all-programs")} />
           </div>

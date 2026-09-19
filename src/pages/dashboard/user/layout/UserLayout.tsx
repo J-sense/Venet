@@ -101,6 +101,7 @@ const UserLayout = ({ navItems, user }: UserLayoutProps) => {
         isOpen={isSidebarOpen}
         onClose={handleSidebarClose}
         navItems={navItems}
+        user={userData}
       />
 
       {/* Main Content — shifts right on desktop when sidebar is open */}

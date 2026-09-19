@@ -1,3 +1,4 @@
+import { Home } from "lucide-react";
 import React from "react";
 import { Link } from "react-router";
 
@@ -22,7 +23,7 @@ export const AuthLayout = ({
           <img
             src="/VNetLogo.png"
             alt="VNET Logo"
-            className="w-32 h-9 sm:w-40 sm:h-11 md:w-56 md:h-16 object-contain transition-all duration-300"
+            className="w-32 h-9 rounded-full sm:w-40 sm:h-11 md:w-56 md:h-16 object-contain transition-all duration-300"
           />
         </Link>
       </div>
@@ -30,7 +31,7 @@ export const AuthLayout = ({
       {/* ── Main Content ── */}
       <main className="flex w-full flex-1 h-full">
         {/* LEFT: Hero Panel - Desktop & Tablet */}
-        <div className="hidden md:block md:w-[35%] lg:w-1/2 xl:w-[55%] relative overflow-visible bg-[#080A0E]">
+        <div className="hidden xl:block  md:w-[35%] lg:w-1/2 xl:w-[55%] relative overflow-visible bg-[#080A0E]">
           <div className="absolute inset-0 z-0 bg-[radial-gradient(ellipse_55%_85%_at_0%_40%,#1E40AFCC_0%,#1E3A8A88_35%,transparent_65%)]" />
           {/* Extended gradient to the bottom side */}
           <div className="absolute inset-0 -ml-3xl z-10 bg-gradient-to-b from-[#080A0E] via-[#080A0E]/50 to-transparent h-[45%]" />
@@ -40,17 +41,15 @@ export const AuthLayout = ({
             src="/authImg.png"
             alt=""
             aria-hidden="true"
-            className="absolute bottom-0 -right-[5%] md:-right-[15%] lg:-right-[10%] xl:-right-[15%] brightness-130 z-20 w-auto object-contain object-right-bottom h-[110%] md:h-[140%] lg:h-[180%] xl:h-[210%] pointer-events-none"
+            className="absolute bottom-0 md:bottom-5 -right-[5%] md:-right-[15%] lg:-right-[10%] xl:-right-[15%] brightness-130 z-20 w-auto object-contain object-right-bottom pointer-events-none"
           />
         </div>
 
         {/* RIGHT: Form Panel */}
         <div
-          className={`flex-1 flex ${
-            isCentered ? "items-center" : "items-start"
-          } justify-center w-full z-30 px-4 py-4 sm:px-6 lg:py-12 overflow-y-auto relative h-full ${
-            isCentered ? "pt-12" : "pt-20 md:pt-24 lg:pt-14"
-          }`}
+          className={`flex-1 flex ${isCentered ? "items-center" : "items-start"
+            } justify-center w-full z-30 px-4 py-4 sm:px-6 lg:py-12 overflow-y-auto relative h-full ${isCentered ? "pt-12" : "pt-20 md:pt-24 lg:pt-14"
+            }`}
         >
           {/* Mobile Full Background (Only visible on small screens) */}
           <div className="md:hidden absolute inset-0 z-0">
@@ -65,12 +64,23 @@ export const AuthLayout = ({
           </div>
 
           <div
-            className={`w-full max-w-[400px] md:max-w-[420px] lg:max-w-[480px] xl:max-w-[520px] relative z-10 ${
-              isCentered ? "my-auto" : "mt-12 md:mt-16 lg:mt-16"
-            }`}
+            className={`w-full max-w-[400px] md:max-w-[420px] lg:max-w-[480px] xl:max-w-[520px] relative z-10 ${isCentered ? "my-auto" : "mt-12 md:mt-16 lg:mt-16"
+              }`}
           >
             <div className="relative rounded-3xl sm:rounded-[2rem] bg-[#191C2B] backdrop-blur-3xl border border-white/[0.06] p-6 sm:p-7 lg:px-10 lg:py-8 shadow-[0_16px_60px_-15px_rgba(0,0,0,0.8)]">
-              <div className="text-center mb-4 lg:mb-6">
+              {/* Header with Home Navigation */}
+              <div className="relative mb-6 lg:mb-8 text-center">
+                <div className="flex items-center justify-between mb-4 pb-3 border-b border-white/[0.08]">
+                  <Link
+                    to="/"
+                    className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.05] hover:bg-blue-600/20 border border-white/10 hover:border-blue-500/30 text-xs font-medium text-gray-300 hover:text-blue-400 transition-all duration-300 group shadow-sm"
+                    title="Return to Homepage"
+                  >
+                    <Home className="w-3.5 h-3.5 text-blue-400 group-hover:scale-110 transition-transform" />
+                    <span>Back to Home</span>
+                  </Link>
+                </div>
+
                 <h1 className="text-2xl sm:text-[28px] font-bold text-white tracking-tight mb-1 lg:mb-2">
                   {title}
                 </h1>

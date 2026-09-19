@@ -1,3 +1,4 @@
+import { StartFreeButton } from "@/components/assessment";
 import {
   Activity,
   Award,
@@ -13,7 +14,6 @@ import {
   Zap,
 } from "lucide-react";
 import { useEffect } from "react";
-import { AboutUsCTA } from "./components/AboutUsCTA";
 
 const timelineEvents = [
   {
@@ -347,13 +347,10 @@ export const FounderStoryPage = () => {
           </div>
         </section>
       </div>
-      <AboutUsCTA
-        title="Your Story Isn't Over Yet"
-        description="No matter where you've been or what you've experienced, transformation is possible. Your next chapter begins today."
-        buttonText="Start Free Assessment"
-        bgClass="bg-[#1E3A8A]"
-        bottomCurveColor="#191C2B"
-        buttonTextClass="!text-[#1E3A8A]"
+      <StartFreeButton
+        text="Start Free Assessment"
+        showIcon
+        className="px-6 py-3.5 md:px-8 md:py-4 text-base md:text-lg shadow-[#155DFC4D] w-full sm:w-auto"
       />
     </>
   );

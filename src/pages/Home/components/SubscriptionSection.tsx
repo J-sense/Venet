@@ -19,7 +19,7 @@ export const SubscriptionSection: React.FC = () => {
     {
       title: "First Program",
       subtitle: "Ultimate package for serious athletes",
-      price: "$29.99",
+      price: "$14.99",
       features: [
         { text: "AI-powered tracking" },
         { text: "Progress tracking" },
@@ -31,7 +31,7 @@ export const SubscriptionSection: React.FC = () => {
     {
       title: "Additional Programs",
       subtitle: "Best for dedicated fitness enthusiasts",
-      price: "$19.99",
+      price: "$24.98",
       isPopular: true,
       features: [
         { text: "All First Program features" },
@@ -161,7 +161,7 @@ export const SubscriptionSection: React.FC = () => {
               </div>
 
               {/* Action Button */}
-              <Link to="/shopping-cart">
+              <Link to={`${plan.title == "Talent Portal" ? "/talent-portal" : "/programs/all-programs"}`}>
                 < button
                   className={`w-full py-3.5 rounded-full font-bold font-inter text-sm tracking-wide transition-all duration-200 active:scale-[0.98] ${plan.isPopular
                     ? "bg-white text-[#0066FF] hover:bg-neutral-50 shadow-lg shadow-black/10"

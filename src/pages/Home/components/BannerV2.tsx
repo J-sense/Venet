@@ -1,11 +1,9 @@
-import { useState } from "react";
 import { Sparkles } from "lucide-react";
 import { Link } from "react-router";
-import { AssessmentModal } from "@/components/assessment";
+import { StartFreeButton } from "@/components/assessment";
 import { useAllProgramsQuery } from "@/redux/features/programs/program.api";
 
 export default function BannerV2() {
-  const [isAssessmentOpen, setIsAssessmentOpen] = useState(false);
   const stats = [
     { label: "Members Transformed", value: "10K+" },
     { label: "Expert Coaches", value: "500+" },
@@ -52,13 +50,11 @@ export default function BannerV2() {
           </p>
 
           <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-3 md:gap-4 w-full sm:w-auto px-6 sm:px-0 pt-2">
-            <button
-              onClick={() => setIsAssessmentOpen(true)}
-              className="bg-[#007AFF] shadow-[#155DFC4D] hover:bg-blue-600 transition px-6 py-3.5 md:px-8 md:py-4 rounded-full font-semibold text-base md:text-lg flex items-center justify-center gap-2 md:gap-3 text-white w-full sm:w-auto"
-            >
-              Start Free Assessment
-              <span className="text-lg md:text-xl">→</span>
-            </button>
+            <StartFreeButton
+              text="Start Free Assessment"
+              showIcon
+              className="px-6 py-3.5 md:px-8 md:py-4 text-base md:text-lg shadow-[#155DFC4D] w-full sm:w-auto"
+            />
             <Link to="/programs/all-programs">
               <button className="border text-white bg-[#FFFFFF1A] border-white/40 hover:bg-white/10 transition px-6 py-3.5 md:px-8 md:py-4 rounded-full font-semibold text-base md:text-lg w-full sm:w-auto">
                 Explore Programs
@@ -81,10 +77,6 @@ export default function BannerV2() {
           </div>
         </div>
       </div>
-      <AssessmentModal
-        isOpen={isAssessmentOpen}
-        onClose={() => setIsAssessmentOpen(false)}
-      />
     </div>
   );
 }

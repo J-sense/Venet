@@ -1,9 +1,9 @@
+import { StartFreeButton } from "@/components/assessment";
 import { SectionHeader } from "@/components/ui/TItleWithSubtitle";
-import React, { useState } from "react";
-import { AssessmentModal } from "@/components/assessment";
+import React from "react";
 
 export const CTASection: React.FC = () => {
-  const [isAssessmentOpen, setIsAssessmentOpen] = useState(false);
+  // const [isAssessmentOpen, setIsAssessmentOpen] = useState(false);
 
   return (
     <section className="relative w-full min-h-[740px] flex items-center justify-center bg-[#030303] overflow-hidden select-none py-20">
@@ -25,12 +25,11 @@ export const CTASection: React.FC = () => {
           titleAccent="Journey?"
           titlePrimary="Ready to Start Your "
         />
-        <button
-          onClick={() => setIsAssessmentOpen(true)}
-          className="mt-4 px-8 py-3.5 bg-[#2B7FFF] text-white font-bold font-inter text-sm rounded-full shadow-[0_4px_20px_rgba(43,127,255,0.3)] hover:bg-[#0066FF] hover:shadow-[0_4px_25px_rgba(43,127,255,0.45)] transition-all duration-200 active:scale-[0.98]"
-        >
-          Start Free Assessment
-        </button>
+        <StartFreeButton
+          text="Start Free Assessment"
+          showIcon
+          className="px-6 py-3.5 md:px-8 md:py-4 text-base md:text-lg shadow-[#155DFC4D] w-full sm:w-auto"
+        />
       </div>
 
       {/* ── EXACT CURVE FROM YOUR SVG ── */}
@@ -48,10 +47,7 @@ export const CTASection: React.FC = () => {
         </svg>
       </div>
 
-      <AssessmentModal
-        isOpen={isAssessmentOpen}
-        onClose={() => setIsAssessmentOpen(false)}
-      />
+
     </section>
   );
 };

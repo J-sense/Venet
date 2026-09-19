@@ -58,7 +58,7 @@ export default function AssessmentWizard({
 
     try {
       const responseData = await submitAssessment(payload);
-      // console.log(responseData);
+      console.log(responseData);
       if (responseData.data?.success) {
         if (!currentUser) {
           localStorage.setItem(GUEST_ASSESSMENT_COMPLETED_KEY, "true");
@@ -75,14 +75,18 @@ export default function AssessmentWizard({
         console.log(responseData);
         setHasAlreadySubmitted(true);
       }
+      else if ((responseData?.error as any)?.data?.code == "ASSESSMENT_SUBMIT_FAILED") {
+        toast.error((responseData?.error as any)?.data?.code)
+      }
     } catch (error: any) {
+      console.log(error, "errorrrrr")
       if (error?.data?.code === "ASSESSMENT_ALREADY_SUBMITTED") {
         setHasAlreadySubmitted(true);
       }
       console.log(error.error);
       toast.error(
         error?.data?.details?.answers ||
-          "An error occurred while submitting the assessment.",
+        "An error occurred while submitting the assessment.",
       );
     }
   };
