@@ -384,7 +384,7 @@ const WeeklyAvailability: React.FC = () => {
               <button
                 onClick={handlePrevWeek}
                 title="Previous week"
-                className="hidden text-gray-400 hover:text-white transition-colors flex items-center justify-center p-1 rounded-lg hover:bg-[#25344A]"
+                className="text-gray-400 hover:text-white transition-colors flex items-center justify-center p-1 rounded-lg hover:bg-[#25344A]"
               >
                 <ChevronLeft size={18} />
               </button>
@@ -394,7 +394,7 @@ const WeeklyAvailability: React.FC = () => {
               <button
                 onClick={handleNextWeek}
                 title="Next week"
-                className="hidden text-gray-400 hover:text-white transition-colors flex items-center justify-center p-1 rounded-lg hover:bg-[#25344A]"
+                className=" text-gray-400 hover:text-white transition-colors flex items-center justify-center p-1 rounded-lg hover:bg-[#25344A]"
               >
                 <ChevronRight size={18} />
               </button>
