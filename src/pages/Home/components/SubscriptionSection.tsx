@@ -31,7 +31,7 @@ export const SubscriptionSection: React.FC = () => {
     {
       title: "Additional Programs",
       subtitle: "Best for dedicated fitness enthusiasts",
-      price: "$24.98",
+      price: "$24.99",
       isPopular: true,
       features: [
         { text: "All First Program features" },

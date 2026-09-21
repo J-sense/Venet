@@ -78,36 +78,36 @@ export const Footer: React.FC = () => {
             </h4>
             <ul className="flex flex-col gap-4 text-[#CBD5E1] text-[14px] font-normal">
               <li>
-                <a
-                  href="#health-fitness"
+                <Link
+                  to="/programs/health-fitness"
                   className="hover:text-white transition-colors"
                 >
                   Health & Fitness
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#mental-health"
+                <Link
+                  to="/programs/mental-health"
                   className="hover:text-white transition-colors"
                 >
                   Mental Health
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#career-coaching"
+                <Link
+                  to="/programs/career"
                   className="hover:text-white transition-colors"
                 >
                   Career Coaching
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#life-coaching"
+                <Link
+                  to="/programs/education-service"
                   className="hover:text-white transition-colors"
                 >
-                  Life Coaching
-                </a>
+                  Education Service
+                </Link>
               </li>
             </ul>
           </div>
@@ -119,25 +119,25 @@ export const Footer: React.FC = () => {
             </h4>
             <ul className="flex flex-col gap-3 text-[#CBD5E1] text-[14px] font-normal">
               <li>
-                <a href="#about" className="hover:text-white transition-colors">
+                <Link to="/about" className="hover:text-white transition-colors">
                   About Us
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#experts"
+                <Link
+                  to="/experts"
                   className="hover:text-white transition-colors"
                 >
                   Our Experts
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#stories"
+                <Link
+                  to="/founder-story"
                   className="hover:text-white transition-colors"
                 >
-                  Success Stories
-                </a>
+                  Founder Story
+                </Link>
               </li>
             </ul>
           </div>
@@ -220,7 +220,7 @@ export const Footer: React.FC = () => {
                   info@vn4et.com
                 </a>
               </li>
-              <li className="flex items-center gap-2.5">
+              <li className="flex items-center gap-2.5 hidden">
                 <svg
                   className="w-4 h-4 text-[#2B7FFF] shrink-0"
                   fill="none"
@@ -241,7 +241,7 @@ export const Footer: React.FC = () => {
                   +1 (555) 123-4567
                 </a>
               </li>
-              <li className="flex items-start gap-2.5">
+              <li className="flex items-start gap-2.5 hidden">
                 <svg
                   className="w-4 h-4 text-[#2B7FFF] shrink-0 mt-0.5"
                   fill="none"

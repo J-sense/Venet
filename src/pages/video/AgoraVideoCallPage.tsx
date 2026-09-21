@@ -196,7 +196,7 @@ function CallRoom() {
       gain.connect(ctx.destination);
       osc.start();
       osc.stop(ctx.currentTime + 0.2);
-    } catch (e) {}
+    } catch (e) { }
 
     const role = searchParams.get("role");
     if (role === "user") {
@@ -258,9 +258,8 @@ function CallRoom() {
           {isConnected && remoteUsers.length > 0 ? (
             // Layout: 1 remote = full screen, 2+ = grid
             <div
-              className={`w-full h-full ${
-                remoteUsers.length === 1 ? "" : "grid grid-cols-2 gap-1"
-              }`}
+              className={`w-full h-full ${remoteUsers.length === 1 ? "" : "grid grid-cols-2 gap-1"
+                }`}
             >
               {remoteUsers.map((user) => (
                 <div
@@ -383,11 +382,10 @@ function CallRoom() {
             <button
               onClick={() => setMicOn((prev) => !prev)}
               title={micOn ? "Mute" : "Unmute"}
-              className={`p-3.5 rounded-full transition-all duration-200 active:scale-90 shadow-md cursor-pointer ${
-                micOn
+              className={`p-3.5 rounded-full transition-all duration-200 active:scale-90 shadow-md cursor-pointer ${micOn
                   ? "bg-[#1E2D44] hover:bg-[#263752] text-white border border-blue-500/20"
                   : "bg-red-500/20 hover:bg-red-500/30 text-red-400 border border-red-500/30"
-              }`}
+                }`}
             >
               {micOn ? <Mic size={19} /> : <MicOff size={19} />}
             </button>
@@ -396,11 +394,10 @@ function CallRoom() {
             <button
               onClick={() => setCameraOn((prev) => !prev)}
               title={cameraOn ? "Stop Video" : "Start Video"}
-              className={`p-3.5 rounded-full transition-all duration-200 active:scale-90 shadow-md cursor-pointer ${
-                cameraOn
+              className={`p-3.5 rounded-full transition-all duration-200 active:scale-90 shadow-md cursor-pointer ${cameraOn
                   ? "bg-[#1E2D44] hover:bg-[#263752] text-white border border-blue-500/20"
                   : "bg-red-500/20 hover:bg-red-500/30 text-red-400 border border-red-500/30"
-              }`}
+                }`}
             >
               {cameraOn ? <Video size={19} /> : <VideoOff size={19} />}
             </button>
@@ -409,11 +406,10 @@ function CallRoom() {
             <button
               onClick={() => setScreenShareOn((prev) => !prev)}
               title={screenShareOn ? "Stop Screen Share" : "Start Screen Share"}
-              className={`p-3.5 rounded-full transition-all duration-200 active:scale-90 shadow-md cursor-pointer ${
-                screenShareOn
+              className={`p-3.5 rounded-full transition-all duration-200 active:scale-90 shadow-md cursor-pointer ${screenShareOn
                   ? "bg-blue-600 text-white border border-blue-400/30"
                   : "bg-[#1E2D44] hover:bg-[#263752] text-white border border-white/10"
-              }`}
+                }`}
             >
               {screenShareOn ? (
                 <MonitorUp size={19} />
@@ -426,11 +422,10 @@ function CallRoom() {
             <button
               onClick={() => setChatOpen((prev) => !prev)}
               title="Chat"
-              className={`p-3.5 rounded-full transition-all duration-200 active:scale-90 shadow-md cursor-pointer relative ${
-                chatOpen
+              className={`p-3.5 rounded-full transition-all duration-200 active:scale-90 shadow-md cursor-pointer relative ${chatOpen
                   ? "bg-blue-600 text-white border border-blue-400/30"
                   : "bg-[#1E2D44] hover:bg-[#263752] text-white border border-white/10"
-              }`}
+                }`}
             >
               <MessageSquare size={19} />
             </button>
