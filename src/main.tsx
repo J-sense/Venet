@@ -9,6 +9,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import { Toaster } from "./components/ui/sonner.tsx";
 import { BookingSocketProvider } from "./providers/BookingSocketProvider.tsx";
 import { SessionSocketProvider } from "./providers/SessionSocketProvider.tsx";
+import { NotificationSocketProvider } from "./providers/NotificationSocketProvider.tsx";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 createRoot(document.getElementById("root")!).render(
@@ -19,8 +20,10 @@ createRoot(document.getElementById("root")!).render(
           <BrowserRouter>
             <BookingSocketProvider>
               <SessionSocketProvider>
-                <App />
-                <Toaster richColors position="top-left" />
+                <NotificationSocketProvider>
+                  <App />
+                  <Toaster richColors position="top-left" />
+                </NotificationSocketProvider>
               </SessionSocketProvider>
             </BookingSocketProvider>
           </BrowserRouter>

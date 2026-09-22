@@ -27,7 +27,7 @@ export default function UserHome() {
   const { data: myPurchaseProgramme } = useMyPurchaseProgrammeQuery(undefined);
   const { data: dashboadData } = useGetUserDashboardQuery(undefined);
   // const { data: getAllCertificate } = useGetAllCertificateQuery(undefined);
-
+  console.log(myPurchaseProgramme)
   const userName = userProfileData?.data?.first_name
     ? `${userProfileData.data.first_name} ${userProfileData.data.last_name || ""}`.trim()
     : "User";
@@ -101,19 +101,14 @@ export default function UserHome() {
                     </div>
                     <div>
                       <h2 className="text:xl md:text-2xl font-bold text-white tracking-tight leading-tight">
-                        My Programs
+                        My Programsssss
                       </h2>
                       <p className="text-sm md:text-sm text-zinc-400 mt-0.5 font-medium">
                         Continue where you left off
                       </p>
                     </div>
                   </div>
-                  {/* {myPrograms && myPrograms.length > 0 && (
-                    <button className="text-blue-400 hover:text-blue-300 text-sm font-semibold transition-colors flex items-center gap-1 group/btn">
-                      View All{" "}
-                      <ChevronRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1" />
-                    </button>
-                  )} */}
+
                 </div>
 
                 <div className="space-y-4 relative z-10">

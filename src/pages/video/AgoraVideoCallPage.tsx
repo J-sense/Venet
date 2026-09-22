@@ -4,18 +4,28 @@
 //  Uses agora-rtc-react LocalUser + RemoteUser (no simulation)
 // ============================================================
 
-import AgoraRTC, { AgoraRTCProvider } from "agora-rtc-react";
-import {
-  LocalUser,
+import { useSessionSocket } from "@/providers/SessionSocketProvider";
+import AgoraRTC, {
+  AgoraRTCProvider, LocalUser,
   RemoteUser,
   useIsConnected,
   useJoin,
   useLocalCameraTrack,
-  useLocalMicrophoneTrack,
-  useLocalScreenTrack,
-  usePublish,
-  useRemoteUsers,
+  useLocalMicrophoneTrack, usePublish,
+  useRemoteUsers
 } from "agora-rtc-react";
+import {
+  MessageSquare,
+  Mic,
+  MicOff,
+  MonitorOff,
+  MonitorUp,
+  PhoneOff,
+  Users,
+  Video,
+  VideoOff,
+  X,
+} from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import {
   useLocation,
@@ -23,21 +33,8 @@ import {
   useParams,
   useSearchParams,
 } from "react-router";
-import {
-  Mic,
-  MicOff,
-  Video,
-  VideoOff,
-  MessageSquare,
-  PhoneOff,
-  Users,
-  MonitorUp,
-  MonitorOff,
-  X,
-} from "lucide-react";
-import InCallChatSidebar from "./components/InCallChatSidebar";
-import { useSessionSocket } from "@/providers/SessionSocketProvider";
 import { toast } from "sonner";
+import InCallChatSidebar from "./components/InCallChatSidebar";
 
 // ──────────────────────────────────────────────────────────────
 //  Agora client (create once, outside any component!)
@@ -131,6 +128,7 @@ function CallRoom() {
     "";
 
   // ----- Call state -----
+  const [joined, setJoined] = useState(false);
   const [micOn, setMicOn] = useState(true);
   const [cameraOn, setCameraOn] = useState(true);
   const [chatOpen, setChatOpen] = useState(false);
@@ -143,7 +141,8 @@ function CallRoom() {
 
   const { localMicrophoneTrack } = useLocalMicrophoneTrack(micOn);
   const { localCameraTrack } = useLocalCameraTrack(cameraOn);
-  const { screenTrack } = useLocalScreenTrack(screenShareOn, {}, "disable");
+  // Custom screen track state created directly via SDK
+  const [customScreenTrack, setCustomScreenTrack] = useState<any>(null);
 
   // Join channel with dynamic backend credentials
   useJoin(
@@ -153,34 +152,83 @@ function CallRoom() {
       token: TOKEN,
       uid: rawUid || null,
     },
-    true,
+    joined,
   );
 
-  // Publish our local tracks to the channel
-  // Agora Web SDK allows only 1 video track per client.
-  // We swap the camera track for the screen track when sharing.
-  const activeVideoTrack =
-    screenShareOn && screenTrack ? screenTrack : localCameraTrack;
+  // Publish active video track: use customScreenTrack if active, otherwise localCameraTrack
+  const activeVideoTrack = screenShareOn && customScreenTrack ? customScreenTrack : localCameraTrack;
   const tracksToPublish = [localMicrophoneTrack, activeVideoTrack].filter(
     Boolean,
   ) as any[];
-  usePublish(tracksToPublish);
+  usePublish(tracksToPublish, joined);
 
-  // Handle native "Stop Sharing" button in the browser
-  useEffect(() => {
-    if (screenTrack) {
-      const handleTrackEnded = () => setScreenShareOn(false);
-      screenTrack.on("track-ended", handleTrackEnded);
-      return () => {
-        screenTrack.off("track-ended", handleTrackEnded);
-      };
+  // Direct toggleScreenShare using SDK track creation and explicit close
+  const toggleScreenShare = async () => {
+    if (screenShareOn) {
+      // Stop sharing
+      if (customScreenTrack) {
+        try {
+          customScreenTrack.close();
+        } catch (e) { }
+        setCustomScreenTrack(null);
+      }
+      setScreenShareOn(false);
+    } else {
+      // Start sharing: creates a new fresh screen track every single time
+      try {
+        const screenTrackObj = await AgoraRTC.createScreenVideoTrack({}, "disable");
+
+        // Handle native "Stop Sharing" floating browser button
+        const handleEnded = () => {
+          console.log("[AgoraVideoCallPage] Native browser screen share ended");
+          try {
+            screenTrackObj.close();
+          } catch (e) { }
+          setCustomScreenTrack(null);
+          setScreenShareOn(false);
+        };
+
+        if (Array.isArray(screenTrackObj)) {
+          // If video+audio track array returned
+          const vTrack = screenTrackObj[0];
+          vTrack.on("track-ended", handleEnded);
+          setCustomScreenTrack(vTrack);
+        } else {
+          screenTrackObj.on("track-ended", handleEnded);
+          setCustomScreenTrack(screenTrackObj);
+        }
+
+        setScreenShareOn(true);
+      } catch (err) {
+        console.warn("[AgoraVideoCallPage] User cancelled screen picker or failed:", err);
+        setCustomScreenTrack(null);
+        setScreenShareOn(false);
+      }
     }
-  }, [screenTrack]);
+  };
 
   // All remote participants in the channel
   const remoteUsers = useRemoteUsers();
 
+  // Cleanup screen track when component unmounts or call leaves
+  useEffect(() => {
+    return () => {
+      if (customScreenTrack) {
+        try {
+          customScreenTrack.close();
+        } catch (e) { }
+      }
+    };
+  }, [customScreenTrack]);
+
   const handleLeave = () => {
+    if (customScreenTrack) {
+      try {
+        customScreenTrack.close();
+      } catch (e) { }
+      setCustomScreenTrack(null);
+    }
+
     try {
       const ctx = new (
         window.AudioContext || (window as any).webkitAudioContext
@@ -246,6 +294,137 @@ function CallRoom() {
       }
     }
   }, [lastMessage, sessionId]);
+
+  // ──────────────────────────────────────────────────────────
+  //  PRE-CALL PREVIEW SCREEN (Modern Glassmorphism Design)
+  // ──────────────────────────────────────────────────────────
+  if (!joined) {
+    return (
+      <div className="relative flex h-screen w-screen bg-[#060913] items-center justify-center p-4 font-sora select-none overflow-hidden">
+        {/* Background Ambient Glows */}
+        <div className="absolute top-1/4 left-1/3 w-96 h-96 bg-blue-600/15 rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute bottom-1/4 right-1/3 w-96 h-96 bg-indigo-600/15 rounded-full blur-[120px] pointer-events-none" />
+
+        {/* Main Pre-Call Card */}
+        <div className="relative z-10 bg-[#0D1424]/80 backdrop-blur-2xl border border-white/10 rounded-3xl p-6 sm:p-8 max-w-xl w-full flex flex-col items-center shadow-2xl shadow-blue-950/40 animate-in fade-in zoom-in-95 duration-300">
+
+          {/* Header Title & Badge */}
+          <div className="w-full flex items-center justify-between mb-6 border-b border-white/5 pb-4">
+            <div className="flex items-center gap-3 text-left">
+              <div className="w-10 h-10 rounded-2xl bg-blue-600/20 border border-blue-500/30 flex items-center justify-center text-blue-400">
+                <Video size={20} />
+              </div>
+              <div>
+                <h2 className="text-lg sm:text-xl font-bold text-white tracking-wide">
+                  Ready to join?
+                </h2>
+                <p className="text-xs text-zinc-400 font-normal">
+                  Check your camera and mic before starting
+                </p>
+              </div>
+            </div>
+
+            <span className="text-[11px] font-semibold text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1 rounded-full flex items-center gap-1.5">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              Live Preview
+            </span>
+          </div>
+
+          {/* Video Preview Container */}
+          <div className="relative w-full aspect-video bg-[#030712] rounded-2xl overflow-hidden border border-white/10 mb-6 group shadow-inner">
+            {cameraOn ? (
+              <LocalUser
+                audioTrack={localMicrophoneTrack}
+                cameraOn={true}
+                micOn={micOn}
+                playAudio={false}
+                videoTrack={localCameraTrack}
+                style={{ width: "100%", height: "100%", objectFit: "cover" }}
+              />
+            ) : (
+              <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-b from-[#0B101D] to-[#040711]">
+                <div className="relative mb-3">
+                  {localAvatar ? (
+                    <img
+                      src={localAvatar}
+                      alt={localName}
+                      className="w-24 h-24 rounded-full object-cover ring-4 ring-blue-500/30 shadow-2xl"
+                    />
+                  ) : (
+                    <div className="w-24 h-24 rounded-full bg-gradient-to-tr from-blue-700 to-indigo-600 flex items-center justify-center text-white font-extrabold text-3xl shadow-2xl border border-white/20">
+                      {localName
+                        .split(" ")
+                        .map((n: string) => n[0])
+                        .join("")
+                        .slice(0, 2)}
+                    </div>
+                  )}
+                  <div className="absolute -bottom-1 -right-1 p-1.5 bg-red-500 rounded-full border-2 border-[#060913]">
+                    <VideoOff size={14} className="text-white" />
+                  </div>
+                </div>
+                <span className="text-xs text-zinc-400 font-medium tracking-wide">
+                  Camera disabled
+                </span>
+              </div>
+            )}
+
+            {/* Top Right Live Audio Indicator */}
+            <div className="absolute top-3 right-3 bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-full text-[11px] font-medium text-white border border-white/10 flex items-center gap-1.5 z-20">
+              <span className={`w-2 h-2 rounded-full ${micOn ? "bg-blue-400 animate-ping" : "bg-red-500"}`} />
+              <span>{micOn ? "Mic Active" : "Mic Muted"}</span>
+            </div>
+
+            {/* Bottom Overlay Info Tag */}
+            <div className="absolute bottom-3 left-3 bg-black/60 backdrop-blur-md px-3.5 py-1.5 rounded-xl text-xs font-semibold text-white border border-white/10 flex items-center gap-2 z-20">
+              {localAvatar && (
+                <img
+                  src={localAvatar}
+                  alt={localName}
+                  className="w-5 h-5 rounded-full object-cover"
+                />
+              )}
+              <span>{localName} (You)</span>
+            </div>
+          </div>
+
+          {/* Media Control Buttons */}
+          <div className="flex items-center justify-center gap-4 mb-8 w-full">
+            <button
+              onClick={() => setMicOn((prev) => !prev)}
+              className={`flex-1 py-3 px-4 rounded-2xl border transition-all duration-200 flex items-center justify-center gap-2.5 font-semibold text-xs sm:text-sm active:scale-95 cursor-pointer shadow-md ${micOn
+                  ? "bg-[#162035] border-blue-500/30 text-white hover:bg-[#1E2D4A]"
+                  : "bg-red-500/15 border-red-500/30 text-red-400 hover:bg-red-500/25"
+                }`}
+            >
+              {micOn ? <Mic size={18} className="text-blue-400" /> : <MicOff size={18} />}
+              <span>{micOn ? "Mute Mic" : "Unmute Mic"}</span>
+            </button>
+
+            <button
+              onClick={() => setCameraOn((prev) => !prev)}
+              className={`flex-1 py-3 px-4 rounded-2xl border transition-all duration-200 flex items-center justify-center gap-2.5 font-semibold text-xs sm:text-sm active:scale-95 cursor-pointer shadow-md ${cameraOn
+                  ? "bg-[#162035] border-blue-500/30 text-white hover:bg-[#1E2D4A]"
+                  : "bg-red-500/15 border-red-500/30 text-red-400 hover:bg-red-500/25"
+                }`}
+            >
+              {cameraOn ? <Video size={18} className="text-blue-400" /> : <VideoOff size={18} />}
+              <span>{cameraOn ? "Stop Video" : "Start Video"}</span>
+            </button>
+          </div>
+
+          {/* Main Join Action */}
+          <button
+            onClick={() => setJoined(true)}
+            className="w-full py-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold rounded-2xl transition-all duration-200 shadow-xl shadow-blue-600/25 hover:shadow-blue-600/40 active:scale-[0.98] cursor-pointer text-sm sm:text-base tracking-wide flex items-center justify-center gap-2"
+          >
+            <span>Join Meeting Now</span>
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   // ──────────────────────────────────────────────────────────
   //  IN-CALL SCREEN
   // ──────────────────────────────────────────────────────────
@@ -319,14 +498,14 @@ function CallRoom() {
           <div className="absolute bottom-4 left-4 w-[160px] sm:w-[220px] aspect-video rounded-2xl overflow-hidden border border-white/10 bg-[#1A2333] shadow-2xl z-20 hover:scale-[1.03] transition-transform duration-300">
             <LocalUser
               audioTrack={localMicrophoneTrack}
-              cameraOn={cameraOn}
+              cameraOn={cameraOn || screenShareOn}
               micOn={micOn}
               playAudio={false}
-              videoTrack={localCameraTrack}
+              videoTrack={activeVideoTrack}
               style={{ width: "100%", height: "100%", objectFit: "cover" }}
             >
-              {/* If camera is off, show avatar or initials */}
-              {!cameraOn && (
+              {/* If camera is off and not screen sharing, show avatar or initials */}
+              {!cameraOn && !screenShareOn && (
                 <div className="w-full h-full flex items-center justify-center bg-[#1A2333] absolute inset-0 z-10">
                   {localAvatar ? (
                     <img
@@ -383,8 +562,8 @@ function CallRoom() {
               onClick={() => setMicOn((prev) => !prev)}
               title={micOn ? "Mute" : "Unmute"}
               className={`p-3.5 rounded-full transition-all duration-200 active:scale-90 shadow-md cursor-pointer ${micOn
-                  ? "bg-[#1E2D44] hover:bg-[#263752] text-white border border-blue-500/20"
-                  : "bg-red-500/20 hover:bg-red-500/30 text-red-400 border border-red-500/30"
+                ? "bg-[#1E2D44] hover:bg-[#263752] text-white border border-blue-500/20"
+                : "bg-red-500/20 hover:bg-red-500/30 text-red-400 border border-red-500/30"
                 }`}
             >
               {micOn ? <Mic size={19} /> : <MicOff size={19} />}
@@ -395,8 +574,8 @@ function CallRoom() {
               onClick={() => setCameraOn((prev) => !prev)}
               title={cameraOn ? "Stop Video" : "Start Video"}
               className={`p-3.5 rounded-full transition-all duration-200 active:scale-90 shadow-md cursor-pointer ${cameraOn
-                  ? "bg-[#1E2D44] hover:bg-[#263752] text-white border border-blue-500/20"
-                  : "bg-red-500/20 hover:bg-red-500/30 text-red-400 border border-red-500/30"
+                ? "bg-[#1E2D44] hover:bg-[#263752] text-white border border-blue-500/20"
+                : "bg-red-500/20 hover:bg-red-500/30 text-red-400 border border-red-500/30"
                 }`}
             >
               {cameraOn ? <Video size={19} /> : <VideoOff size={19} />}
@@ -404,11 +583,11 @@ function CallRoom() {
 
             {/* Screen Share */}
             <button
-              onClick={() => setScreenShareOn((prev) => !prev)}
+              onClick={toggleScreenShare}
               title={screenShareOn ? "Stop Screen Share" : "Start Screen Share"}
               className={`p-3.5 rounded-full transition-all duration-200 active:scale-90 shadow-md cursor-pointer ${screenShareOn
-                  ? "bg-blue-600 text-white border border-blue-400/30"
-                  : "bg-[#1E2D44] hover:bg-[#263752] text-white border border-white/10"
+                ? "bg-blue-600 text-white border border-blue-400/30"
+                : "bg-[#1E2D44] hover:bg-[#263752] text-white border border-white/10"
                 }`}
             >
               {screenShareOn ? (
@@ -423,8 +602,8 @@ function CallRoom() {
               onClick={() => setChatOpen((prev) => !prev)}
               title="Chat"
               className={`p-3.5 rounded-full transition-all duration-200 active:scale-90 shadow-md cursor-pointer relative ${chatOpen
-                  ? "bg-blue-600 text-white border border-blue-400/30"
-                  : "bg-[#1E2D44] hover:bg-[#263752] text-white border border-white/10"
+                ? "bg-blue-600 text-white border border-blue-400/30"
+                : "bg-[#1E2D44] hover:bg-[#263752] text-white border border-white/10"
                 }`}
             >
               <MessageSquare size={19} />

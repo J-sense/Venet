@@ -1,4 +1,5 @@
-import { Bell, Settings } from "lucide-react";
+import { NotificationPopover } from "@/components/ui/NotificationPopover";
+import { Settings } from "lucide-react";
 
 interface ExpertHeaderProps {
   title?: string;
@@ -28,10 +29,7 @@ export default function ExpertHeader({
       {/* Right: Actions + Avatar */}
       <div className="flex items-center gap-4">
         {/* Notifications */}
-        <button className="p-3 hover:bg-white/5 rounded-xl transition-colors relative">
-          <Bell className="w-5 h-5 text-zinc-400" />
-          <div className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full"></div>
-        </button>
+        <NotificationPopover />
 
         {/* Settings */}
         <button className="p-3 hover:bg-white/5 rounded-xl transition-colors">

@@ -125,9 +125,9 @@ export default function ProgramDetails() {
   const navigate = useNavigate();
   const program = programData[id || ""] || programData["mental-health"];
   const { data: getMyPlan } = useGetProgramPlanQuery(id);
-
+  console.log(program, "jsdkljfkldsjfljsdafkjsdklj")
   const isGenerated = Boolean(getMyPlan?.data?.is_generated);
-  console.log("isGenerated:", isGenerated);
+
 
   const handleStartOrContinue = () => {
     if (isGenerated) {

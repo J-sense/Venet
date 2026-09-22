@@ -1,13 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Menu, Bell } from "lucide-react";
-import { useRef, useState, useEffect } from "react";
-import { Outlet, useLocation } from "react-router";
-import { UserSidebar } from "./UserSidebar";
+import { ProfileDropdown } from "@/components/ui/layouts/ProfileDropdown";
+import { NotificationPopover } from "@/components/ui/NotificationPopover";
 import { ScrollToTop } from "@/components/ui/ScrollToTop";
 import { useMyProfileQuery } from "@/redux/features/auth/auth.api";
-import { useAppSelector } from "@/redux/hooks";
 import { selectCurrentUser } from "@/redux/features/auth/authSlice";
-import { ProfileDropdown } from "@/components/ui/layouts/ProfileDropdown";
+import { useAppSelector } from "@/redux/hooks";
+import { Menu } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { Outlet, useLocation } from "react-router";
+import { UserSidebar } from "./UserSidebar";
 
 type UserLayoutProps = {
   navItems: any[];
@@ -132,10 +133,7 @@ const UserLayout = ({ navItems, user }: UserLayoutProps) => {
 
           {/* Right: Notifications & Profile */}
           <div className="flex items-center gap-2 sm:gap-4 shrink-0">
-            <button className="relative p-2 text-zinc-400 hover:text-white hover:bg-zinc-800 rounded-full transition-all">
-              <Bell className="w-4 h-4 sm:w-5 sm:h-5" />
-              <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 bg-blue-500 rounded-full border border-black" />
-            </button>
+            <NotificationPopover />
             {userData ? (
               <ProfileDropdown user={userData} isDashboard={true} />
             ) : (

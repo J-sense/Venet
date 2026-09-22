@@ -143,9 +143,27 @@
   background: rgba(59, 130, 246, 0.6);
 }
 
-/* Firefox support */
-.custom-scrollbar {
+/* Custom Popover Minimal Scrollbar */
+.custom-popover-scrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+
+.custom-popover-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-popover-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 9999px;
+  transition: background 0.2s ease-in-out;
+}
+
+.custom-popover-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(91, 127, 255, 0.5);
+}
+
+.custom-popover-scrollbar {
   scrollbar-width: thin;
-  scrollbar-color: rgba(255, 255, 255, 0.2) rgba(13, 21, 38, 0.6);
+  scrollbar-color: rgba(255, 255, 255, 0.12) transparent;
 }
 
