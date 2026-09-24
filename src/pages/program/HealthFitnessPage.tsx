@@ -7,7 +7,7 @@ import { useHealthAndFitnessProgramQuery } from "@/redux/features/programs/progr
 export default function HealthFitnessPage() {
   const { data: healthAndFintnessProgram } =
     useHealthAndFitnessProgramQuery(undefined);
-  console.log(healthAndFintnessProgram?.data?.id);
+  console.log(healthAndFintnessProgram)
   return (
     <div className="bg-[#0A0A0A] text-white ">
       {/* Full Screen Hero Section */}

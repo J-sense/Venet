@@ -27,8 +27,8 @@ const CART_BENEFITS = [
 ];
 
 const PRICING_RULES = [
-  "First program: $29.99/month",
-  "Each additional program: $19.99/month",
+  "First program: $14.99/month",
+  "Each additional program: $9.99/month",
   "Automatic multi-program discounts",
   "No refunds for current billing period",
 ];
@@ -36,12 +36,14 @@ const PRICING_RULES = [
 export const ShoppingCartPage = () => {
   const dispatch = useAppDispatch();
   const rawCartItems = useAppSelector(selectCartItems);
+  console.log(rawCartItems)
   const token = useAppSelector(selectCurrentToken);
   const [clearCartApi, { isLoading: isClearApiLoading }] =
     useClearCartApiMutation();
   const { data: getAllCart, refetch } = useGetAllCartItemsQuery(undefined, {
     skip: !token,
   });
+  console.log(getAllCart)
   const [removeItem, { isLoading: isRemoveAllLoading }] =
     useRemoveAllItemFromCartMutation();
   const [singleRemoveCart] = useRemoveSingleCartItemMutation();
@@ -133,11 +135,11 @@ export const ShoppingCartPage = () => {
   const totalItemCount = token ? backendItems.length : cartTitles.length;
 
   // Pricing calculation fallback for guests
-  const guestFirstPrice = cartTitles.length >= 1 ? 29.99 : 0.0;
+  const guestFirstPrice = cartTitles.length >= 1 ? 14.99 : 0.0;
   const guestAdditionalPrice =
-    cartTitles.length > 1 ? (cartTitles.length - 1) * 29.99 : 0.0;
+    cartTitles.length > 1 ? (cartTitles.length - 1) * 14.99 : 0.0;
   const guestDiscount =
-    cartTitles.length > 1 ? (cartTitles.length - 1) * 10.0 : 0.0;
+    cartTitles.length > 1 ? (cartTitles.length - 1) * 5.0 : 0.0;
   const guestTotal = guestFirstPrice + guestAdditionalPrice - guestDiscount;
 
   const firstPrice = token
@@ -247,7 +249,7 @@ export const ShoppingCartPage = () => {
                       {title}
                     </h3>
                     <p className="text-[#9F9FA9] text-[19.37px] font-normal font-['Inter'] leading-7">
-                      ${idx === 0 ? "29.99" : "19.99"}/month
+                      ${idx === 0 ? "14.99" : "9.99"}/month
                     </p>
                   </div>
 

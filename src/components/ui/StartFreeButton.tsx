@@ -51,7 +51,7 @@ export function StartFreeButton({
   const buttonContent = children || (
     <>
       <span>{text}</span>
-      {showIcon && <span className="text-lg md:text-xl">→</span>}
+      {showIcon && <span className="text-[12px] md:text-[14px]">→</span>}
     </>
   );
 

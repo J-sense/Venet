@@ -12,6 +12,26 @@ import { SessionSocketProvider } from "./providers/SessionSocketProvider.tsx";
 import { NotificationSocketProvider } from "./providers/NotificationSocketProvider.tsx";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+
+
+const registerServiceWorker = async () => {
+  if ("serviceWorker" in navigator) {
+    try {
+      const registration = await navigator.serviceWorker.register("/sw.js", {
+        scope: "/",
+      });
+      console.log("Service Worker", registration.scope);
+    } catch (error) {
+      console.error("Service Worker:", error);
+    }
+  }
+};
+
+if (typeof window !== "undefined") {
+  window.addEventListener("load", () => {
+    registerServiceWorker();
+  });
+}
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <Provider store={store}>

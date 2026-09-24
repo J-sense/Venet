@@ -64,7 +64,7 @@ export default function HowItWorks({
     if (!isAdded) {
       const pId = programId || "02ed108d-1636-4acd-acd9-c85a30100fbc";
       dispatch(
-        addToCart({ program_id: pId, title: programTitle, price: 29.99 }),
+        addToCart({ program_id: pId, title: programTitle, price: 14.99 }),
       );
       toast.success(`${programTitle} added to cart!`);
 
