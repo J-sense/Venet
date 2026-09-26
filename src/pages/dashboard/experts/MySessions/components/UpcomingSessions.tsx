@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { useState } from "react";
 import { useGetServerTimeQuery } from "@/redux/features/userDashboard/userSession.api";
 import {
   Calendar,
@@ -172,7 +173,17 @@ export const UpcomingSessions = ({
 }: UpcomingSessionsProps) => {
   const navigate = useNavigate();
   const { data: serVerTime } = useGetServerTimeQuery(undefined);
-  console.log(serVerTime, "server time");
+  const [activeTab, setActiveTab] = useState<"upcoming" | "completed">("upcoming");
+
+  const completedSessions = sessionsList.filter(
+    (s: any) => s?.status?.toUpperCase() === "COMPLETED",
+  );
+  const upcomingSessions = sessionsList.filter(
+    (s: any) => s?.status?.toUpperCase() !== "COMPLETED",
+  );
+
+  const displayedSessions =
+    activeTab === "upcoming" ? upcomingSessions : completedSessions;
 
   const handleJoinCall = (session: any) => {
     const agora = session.agora || {};
@@ -229,22 +240,69 @@ export const UpcomingSessions = ({
   return (
     <div className="flex-1 overflow-y-auto bg-[#0F172A] text-white">
       {/* Header */}
-      <div className="sticky top-0 z-10 px-4 sm:px-6 lg:px-8 py-4 sm:py-5 border-b border-white/5 bg-[#0F172A]/95 backdrop-blur-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-        <div>
-          <h2 className="text-xl sm:text-2xl font-bold text-white leading-tight">
-            Upcoming Sessions
-          </h2>
-          <p className="text-zinc-400 text-xs sm:text-sm mt-0.5">
-            Manage and join your scheduled voice sessions
-          </p>
+      <div className="sticky top-0 z-10 px-4 sm:px-6 lg:px-8 py-4 sm:py-5 border-b border-white/5 bg-[#0F172A]/95 backdrop-blur-sm flex flex-col gap-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <h2 className="text-xl sm:text-2xl font-bold text-white leading-tight">
+              My Sessions
+            </h2>
+            <p className="text-zinc-400 text-xs sm:text-sm mt-0.5">
+              Manage your scheduled voice sessions and view completed history
+            </p>
+          </div>
+          <div className="relative w-full sm:w-64 lg:w-72 shrink-0 hidden">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400" />
+            <input
+              type="text"
+              placeholder="Search sessions..."
+              className="w-full bg-[#131926] border border-white/10 rounded-full py-2.5 pl-10 pr-4 text-sm text-white focus:outline-none focus:border-blue-500 transition-colors placeholder:text-zinc-500"
+            />
+          </div>
         </div>
-        <div className="relative w-full sm:w-64 lg:w-72 shrink-0 hidden">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400" />
-          <input
-            type="text"
-            placeholder="Search sessions..."
-            className="w-full bg-[#131926] border border-white/10 rounded-full py-2.5 pl-10 pr-4 text-sm text-white focus:outline-none focus:border-blue-500 transition-colors placeholder:text-zinc-500"
-          />
+
+        {/* Tab Navigation */}
+        <div className="flex items-center gap-2 border-b border-white/10 pt-1">
+          <button
+            onClick={() => setActiveTab("upcoming")}
+            className={`flex items-center gap-2 px-4 py-2.5 text-sm font-semibold border-b-2 transition-all cursor-pointer ${
+              activeTab === "upcoming"
+                ? "border-blue-500 text-blue-400 bg-blue-500/10 rounded-t-lg"
+                : "border-transparent text-zinc-400 hover:text-zinc-200 hover:bg-white/5 rounded-t-lg"
+            }`}
+          >
+            <Clock className="w-4 h-4" />
+            <span>Scheduled & Active</span>
+            <span
+              className={`text-xs px-2 py-0.5 rounded-full font-bold ${
+                activeTab === "upcoming"
+                  ? "bg-blue-500/20 text-blue-300"
+                  : "bg-zinc-800 text-zinc-400"
+              }`}
+            >
+              {upcomingSessions.length}
+            </span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab("completed")}
+            className={`flex items-center gap-2 px-4 py-2.5 text-sm font-semibold border-b-2 transition-all cursor-pointer ${
+              activeTab === "completed"
+                ? "border-emerald-500 text-emerald-400 bg-emerald-500/10 rounded-t-lg"
+                : "border-transparent text-zinc-400 hover:text-zinc-200 hover:bg-white/5 rounded-t-lg"
+            }`}
+          >
+            <CheckCircle2 className="w-4 h-4" />
+            <span>Completed</span>
+            <span
+              className={`text-xs px-2 py-0.5 rounded-full font-bold ${
+                activeTab === "completed"
+                  ? "bg-emerald-500/20 text-emerald-300"
+                  : "bg-zinc-800 text-zinc-400"
+              }`}
+            >
+              {completedSessions.length}
+            </span>
+          </button>
         </div>
       </div>
 
@@ -257,12 +315,14 @@ export const UpcomingSessions = ({
               Loading sessions...
             </p>
           </div>
-        ) : sessionsList.length === 0 ? (
+        ) : displayedSessions.length === 0 ? (
           <div className="text-center py-12 text-zinc-400">
-            No upcoming sessions found.
+            {activeTab === "upcoming"
+              ? "No upcoming or scheduled sessions found."
+              : "No completed sessions found."}
           </div>
         ) : (
-          sessionsList.map((session: any) => {
+          displayedSessions.map((session: any) => {
             const rawAvatar = !isExpert
               ? session.expert_profile_image
               : session.user_profile_image;
