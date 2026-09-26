@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useMemo, useEffect } from "react";
-import { useParams, Link } from "react-router";
+import { useMemo, useEffect, useRef } from "react";
+import { useParams, Link, Navigate, useNavigate } from "react-router";
 import { ChevronLeft } from "lucide-react";
 import type { Expert } from "./data/expertsData";
 import ExpertProfileDetails from "./components/profile/ExpertProfileDetails";
@@ -12,6 +12,8 @@ import {
 } from "@/redux/features/expertsRoute/expertRoute.api";
 import { useGetSingleExpertAvailabilityQuery } from "@/redux/features/expertDashboard/expertAvailability.api";
 import { useBookingSocket } from "@/providers/BookingSocketProvider";
+import { useAppSelector } from "@/redux/hooks";
+import { toast } from "sonner";
 
 // Helper to format image URLs and handle HTTP/HTTPS mixed content
 const getImageUrl = (url?: string | null) => {
@@ -29,7 +31,25 @@ const getImageUrl = (url?: string | null) => {
 export default function ExpertsDetails() {
   const { id } = useParams();
   const { lastMessage, setExpertId } = useBookingSocket();
+  const { token } = useAppSelector((state) => state.auth)
+  const navigate = useNavigate()
+  const hasToastedRef = useRef(false);
+  useEffect(() => {
 
+    if (!token && !hasToastedRef.current) {
+      hasToastedRef.current = true; // Mark as shown
+
+      toast.error("Please login to book an expert", {
+        description: "You need to be logged in to book an expert",
+      });
+
+      navigate("/auth/login", { replace: true });
+    }
+  }, [token, navigate]);
+
+  if (!token) {
+    return null; // Prevents rendering content while redirecting
+  }
   useEffect(() => {
     if (id) {
       setExpertId(id);
