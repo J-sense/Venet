@@ -24,6 +24,7 @@ const renderSessionActionButton = (
   onJoin: (s: any) => void,
   isMobile = false
 ) => {
+  console.log(session, "sessionsss");
   const baseStyle = isMobile
     ? "w-full font-bold py-3 px-6 rounded-xl flex items-center justify-center gap-2 text-sm transition-all whitespace-nowrap"
     : "font-semibold py-2.5 px-5 rounded-xl flex items-center gap-2 text-sm transition-all whitespace-nowrap";
@@ -206,8 +207,7 @@ export const UpcomingSessions = ({
     navigate(
       `/video-call/${channel}?remoteName=${encodeURIComponent(
         remoteName,
-      )}&localName=${encodeURIComponent(localName)}&role=${role}${
-        token ? `&token=${encodeURIComponent(token)}` : ""
+      )}&localName=${encodeURIComponent(localName)}&role=${role}${token ? `&token=${encodeURIComponent(token)}` : ""
       }${uid ? `&uid=${encodeURIComponent(uid)}` : ""}${localAvatar ? `&localAvatar=${encodeURIComponent(localAvatar)}` : ""}${remoteAvatar ? `&remoteAvatar=${encodeURIComponent(remoteAvatar)}` : ""}`,
       {
         state: {

@@ -6,6 +6,7 @@ import { selectCurrentToken } from "@/redux/features/auth/authSlice";
 import {
   useAddToCartMultipleMutation,
   useGetAllCartItemsQuery,
+  useRemoveSingleCartItemMutation,
 } from "@/redux/features/cart/cart.api";
 import {
   addToCart,
@@ -25,6 +26,7 @@ export const SubscriptionSuggestionMain = () => {
   const dispatch = useAppDispatch();
   const token = useAppSelector(selectCurrentToken);
   const [addToCartApi] = useAddToCartMultipleMutation();
+  const [singleRemoveCart] = useRemoveSingleCartItemMutation();
   const { data: getAllCartItem } = useGetAllCartItemsQuery(undefined, {
     skip: !token,
   });
@@ -39,13 +41,13 @@ export const SubscriptionSuggestionMain = () => {
     title: string,
     price: number,
   ) => {
-    const isAddedInBackend = Boolean(
-      getAllCartItem?.data?.items?.some(
-        (item: any) =>
-          item.program?.id === programId ||
-          item.program?.name?.toLowerCase() === title.toLowerCase(),
-      ),
+    const matchedCartItem = getAllCartItem?.data?.items?.find(
+      (item: any) =>
+        item.program?.id === programId ||
+        item.program?.name?.toLowerCase() === title.toLowerCase(),
     );
+
+    const isAddedInBackend = Boolean(matchedCartItem);
 
     const isAddedInRedux = cartTitles.some(
       (t) => t.toLowerCase() === title.toLowerCase(),
@@ -56,6 +58,14 @@ export const SubscriptionSuggestionMain = () => {
     if (isAdded) {
       dispatch(removeFromCart(title));
       toast.success(`${title} removed from cart`);
+
+      if (token && matchedCartItem?.id) {
+        try {
+          await singleRemoveCart(matchedCartItem.id).unwrap();
+        } catch (err) {
+          console.error("Failed to remove item from backend cart:", err);
+        }
+      }
     } else {
       dispatch(addToCart({ program_id: programId, title, price }));
       toast.success(`${title} added to cart!`);
