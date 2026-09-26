@@ -1,19 +1,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useMemo, useEffect, useRef } from "react";
-import { useParams, Link, Navigate, useNavigate } from "react-router";
-import { ChevronLeft } from "lucide-react";
-import type { Expert } from "./data/expertsData";
-import ExpertProfileDetails from "./components/profile/ExpertProfileDetails";
-import CustomBooking from "./components/booking/CustomBooking";
+import { useBookingSocket } from "@/providers/BookingSocketProvider";
+import { useGetSingleExpertAvailabilityQuery } from "@/redux/features/expertDashboard/expertAvailability.api";
 import {
   // useGetSingleExpertAvailabilityQuery,
   useGetSingleExpertDurationAndTimeQuery,
   useGetSingleExpertQuery,
 } from "@/redux/features/expertsRoute/expertRoute.api";
-import { useGetSingleExpertAvailabilityQuery } from "@/redux/features/expertDashboard/expertAvailability.api";
-import { useBookingSocket } from "@/providers/BookingSocketProvider";
 import { useAppSelector } from "@/redux/hooks";
+import { ChevronLeft } from "lucide-react";
+import { useEffect, useMemo, useRef } from "react";
+import { Link, useNavigate, useParams } from "react-router";
 import { toast } from "sonner";
+import CustomBooking from "./components/booking/CustomBooking";
+import ExpertProfileDetails from "./components/profile/ExpertProfileDetails";
+import type { Expert } from "./data/expertsData";
 
 // Helper to format image URLs and handle HTTP/HTTPS mixed content
 const getImageUrl = (url?: string | null) => {
