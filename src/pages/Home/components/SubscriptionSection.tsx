@@ -58,7 +58,6 @@ export const SubscriptionSection: React.FC = () => {
   return (
     <section className="relative w-full bg-[#030303] py-24 px-4 sm:px-6 lg:px-8 overflow-hidden select-none">
       {/* ── AMBIENT NEON BACKGROUND GLOW SYSTEM ── */}
-      {/* Soft Blue Top Center Glow */}
       <div
         className="absolute left-1/2 top-[-10%] -translate-x-1/2 w-[80%] h-[350px] pointer-events-none z-0 opacity-40 filter blur-[120px]"
         style={{
@@ -67,7 +66,6 @@ export const SubscriptionSection: React.FC = () => {
         }}
       />
 
-      {/* Soft Blue Bottom Glow behind the popular card */}
       <div
         className="absolute left-1/2 bottom-[-5%] -translate-x-1/2 w-[60%] h-[250px] pointer-events-none z-0 opacity-30 filter blur-[100px] mix-blend-screen"
         style={{
@@ -78,21 +76,20 @@ export const SubscriptionSection: React.FC = () => {
 
       <div className="relative max-w-[1440px] mx-auto flex flex-col gap-16 lg:gap-20 z-10">
         {/* Header Block */}
-
         <SectionHeader
           titlePrimary="Subscription"
           titleAccent="Plan"
-          subtitle=" Select The Perfect Membership Plan That Matches Your Fitness Goals
-            And Lifestyle"
+          subtitle="Select The Perfect Membership Plan That Matches Your Fitness Goals And Lifestyle"
         />
-        {/* Pricing Cards Deck */}
+
+        {/* Pricing Cards Deck - All aligned in one row */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch max-w-[1200px] mx-auto w-full px-4">
           {plans.map((plan, index) => (
             <div
               key={index}
-              className={`relative flex flex-col justify-between rounded-[24px] p-8 transition-all duration-300 ${plan.isPopular
-                ? "bg-[#0066FF] text-white shadow-[0_0_50px_rgba(0,102,255,0.25)] border-2 border-[#2B7FFF] md:-translate-y-4 z-20"
-                : "bg-[#101828]/70 border border-[#1E2939]/80 text-white backdrop-blur-sm z-10 hover:border-white/20"
+              className={`relative flex flex-col justify-between h-full rounded-[24px] p-8 transition-all duration-300 ${plan.isPopular
+                  ? "bg-[#0066FF] text-white shadow-[0_0_50px_rgba(0,102,255,0.25)] border-2 border-[#2B7FFF] z-20"
+                  : "bg-[#101828]/70 border border-[#1E2939]/80 text-white backdrop-blur-sm z-10 hover:border-white/20"
                 }`}
             >
               {/* Popular Badge */}
@@ -102,13 +99,13 @@ export const SubscriptionSection: React.FC = () => {
                 </div>
               )}
 
-              {/* Card Meta Content */}
+              {/* Top Content Box (Aligned Headers + Pricing) */}
               <div>
                 <h3 className="text-2xl font-bold font-sora tracking-tight mb-2">
                   {plan.title}
                 </h3>
                 <p
-                  className={`text-xs font-inter mb-8 ${plan.isPopular ? "text-white/80" : "text-[#99A1AF]"
+                  className={`text-xs font-inter min-h-[36px] flex items-center mb-6 ${plan.isPopular ? "text-white/80" : "text-[#99A1AF]"
                     }`}
                 >
                   {plan.subtitle}
@@ -116,7 +113,7 @@ export const SubscriptionSection: React.FC = () => {
 
                 {/* Pricing Display */}
                 <div className="flex items-baseline gap-1 font-inter mb-8">
-                  <span className="text-4xl lg:text-[44px] font-extrabold tracking-tight">
+                  <span className="text-4xl lg:text-[44px] font-extrabold tracking-tight leading-none">
                     {plan.price}
                   </span>
                   <span
@@ -127,8 +124,8 @@ export const SubscriptionSection: React.FC = () => {
                   </span>
                 </div>
 
-                {/* Features Checklist */}
-                <ul className="space-y-4 mb-8">
+                {/* Features List (Aligned Height Container) */}
+                <ul className="space-y-4 mb-8 min-h-[220px]">
                   {plan.features.map((feature, fIndex) => (
                     <li
                       key={fIndex}
@@ -160,22 +157,31 @@ export const SubscriptionSection: React.FC = () => {
                 </ul>
               </div>
 
-              {/* Action Button */}
-              <Link to={`${plan.title == "Talent Portal" ? "/talent-portal" : "/programs/all-programs"}`}>
-                < button
-                  className={`w-full py-3.5 rounded-full font-bold font-inter text-sm tracking-wide transition-all duration-200 active:scale-[0.98] ${plan.isPopular
-                    ? "bg-white text-[#0066FF] hover:bg-neutral-50 shadow-lg shadow-black/10"
-                    : "bg-[#0066FF] text-white hover:bg-[#0052D4]"
-                    }`}
+              {/* Action Button pinned to bottom */}
+              <div className="w-full pt-4 mt-auto">
+                <Link
+                  to={
+                    plan.title === "Talent Portal"
+                      ? "/talent-portal"
+                      : "/programs/all-programs"
+                  }
+                  className="block w-full"
                 >
-                  Get Started
-                </button>
-              </Link>
+                  <button
+                    type="button"
+                    className={`w-full py-3.5 rounded-full font-bold font-inter text-sm tracking-wide transition-all duration-200 active:scale-[0.98] ${plan.isPopular
+                        ? "bg-white text-[#0066FF] hover:bg-neutral-50 shadow-lg shadow-black/10"
+                        : "bg-[#0066FF] text-white hover:bg-[#0052D4]"
+                      }`}
+                  >
+                    Get Started
+                  </button>
+                </Link>
+              </div>
             </div>
-          ))
-          }
-        </div >
-      </div >
-    </section >
+          ))}
+        </div>
+      </div>
+    </section>
   );
 };
