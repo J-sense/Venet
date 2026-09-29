@@ -32,6 +32,12 @@ const programApi = baseApi.injectEndpoints({
         method: "GET",
       }),
     }),
+    singleProgramsById: builder.query({
+      query: (id) => ({
+        url: `/programs/${id}`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 export const {
@@ -40,4 +46,5 @@ export const {
   useMentalHealthProgramQuery,
   useCareerProgrammeQuery,
   useHealthAndFitnessProgramQuery,
+  useSingleProgramsByIdQuery,
 } = programApi;

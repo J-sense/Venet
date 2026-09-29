@@ -24,7 +24,7 @@ import { trainers } from "./data/userHomeData";
 export default function UserHome() {
   const navigate = useNavigate();
   const { data: userProfileData } = useGetUserProfileQuery(undefined);
-  const { data: myPurchaseProgramme } = useMyPurchaseProgrammeQuery(undefined);
+  const { data: myPurchaseProgramme, isLoading: isMyProgramsLoading } = useMyPurchaseProgrammeQuery(undefined);
   const { data: dashboadData } = useGetUserDashboardQuery(undefined);
   // const { data: getAllCertificate } = useGetAllCertificateQuery(undefined);
   console.log(myPurchaseProgramme)
@@ -101,7 +101,7 @@ export default function UserHome() {
                     </div>
                     <div>
                       <h2 className="text:xl md:text-2xl font-bold text-white tracking-tight leading-tight">
-                        My Programsssss
+                        My Program
                       </h2>
                       <p className="text-sm md:text-sm text-zinc-400 mt-0.5 font-medium">
                         Continue where you left off
@@ -112,7 +112,22 @@ export default function UserHome() {
                 </div>
 
                 <div className="space-y-4 relative z-10">
-                  {!myPurchaseProgramme?.data ||
+                  {isMyProgramsLoading ? (
+                    <div className="space-y-4">
+                      {[1, 2].map((i) => (
+                        <div key={i} className="bg-[#0D1526]/60 border border-white/5 rounded-2xl p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 pb-8 animate-pulse">
+                          <div className="flex items-center gap-5 w-full">
+                            <div className="w-14 h-14 shrink-0 rounded-2xl bg-white/10" />
+                            <div className="flex flex-col gap-2 w-full max-w-[200px]">
+                              <div className="h-5 bg-white/10 rounded w-full" />
+                              <div className="h-4 bg-white/10 rounded w-2/3" />
+                            </div>
+                          </div>
+                          <div className="h-14 bg-white/10 rounded-full w-full sm:w-32 shrink-0" />
+                        </div>
+                      ))}
+                    </div>
+                  ) : !myPurchaseProgramme?.data ||
                     myPurchaseProgramme.data.length === 0 ? (
                     <div className="flex flex-col items-center justify-center py-16 px-4 border border-dashed border-white/10 rounded-2xl bg-gradient-to-b from-white/[0.02] to-transparent">
                       <div className="w-16 h-16 bg-[#1A2333] rounded-full flex items-center justify-center mb-4 border border-white/5 shadow-lg">

@@ -16,12 +16,12 @@ import { useExpertsOverViewQuery } from "@/redux/features/expertDashboard/expert
 export default function ExpertOverview() {
   const { data: getStripe, isLoading: isLoadingStripe } =
     useGetExpertStripeAccountQuery(undefined);
-  console.log(getStripe);
+
   const [createOnboarding, { isLoading: isOnboarding }] =
     useExpertOnBoardingMutation();
   const { data: expertsOverView, } =
     useExpertsOverViewQuery(undefined);
-  console.log(expertsOverView?.data?.summary?.total_earnings, "expertsOverView")
+  console.log(expertsOverView, "expertsOverView")
   const handleStripeConnect = async () => {
     try {
       const res = await createOnboarding(undefined).unwrap();
@@ -42,12 +42,10 @@ export default function ExpertOverview() {
     {
       title: "Total Earnings",
       value:
-        `$ ${expertsOverView?.data?.summary?.total_earnings}`
+        `$ ${expertsOverView?.data?.summary?.total_earnings || 0}`
       ,
       subtitle: "All time",
-      icon: <DollarSign className="w-6 h-6" />,
-
-      href: "earnings",
+      icon: <DollarSign className="w-6 h-6" />
     },
     {
       title: "Total Clients",
@@ -91,7 +89,7 @@ export default function ExpertOverview() {
                 subtitle={stat.subtitle}
                 icon={stat.icon}
 
-                href={stat?.href}
+              // href={stat?.href}
               />
             ))}
           </div>
@@ -104,40 +102,82 @@ export default function ExpertOverview() {
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                {[
-                  {
-                    name: "Sarah J.",
-                    topic: "Fitness Goals",
-                    time: "Today • 2:30 PM",
-                  },
-                  {
-                    name: "Michael R.",
-                    topic: "Fitness Goals",
-                    time: "Tomorrow • 10:30 AM",
-                  },
-                  {
-                    name: "Emily K.",
-                    topic: "Mental Health",
-                    time: "Jun 10 • 2:00 PM",
-                  },
-                ].map((item, i) => (
-                  <div
-                    key={i}
-                    className="flex justify-between items-center bg-[#334155] p-4 rounded-2xl"
-                  >
-                    <div>
-                      <p className="font-medium text-[#FFFFFF] text-[18px]">
-                        {item.name}
-                      </p>
-                      <p className="text-sm text-[#9F9FA9] text-[14px] font-normal">
-                        {item.topic}
-                      </p>
-                    </div>
-                    <div className="text-right text-sm text-zinc-400">
-                      {item.time}
-                    </div>
+                {expertsOverView?.data?.upcoming_consultations && expertsOverView.data.upcoming_consultations.length > 0 ? (
+                  expertsOverView.data.upcoming_consultations.map((item: any) => {
+                    // Format time
+                    const timeString = item.start_time;
+                    let formattedTime = "";
+                    if (timeString) {
+                      const [hours, minutes] = timeString.split(":");
+                      const dateObj = new Date();
+                      dateObj.setHours(parseInt(hours, 10));
+                      dateObj.setMinutes(parseInt(minutes, 10));
+                      formattedTime = dateObj.toLocaleTimeString("en-US", {
+                        hour: "numeric",
+                        minute: "2-digit",
+                        hour12: true,
+                      });
+                    }
+
+                    // Format date
+                    const dateString = item.date;
+                    let formattedDate = "";
+                    if (dateString) {
+                      const [year, month, day] = dateString.split("-").map(Number);
+                      const dateObj = new Date(year, month - 1, day);
+                      const today = new Date();
+                      today.setHours(0, 0, 0, 0);
+
+                      const tomorrow = new Date(today);
+                      tomorrow.setDate(tomorrow.getDate() + 1);
+
+                      if (dateObj.getTime() === today.getTime()) {
+                        formattedDate = "Today";
+                      } else if (dateObj.getTime() === tomorrow.getTime()) {
+                        formattedDate = "Tomorrow";
+                      } else {
+                        formattedDate = dateObj.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+                      }
+                    }
+
+                    return (
+                      <div
+                        key={item.id}
+                        className="flex justify-between items-center bg-[#334155] p-4 rounded-2xl"
+                      >
+                        <div className="flex items-center gap-3">
+                          {item.client_image ? (
+                            <img
+                              src={item.client_image}
+                              alt={item.client_name}
+                              className="w-12 h-12 rounded-full object-cover border border-white/10"
+                            />
+                          ) : (
+                            <div className="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400 font-bold border border-blue-500/30">
+                              {item.client_name?.charAt(0) || "U"}
+                            </div>
+                          )}
+                          <div>
+                            <p className="font-medium text-[#FFFFFF] text-[18px]">
+                              {item.client_name}
+                            </p>
+                            <p className="text-sm text-[#9F9FA9] text-[14px] font-normal">
+                              {item.duration_minutes} min Consultation
+                            </p>
+                          </div>
+                        </div>
+                        <div className="text-right flex flex-col items-end">
+                          <span className="text-[#9F9FA9] text-sm">{formattedDate}</span>
+                          <span className="text-[#FFFFFF] font-medium">{formattedTime}</span>
+                        </div>
+                      </div>
+                    );
+                  })
+                ) : (
+                  <div className="text-center py-6 text-zinc-400 bg-[#334155]/50 rounded-2xl border border-dashed border-zinc-600">
+                    No upcoming consultations
                   </div>
-                ))}
+                )}
               </CardContent>
             </Card>
 
@@ -149,28 +189,46 @@ export default function ExpertOverview() {
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                {[
-                  { name: "Sarah J.", amount: "$90", time: "Jun 8 • 45 min" },
-                  { name: "Michael R.", amount: "$90", time: "Jun 7 • 50 min" },
-                  { name: "Emily K.", amount: "$90", time: "Jun 6 • 30 min" },
-                ].map((item, i) => (
-                  <div
-                    key={i}
-                    className="flex justify-between items-center bg-[#334155] p-4 rounded-2xl"
-                  >
-                    <div>
-                      <p className="font-medium text-[#FFFFFF] text-[18px]">
-                        {item.name}
-                      </p>
-                      <p className="text-sm text-[#9F9FA9] text-[14px] font-normal">
-                        {item.time}
-                      </p>
-                    </div>
-                    <div className="font-semibold text-emerald-400">
-                      {item.amount}
-                    </div>
+                {expertsOverView?.data?.recent_earnings && expertsOverView.data.recent_earnings.length > 0 ? (
+                  expertsOverView.data.recent_earnings.map((item: any, i: number) => {
+                    const name = item.client_name || item.name || "Client";
+                    const amount = item.amount || item.earnings || 0;
+                    const duration = item.duration_minutes || item.duration || 0;
+
+                    // Format date
+                    const dateString = item.date || item.created_at || "";
+                    let formattedDate = dateString;
+                    if (dateString) {
+                      const dateObj = new Date(dateString);
+                      if (!isNaN(dateObj.getTime())) {
+                        formattedDate = dateObj.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+                      }
+                    }
+
+                    return (
+                      <div
+                        key={item.id || i}
+                        className="flex justify-between items-center bg-[#334155] p-4 rounded-2xl"
+                      >
+                        <div>
+                          <p className="font-medium text-[#FFFFFF] text-[18px]">
+                            {name}
+                          </p>
+                          <p className="text-sm text-[#9F9FA9] text-[14px] font-normal">
+                            {formattedDate ? `${formattedDate} • ` : ""}{duration > 0 ? `${duration} min` : "Consultation"}
+                          </p>
+                        </div>
+                        <div className="font-semibold text-emerald-400">
+                          ${Number(amount).toFixed(2)}
+                        </div>
+                      </div>
+                    );
+                  })
+                ) : (
+                  <div className="text-center py-6 text-zinc-400 bg-[#334155]/50 rounded-2xl border border-dashed border-zinc-600">
+                    No recent earnings
                   </div>
-                ))}
+                )}
               </CardContent>
             </Card>
           </div>

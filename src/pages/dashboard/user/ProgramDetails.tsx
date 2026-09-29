@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button } from "@/components/ui/button";
+import { useSingleProgramsByIdQuery } from "@/redux/features/programs/program.api";
 import { useGetProgramPlanQuery } from "@/redux/features/userDashboard/userProfile.api";
 import { ArrowLeft, Brain, Briefcase, GraduationCap, HeartPulse } from "lucide-react";
 import { useNavigate, useParams } from "react-router";
@@ -124,10 +125,13 @@ export default function ProgramDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
   const program = programData[id || ""] || programData["mental-health"];
-  const { data: getMyPlan } = useGetProgramPlanQuery(id);
-  console.log(program, "jsdkljfkldsjfljsdafkjsdklj")
-  const isGenerated = Boolean(getMyPlan?.data?.is_generated);
+  const { data: getSinglePackageById, isLoading: isPackageLoading } = useSingleProgramsByIdQuery(id, {
+    skip: !id
+  });
 
+  const { data: getMyPlan, isLoading: isPlanLoading } = useGetProgramPlanQuery(id);
+
+  const isGenerated = Boolean(getMyPlan?.data?.is_generated);
 
   const handleStartOrContinue = () => {
     if (isGenerated) {
@@ -136,6 +140,45 @@ export default function ProgramDetails() {
       navigate(`/dashboard/user/program/${id || "mental-health"}/assessment`);
     }
   };
+
+  const isLoading = isPackageLoading || isPlanLoading;
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-black text-white p-4 sm:p-8 lg:p-16 max-w-7xl mx-auto">
+        {/* Back Button Skeleton */}
+        <div className="w-24 h-10 bg-[#1E293B] rounded-full mb-8 animate-pulse" />
+
+        {/* Header Skeleton */}
+        <div className="flex flex-col md:flex-row items-center gap-4 mb-6">
+          <div className="w-10 h-10 bg-white/5 rounded-full animate-pulse" />
+          <div className="h-10 bg-white/5 rounded-lg w-64 md:w-96 animate-pulse" />
+        </div>
+
+        {/* Description Skeleton */}
+        <div className="h-16 bg-white/5 rounded-lg w-full max-w-2xl mb-12 animate-pulse" />
+
+        {/* How it works Title Skeleton */}
+        <div className="h-7 bg-white/5 rounded-lg w-48 mb-6 animate-pulse" />
+
+        {/* Steps Skeleton */}
+        <div className="space-y-4 mb-16">
+          {[1, 2, 3, 4, 5].map((i) => (
+            <div key={i} className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-5 bg-[#0F172A] p-5 rounded-xl border border-[#1E293B]">
+              <div className="w-10 h-10 rounded-full bg-[#1E293B] animate-pulse shrink-0" />
+              <div className="w-full space-y-2">
+                <div className="h-5 bg-white/5 rounded w-1/3 animate-pulse" />
+                <div className="h-4 bg-white/5 rounded w-2/3 animate-pulse" />
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Button Skeleton */}
+        <div className="h-14 bg-white/5 rounded-full w-full md:w-64 animate-pulse" />
+      </div>
+    );
+  }
 
   return (
     // min-h-screen keeps it full height; padding scales from 4 to 12
@@ -152,12 +195,12 @@ export default function ProgramDetails() {
       <div className="flex flex-col md:flex-row items-center gap-4 mb-6 text-center md:text-left">
         <div className="text-4xl">{program.icon}</div>
         <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold">
-          {program.title}
+          {getSinglePackageById?.data?.name}
         </h1>
       </div>
 
       <p className="text-[#9F9FA9] text-sm sm:text-base mb-12 max-w-2xl text-center md:text-left mx-auto md:mx-0">
-        {program.description}
+        {getSinglePackageById?.data?.description}
       </p>
 
       {/* How it works */}
