@@ -45,7 +45,7 @@ export const MeetFounder = () => {
             near-death experiences, serious illness, and paralysis. Rather than
             giving up, I turned it into fuel through discipline, health, and a
             mission. Today, my mission is to help others transform their own
-            lives through the vNET community.
+            lives through the vNXT community.
           </p>
 
           <Link

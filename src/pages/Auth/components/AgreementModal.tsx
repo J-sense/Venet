@@ -12,7 +12,7 @@ const agreementList = [
     points: [
       "Maintain confidentiality of all client information shared during consultations",
       "Not disclose any personal, health, career, or educational information of clients",
-      "Protect all proprietary information about the vNET platform and its operations",
+      "Protect all proprietary information about the vNXT platform and its operations",
       "Not use client information for any purpose other than providing consultations",
     ],
     label: "I have read and agree to the NDA",
@@ -22,7 +22,7 @@ const agreementList = [
     icon: ShieldCheck,
     title: "Non-Disclosure Agreement",
     points: [
-      "Trade secrets or business methods of vNET",
+      "Trade secrets or business methods of vNXT",
       "Client lists, contact information, or usage patterns",
       "Platform features, algorithms, or technical implementations",
       "Financial information or pricing strategies",
@@ -34,9 +34,9 @@ const agreementList = [
     icon: Briefcase,
     title: "Non-Compete Agreement",
     points: [
-      "Solicit vNET clients for services outside the platform",
+      "Solicit vNXT clients for services outside the platform",
       "Create or join a directly competing platform in the same market",
-      "Use client contacts gained through vNET for non-platform business",
+      "Use client contacts gained through vNXT for non-platform business",
       "Share or sell client information to third parties",
     ],
     label: "I have read and agree to the Non-Compete Agreement",
@@ -138,11 +138,10 @@ export const AgreementModal = ({
                 return (
                   <div
                     key={item.id}
-                    className={`rounded-xl p-3 sm:p-3.5 border transition-all duration-150 ${
-                      isChecked
-                        ? "border-blue-500/40 bg-blue-500/10"
-                        : "border-white/[0.09] bg-white/[0.04]"
-                    }`}
+                    className={`rounded-xl p-3 sm:p-3.5 border transition-all duration-150 ${isChecked
+                      ? "border-blue-500/40 bg-blue-500/10"
+                      : "border-white/[0.09] bg-white/[0.04]"
+                      }`}
                   >
                     {/* Title row */}
                     <div className="flex items-start gap-2.5 mb-2.5">
@@ -169,11 +168,10 @@ export const AgreementModal = ({
                       onClick={() => toggle(item.id)}
                     >
                       <div
-                        className={`w-4 h-4 rounded flex items-center justify-center flex-shrink-0 transition-all duration-150 ${
-                          isChecked
-                            ? "bg-blue-600 border-blue-600"
-                            : "bg-transparent border border-white/25"
-                        }`}
+                        className={`w-4 h-4 rounded flex items-center justify-center flex-shrink-0 transition-all duration-150 ${isChecked
+                          ? "bg-blue-600 border-blue-600"
+                          : "bg-transparent border border-white/25"
+                          }`}
                         style={{ borderWidth: "1.5px" }}
                       >
                         {isChecked && (
@@ -195,11 +193,10 @@ export const AgreementModal = ({
 
             {/* CTA */}
             <Button
-              className={`w-full h-[46px] rounded-full text-[14px] font-semibold text-white transition-all duration-200 border-none ${
-                allAccepted
-                  ? "bg-blue-600 hover:bg-blue-700 opacity-100 cursor-pointer"
-                  : "bg-blue-600 opacity-40 cursor-not-allowed"
-              }`}
+              className={`w-full h-[46px] rounded-full text-[14px] font-semibold text-white transition-all duration-200 border-none ${allAccepted
+                ? "bg-blue-600 hover:bg-blue-700 opacity-100 cursor-pointer"
+                : "bg-blue-600 opacity-40 cursor-not-allowed"
+                }`}
               disabled={!allAccepted}
               onClick={onAccept}
             >

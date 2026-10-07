@@ -17,7 +17,7 @@ export const AboutUsHero = () => {
             </span>
           </h1>
           <p className="text-lg md:text-xl text-slate-400 font-normal font-['Inter'] leading-7 max-w-2xl">
-            vNET combines AI-powered roadmaps, expert guidance, personalized
+            vNXT combines AI-powered roadmaps, expert guidance, personalized
             programs, and career development tools to help people achieve
             meaningful life transformation.
           </p>

@@ -123,7 +123,7 @@ export const MissionSection: React.FC = () => {
             {/* Paragraphs */}
             <div className="space-y-6 text-[#D1D5DC] text-[19px] font-normal">
               <p>
-                At VNET, we believe everyone deserves access to high-quality
+                At vNXT, we believe everyone deserves access to high-quality
                 programs that can transform their health, mind, skills, and
                 career. Our AI-powered platform creates personalized roadmaps
                 that adapt to your unique journey.

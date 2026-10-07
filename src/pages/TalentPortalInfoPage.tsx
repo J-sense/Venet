@@ -44,14 +44,14 @@ export default function TalentPortalInfoPage() {
       icon: <Network className="w-6 h-6 text-cyan-400" />,
       title: "Professional Networking Ecosystem",
       description:
-        "Connect with industry leaders, certified mentors, and fellow transformed candidates across the vNET network.",
+        "Connect with industry leaders, certified mentors, and fellow transformed candidates across the vNXT network.",
       badge: "Global Community",
     },
     {
       icon: <Award className="w-6 h-6 text-amber-400" />,
       title: "Verified Credentials & Badges",
       description:
-        "Display your official vNET certificates and achievements to employers with tamper-proof digital verification.",
+        "Display your official vNXT certificates and achievements to employers with tamper-proof digital verification.",
       badge: "Verified Proof",
     },
     {
@@ -72,7 +72,7 @@ export default function TalentPortalInfoPage() {
 
   const benefits = [
     "Accelerate your job search with AI-generated resumes & cover letters",
-    "Stand out to global recruiters with verified vNET program certificates",
+    "Stand out to global recruiters with verified vNXT program certificates",
     "Access exclusive career coaching, interview preps, and mentorship",
     "Unlock high-paying career pathways tailored to your unique strengths",
     "Join a thriving network of high-achieving professionals and experts",
@@ -104,7 +104,7 @@ export default function TalentPortalInfoPage() {
           <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.1] text-white">
             Welcome to the <br className="hidden sm:block" />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-300 to-indigo-400">
-              vNET Talent Portal
+              vNXT Talent Portal
             </span>
           </h1>
 
@@ -159,7 +159,7 @@ export default function TalentPortalInfoPage() {
                 An All-in-One Career Acceleration Engine
               </h2>
               <p className="text-zinc-300 leading-relaxed text-base sm:text-lg">
-                The <strong className="text-white font-semibold">vNET Talent Portal</strong> is a premium career ecosystem designed to help individuals convert their education, wellness, and skills into tangible professional career success.
+                The <strong className="text-white font-semibold">vNXT  Talent Portal</strong> is a premium career ecosystem designed to help individuals convert their education, wellness, and skills into tangible professional career success.
               </p>
               <p className="text-zinc-400 leading-relaxed text-sm sm:text-base">
                 Whether you are seeking a strategic career pivot, looking to land high-paying roles, or building a standout professional brand, the Talent Portal equips you with AI tools, direct recruiter visibility, and verified credentials.
@@ -282,7 +282,7 @@ export default function TalentPortalInfoPage() {
             Ready to Unlock Your Talent Potential?
           </h2>
           <p className="text-blue-100 text-base sm:text-xl max-w-2xl mx-auto leading-relaxed relative z-10">
-            Join thousands of professionals already accelerating their career trajectory with the vNET Talent Portal.
+            Join thousands of professionals already accelerating their career trajectory with the vNXT Talent Portal.
           </p>
 
           <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-5 relative z-10">

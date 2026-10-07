@@ -98,7 +98,7 @@ export default function UserCertificates() {
             </h2>
           </div>
           <p className="text-zinc-400 text-sm">
-            View, download, and share your verified professional accomplishments issued by vNET
+            View, download, and share your verified professional accomplishments issued by vNXT
           </p>
         </div>
 
@@ -315,7 +315,7 @@ function LoadingState() {
     <div className="flex flex-col items-center justify-center py-20 bg-zinc-900/40 border border-zinc-800/80 rounded-2xl text-center">
       <Loader2 className="w-10 h-10 text-blue-500 animate-spin mb-4" />
       <p className="text-zinc-300 font-medium">Fetching your certificates...</p>
-      <p className="text-zinc-500 text-xs mt-1">Connecting to vNET records</p>
+      <p className="text-zinc-500 text-xs mt-1">Connecting to vNXT records</p>
     </div>
   );
 }
@@ -360,7 +360,7 @@ function AboutSection() {
     <div className="bg-gradient-to-r from-blue-950/30 via-zinc-900 to-zinc-900 border border-zinc-800 rounded-2xl p-6">
       <h3 className="text-zinc-200 font-semibold mb-3 flex items-center gap-2 text-sm">
         <ShieldCheck className="w-4 h-4 text-blue-400" />
-        About vNET Certificates
+        About vNXT Certificates
       </h3>
       <ul className="space-y-2.5 text-xs text-zinc-400">
         <li className="flex items-center gap-2.5">
@@ -373,7 +373,7 @@ function AboutSection() {
         </li>
         <li className="flex items-center gap-2.5">
           <span className="w-1.5 h-1.5 rounded-full bg-blue-400 shrink-0" />
-          Issued certificates remain permanently stored and accessible under your vNET profile.
+          Issued certificates remain permanently stored and accessible under your vNXT profile.
         </li>
       </ul>
     </div>

@@ -105,7 +105,7 @@ export interface FeedbackItem {
 export const customerReviews: FeedbackItem[] = [
   {
     quote:
-      "Before joining vNET, I was stuck in a fitness rut. But the trainers here are amazing, and the community is so supportive! It's like a second home to me now.",
+      "Before joining vNXT, I was stuck in a fitness rut. But the trainers here are amazing, and the community is so supportive! It's like a second home to me now.",
     rating: 5,
     author: "Joanne",
     image:
@@ -113,7 +113,7 @@ export const customerReviews: FeedbackItem[] = [
   },
   {
     quote:
-      "I used to dread going to the gym, but vNET changed that for me. This variety of classes ensures I never get bored, and I genuinely look forward to each workout session!",
+      "I used to dread going to the gym, but vNXT changed that for me. This variety of classes ensures I never get bored, and I genuinely look forward to each workout session!",
     rating: 5,
     author: "Caleb",
     image:
@@ -121,7 +121,7 @@ export const customerReviews: FeedbackItem[] = [
   },
   {
     quote:
-      "Not only have I seen incredible physical results, but I've also gained a newfound confidence and sense of accomplishment. vNET isn't just a place to work out!",
+      "Not only have I seen incredible physical results, but I've also gained a newfound confidence and sense of accomplishment. vNXT isn't just a place to work out!",
     rating: 5,
     author: "Donna",
     image:
@@ -136,12 +136,12 @@ export interface FAQItem {
 
 export const faqsData: FAQItem[] = [
   {
-    question: "What Is vNET And How Can It Help Me Reach My Fitness Goals?",
+    question: "What Is vNXT And How Can It Help Me Reach My Fitness Goals?",
     answer:
-      "vNET is an online fitness platform that offers personalized workout plans, expert coaching, and comprehensive nutritional guidance. Whether you're looking to lose weight, build muscle, or simply stay fit, our tailored programs and community support will help you achieve your fitness goals.",
+      "vNXT is an online fitness platform that offers personalized workout plans, expert coaching, and comprehensive nutritional guidance. Whether you're looking to lose weight, build muscle, or simply stay fit, our tailored programs and community support will help you achieve your fitness goals.",
   },
   {
-    question: "How Do I Get Started With A Workout Plan On vNET?",
+    question: "How Do I Get Started With A Workout Plan On vNXT?",
     answer:
       "Getting started is simple. Select a subscription tier that matches your preference, complete your physical evaluation profile, and our AI pipeline will map out your baseline routine instantly.",
   },

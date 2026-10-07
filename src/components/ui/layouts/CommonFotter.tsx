@@ -274,7 +274,7 @@ export const Footer: React.FC = () => {
         {/* ── HORIZONTAL DIVIDER & BOTTOM RIGHTS ROW ── */}
         <div className="w-full border-t border-[#1E2939]/30 flex items-center justify-center">
           <p className="text-[#717182] text-[14px] font-normal">
-            &copy; 2026 VNET. All rights reserved.
+            &copy; 2026 vNXT. All rights reserved.
           </p>
         </div>
       </div>

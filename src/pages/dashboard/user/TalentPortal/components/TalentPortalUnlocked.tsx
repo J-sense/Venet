@@ -54,7 +54,7 @@ export default function TalentPortalUnlocked() {
                 <div className="absolute top-4 sm:top-6 right-4 sm:right-8 text-right z-10 max-w-[200px] xs:max-w-[260px] sm:max-w-md">
                   <div className="inline-flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[10px] sm:text-xs font-semibold mb-1 backdrop-blur-md">
                     <Sparkles className="w-3 sm:w-3.5 h-3 sm:h-3.5" />
-                    <span>vNET Career Portal</span>
+                    <span>vNXT Career Portal</span>
                   </div>
                   <h2 className="text-xs xs:text-sm sm:text-lg font-bold text-white tracking-tight">
                     AI Talent & Career Hub
@@ -335,7 +335,7 @@ export default function TalentPortalUnlocked() {
                     Resume Builder
                   </h3>
                   <p className="text-sm text-gray-400 leading-relaxed">
-                    Create a professional resume showcasing your vNET certifications and achievements.
+                    Create a professional resume showcasing your vNXT certifications and achievements.
                   </p>
                 </div>
 

@@ -30,7 +30,7 @@ export default function HowItWorks({
   title = "How It Works",
   subtitle = "Your journey from assessment to success in 5 simple steps",
   buttonText = "Start Your Journey",
-  programTitle = "VNET Wellness Program",
+  programTitle = "vNXT Wellness Program",
   programId,
 }: HowItWorksProps) {
   const dispatch = useAppDispatch();

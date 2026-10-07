@@ -53,7 +53,7 @@ export default function MentalHealthPage() {
 
             <p className="text-sm sm:text-base md:text-lg text-white/70 max-w-lg mb-8 sm:mb-10 text-[#FFFFFFB2] leading-relaxed">
               Mental health. Substance abuse. Hope lost. Whatever you're
-              carrying — change is possible. Transformation is real. VNET is
+              carrying — change is possible. Transformation is real. vNXT is
               where your comeback begins.
             </p>
 

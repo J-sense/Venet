@@ -119,9 +119,8 @@ export const ProfileDropdown = ({
             {firstName || fullName}
           </span>
           <ChevronDown
-            className={`w-4 h-4 text-gray-400 transition-transform duration-200 ${
-              isOpen ? "rotate-180 text-blue-400" : ""
-            }`}
+            className={`w-4 h-4 text-gray-400 transition-transform duration-200 ${isOpen ? "rotate-180 text-blue-400" : ""
+              }`}
           />
         </button>
 
@@ -204,7 +203,7 @@ export const ProfileDropdown = ({
               Confirm Logout
             </DialogTitle>
             <DialogDescription className="text-sm text-zinc-400">
-              Are you sure you want to log out of your vNET account?
+              Are you sure you want to log out of your vNXT account?
             </DialogDescription>
           </DialogHeader>
 

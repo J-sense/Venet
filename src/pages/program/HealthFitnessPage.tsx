@@ -50,13 +50,13 @@ export default function HealthFitnessPage() {
               <div>
                 <h1 className="text-center text-4xl sm:text-5xl md:text-7xl font-extrabold leading-tight md:leading-[80px]">
                   Achieve Your Health &amp; Fitness Goals with{" "}
-                  <span className="text-blue-600">VNET</span>
+                  <span className="text-blue-600">vNXT</span>
                 </h1>
               </div>
 
               {/* Subtitle */}
               <p className="max-w-[814px] text-white/70 text-base md:text-lg font-normal leading-relaxed md:leading-7 text-center px-2">
-                Join the VNET community and take charge of your health and
+                Join the vNXT community and take charge of your health and
                 fitness journey. With personalized workout plans, nutrition
                 guidance, and expert support.
               </p>

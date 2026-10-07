@@ -13,7 +13,7 @@ export default function DisclaimerMain() {
             IMPORTANT: Please Read Carefully
           </h3>
           <p className="text-lg leading-relaxed text-[#D4D4D8]">
-            vNET provides educational guidance and wellness recommendations
+            vNXT provides educational guidance and wellness recommendations
             based on common patterns and best practices. We do NOT provide
             medical diagnosis, medical treatment, mental health diagnosis, or
             professional medical advice. Always consult with qualified
@@ -28,7 +28,7 @@ export default function DisclaimerMain() {
           </h2>
           <p className="text-[#94A3B8]">
             <span className="font-semibold text-white">
-              vNET is NOT a substitute for professional medical care.
+              vNXT is NOT a substitute for professional medical care.
             </span>{" "}
             Our platform provides:
           </p>
@@ -71,7 +71,7 @@ export default function DisclaimerMain() {
 
           <p className="text-[#94A3B8]">
             Never disregard professional medical advice or delay seeking it
-            because of something you read on vNET. If you think you may have a
+            because of something you read on vNXT. If you think you may have a
             medical emergency, call your doctor or emergency services
             immediately.
           </p>
@@ -156,7 +156,7 @@ export default function DisclaimerMain() {
             our platform, please understand:
           </p>
           <ul className="list-disc pl-6 space-y-2 text-[#94A3B8]">
-            <li>Experts are independent professionals, not vNET employees.</li>
+            <li>Experts are independent professionals, not vNXT employees.</li>
             <li>
               We verify credentials but do not guarantee ongoing consultations.
             </li>
@@ -202,9 +202,9 @@ export default function DisclaimerMain() {
             7. No Doctor-Patient Relationship
           </h2>
           <p className="text-[#94A3B8]">
-            Use of the vNET platform does NOT create a doctor-patient
+            Use of the vNXT platform does NOT create a doctor-patient
             relationship, therapist-client relationship, or any professional
-            healthcare relationship between you and vNET, our staff, or our
+            healthcare relationship between you and vNXT, our staff, or our
             platform. We are a technology and educational platform, not a
             healthcare provider.
           </p>
@@ -250,7 +250,7 @@ export default function DisclaimerMain() {
             10. Assumption of Risk
           </h2>
           <p className="text-[#94A3B8]">
-            By using vNET, you acknowledge and accept that:
+            By using vNXT, you acknowledge and accept that:
           </p>
           <ul className="list-disc pl-6 space-y-2 text-[#94A3B8]">
             <li>
@@ -359,7 +359,7 @@ export default function DisclaimerMain() {
           </h3>
           <p className="text-lg leading-relaxed text-[#D4D4D8]">
             Your health and safety are paramount. When in doubt, always consult
-            qualified healthcare professionals. vNET is here to support your
+            qualified healthcare professionals. vNXT is here to support your
             wellness journey with educational tools and resources, but we cannot
             and do not replace professional medical care.
           </p>

@@ -14,7 +14,7 @@ export default function PrivacyMain() {
         {/* Intro Box */}
         <div className="bg-[#0F172A] rounded-xl p-6 shadow-lg shadow-black/20">
           <p className="text-lg leading-relaxed text-[#94A3B8]">
-            At vNET, we take your privacy seriously. This Privacy Policy
+            At vNXT, we take your privacy seriously. This Privacy Policy
             explains how we collect, use, disclose, and safeguard your
             information when you use our platform.
           </p>

@@ -245,11 +245,11 @@ export const FounderStoryPage = () => {
                   The Mission
                 </span>
                 <h2 className="text-3xl sm:text-4xl font-extrabold text-[#FFFFFF] font-sora">
-                  Why I Created <span className="text-[#155DFC]">vNET</span>
+                  Why I Created <span className="text-[#155DFC]">vNXT</span>
                 </h2>
               </div>
               <p className="text-[#94A3B8] text-sm sm:text-base leading-relaxed max-w-xl font-normal font-['Inter']">
-                vNET exists because no one should have to face life's darkest
+                vNXT exists because no one should have to face life's darkest
                 moments alone. The platform connects people with experts,
                 education, coaching, wellness resources, and a supportive
                 community that empowers lasting transformation.

@@ -10,12 +10,12 @@ export default function TermsMain() {
         title="Terms & Conditions"
         date="June 5, 2026"
       />
-      
+
       <main className="max-w-4xl mx-auto px-6 py-16 text-[#E2E8F0] space-y-12">
         {/* Intro Box */}
         <div className="bg-[#0F172A] rounded-xl p-6 shadow-lg shadow-black/20">
           <p className="text-lg leading-relaxed text-[#94A3B8]">
-            Please read these Terms and Conditions carefully before using the vNET platform. By accessing or using our services, you agree to be bound by these Terms.
+            Please read these Terms and Conditions carefully before using the vNXT platform. By accessing or using our services, you agree to be bound by these Terms.
           </p>
         </div>
 
@@ -23,14 +23,14 @@ export default function TermsMain() {
         <section className="space-y-4">
           <h2 className="text-2xl font-bold text-white tracking-tight">1. Acceptance of Terms</h2>
           <p className="text-[#94A3B8]">
-            By creating an account, accessing, or using vNET's services, you agree to comply with and be bound by these Terms and Conditions, our Privacy Policy, and our Disclaimer. If you do not agree to these Terms, please do not use our services.
+            By creating an account, accessing, or using vNXT's services, you agree to comply with and be bound by these Terms and Conditions, our Privacy Policy, and our Disclaimer. If you do not agree to these Terms, please do not use our services.
           </p>
         </section>
 
         {/* Section 2 */}
         <section className="space-y-4">
           <h2 className="text-2xl font-bold text-white tracking-tight">2. Description of Services</h2>
-          <p className="text-[#94A3B8]">vNET provides:</p>
+          <p className="text-[#94A3B8]">vNXT provides:</p>
           <ul className="list-disc pl-6 space-y-2 text-[#94A3B8]">
             <li>AI-powered wellness and career development programs</li>
             <li>Personalized roadmaps and goal-tracking tools</li>
@@ -46,7 +46,7 @@ export default function TermsMain() {
         {/* Section 3 */}
         <section className="space-y-4">
           <h2 className="text-2xl font-bold text-white tracking-tight">3. User Accounts</h2>
-          
+
           <h3 className="text-lg font-semibold text-white mt-6">Account Creation</h3>
           <ul className="list-disc pl-6 space-y-2 text-[#94A3B8]">
             <li>You must be at least 18 years old to create an account.</li>
@@ -64,7 +64,7 @@ export default function TermsMain() {
         {/* Section 4 */}
         <section className="space-y-4">
           <h2 className="text-2xl font-bold text-white tracking-tight">4. Subscription and Payment</h2>
-          
+
           <h3 className="text-lg font-semibold text-white mt-6">Subscription Plans</h3>
           <ul className="list-disc pl-6 space-y-2 text-[#94A3B8]">
             <li>Single program: $29.99/month</li>
@@ -115,7 +115,7 @@ export default function TermsMain() {
         <section className="space-y-4">
           <h2 className="text-2xl font-bold text-white tracking-tight">6. Intellectual Property</h2>
           <p className="text-[#94A3B8]">
-            All content on the vNET platform, including text, graphics, logos, images, software, and AI-generated roadmaps, is the property of vNET or its licensors and is protected by copyright, trademark, and other intellectual property laws. You may not use, reproduce, modify, or distribute any content without our express written permission.
+            All content on the vNXT platform, including text, graphics, logos, images, software, and AI-generated roadmaps, is the property of vNXT or its licensors and is protected by copyright, trademark, and other intellectual property laws. You may not use, reproduce, modify, or distribute any content without our express written permission.
           </p>
         </section>
 
@@ -123,7 +123,7 @@ export default function TermsMain() {
         <section className="space-y-4">
           <h2 className="text-2xl font-bold text-white tracking-tight">7. Expert Services</h2>
           <p className="text-[#94A3B8]">
-            When you book a session with an expert Coach or Consultant through our platform, you acknowledge that the expert is an independent professional. vNET facilitates the connection but is not responsible for the quality, accuracy, or outcomes of expert services. Any disputes with experts should be resolved directly with the expert.
+            When you book a session with an expert Coach or Consultant through our platform, you acknowledge that the expert is an independent professional. vNXT facilitates the connection but is not responsible for the quality, accuracy, or outcomes of expert services. Any disputes with experts should be resolved directly with the expert.
           </p>
         </section>
 
@@ -139,7 +139,7 @@ export default function TermsMain() {
         <section className="space-y-4">
           <h2 className="text-2xl font-bold text-white tracking-tight">9. Limitation of Liability</h2>
           <p className="text-[#94A3B8] uppercase">
-            TO THE MAXIMUM EXTENT PERMITTED BY LAW, vNET SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, OR ANY LOSS OF PROFITS OR REVENUES, WHETHER INCURRED DIRECTLY OR INDIRECTLY, OR ANY LOSS OF DATA, USE, GOODWILL, OR OTHER INTANGIBLE LOSSES.
+            TO THE MAXIMUM EXTENT PERMITTED BY LAW, vNXT SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, OR ANY LOSS OF PROFITS OR REVENUES, WHETHER INCURRED DIRECTLY OR INDIRECTLY, OR ANY LOSS OF DATA, USE, GOODWILL, OR OTHER INTANGIBLE LOSSES.
           </p>
         </section>
 
@@ -147,7 +147,7 @@ export default function TermsMain() {
         <section className="space-y-4">
           <h2 className="text-2xl font-bold text-white tracking-tight">10. Indemnification</h2>
           <p className="text-[#94A3B8]">
-            You agree to indemnify and hold harmless vNET, its affiliates, and their respective officers, directors, employees, and agents from any claims, damages, losses, liabilities, and expenses (including legal fees) arising from your use of the platform or violation of these Terms.
+            You agree to indemnify and hold harmless vNXT, its affiliates, and their respective officers, directors, employees, and agents from any claims, damages, losses, liabilities, and expenses (including legal fees) arising from your use of the platform or violation of these Terms.
           </p>
         </section>
 
