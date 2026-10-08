@@ -2,9 +2,9 @@ import HowItWorks from "@/components/ui/ProgrammeHowItWorksSection";
 
 import { StartFreeButton } from "@/components/assessment";
 import HeadingBadge from "@/components/ui/HeadingBadge";
+import { LearnMoreButton } from "@/components/ui/LearnMoreButton";
 import { useEducationServiceProgramQuery } from "@/redux/features/programs/program.api";
 import { educationSteps } from "./data/programData";
-import { LearnMoreButton } from "@/components/ui/LearnMoreButton";
 
 export default function EducationServicePage() {
   const { data: educationServiceProgram } =
