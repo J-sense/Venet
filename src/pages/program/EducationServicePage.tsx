@@ -2,9 +2,9 @@ import HowItWorks from "@/components/ui/ProgrammeHowItWorksSection";
 
 import { StartFreeButton } from "@/components/assessment";
 import HeadingBadge from "@/components/ui/HeadingBadge";
-import { LearnMoreButton } from "@/components/ui/LearnMoreButton";
 import { useEducationServiceProgramQuery } from "@/redux/features/programs/program.api";
 import { educationSteps } from "./data/programData";
+import { LearnMoreButton } from "@/components/ui/LearnMoreButton";
 
 export default function EducationServicePage() {
   const { data: educationServiceProgram } =
@@ -53,7 +53,7 @@ export default function EducationServicePage() {
                 showIcon
                 className="px-6 py-3.5 md:px-8 md:py-4 text-base md:text-lg shadow-[#155DFC4D] w-full sm:w-auto"
               />
-              <LearnMoreButton className="text-white w-full sm:w-auto h-14 px-8 py-3.5 bg-white/10 rounded-full outline outline-1 outline-offset-[-1px] outline-white/20 flex items-center justify-center gap-2.5 hover:bg-white/20 transition-all" text="Learn More" />
+              <LearnMoreButton className="text-white w-full sm:w-auto h-14 px-8 py-3.5 bg-white/10 rounded-full outline outline-1 outline-offset-[-1px] outline-white/20 flex items-center justify-center gap-2.5 hover:bg-white/20 transition-all" ></LearnMoreButton>
             </div>
 
             {/* Stats */}
