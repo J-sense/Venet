@@ -63,7 +63,7 @@ export function StartFreeButton({
         title={isDisabled ? "Assessment already completed" : text}
         className={cn(
           "bg-gradient-to-b from-[#007AFF] to-[#0B60BD] border border-[#007AFF4D] text-white rounded-full font-bold transition-all duration-200 shadow-[inset_0_1px_0_rgba(255,255,255,0.35),inset_0_-3px_6px_rgba(0,0,0,0.35),0_4px_15px_rgba(0,122,255,0.3)] [text-shadow:0_1px_2px_rgba(0,0,0,0.45)] active:scale-[0.97] active:shadow-[inset_0_1px_0_rgba(255,255,255,0.25),inset_0_-2px_4px_rgba(0,0,0,0.35)] cursor-pointer flex items-center justify-center gap-2 select-none",
-          "disabled:bg-zinc-800/90 disabled:bg-none disabled:text-zinc-400 disabled:border disabled:border-zinc-700/80 disabled:cursor-not-allowed disabled:opacity-75 disabled:shadow-none disabled:hover:brightness-100 disabled:active:scale-100",
+          "disabled:from-zinc-700 disabled:to-zinc-800 disabled:text-zinc-400 disabled:border-zinc-600/50 disabled:cursor-not-allowed disabled:shadow-[inset_0_1px_0_rgba(255,255,255,0.08),inset_0_-3px_6px_rgba(0,0,0,0.35)] disabled:active:shadow-[inset_0_1px_0_rgba(255,255,255,0.08),inset_0_-3px_6px_rgba(0,0,0,0.35)] disabled:[text-shadow:0_1px_1px_rgba(0,0,0,0.5)] disabled:hover:brightness-100 disabled:active:scale-100",
           className
         )}
         {...props}
