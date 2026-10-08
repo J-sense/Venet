@@ -5,6 +5,7 @@ import { LearnMoreButton } from "@/components/ui/LearnMoreButton";
 import { fitnessSteps } from "./data/programData";
 import { useHealthAndFitnessProgramQuery } from "@/redux/features/programs/program.api";
 import HeadingBadge from "@/components/ui/HeadingBadge";
+import { StartFreeButton } from "@/components/assessment";
 
 export default function HealthFitnessPage() {
   const { data: healthAndFintnessProgram } =
@@ -64,7 +65,11 @@ export default function HealthFitnessPage() {
             <div className="w-full max-w-md flex flex-col items-center gap-8 mt-6">
               {/* Buttons */}
               <div className="flex flex-col sm:flex-row gap-4 w-full justify-center">
-                <ActionButton label="Start Free Assessment" />
+                <StartFreeButton
+                  text="Start Free Assessment"
+                  showIcon
+                  className="px-8 py-3.5 text-sm font-semibold min-w-[220px]"
+                />
 
                 <LearnMoreButton />
               </div>
