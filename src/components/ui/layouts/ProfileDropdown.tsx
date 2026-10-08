@@ -207,18 +207,40 @@ export const ProfileDropdown = ({
             </DialogDescription>
           </DialogHeader>
 
-          <DialogFooter className="flex flex-col-reverse sm:flex-row gap-2 mt-4 sm:justify-center">
+
+
+          <DialogFooter className="flex flex-col-reverse sm:flex-row gap-3 mt-6 sm:justify-center">
+            {/* Cancel: dark glass */}
             <Button
               variant="outline"
               onClick={() => setIsLogoutModalOpen(false)}
-              className="bg-zinc-800/80 hover:bg-zinc-700 text-zinc-300 border-zinc-700 rounded-xl px-5 py-2 text-sm cursor-pointer"
+              className="min-w-28 px-6 py-2 rounded-full text-sm font-medium cursor-pointer select-none
+      text-zinc-300 hover:text-white
+      bg-gradient-to-b from-zinc-700/70 to-zinc-800/80 hover:from-zinc-600/70 hover:to-zinc-700/80
+      border border-zinc-600/50
+      shadow-[inset_0_1px_0_rgba(255,255,255,0.12),inset_0_-3px_6px_rgba(0,0,0,0.35)]
+      [text-shadow:0_1px_2px_rgba(0,0,0,0.45)]
+      transition-all duration-200 active:scale-[0.97]
+      focus-visible:ring-2 focus-visible:ring-zinc-400/60 focus-visible:ring-offset-0"
             >
               Cancel
             </Button>
+
+            {/* Log Out: glossy red */}
             <Button
               onClick={handleConfirmLogout}
-              className="bg-red-600 hover:bg-red-500 text-white font-medium rounded-xl px-5 py-2 text-sm cursor-pointer shadow-lg shadow-red-600/20"
+              className="min-w-28 px-6 py-2 rounded-full text-sm font-bold cursor-pointer select-none
+      flex items-center justify-center gap-2 text-white
+      bg-gradient-to-b from-[#F04444] to-[#C21F1F] hover:from-[#F25555] hover:to-[#D12B2B]
+      border border-red-400/30
+      shadow-[inset_0_1px_0_rgba(255,255,255,0.35),inset_0_-3px_6px_rgba(0,0,0,0.35),0_4px_15px_rgba(239,68,68,0.3)]
+      [text-shadow:0_1px_2px_rgba(0,0,0,0.45)]
+      transition-all duration-200 hover:-translate-y-0.5
+      active:translate-y-0 active:scale-[0.97]
+      active:shadow-[inset_0_1px_0_rgba(255,255,255,0.25),inset_0_-2px_4px_rgba(0,0,0,0.35)]
+      focus-visible:ring-2 focus-visible:ring-red-300/70 focus-visible:ring-offset-0"
             >
+              <LogOut className="w-4 h-4" />
               Log Out
             </Button>
           </DialogFooter>
