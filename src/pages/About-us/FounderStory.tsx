@@ -1,4 +1,3 @@
-import { StartFreeButton } from "@/components/assessment";
 import {
   Activity,
   Award,

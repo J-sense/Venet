@@ -1,8 +1,7 @@
-import { Sparkles } from "lucide-react";
-import { Link } from "react-router";
 import { StartFreeButton } from "@/components/assessment";
-import { useAllProgramsQuery } from "@/redux/features/programs/program.api";
 import HeadingBadge from "@/components/ui/HeadingBadge";
+import { useAllProgramsQuery } from "@/redux/features/programs/program.api";
+import { Link } from "react-router";
 
 export default function BannerV2() {
   const stats = [
