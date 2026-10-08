@@ -1,11 +1,10 @@
-import { ActionButton } from "@/components/ui/ActionButton";
-import HowItWorks from "@/components/ui/ProgrammeHowItWorksSection";
 import { LearnMoreButton } from "@/components/ui/LearnMoreButton";
+import HowItWorks from "@/components/ui/ProgrammeHowItWorksSection";
 
-import { fitnessSteps } from "./data/programData";
-import { useHealthAndFitnessProgramQuery } from "@/redux/features/programs/program.api";
-import HeadingBadge from "@/components/ui/HeadingBadge";
 import { StartFreeButton } from "@/components/assessment";
+import HeadingBadge from "@/components/ui/HeadingBadge";
+import { useHealthAndFitnessProgramQuery } from "@/redux/features/programs/program.api";
+import { fitnessSteps } from "./data/programData";
 
 export default function HealthFitnessPage() {
   const { data: healthAndFintnessProgram } =
