@@ -1,4 +1,4 @@
-import { Star } from "lucide-react";
+import { ArrowRight, Star } from "lucide-react";
 import type { Expert } from "../data/expertsData";
 import { Link } from "react-router";
 
@@ -80,8 +80,23 @@ export default function ExpertCard({ expert }: ExpertCardProps) {
           <span className="text-gray-500 text-xs font-medium ml-1">/hour</span>
         </div>
         <Link to={`/experts/${expert?.id}`}>
-          <button className="bg-white hover:bg-slate-100 text-slate-950 px-5 py-2 rounded-full text-[16px] font-medium transition-all duration-200 hover:shadow-md hover:shadow-white/10 active:scale-95 flex items-center gap-1.5 group/btn">
+
+          <button
+            className="group/btn flex items-center gap-1.5 px-5 py-2 rounded-full select-none cursor-pointer
+    text-[16px] font-semibold text-slate-950
+    bg-gradient-to-b from-white to-slate-200
+    border border-white/60
+    shadow-[inset_0_1px_0_rgba(255,255,255,1),inset_0_-3px_6px_rgba(15,23,42,0.18),0_4px_12px_rgba(0,0,0,0.25)]
+    [text-shadow:0_1px_0_rgba(255,255,255,0.8)]
+    transition-all duration-200
+    hover:from-white hover:to-slate-100 hover:-translate-y-0.5
+    hover:shadow-[inset_0_1px_0_rgba(255,255,255,1),inset_0_-3px_6px_rgba(15,23,42,0.18),0_8px_20px_rgba(0,0,0,0.3)]
+    active:translate-y-0 active:scale-[0.97]
+    active:shadow-[inset_0_1px_0_rgba(255,255,255,1),inset_0_-2px_4px_rgba(15,23,42,0.2)]
+    focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+          >
             View Profile
+            <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover/btn:translate-x-0.5" />
           </button>
         </Link>
       </div>
