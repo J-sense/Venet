@@ -25,7 +25,30 @@ import HeadingBadge from "@/components/ui/HeadingBadge";
 export default function TalentPortalInfoPage() {
   const navigate = useNavigate();
   const [isAssessmentOpen, setIsAssessmentOpen] = useState(false);
-
+  const COLORS = {
+    blue: {
+      cardHover: "hover:border-blue-400/40",
+      tile: "from-blue-500/35 to-blue-700/15 border-blue-400/30 text-blue-300",
+    },
+    purple: {
+      cardHover: "hover:border-purple-400/40",
+      tile: "from-purple-500/35 to-purple-700/15 border-purple-400/30 text-purple-300",
+    },
+    cyan: {
+      cardHover: "hover:border-cyan-400/40",
+      tile: "from-cyan-500/35 to-cyan-700/15 border-cyan-400/30 text-cyan-300",
+    },
+    amber: {
+      cardHover: "hover:border-amber-400/40",
+      tile: "from-amber-500/35 to-amber-700/15 border-amber-400/30 text-amber-300",
+    },
+  } as const
+  const items = [
+    { color: "blue", icon: <span className="text-lg font-bold">AI</span>, title: "Resume Builder", desc: "Automated ATS templates & cover letters" },
+    { color: "purple", icon: <Globe className="w-6 h-6" />, title: "Global Hiring", desc: "Recruiter visibility & job matches" },
+    { color: "cyan", icon: <Users className="w-6 h-6" />, title: "Expert Coaching", desc: "1-on-1 mentorship & interview prep" },
+    { color: "amber", icon: <Zap className="w-6 h-6" />, title: "Roadmap Sync", desc: "Track milestones & progress gains" },
+  ] as const;
   const features = [
     {
       icon: <FileText className="w-6 h-6 text-blue-400" />,
@@ -130,9 +153,12 @@ export default function TalentPortalInfoPage() {
             {stats.map((stat, idx) => (
               <div
                 key={idx}
-                className="bg-[#0D1526]/80 border border-white/5 p-4 sm:p-6 rounded-2xl text-center space-y-1 backdrop-blur-md"
+                className="p-4 sm:p-6 rounded-2xl text-center space-y-1 select-none
+        bg-gradient-to-b from-[#121B2E]/90 to-[#0A1120]/90 backdrop-blur-md
+        border border-white/10
+        shadow-[inset_0_1px_0_rgba(255,255,255,0.12),inset_0_-3px_6px_rgba(0,0,0,0.35)]"
               >
-                <div className="text-2xl sm:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white to-zinc-300">
+                <div className="text-2xl sm:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-b from-white to-zinc-400">
                   {stat.value}
                 </div>
                 <div className="text-xs sm:text-sm text-zinc-400 font-medium">
@@ -165,34 +191,32 @@ export default function TalentPortalInfoPage() {
             </div>
 
             <div className="lg:col-span-5 grid grid-cols-2 gap-4">
-              <div className="bg-[#121B2E] border border-white/10 p-6 rounded-2xl text-center space-y-3 hover:border-blue-500/40 transition-all duration-300 hover:-translate-y-1 shadow-lg">
-                <div className="w-12 h-12 mx-auto rounded-2xl bg-blue-500/20 border border-blue-500/30 flex items-center justify-center text-blue-400 font-bold text-lg">
-                  AI
+              {items.map((item) => (
+                <div
+                  key={item.title}
+                  className={`group p-6 rounded-2xl text-center space-y-3 select-none
+        bg-gradient-to-b from-[#172238] to-[#0F1727]
+        border border-white/10 ${COLORS[item.color].cardHover}
+        shadow-[inset_0_1px_0_rgba(255,255,255,0.12),inset_0_-3px_6px_rgba(0,0,0,0.35)]
+        transition-all duration-300 hover:-translate-y-1`}
+                >
+                  <div
+                    className={`w-12 h-12 mx-auto rounded-2xl flex items-center justify-center
+          bg-gradient-to-b border ${COLORS[item.color].tile}
+          shadow-[inset_0_1px_0_rgba(255,255,255,0.25),inset_0_-3px_6px_rgba(0,0,0,0.35)]
+          transition-transform duration-300 group-hover:scale-110`}
+                  >
+                    <span className="flex items-center justify-center drop-shadow-[0_2px_3px_rgba(0,0,0,0.45)]">
+                      {item.icon}
+                    </span>
+                  </div>
+
+                  <h4 className="font-bold text-white text-base [text-shadow:0_1px_2px_rgba(0,0,0,0.45)]">
+                    {item.title}
+                  </h4>
+                  <p className="text-xs text-zinc-400 leading-relaxed">{item.desc}</p>
                 </div>
-                <h4 className="font-bold text-white text-base">Resume Builder</h4>
-                <p className="text-xs text-zinc-400 leading-relaxed">Automated ATS templates & cover letters</p>
-              </div>
-              <div className="bg-[#121B2E] border border-white/10 p-6 rounded-2xl text-center space-y-3 hover:border-purple-500/40 transition-all duration-300 hover:-translate-y-1 shadow-lg">
-                <div className="w-12 h-12 mx-auto rounded-2xl bg-purple-500/20 border border-purple-500/30 flex items-center justify-center text-purple-400 font-bold text-lg">
-                  <Globe className="w-6 h-6" />
-                </div>
-                <h4 className="font-bold text-white text-base">Global Hiring</h4>
-                <p className="text-xs text-zinc-400 leading-relaxed">Recruiter visibility & job matches</p>
-              </div>
-              <div className="bg-[#121B2E] border border-white/10 p-6 rounded-2xl text-center space-y-3 hover:border-cyan-500/40 transition-all duration-300 hover:-translate-y-1 shadow-lg">
-                <div className="w-12 h-12 mx-auto rounded-2xl bg-cyan-500/20 border border-cyan-500/30 flex items-center justify-center text-cyan-400 font-bold text-lg">
-                  <Users className="w-6 h-6" />
-                </div>
-                <h4 className="font-bold text-white text-base">Expert Coaching</h4>
-                <p className="text-xs text-zinc-400 leading-relaxed">1-on-1 mentorship & interview prep</p>
-              </div>
-              <div className="bg-[#121B2E] border border-white/10 p-6 rounded-2xl text-center space-y-3 hover:border-amber-500/40 transition-all duration-300 hover:-translate-y-1 shadow-lg">
-                <div className="w-12 h-12 mx-auto rounded-2xl bg-amber-500/20 border border-amber-500/30 flex items-center justify-center text-amber-400 font-bold text-lg">
-                  <Zap className="w-6 h-6" />
-                </div>
-                <h4 className="font-bold text-white text-base">Roadmap Sync</h4>
-                <p className="text-xs text-zinc-400 leading-relaxed">Track milestones & progress gains</p>
-              </div>
+              ))}
             </div>
           </div>
         </section>
@@ -216,18 +240,45 @@ export default function TalentPortalInfoPage() {
             {features.map((feature, idx) => (
               <Card
                 key={idx}
-                className="bg-gradient-to-b from-[#0D1526] to-[#0A101D] border-white/10 hover:border-blue-500/50 transition-all duration-300 group hover:-translate-y-2 shadow-xl hover:shadow-2xl hover:shadow-blue-900/20 relative overflow-hidden"
+                className="group relative overflow-hidden
+        bg-gradient-to-b from-[#121B2E] to-[#0A101D]
+        border border-white/10 hover:border-blue-400/40
+        shadow-[inset_0_1px_0_rgba(255,255,255,0.12),inset_0_-3px_6px_rgba(0,0,0,0.35)]
+        hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.18),inset_0_-3px_6px_rgba(0,0,0,0.35)]
+        transition-all duration-300 hover:-translate-y-2"
               >
                 <div className="absolute top-0 right-0 p-4">
-                  <span className="text-[10px] font-bold text-blue-400 bg-blue-500/10 border border-blue-500/20 px-2.5 py-1 rounded-full uppercase tracking-wider">
+                  <span
+                    className="inline-flex items-center px-2.5 py-1 rounded-full select-none
+            text-[10px] font-bold uppercase tracking-wider text-blue-300
+            bg-gradient-to-b from-blue-500/25 to-blue-700/15
+            border border-blue-400/30
+            shadow-[inset_0_1px_0_rgba(255,255,255,0.2),inset_0_-2px_4px_rgba(0,0,0,0.3)]
+            [text-shadow:0_1px_2px_rgba(0,0,0,0.45)]"
+                  >
                     {feature.badge}
                   </span>
                 </div>
+
                 <CardContent className="p-8 space-y-5">
-                  <div className="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center group-hover:scale-110 group-hover:bg-blue-600/10 group-hover:border-blue-500/30 transition-all duration-300">
-                    {feature.icon}
+                  <div
+                    className="w-14 h-14 rounded-2xl flex items-center justify-center select-none
+            bg-gradient-to-b from-white/10 to-white/[0.02]
+            border border-white/10
+            shadow-[inset_0_1px_0_rgba(255,255,255,0.2),inset_0_-3px_6px_rgba(0,0,0,0.35)]
+            text-zinc-300
+            transition-all duration-300
+            group-hover:scale-110 group-hover:-translate-y-0.5
+            group-hover:from-blue-500/30 group-hover:to-blue-700/15
+            group-hover:border-blue-400/40 group-hover:text-blue-300
+            group-hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.3),inset_0_-3px_6px_rgba(0,0,0,0.35)]"
+                  >
+                    <span className="flex items-center justify-center drop-shadow-[0_2px_3px_rgba(0,0,0,0.45)] transition-transform duration-300 group-hover:scale-105">
+                      {feature.icon}
+                    </span>
                   </div>
-                  <h3 className="text-xl font-bold text-white group-hover:text-blue-400 transition-colors">
+
+                  <h3 className="text-xl font-bold text-white group-hover:text-blue-300 transition-colors [text-shadow:0_1px_2px_rgba(0,0,0,0.45)]">
                     {feature.title}
                   </h3>
                   <p className="text-zinc-400 text-sm leading-relaxed">
@@ -240,13 +291,26 @@ export default function TalentPortalInfoPage() {
         </section>
 
         {/* WHY SIGN UP / BENEFITS */}
-        <section className="bg-gradient-to-r from-[#0D1526] via-[#151D33] to-[#0D1526] border border-white/10 rounded-3xl p-8 sm:p-14 space-y-12 shadow-2xl relative overflow-hidden">
+        <section
+          className="relative overflow-hidden rounded-3xl p-8 sm:p-14 space-y-12
+    bg-gradient-to-r from-[#0D1526] via-[#151D33] to-[#0D1526]
+    border border-white/10
+    shadow-[inset_0_1px_0_rgba(255,255,255,0.1),inset_0_-3px_6px_rgba(0,0,0,0.35)]"
+        >
           <div className="max-w-3xl space-y-4">
-            <div className="inline-flex items-center gap-2 text-purple-400 text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full bg-purple-400/10 border border-purple-400/20">
-              <Star className="w-4 h-4" />
+            <div
+              className="inline-flex items-center gap-2 px-3 py-1 rounded-full select-none
+        text-purple-300 text-xs font-bold uppercase tracking-widest
+        bg-gradient-to-b from-purple-500/25 to-purple-700/15
+        border border-purple-400/30
+        shadow-[inset_0_1px_0_rgba(255,255,255,0.2),inset_0_-2px_4px_rgba(0,0,0,0.3)]
+        [text-shadow:0_1px_2px_rgba(0,0,0,0.45)]"
+            >
+              <Star className="w-4 h-4 drop-shadow-[0_1px_2px_rgba(0,0,0,0.45)]" />
               Why Join the Talent Portal?
             </div>
-            <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-white">
+
+            <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-white [text-shadow:0_1px_2px_rgba(0,0,0,0.45)]">
               Transform Your Career Potential into Reality
             </h2>
             <p className="text-zinc-400 text-base sm:text-lg">
@@ -258,10 +322,19 @@ export default function TalentPortalInfoPage() {
             {benefits.map((benefit, idx) => (
               <div
                 key={idx}
-                className="flex items-start gap-4 p-5 rounded-2xl bg-white/[0.03] border border-white/5 hover:border-white/15 hover:bg-white/[0.05] transition-all duration-300"
+                className="flex items-start gap-4 p-5 rounded-2xl
+          bg-gradient-to-b from-white/[0.06] to-white/[0.02]
+          border border-white/10 hover:border-white/20
+          shadow-[inset_0_1px_0_rgba(255,255,255,0.1),inset_0_-3px_6px_rgba(0,0,0,0.3)]
+          transition-all duration-300"
               >
-                <div className="w-7 h-7 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0 mt-0.5 border border-emerald-500/30">
-                  <CheckCircle2 className="w-4 h-4" />
+                <div
+                  className="w-7 h-7 rounded-full shrink-0 mt-0.5 flex items-center justify-center select-none
+            bg-gradient-to-b from-emerald-500/35 to-emerald-700/15
+            border border-emerald-400/30 text-emerald-300
+            shadow-[inset_0_1px_0_rgba(255,255,255,0.25),inset_0_-2px_4px_rgba(0,0,0,0.35)]"
+                >
+                  <CheckCircle2 className="w-4 h-4 drop-shadow-[0_1px_2px_rgba(0,0,0,0.45)]" />
                 </div>
                 <span className="text-zinc-200 text-base font-medium leading-relaxed">
                   {benefit}
