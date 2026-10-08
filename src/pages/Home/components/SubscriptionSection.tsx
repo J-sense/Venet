@@ -169,10 +169,11 @@ export const SubscriptionSection: React.FC = () => {
                 >
                   <button
                     type="button"
-                    className={`w-full py-3.5 rounded-full font-bold font-inter text-sm tracking-wide transition-all duration-200 active:scale-[0.98] ${plan.isPopular
-                        ? "bg-white text-[#0066FF] hover:bg-neutral-50 shadow-lg shadow-black/10"
-                        : "bg-[#0066FF] text-white hover:bg-[#0052D4]"
-                      }`}
+                    className={`w-full py-3.5 rounded-full font-bold font-inter text-sm tracking-wide cursor-pointer select-none ${
+                      plan.isPopular
+                        ? "bg-white text-[#0066FF] shadow-[inset_0_1px_0_rgba(255,255,255,0.9),inset_0_-3px_6px_rgba(0,0,0,0.12),0_8px_24px_rgba(0,0,0,0.15)] [text-shadow:0_1px_1px_rgba(255,255,255,0.5)]"
+                        : "bg-gradient-to-b from-[#0066FF] to-[#0052D4] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.35),inset_0_-3px_6px_rgba(0,0,0,0.35),0_8px_24px_rgba(0,102,255,0.3)] [text-shadow:0_1px_2px_rgba(0,0,0,0.45)]"
+                    }`}
                   >
                     Get Started
                   </button>

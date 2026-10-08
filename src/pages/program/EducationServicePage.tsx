@@ -3,6 +3,7 @@ import HowItWorks from "@/components/ui/ProgrammeHowItWorksSection";
 
 import { educationSteps } from "./data/programData";
 import { useEducationServiceProgramQuery } from "@/redux/features/programs/program.api";
+import HeadingBadge from "@/components/ui/HeadingBadge";
 
 export default function EducationServicePage() {
   const { data: educationServiceProgram } =
@@ -26,14 +27,9 @@ export default function EducationServicePage() {
         <div className="relative z-10 w-full max-w-[1600px]  px-6">
           <div className="max-w-7xl mx-auto text-center">
             {/* Badge */}
-            <div className="inline-flex items-center gap-1.5 sm:gap-2 bg-blue-500/10 border border-blue-500/30 px-4 py-2 sm:px-6 sm:py-2.5 rounded-full mb-6 sm:mb-8 max-w-full">
-              <span className="text-blue-400 text-xs sm:text-base shrink-0">
-                ★
-              </span>
-              <span className="uppercase text-blue-300 text-[10px] sm:text-sm font-medium tracking-wider sm:tracking-widest truncate sm:whitespace-normal">
-                EDUCATION . SERVICE . DIRECTION
-              </span>
-            </div>
+
+
+            <HeadingBadge children="Education. Service. Program" />
 
             {/* Headline */}
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold leading-tight md:leading-[78px] mb-4 md:mb-6">

@@ -1,7 +1,10 @@
 import HowItWorks from "@/components/ui/ProgrammeHowItWorksSection";
+import { StartFreeButton } from "@/components/ui/StartFreeButton";
+import { LearnMoreButton } from "@/components/ui/LearnMoreButton";
 
 import { mentalHealthSteps } from "./data/programData";
 import { useMentalHealthProgramQuery } from "@/redux/features/programs/program.api";
+import HeadingBadge from "@/components/ui/HeadingBadge";
 
 export default function MentalHealthPage() {
   const { data: mentalHealthProgram } = useMentalHealthProgramQuery(undefined);
@@ -39,12 +42,9 @@ export default function MentalHealthPage() {
           {/* Left Side Copy */}
           <div className="max-w-2xl mx-auto lg:mx-0 flex flex-col items-center lg:items-start">
             {/* Badge */}
-            <div className="inline-flex items-center gap-2 bg-blue-900/40 border border-blue-500/30 px-4 py-1.5 rounded-full mt-6">
-              <div className="w-1.5 h-1.5 bg-blue-400 rounded-full animate-pulse" />
-              <span className="uppercase text-blue-300 text-[10px] sm:text-xs font-medium tracking-widest">
-                MENTAL HEALTH PROGRAM
-              </span>
-            </div>
+
+
+            <HeadingBadge children="MENTAL HEALTH PROGRAM" />
 
             {/* Main Heading */}
             <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold leading-tight mb-4 sm:mb-6 w-full">
@@ -59,13 +59,12 @@ export default function MentalHealthPage() {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 mb-10 sm:mb-12 w-full sm:w-auto">
-              <button className="bg-[#1A63F4] hover:bg-blue-600 shadow-[0_0_20px_rgba(26,99,244,0.4)] transition px-8 py-3.5 rounded-full font-semibold text-sm flex items-center justify-center gap-3 w-full sm:w-auto">
-                Start Your Recovery
-                <span>→</span>
-              </button>
-              <button className="px-8 py-3.5 bg-black/40 border border-white/20 hover:bg-white/10 rounded-full transition-all text-sm font-medium flex items-center justify-center w-full sm:w-auto">
-                Learn More
-              </button>
+              <StartFreeButton
+                text="Start Your Recovery"
+                showIcon
+                className="px-8 py-3.5 text-sm font-semibold w-full sm:w-auto"
+              />
+              <LearnMoreButton />
             </div>
 
             {/* Stats */}

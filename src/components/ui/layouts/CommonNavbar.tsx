@@ -70,9 +70,9 @@ export const CommonNavbar = () => {
           {/* Logo - Fluid Sizing across device sizes */}
           <Link to="/" className="flex items-center flex-shrink-0">
             <img
-              src="/VNetLogo.png"
+              src="/VNextLogo.png"
               alt="VNET Logo"
-              className="w-28 h-8 sm:w-36 sm:h-10 md:w-44 md:h-12 lg:w-52 lg:h-14 object-cover rounded-full border border-zinc-800 transition-all duration-300 hover:border-blue-500/40"
+              className="w-28 h-8 sm:w-36 sm:h-10 md:w-44 md:h-12 lg:w-40 lg:h-14 object-cover rounded-full border border-zinc-800 transition-all duration-300 hover:border-blue-500/40"
             />
           </Link>
 
@@ -143,16 +143,15 @@ export const CommonNavbar = () => {
             {/* Shopping Cart Button */}
             <Link
               to="/shopping-cart"
-              className="group relative p-[1.5px] rounded-full bg-gradient-to-r from-blue-500/40 via-indigo-500/40 to-cyan-400/40 hover:from-blue-400 hover:via-cyan-400 hover:to-indigo-400 transition-all duration-300 shadow-[0_0_15px_rgba(0,122,255,0.2)] hover:shadow-[0_0_25px_rgba(0,122,255,0.5)] active:scale-95 flex items-center justify-center shrink-0"
+              className="relative p-[1.5px] rounded-full bg-gradient-to-r from-blue-500/40 via-indigo-500/40 to-cyan-400/40 shadow-[inset_0_1px_0_rgba(255,255,255,0.35),inset_0_-3px_6px_rgba(0,0,0,0.35)] flex items-center justify-center shrink-0 cursor-pointer select-none"
               title="View Cart"
             >
-              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#0B0F19]/90 hover:bg-[#0E1526] backdrop-blur-xl flex items-center justify-center relative overflow-hidden transition-colors duration-300">
-                <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/5 to-white/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <ShoppingBag className="relative z-10 w-4 h-4 sm:w-4.5 sm:h-4.5 text-cyan-400 group-hover:text-white group-hover:scale-110 transition-all duration-300 drop-shadow-[0_0_10px_rgba(6,182,212,0.8)]" />
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#0B0F19]/90 backdrop-blur-xl flex items-center justify-center relative overflow-hidden shadow-[inset_0_1px_0_rgba(255,255,255,0.25),inset_0_-3px_6px_rgba(0,0,0,0.4)]">
+                <ShoppingBag className="relative z-10 w-4 h-4 sm:w-4.5 sm:h-4.5 text-cyan-400 drop-shadow-[0_0_10px_rgba(6,182,212,0.8)]" />
               </div>
 
               {displayCartCount > 0 && (
-                <span className="absolute -top-1 -right-1 z-20 bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-500 text-white text-[10px] font-extrabold min-w-[18px] h-4.5 px-1 rounded-full flex items-center justify-center shadow-[0_0_10px_rgba(0,198,255,0.8)] ring-2 ring-[#0B0F19]">
+                <span className="absolute -top-1 -right-1 z-20 bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-500 text-white text-[10px] font-extrabold min-w-[18px] h-4.5 px-1 rounded-full flex items-center justify-center shadow-[inset_0_1px_0_rgba(255,255,255,0.4),inset_0_-1px_3px_rgba(0,0,0,0.4)] ring-2 ring-[#0B0F19]">
                   {displayCartCount}
                 </span>
               )}
@@ -172,13 +171,13 @@ export const CommonNavbar = () => {
                 <>
                   <button
                     onClick={() => setIsAgreementModalOpen(true)}
-                    className="hidden md:inline-flex px-3.5 py-2 lg:px-5 lg:py-2.5 rounded-full text-xs lg:text-sm font-semibold text-white/90 border border-white/20 bg-white/5 hover:bg-white/10 hover:text-white transition-all duration-200 cursor-pointer shrink-0"
+                    className="hidden md:inline-flex px-3.5 py-2 lg:px-5 lg:py-2.5 rounded-full text-xs lg:text-sm font-semibold text-white bg-gradient-to-b from-white/15 to-white/5 border border-white/20 shadow-[inset_0_1px_0_rgba(255,255,255,0.25),inset_0_-2px_4px_rgba(0,0,0,0.3)] [text-shadow:0_1px_2px_rgba(0,0,0,0.45)] transition-all duration-200 cursor-pointer shrink-0"
                   >
                     Join as Expert
                   </button>
                   <Link
                     to="/auth/login"
-                    className="px-3.5 py-2 lg:px-6 lg:py-2.5 rounded-full text-xs lg:text-sm font-semibold text-[#3B82F6] border border-[#3B82F6]/70 bg-blue-500/5 hover:bg-blue-500/10 transition-colors shrink-0"
+                    className="px-3.5 py-2 lg:px-6 lg:py-2.5 rounded-full text-xs lg:text-sm font-semibold text-white bg-gradient-to-b from-[#007AFF] to-[#0B60BD] shadow-[inset_0_1px_0_rgba(255,255,255,0.35),inset_0_-3px_6px_rgba(0,0,0,0.35)] [text-shadow:0_1px_2px_rgba(0,0,0,0.45)] transition-all duration-200 shrink-0"
                   >
                     Log In
                   </Link>
@@ -384,21 +383,21 @@ export const CommonNavbar = () => {
                   setMobileMenuOpen(false);
                   setIsAgreementModalOpen(true);
                 }}
-                className="w-full text-center px-6 py-3.5 rounded-full text-base font-bold text-white border border-white/20 bg-white/5 hover:bg-white/10 transition-all duration-200 cursor-pointer"
+                className="w-full text-center px-6 py-3.5 rounded-full text-base font-bold text-white bg-gradient-to-b from-white/15 to-white/5 border border-white/20 shadow-[inset_0_1px_0_rgba(255,255,255,0.25),inset_0_-2px_4px_rgba(0,0,0,0.3)] [text-shadow:0_1px_2px_rgba(0,0,0,0.45)] transition-all duration-200 cursor-pointer"
               >
                 Join as Expert
               </button>
               <Link
                 to="/auth/login"
                 onClick={() => setMobileMenuOpen(false)}
-                className="w-full text-center px-6 py-3.5 rounded-full text-base font-bold text-[#3B82F6] border-2 border-[#3B82F6] bg-transparent hover:bg-blue-500/10 transition-all duration-200"
+                className="w-full text-center px-6 py-3.5 rounded-full text-base font-bold text-white bg-gradient-to-b from-[#007AFF] to-[#0B60BD] shadow-[inset_0_1px_0_rgba(255,255,255,0.35),inset_0_-3px_6px_rgba(0,0,0,0.35)] [text-shadow:0_1px_2px_rgba(0,0,0,0.45)] transition-all duration-200"
               >
                 Log In
               </Link>
               <StartFreeButton
                 text="Start Free"
                 onClick={() => setMobileMenuOpen(false)}
-                className="w-full px-6 py-3.5 text-base font-bold shadow-[0_0_20px_rgba(0,122,255,0.4)]"
+                className=""
               />
             </>
           )}

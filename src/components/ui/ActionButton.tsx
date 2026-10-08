@@ -19,15 +19,15 @@ export const ActionButton: React.FC<ActionButtonProps> = ({
 
   const variantClasses =
     variant === "fill"
-      ? "bg-[#0B60BD] text-white shadow-md"
-      : "border border-[#0B60BD] text-[#0B60BD] hover:bg-[#0B60BD]/5";
+      ? "bg-gradient-to-b from-[#007AFF] to-[#0B60BD] border border-[#007AFF4D] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.35),inset_0_-3px_6px_rgba(0,0,0,0.35)] [text-shadow:0_1px_2px_rgba(0,0,0,0.45)] cursor-pointer select-none"
+      : "border border-[#0B60BD] text-[#0B60BD] hover:bg-[#0B60BD]/5 shadow-[inset_0_1px_0_rgba(255,255,255,0.2),inset_0_-3px_6px_rgba(0,0,0,0.2)] [text-shadow:0_1px_2px_rgba(0,0,0,0.3)] cursor-pointer select-none";
 
   return (
     <button
       onClick={onClick}
-      className={`rounded-[100px] w-300px inline-flex justify-center items-center gap-5 transition-all duration-300 font-vazirmatn text-lg font-medium ${sizeClasses} ${variantClasses} ${className}`}
+      className={`rounded-[100px] inline-flex justify-center items-center gap-5 transition-all duration-300 font-vazirmatn text-lg font-medium ${sizeClasses} ${variantClasses} ${className}`}
     >
-      <span className="text-center [text-shadow:_0px_2px_4px_rgb(0_0_0_/_0.20)]">
+      <span className="text-center [text-shadow:0_1px_2px_rgba(0,0,0,0.45)]">
         {label}
       </span>
     </button>

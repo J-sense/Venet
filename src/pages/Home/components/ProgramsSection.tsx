@@ -130,8 +130,8 @@ const ProgramCard: React.FC<{ program: ProgramItem }> = ({ program }) => {
         </div>
 
         {/* GLASSMORPHISM "LEARN MORE" BUTTON */}
-        <div className="w-full h-[62px] rounded-full relative overflow-hidden backdrop-blur-[12px] backdrop-saturate-[1.6] bg-gradient-to-b from-white/[0.11] to-white/[0.04] shadow-[inset_0_1px_0_rgba(255,255,255,0.14),inset_0_-1px_0_rgba(255,255,255,0.04),0_2px_8px_rgba(0,0,0,0.30)] transition-all duration-300 ease-in-out flex items-center justify-center mt-7 cursor-pointer select-none hover:backdrop-blur-[16px] hover:backdrop-saturate-[1.8] hover:from-blue-500/[0.22] hover:to-blue-500/[0.10] hover:shadow-[inset_0_1px_0_rgba(59,130,246,0.40),inset_0_-1px_0_rgba(59,130,246,0.10),0_4px_16px_rgba(59,130,246,0.18)] group/btn">
-          <span className="font-['Inter'] font-semibold text-[17.5px] leading-[26px] text-[#3B82F6] transition-colors duration-300 ease-in-out relative z-10 group-hover/btn:text-white">
+        <div className="w-full h-[62px] rounded-full relative overflow-hidden backdrop-blur-[12px] backdrop-saturate-[1.6] bg-gradient-to-b from-white/[0.11] to-white/[0.04] shadow-[inset_0_1px_0_rgba(255,255,255,0.14),inset_0_-1px_0_rgba(255,255,255,0.04),0_2px_8px_rgba(0,0,0,0.30)] transition-all duration-300 ease-in-out flex items-center justify-center mt-7 cursor-pointer select-none group-hover:backdrop-blur-[16px] group-hover:backdrop-saturate-[1.8] group-hover:from-blue-500/[0.22] group-hover:to-blue-500/[0.10] group-hover:shadow-[inset_0_1px_0_rgba(59,130,246,0.40),inset_0_-1px_0_rgba(59,130,246,0.10),0_4px_16px_rgba(59,130,246,0.18)] hover:backdrop-blur-[16px] hover:backdrop-saturate-[1.8] hover:from-blue-500/[0.22] hover:to-blue-500/[0.10] hover:shadow-[inset_0_1px_0_rgba(59,130,246,0.40),inset_0_-1px_0_rgba(59,130,246,0.10),0_4px_16px_rgba(59,130,246,0.18)] group/btn">
+          <span className="font-['Inter'] font-semibold text-[17.5px] leading-[26px] text-[#3B82F6] transition-colors duration-300 ease-in-out relative z-10 group-hover:text-white group-hover/btn:text-white">
             Learn More
           </span>
         </div>

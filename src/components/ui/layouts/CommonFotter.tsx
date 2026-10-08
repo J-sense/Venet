@@ -12,10 +12,10 @@ export const Footer: React.FC = () => {
           {/* Column 1: Brand Logo, Description & Socials */}
           <div className="lg:col-span-4 flex flex-col gap-5 max-w-sm">
             {/* মোবাইল স্ক্রিনে কন্টেইনার এবং লোগো যাতে রেসপন্সিভ হয় তার পরিবর্তন */}
-            <div className="w-full max-w-[160px] sm:max-w-[200px] md:max-w-[240px] ">
+            <div className="w-full max-w-[160px] sm:max-w-[200px] md:max-w-[200px] ">
               <Link to="/" className="flex items-center flex-shrink-0 ">
                 <img
-                  src="/VNetLogo.png"
+                  src="/VNextLogo.png"
                   alt="VNET Logo"
                   // ক্লায়েন্টের ফিডব্যাক অনুযায়ী এখানে মোবাইল স্ক্রিনের জন্য রেসপন্সিভ সাইজিং ফিক্স করা হয়েছে
                   className="w-full h-auto max-w-full object-contain border border-zinc-800 transition-all duration-300 rounded-full"
@@ -32,19 +32,19 @@ export const Footer: React.FC = () => {
               {/* Facebook */}
               <Link
                 to="#"
-                className="w-9 h-9 flex items-center justify-center rounded-full bg-[#2B7FFF] hover:bg-[#1a5ed9] transition-all duration-200"
+                className="w-9 h-9 flex items-center justify-center rounded-full bg-gradient-to-b from-[#3B8FFF] to-[#1a5ed9] shadow-[inset_0_1px_0_rgba(255,255,255,0.35),inset_0_-2px_5px_rgba(0,0,0,0.35)] transition-all duration-200 active:scale-[0.93] select-none"
                 aria-label="Facebook"
               >
-                <Facebook className="w-5 h-5 text-white" />
+                <Facebook className="w-5 h-5 text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)]" />
               </Link>
 
               {/* Twitter / X */}
               <Link
                 to="#"
-                className="w-9 h-9 flex items-center justify-center rounded-full bg-[#2B7FFF] hover:bg-[#1a5ed9] transition-all duration-200"
+                className="w-9 h-9 flex items-center justify-center rounded-full bg-gradient-to-b from-[#3B8FFF] to-[#1a5ed9] shadow-[inset_0_1px_0_rgba(255,255,255,0.35),inset_0_-2px_5px_rgba(0,0,0,0.35)] transition-all duration-200 active:scale-[0.93] select-none"
                 aria-label="Twitter"
               >
-                <Twitter className="w-5 h-5 text-white" />
+                <Twitter className="w-5 h-5 text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)]" />
               </Link>
 
               {/* Instagram */}
@@ -52,10 +52,10 @@ export const Footer: React.FC = () => {
                 href="https://www.instagram.com/vnet_karmalife8"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-9 h-9 flex items-center justify-center rounded-full bg-[#2B7FFF] hover:bg-[#1a5ed9] transition-all duration-200"
+                className="w-9 h-9 flex items-center justify-center rounded-full bg-gradient-to-b from-[#3B8FFF] to-[#1a5ed9] shadow-[inset_0_1px_0_rgba(255,255,255,0.35),inset_0_-2px_5px_rgba(0,0,0,0.35)] transition-all duration-200 active:scale-[0.93] select-none"
                 aria-label="Instagram"
               >
-                <Instagram className="w-5 h-5 text-white" />
+                <Instagram className="w-5 h-5 text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)]" />
               </a>
 
               {/* LinkedIn */}
@@ -63,12 +63,13 @@ export const Footer: React.FC = () => {
                 href="https://www.linkedin.com/company/vnet-the-virtual-network-of-extreme-transformation/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-9 h-9 flex items-center justify-center rounded-full bg-[#2B7FFF] hover:bg-[#1a5ed9] transition-all duration-200"
+                className="w-9 h-9 flex items-center justify-center rounded-full bg-gradient-to-b from-[#3B8FFF] to-[#1a5ed9] shadow-[inset_0_1px_0_rgba(255,255,255,0.35),inset_0_-2px_5px_rgba(0,0,0,0.35)] transition-all duration-200 active:scale-[0.93] select-none"
                 aria-label="LinkedIn"
               >
-                <Linkedin className="w-5 h-5 text-white" />
+                <Linkedin className="w-5 h-5 text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)]" />
               </a>
             </div>
+
           </div>
 
           {/* Column 2: Programs */}

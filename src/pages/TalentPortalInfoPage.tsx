@@ -20,6 +20,7 @@ import {
   Zap,
 } from "lucide-react";
 import { AssessmentModal } from "@/components/assessment";
+import HeadingBadge from "@/components/ui/HeadingBadge";
 
 export default function TalentPortalInfoPage() {
   const navigate = useNavigate();
@@ -96,10 +97,7 @@ export default function TalentPortalInfoPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-24">
         {/* HERO SECTION */}
         <section className="text-center max-w-4xl mx-auto space-y-8 pt-4">
-          <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-gradient-to-r from-blue-500/10 via-cyan-500/10 to-indigo-500/10 border border-blue-500/25 text-blue-400 text-xs font-semibold uppercase tracking-widest backdrop-blur-xl shadow-[0_0_15px_rgba(59,130,246,0.2)]">
-            <Sparkles className="w-4 h-4 text-blue-400 animate-pulse" />
-            Empowering Your Professional Journey
-          </div>
+          <HeadingBadge icon={<Sparkles className="w-4 h-4 animate-pulse" />} children="Empowering Your Professional Journey" />
 
           <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.1] text-white">
             Welcome to the <br className="hidden sm:block" />
@@ -115,13 +113,13 @@ export default function TalentPortalInfoPage() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-5 pt-2">
             <Button
               onClick={() => navigate("/dashboard/user/talent-portal")}
-              className="w-full sm:w-auto bg-gradient-to-r from-blue-600 via-blue-500 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white px-9 py-7 rounded-full font-bold text-lg shadow-[0_0_35px_rgba(37,99,235,0.45)] transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer"
+              className="w-full sm:w-auto bg-gradient-to-b from-[#007AFF] to-[#0B60BD] text-white px-9 py-7 rounded-full font-bold text-lg shadow-[inset_0_1px_0_rgba(255,255,255,0.35),inset_0_-3px_6px_rgba(0,0,0,0.35),0_4px_15px_rgba(0,122,255,0.3)] [text-shadow:0_1px_2px_rgba(0,0,0,0.45)] transition-all duration-200 cursor-pointer select-none active:scale-[0.97]"
             >
               Access Talent Portal <ChevronRight className="w-5 h-5 ml-1" />
             </Button>
             <Button
               onClick={() => setIsAssessmentOpen(true)}
-              className="w-full sm:w-auto bg-white/5 hover:bg-white/10 text-white border border-white/20 px-8 py-7 rounded-full font-semibold text-lg backdrop-blur-md transition-all duration-300 cursor-pointer"
+              className="w-full sm:w-auto bg-white/5 text-white border border-white/20 px-8 py-7 rounded-full font-semibold text-lg backdrop-blur-md shadow-[inset_0_1px_0_rgba(255,255,255,0.25),inset_0_-3px_6px_rgba(0,0,0,0.35)] [text-shadow:0_1px_2px_rgba(0,0,0,0.45)] transition-all duration-300 cursor-pointer select-none"
             >
               Take Career Assessment
             </Button>
@@ -287,12 +285,12 @@ export default function TalentPortalInfoPage() {
 
           <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-5 relative z-10">
             <Link to="/dashboard/user/talent-portal">
-              <Button className="bg-white text-blue-700 hover:bg-zinc-100 px-10 py-7 rounded-full font-bold text-lg shadow-2xl hover:scale-105 active:scale-95 transition-all cursor-pointer">
+              <Button className="bg-white text-blue-700 hover:bg-zinc-100 px-10 py-7 rounded-full font-bold text-lg shadow-[inset_0_1px_0_rgba(255,255,255,0.9),inset_0_-3px_6px_rgba(0,0,0,0.15),0_8px_24px_rgba(0,0,0,0.2)] [text-shadow:0_1px_1px_rgba(255,255,255,0.5)] transition-all cursor-pointer select-none">
                 Get Started Now <ChevronRight className="w-5 h-5 ml-1" />
               </Button>
             </Link>
             <Link to="/programs/all-programs">
-              <Button className="bg-blue-950/50 hover:bg-blue-900/70 text-white border border-white/25 px-9 py-7 rounded-full font-semibold text-lg backdrop-blur-md transition-all cursor-pointer">
+              <Button className="bg-blue-950/50 hover:bg-blue-900/70 text-white border border-white/25 px-9 py-7 rounded-full font-semibold text-lg backdrop-blur-md shadow-[inset_0_1px_0_rgba(255,255,255,0.25),inset_0_-3px_6px_rgba(0,0,0,0.35)] [text-shadow:0_1px_2px_rgba(0,0,0,0.45)] transition-all cursor-pointer select-none">
                 Browse Programs
               </Button>
             </Link>

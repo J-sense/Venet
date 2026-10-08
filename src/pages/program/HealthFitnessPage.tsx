@@ -1,8 +1,10 @@
 import { ActionButton } from "@/components/ui/ActionButton";
 import HowItWorks from "@/components/ui/ProgrammeHowItWorksSection";
+import { LearnMoreButton } from "@/components/ui/LearnMoreButton";
 
 import { fitnessSteps } from "./data/programData";
 import { useHealthAndFitnessProgramQuery } from "@/redux/features/programs/program.api";
+import HeadingBadge from "@/components/ui/HeadingBadge";
 
 export default function HealthFitnessPage() {
   const { data: healthAndFintnessProgram } =
@@ -38,12 +40,8 @@ export default function HealthFitnessPage() {
         <div className="relative z-10 w-full max-w-[1440px] mx-auto px-6">
           <div className="flex flex-col items-center gap-2 text-center max-w-[917px] mx-auto">
             {/* Badge */}
-            <div className="px-4 py-1.5 bg-blue-500/20 rounded-full outline outline-1 outline-offset-[-1px] outline-blue-500/30 inline-flex justify-center items-center gap-2">
-              <div className="w-1.5 h-1.5 bg-blue-400 rounded-full" />
-              <div className="text-blue-300 text-xs font-medium uppercase tracking-tight">
-                Health and fitness program
-              </div>
-            </div>
+
+            <HeadingBadge children="Health and fitness program" />
 
             {/* Headline */}
             <div className="flex flex-col items-center gap-6 md:gap-10 mt-4 md:mt-0">
@@ -68,11 +66,7 @@ export default function HealthFitnessPage() {
               <div className="flex flex-col sm:flex-row gap-4 w-full justify-center">
                 <ActionButton label="Start Free Assessment" />
 
-                <button className="h-14 px-8 py-3.5 bg-white/10 rounded-full outline outline-1 outline-offset-[-1px] outline-white/20 flex items-center justify-center gap-2.5 hover:bg-white/20 transition-all">
-                  <span className="text-white text-base font-medium">
-                    Learn More
-                  </span>
-                </button>
+                <LearnMoreButton />
               </div>
 
               {/* Stats */}

@@ -20,7 +20,7 @@ export const MeetFounder = () => {
         {/* Right: Content */}
         <div className="flex flex-col items-start text-left space-y-5 lg:space-y-6">
           {/* Badge */}
-          <div className="inline-flex items-center gap-1.5 bg-blue-500/10 border border-blue-500/30 px-4 py-1.5 rounded-full">
+          <div className="inline-flex items-center gap-1.5 bg-gradient-to-b from-blue-500/20 to-blue-600/10 border border-blue-500/40 shadow-[inset_0_1px_0_rgba(255,255,255,0.2),inset_0_-3px_6px_rgba(0,0,0,0.35)] [text-shadow:0_1px_2px_rgba(0,0,0,0.45)] px-4 py-1.5 rounded-full select-none">
             <span className="text-blue-400 text-[10px] sm:text-xs font-semibold uppercase tracking-widest">
               From Tragedy to Triumph
             </span>
@@ -50,7 +50,7 @@ export const MeetFounder = () => {
 
           <Link
             to="/founder-story"
-            className="group px-7 py-3.5 bg-blue-600 hover:bg-blue-700 active:scale-[0.98] rounded-full text-white text-sm font-semibold flex items-center gap-2 transition-all shadow-[0_4px_20px_rgba(37,99,235,0.3)]"
+            className="group px-7 py-3.5 bg-gradient-to-b from-[#007AFF] to-[#0B60BD] shadow-[0_8px_24px_rgba(0,122,255,0.35),inset_0_1px_0_rgba(255,255,255,0.35),inset_0_-3px_6px_rgba(0,0,0,0.35)] [text-shadow:0_1px_2px_rgba(0,0,0,0.45)] rounded-full text-white text-sm font-semibold flex items-center gap-2 transition-all cursor-pointer select-none"
           >
             Read My Story
             <ArrowRight

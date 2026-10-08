@@ -347,11 +347,11 @@ export const FounderStoryPage = () => {
           </div>
         </section>
       </div>
-      <StartFreeButton
+      {/* <StartFreeButton
         text="Start Free Assessment"
         showIcon
         className="px-6 py-3.5 md:px-8 md:py-4 text-base md:text-lg shadow-[#155DFC4D] w-full sm:w-auto"
-      />
+      /> */}
     </>
   );
 };

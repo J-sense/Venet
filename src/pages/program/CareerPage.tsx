@@ -1,7 +1,10 @@
 import HowItWorks from "@/components/ui/ProgrammeHowItWorksSection";
+import { StartFreeButton } from "@/components/ui/StartFreeButton";
+import { LearnMoreButton } from "@/components/ui/LearnMoreButton";
 
 import { careerSteps } from "./data/programData";
 import { useCareerProgrammeQuery } from "@/redux/features/programs/program.api";
+import HeadingBadge from "@/components/ui/HeadingBadge";
 
 export default function CareerPage() {
   const { data: careerProgramData } = useCareerProgrammeQuery(undefined);
@@ -25,12 +28,10 @@ export default function CareerPage() {
             {/* Left Side Copy */}
             <div className="max-w-7xl">
               {/* Badge */}
-              <div className="inline-flex items-center gap-2 bg-blue-900/40 border border-blue-500/30 px-4 py-1.5 rounded-full mb-6">
-                <div className="w-1.5 h-1.5 bg-blue-400 rounded-full animate-pulse" />
-                <span className="uppercase text-blue-300 text-xs font-medium tracking-widest">
-                  EDUCATION • SUPPORT • DIRECTION
-                </span>
-              </div>
+
+
+
+              <HeadingBadge children="CAREER DEVELOPMENT PROGRAM" />
 
               {/* Main Heading */}
               <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold leading-tight mb-6">
@@ -47,14 +48,13 @@ export default function CareerPage() {
 
               {/* CTA Buttons */}
               <div className="flex flex-col sm:flex-row gap-4 mb-12">
-                <button className="bg-[#1A63F4] hover:bg-blue-600 shadow-[0_0_20px_rgba(26,99,244,0.4)] transition px-8 py-3.5 rounded-full font-semibold text-sm flex items-center justify-center gap-3 min-w-[220px]">
-                  Start Free Assessment
-                  <span>→</span>
-                </button>
+                <StartFreeButton
+                  text="Start Free Assessment"
+                  showIcon
+                  className="px-8 py-3.5 text-sm font-semibold min-w-[220px]"
+                />
 
-                <button className="px-8 py-3.5 bg-black/40 border border-white/20 hover:bg-white/10 rounded-full transition-all text-sm font-medium min-w-[160px]">
-                  Learn More
-                </button>
+                <LearnMoreButton />
               </div>
 
               {/* Stats */}

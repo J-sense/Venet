@@ -19,11 +19,11 @@ export const AuthLayout = ({
     <div className="w-full bg-[#080A0E] flex flex-col relative h-screen overflow-hidden">
       {/* Absolute Logo */}
       <div className="absolute top-6 left-6 md:top-8 md:left-8 z-50">
-        <Link to="/" className="flex items-center flex-shrink-0 ">
+        <Link to="/" className="flex items-center flex-shrink-0">
           <img
-            src="/VNetLogo.png"
+            src="/VNextLogo.png"
             alt="VNET Logo"
-            className="w-32 h-9 rounded-full sm:w-40 sm:h-11 md:w-56 md:h-16 object-contain transition-all duration-300"
+            className="w-28 h-8 sm:w-36 sm:h-10 md:w-44 md:h-12 lg:w-44 lg:h-14 object-cover rounded-full border border-zinc-800 transition-all duration-300 hover:border-blue-500/40 shadow-md"
           />
         </Link>
       </div>

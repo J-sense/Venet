@@ -112,7 +112,7 @@ export default function HowItWorks({
                 className="group bg-[#0F172A] shadow-lg hover:bg-[#1A1E2A] border border-white/10 hover:border-[#007AFF]/30 rounded-2xl p-6 md:p-8 flex items-start gap-6 transition-all duration-300"
               >
                 {/* Step Number */}
-                <div className="flex-shrink-0 w-14 h-14 rounded-full bg-[#155DFC] flex items-center justify-center text-white font-semibold text-lg mt-1 shadow-[0_0_20px_#155DFC80,0_6.02px_9.03px_-6.02px_#155DFC]">
+                <div className="flex-shrink-0 w-14 h-14 rounded-full bg-[#155DFC] flex items-center justify-center text-white font-semibold text-lg mt-1 shadow-[inset_0_1px_0_rgba(255,255,255,0.35),inset_0_-3px_6px_rgba(0,0,0,0.35)] [text-shadow:0_1px_2px_rgba(0,0,0,0.45)]">
                   {step.number}
                 </div>
                 {/* Content */}
@@ -126,12 +126,18 @@ export default function HowItWorks({
                 </div>
 
                 {/* Icon Placeholder */}
-                <div className="w-12 h-12 flex-shrink-0 opacity-30 group-hover:opacity-70 transition-opacity flex items-center justify-center text-3xl">
-                  {index === 0 && "🧠"}
-                  {index === 1 && "📋"}
-                  {index === 2 && "📝"}
-                  {index === 3 && "📈"}
-                  {index === 4 && "🏆"}
+                <div className="relative w-12 h-12 flex-shrink-0 flex items-center justify-center">
+                  {/* Background layer (behind) */}
+                  <div className="absolute inset-0 rounded-full bg-[#155DFC] z-0 shadow-[inset_0_1px_0_rgba(255,255,255,0.35),inset_0_-3px_6px_rgba(0,0,0,0.35)]" />
+
+                  {/* Icon layer (above, no blue blending) */}
+                  <span className="relative z-10 text-4xl -translate-y-1 drop-shadow-[0_4px_6px_rgba(0,0,0,0.35)] group-hover:-translate-y-2 group-hover:scale-110 transition-all duration-200">
+                    {index === 0 && "🧠"}
+                    {index === 1 && "📋"}
+                    {index === 2 && "📝"}
+                    {index === 3 && "📈"}
+                    {index === 4 && "🏆"}
+                  </span>
                 </div>
               </div>
             ))}
@@ -140,7 +146,7 @@ export default function HowItWorks({
           {/* Action Buttons: Add to Cart & View Cart */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mt-14">
             {isAdded ? (
-              <div className="relative inline-flex items-center gap-3 px-9 py-4 rounded-full bg-emerald-950/70 border border-emerald-500/50 text-emerald-300 font-bold text-lg shadow-[0_0_30px_rgba(16,185,129,0.35)] backdrop-blur-xl transition-all duration-300">
+              <div className="relative inline-flex items-center gap-3 px-9 py-4 rounded-full bg-emerald-950/70 border border-emerald-500/50 text-emerald-300 font-bold text-lg shadow-[inset_0_1px_0_rgba(255,255,255,0.25),inset_0_-3px_6px_rgba(0,0,0,0.35)] [text-shadow:0_1px_2px_rgba(0,0,0,0.45)] backdrop-blur-xl transition-all duration-300 select-none">
                 <div className="w-6 h-6 rounded-full bg-emerald-500/20 border border-emerald-400 flex items-center justify-center text-emerald-300 shadow-[0_0_10px_rgba(16,185,129,0.8)]">
                   <Check className="w-3.5 h-3.5 stroke-[3]" />
                 </div>
@@ -150,7 +156,7 @@ export default function HowItWorks({
               <button
                 onClick={handleAddToCart}
                 disabled={isAddingToCart}
-                className="group relative px-9 py-4 rounded-full bg-[#007AFF] hover:bg-blue-600 text-white font-bold text-lg flex items-center gap-3 transition-colors duration-200 cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed active:scale-[0.98] shadow-lg shadow-[#007AFF]/30"
+                className="group relative px-9 py-4 rounded-full bg-gradient-to-b from-[#007AFF] to-[#0B60BD] border border-[#007AFF4D] text-white font-bold text-lg flex items-center gap-3 transition-colors duration-200 cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed active:scale-[0.98] shadow-[inset_0_1px_0_rgba(255,255,255,0.35),inset_0_-3px_6px_rgba(0,0,0,0.35)] [text-shadow:0_1px_2px_rgba(0,0,0,0.45)] select-none"
               >
                 {isAddingToCart ? (
                   <>
@@ -166,8 +172,8 @@ export default function HowItWorks({
               </button>
             )}
 
-            <Link to="/shopping-cart">
-              <button className="bg-[#007AFF] hidden hover:bg-blue-600 transition-all px-10 py-4 rounded-full font-semibold text-lg flex items-center gap-3 shadow-lg shadow-[#007AFF]/40">
+            <Link to="/shopping-cart" className="mb-50 -mt-16">
+              <button className="bg-gradient-to-b from-[#007AFF] to-[#0B60BD] border border-[#007AFF4D] text-white hidden transition-all px-10 py-4 rounded-full font-semibold text-lg flex items-center gap-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.35),inset_0_-3px_6px_rgba(0,0,0,0.35)] [text-shadow:0_1px_2px_rgba(0,0,0,0.45)] select-none cursor-pointer">
                 {buttonText}
                 <span>→</span>
               </button>
