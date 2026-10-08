@@ -1,9 +1,10 @@
-import { ActionButton } from "@/components/ui/ActionButton";
 import HowItWorks from "@/components/ui/ProgrammeHowItWorksSection";
 
-import { educationSteps } from "./data/programData";
-import { useEducationServiceProgramQuery } from "@/redux/features/programs/program.api";
+import { StartFreeButton } from "@/components/assessment";
 import HeadingBadge from "@/components/ui/HeadingBadge";
+import { useEducationServiceProgramQuery } from "@/redux/features/programs/program.api";
+import { educationSteps } from "./data/programData";
+import { LearnMoreButton } from "@/components/ui/LearnMoreButton";
 
 export default function EducationServicePage() {
   const { data: educationServiceProgram } =
@@ -47,15 +48,12 @@ export default function EducationServicePage() {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12 w-full sm:w-auto">
-              <ActionButton
-                label="Start Free Assessment"
-                className="bg-[#007AFF] w-full sm:w-auto"
+              <StartFreeButton
+                text="Start Free Assessment"
+                showIcon
+                className="px-6 py-3.5 md:px-8 md:py-4 text-base md:text-lg shadow-[#155DFC4D] w-full sm:w-auto"
               />
-              <button className="w-full sm:w-auto h-14 px-8 py-3.5 bg-white/10 rounded-full outline outline-1 outline-offset-[-1px] outline-white/20 flex items-center justify-center gap-2.5 hover:bg-white/20 transition-all">
-                <span className="text-white text-base font-medium">
-                  Learn More
-                </span>
-              </button>
+              <LearnMoreButton className="text-white w-full sm:w-auto h-14 px-8 py-3.5 bg-white/10 rounded-full outline outline-1 outline-offset-[-1px] outline-white/20 flex items-center justify-center gap-2.5 hover:bg-white/20 transition-all" text="Learn More" />
             </div>
 
             {/* Stats */}
