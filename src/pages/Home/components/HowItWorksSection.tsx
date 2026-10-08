@@ -180,51 +180,56 @@ export const HowItWorksSection: React.FC = () => {
         {/* Steps */}
         {/* Steps */}
         <div className="space-y-12">
-          {/* Steps */}
-          <div className="space-y-12">
-            {stepsData.map((step) => (
-              <div
-                key={step.id}
-                className="relative flex gap-6 items-start p-6 rounded-2xl border border-white/5 backdrop-blur-sm transition-all bg-[#1D293D80] duration-300 hover:border-gray-700/50 overflow-hidden"
-                style={{
-                  // Radial gradient centered in the card
-                  background:
-                    "radial-gradient(circle at center, #0B60BD26, transparent 70%)",
-                }}
-              >
-                {/* Icon circle */}
-                <div className="flex-shrink-0 relative z-10">
+          {stepsData.map((step) => (
+            <div
+              key={step.id}
+              className="relative flex gap-6 items-start p-6 rounded-2xl overflow-hidden
+        border border-white/5 backdrop-blur-sm
+        shadow-[inset_0_1px_0_rgba(255,255,255,0.08),inset_0_-2px_4px_rgba(0,0,0,0.25)]"
+              style={{
+                background:
+                  "radial-gradient(circle at center, #0B60BD26, transparent 70%)",
+              }}
+            >
+              {/* Icon circle */}
+              <div className="flex-shrink-0 relative z-10">
+                <div
+                  className="relative w-16 h-16 rounded-full flex items-center justify-center border-[3px] bg-gray-900/60 select-none"
+                  style={{
+                    borderColor: step.color,
+                    backgroundImage: `linear-gradient(to bottom, ${step.color}33, ${step.color}0D)`,
+                    boxShadow:
+                      "inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -3px 6px rgba(0,0,0,0.35)",
+                  }}
+                >
                   <div
-                    className="w-16 h-16 rounded-full flex items-center justify-center border-[3px] bg-gray-900/60"
+                    className="drop-shadow-[0_2px_3px_rgba(0,0,0,0.45)]"
+                    style={{ color: step.color }}
+                  >
+                    {step.icon}
+                  </div>
+
+                  {/* Number badge */}
+                  <div
+                    className="absolute -top-1.5 -right-1.5 w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-bold border border-white/25 [text-shadow:0_1px_2px_rgba(0,0,0,0.45)]"
                     style={{
-                      borderColor: step.color,
-                      boxShadow: `0 0 20px ${step.color}40`,
+                      backgroundImage: `linear-gradient(135deg, ${step.color}, #a855f7)`,
+                      boxShadow:
+                        "inset 0 1px 0 rgba(255,255,255,0.35), inset 0 -2px 4px rgba(0,0,0,0.35)",
                     }}
                   >
-                    <div style={{ color: step.color }}>{step.icon}</div>
-
-                    {/* Number badge */}
-                    <div
-                      className="absolute -top-1.5 -right-1.5 w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-bold "
-                      style={{
-                        background: `linear-gradient(135deg, ${step.color}, #a855f7)`,
-                      }}
-                    >
-                      {String(step.id).padStart(2, "0")}
-                    </div>
+                    {String(step.id).padStart(2, "0")}
                   </div>
                 </div>
-
-                {/* Content */}
-                <div className="flex-1 pt-1 relative z-10">
-                  <h3 className="text-xl font-semibold text-white mb-2">
-                    {step.title}
-                  </h3>
-                  <p className="text-gray-400 text-base">{step.description}</p>
-                </div>
               </div>
-            ))}
-          </div>
+
+              {/* Content */}
+              <div className="flex-1 pt-1 relative z-10">
+                <h3 className="text-xl font-semibold text-white mb-2">{step.title}</h3>
+                <p className="text-gray-400 text-base">{step.description}</p>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>

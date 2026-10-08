@@ -88,7 +88,7 @@ export const CommonNavbar = () => {
               onMouseEnter={() => setProgramsOpen(true)}
               onMouseLeave={() => setProgramsOpen(false)}
             >
-              <button className="flex items-center gap-1 font-inter text-sm xl:text-base font-medium leading-6 text-gray-300 hover:text-white transition-colors cursor-pointer">
+              <button className="flex items-center gap-1 font-inter text-sm xl:text-base font-medium leading-6 text-gray-300 hover:text-white transition-colors cursor-pointer select-none">
                 Programs
                 <ChevronDown
                   className={`w-4 h-4 transition-transform duration-200 ${programsOpen ? "rotate-180 text-blue-400" : ""}`}
@@ -97,7 +97,10 @@ export const CommonNavbar = () => {
 
               {/* Dropdown Menu */}
               <div className="absolute left-0 top-full pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-                <div className="bg-[#0B0F19]/95 backdrop-blur-2xl border border-white/10 rounded-2xl py-2 px-2 shadow-2xl w-64 animate-in fade-in zoom-in-95 duration-150">
+                <div
+                  className="bg-gradient-to-b from-[#121828]/95 to-[#0B0F19]/95 backdrop-blur-2xl border border-white/10 rounded-2xl py-2 px-2 w-64 animate-in fade-in zoom-in-95 duration-150
+        shadow-[inset_0_1px_0_rgba(255,255,255,0.12),inset_0_-3px_6px_rgba(0,0,0,0.35)]"
+                >
                   <Link
                     to="/programs/health-fitness"
                     className="block px-4 py-2.5 hover:bg-white/10 rounded-xl text-sm font-medium text-gray-300 hover:text-white transition-colors"

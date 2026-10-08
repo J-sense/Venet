@@ -75,33 +75,38 @@ export const SubscriptionSection: React.FC = () => {
       />
 
       <div className="relative max-w-[1440px] mx-auto flex flex-col gap-16 lg:gap-20 z-10">
-        {/* Header Block */}
         <SectionHeader
           titlePrimary="Subscription"
           titleAccent="Plan"
           subtitle="Select The Perfect Membership Plan That Matches Your Fitness Goals And Lifestyle"
         />
 
-        {/* Pricing Cards Deck - All aligned in one row */}
+        {/* Pricing Cards Deck */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch max-w-[1200px] mx-auto w-full px-4">
           {plans.map((plan, index) => (
             <div
               key={index}
-              className={`relative flex flex-col justify-between h-full rounded-[24px] p-8 transition-all duration-300 ${plan.isPopular
-                  ? "bg-[#0066FF] text-white shadow-[0_0_50px_rgba(0,102,255,0.25)] border-2 border-[#2B7FFF] z-20"
-                  : "bg-[#101828]/70 border border-[#1E2939]/80 text-white backdrop-blur-sm z-10 hover:border-white/20"
+              className={`relative flex flex-col justify-between h-full rounded-[24px] p-8 text-white ${plan.isPopular
+                  ? "bg-gradient-to-b from-[#1A7BFF] to-[#0052D4] border-2 border-[#2B7FFF] z-20 shadow-[inset_0_1px_0_rgba(255,255,255,0.35),inset_0_-3px_6px_rgba(0,0,0,0.35)]"
+                  : "bg-gradient-to-b from-[#16203A]/70 to-[#0B1220]/70 border border-[#1E2939]/80 backdrop-blur-sm z-10 shadow-[inset_0_1px_0_rgba(255,255,255,0.1),inset_0_-3px_6px_rgba(0,0,0,0.35)]"
                 }`}
             >
               {/* Popular Badge */}
               {plan.isPopular && (
-                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-[#2B7FFF] text-[10px] tracking-widest font-bold font-inter uppercase px-4 py-1 rounded-full shadow-md text-white border border-white/20">
+                <div
+                  className="absolute -top-3.5 left-1/2 -translate-x-1/2 text-[10px] tracking-widest font-bold font-inter uppercase px-4 py-1 rounded-full text-white
+                    bg-gradient-to-b from-[#4A98FF] to-[#1F6FE0]
+                    border border-white/25
+                    shadow-[inset_0_1px_0_rgba(255,255,255,0.35),inset_0_-2px_4px_rgba(0,0,0,0.3)]
+                    [text-shadow:0_1px_2px_rgba(0,0,0,0.45)]"
+                >
                   Most Popular
                 </div>
               )}
 
-              {/* Top Content Box (Aligned Headers + Pricing) */}
+              {/* Top Content Box */}
               <div>
-                <h3 className="text-2xl font-bold font-sora tracking-tight mb-2">
+                <h3 className="text-2xl font-bold font-sora tracking-tight mb-2 [text-shadow:0_1px_2px_rgba(0,0,0,0.45)]">
                   {plan.title}
                 </h3>
                 <p
@@ -113,38 +118,45 @@ export const SubscriptionSection: React.FC = () => {
 
                 {/* Pricing Display */}
                 <div className="flex items-baseline gap-1 font-inter mb-8">
-                  <span className="text-4xl lg:text-[44px] font-extrabold tracking-tight leading-none">
+                  <span className="text-4xl lg:text-[44px] font-extrabold tracking-tight leading-none [text-shadow:0_2px_4px_rgba(0,0,0,0.45)]">
                     {plan.price}
                   </span>
                   <span
-                    className={`text-sm ${plan.isPopular ? "text-white/70" : "text-[#99A1AF]"
+                    className={`text-sm font-medium ${plan.isPopular ? "text-white/70" : "text-[#99A1AF]"
                       }`}
                   >
                     /month
                   </span>
                 </div>
 
-                {/* Features List (Aligned Height Container) */}
+                {/* Features List */}
                 <ul className="space-y-4 mb-8 min-h-[220px]">
                   {plan.features.map((feature, fIndex) => (
                     <li
                       key={fIndex}
                       className="flex items-start gap-3 text-sm font-inter font-normal"
                     >
-                      <svg
-                        className={`w-4 h-4 mt-0.5 shrink-0 ${plan.isPopular ? "text-white" : "text-[#00C950]"
+                      {/* Glossy check badge */}
+                      <span
+                        className={`w-5 h-5 mt-px rounded-full shrink-0 flex items-center justify-center border ${plan.isPopular
+                            ? "bg-gradient-to-b from-white/30 to-white/10 border-white/30 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.35),inset_0_-2px_3px_rgba(0,0,0,0.3)]"
+                            : "bg-gradient-to-b from-emerald-500/35 to-emerald-700/15 border-emerald-400/30 text-emerald-300 shadow-[inset_0_1px_0_rgba(255,255,255,0.25),inset_0_-2px_3px_rgba(0,0,0,0.35)]"
                           }`}
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        strokeWidth={3}
                       >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M5 13l4 4L19 7"
-                        />
-                      </svg>
+                        <svg
+                          className="w-3 h-3 drop-shadow-[0_1px_1px_rgba(0,0,0,0.45)]"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          strokeWidth={3.5}
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M5 13l4 4L19 7"
+                          />
+                        </svg>
+                      </span>
                       <span
                         className={
                           plan.isPopular ? "text-white" : "text-[#D1D5DC]"
@@ -165,18 +177,12 @@ export const SubscriptionSection: React.FC = () => {
                       ? "/talent-portal"
                       : "/programs/all-programs"
                   }
-                  className="block w-full"
-                >
-                  <button
-                    type="button"
-                    className={`w-full py-3.5 rounded-full font-bold font-inter text-sm tracking-wide cursor-pointer select-none ${
-                      plan.isPopular
-                        ? "bg-white text-[#0066FF] shadow-[inset_0_1px_0_rgba(255,255,255,0.9),inset_0_-3px_6px_rgba(0,0,0,0.12),0_8px_24px_rgba(0,0,0,0.15)] [text-shadow:0_1px_1px_rgba(255,255,255,0.5)]"
-                        : "bg-gradient-to-b from-[#0066FF] to-[#0052D4] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.35),inset_0_-3px_6px_rgba(0,0,0,0.35),0_8px_24px_rgba(0,102,255,0.3)] [text-shadow:0_1px_2px_rgba(0,0,0,0.45)]"
+                  className={`block w-full py-3.5 rounded-full text-center font-bold font-inter text-sm tracking-wide cursor-pointer select-none no-underline ${plan.isPopular
+                      ? "bg-gradient-to-b from-white to-slate-200 text-[#0066FF] border border-white/60 shadow-[inset_0_1px_0_rgba(255,255,255,1),inset_0_-3px_6px_rgba(15,23,42,0.18)] [text-shadow:0_1px_0_rgba(255,255,255,0.8)]"
+                      : "bg-gradient-to-b from-[#0066FF] to-[#0052D4] text-white border border-[#0066FF]/30 shadow-[inset_0_1px_0_rgba(255,255,255,0.35),inset_0_-3px_6px_rgba(0,0,0,0.35)] [text-shadow:0_1px_2px_rgba(0,0,0,0.45)]"
                     }`}
-                  >
-                    Get Started
-                  </button>
+                >
+                  Get Started
                 </Link>
               </div>
             </div>

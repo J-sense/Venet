@@ -3,8 +3,6 @@ import { SectionHeader } from "@/components/ui/TItleWithSubtitle";
 import React from "react";
 
 export const CTASection: React.FC = () => {
-  // const [isAssessmentOpen, setIsAssessmentOpen] = useState(false);
-
   return (
     <section className="relative w-full min-h-[740px] flex items-center justify-center bg-[#030303] overflow-hidden select-none py-20">
       {/* ── CINEMATIC BACKGROUND IMAGE LAYER ── */}
@@ -28,26 +26,31 @@ export const CTASection: React.FC = () => {
         <StartFreeButton
           text="Start Free Assessment"
           showIcon
-          className="px-6 py-3.5 md:px-8 md:py-4 text-base md:text-lg shadow-[#155DFC4D] w-full sm:w-auto"
+          className="px-6 py-3.5 md:px-8 md:py-4 text-base md:text-lg w-full sm:w-auto"
         />
       </div>
 
-      {/* ── EXACT CURVE FROM YOUR SVG ── */}
+      {/* ── CURVED DIVIDER ── */}
       <div className="absolute -bottom-18 left-0 w-full z-20 pointer-events-none text-[#191C2B]">
         <svg
           className="w-full h-auto translate-y-[1px]"
           viewBox="0 0 1440 320"
-          fill="currentColor"
           xmlns="http://www.w3.org/2000/svg"
           preserveAspectRatio="none"
+          aria-hidden="true"
         >
+          <defs>
+            <linearGradient id="ctaCurve" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#222638" />
+              <stop offset="100%" stopColor="#191C2B" />
+            </linearGradient>
+          </defs>
           <path
+            fill="url(#ctaCurve)"
             d="M0,192L60,208C120,224,240,256,360,261.3C480,267,600,245,720,213.3C840,181,960,139,1080,144C1200,149,1320,203,1380,229.3L1440,256L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"
           />
         </svg>
       </div>
-
-
     </section>
   );
 };

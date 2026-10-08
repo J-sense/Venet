@@ -27,7 +27,7 @@ interface HowItWorksProps {
 
 export default function HowItWorks({
   steps,
-  title = "How It Works",
+  title = "How It ",
   subtitle = "Your journey from assessment to success in 5 simple steps",
   buttonText = "Start Your Journey",
   programTitle = "vNXT Wellness Program",
@@ -115,6 +115,7 @@ export default function HowItWorks({
                 <div className="flex-shrink-0 w-14 h-14 rounded-full bg-[#155DFC] flex items-center justify-center text-white font-semibold text-lg mt-1 shadow-[inset_0_1px_0_rgba(255,255,255,0.35),inset_0_-3px_6px_rgba(0,0,0,0.35)] [text-shadow:0_1px_2px_rgba(0,0,0,0.45)]">
                   {step.number}
                 </div>
+
                 {/* Content */}
                 <div className="flex-1">
                   <h3 className="text-xl font-semibold text-white mb-2 group-hover:text-[#007AFF] transition-colors">

@@ -168,7 +168,7 @@ export const ShoppingCartPage = () => {
             <button
               onClick={handleClearAll}
               disabled={isClearing}
-              className="px-4 py-2 bg-red-600/20 border border-red-500/30 hover:bg-red-600/30 text-red-400 rounded-lg text-[12px] md:text-sm font-semibold transition-colors flex items-center gap-2 cursor-pointer disabled:opacity-50"
+              className="px-4 py-2 bg-red-600/20 border border-red-500/30 hover:bg-red-600/30 text-red-400 rounded-lg text-[12px] md:text-sm font-semibold transition-colors flex items-center gap-2 cursor-pointer disabled:opacity-50 select-none shadow-[inset_0_1px_0_rgba(255,255,255,0.15),inset_0_-3px_6px_rgba(0,0,0,0.3)] [text-shadow:0_1px_2px_rgba(0,0,0,0.45)]"
             >
               {isClearing ? (
                 <>
@@ -189,12 +189,12 @@ export const ShoppingCartPage = () => {
           {/* Left Column: Cart Items & Benefits */}
           <div className="lg:col-span-2 space-y-6">
             {totalItemCount === 0 ? (
-              <div className="bg-[#18181B] p-12 rounded-2xl border border-[#27272A] text-center">
+              <div className="bg-[#18181B] p-12 rounded-2xl border border-[#27272A] text-center shadow-[inset_0_1px_0_rgba(255,255,255,0.1),inset_0_-3px_6px_rgba(0,0,0,0.35)]">
                 <h3 className="text-xl text-zinc-400 mb-6 font-['Inter']">
                   Your cart is empty
                 </h3>
                 <Link to="/subscription-suggestions">
-                  <button className="hidden px-8 py-3.5 bg-blue-600 hover:bg-blue-700 transition rounded-full text-white font-semibold text-lg font-['Inter']">
+                  <button className="hidden px-8 py-3.5 bg-blue-600 hover:bg-blue-700 transition rounded-full text-white font-semibold text-lg font-['Inter'] select-none shadow-[inset_0_1px_0_rgba(255,255,255,0.35),inset_0_-3px_6px_rgba(0,0,0,0.35)] [text-shadow:0_1px_2px_rgba(0,0,0,0.45)]">
                     Browse Suggested Programs
                   </button>
                 </Link>
@@ -204,10 +204,10 @@ export const ShoppingCartPage = () => {
               backendItems.map((item: any, idx: number) => (
                 <div
                   key={item.id || idx}
-                  className="bg-[#18181B] p-7 rounded-2xl border border-[#27272A] flex justify-between items-center"
+                  className="bg-[#18181B] p-7 rounded-2xl border border-[#27272A] flex justify-between items-center shadow-[inset_0_1px_0_rgba(255,255,255,0.1),inset_0_-3px_6px_rgba(0,0,0,0.35)]"
                 >
                   <div className="flex flex-col gap-1">
-                    <h3 className="text-[#FFFFFF] text-[21.79px] font-medium font-['Inter'] leading-8">
+                    <h3 className="text-[#FFFFFF] text-[21.79px] font-medium font-['Inter'] leading-8 [text-shadow:0_1px_2px_rgba(0,0,0,0.45)]">
                       {item.program?.name}
                     </h3>
                     <p className="text-[#9F9FA9] text-[19.37px] font-normal font-['Inter'] leading-7">
@@ -223,16 +223,16 @@ export const ShoppingCartPage = () => {
                   <button
                     onClick={() => handleRemove(item.program?.name, item.id)}
                     disabled={deletingId === item.id}
-                    className="text-red-500 hover:bg-red-900/20 p-2.5 rounded-lg transition-colors cursor-pointer disabled:opacity-50 flex items-center justify-center min-w-[40px] min-h-[40px]"
+                    className="text-red-500 hover:bg-red-900/20 p-2.5 rounded-lg transition-colors cursor-pointer disabled:opacity-50 flex items-center justify-center min-w-[40px] min-h-[40px] select-none"
                     aria-label="Remove item"
                   >
                     {deletingId === item.id ? (
-                      <Loader2
-                        size={24}
-                        className="animate-spin text-red-400"
-                      />
+                      <Loader2 size={24} className="animate-spin text-red-400" />
                     ) : (
-                      <Trash2 size={24} />
+                      <Trash2
+                        size={24}
+                        className="drop-shadow-[0_1px_2px_rgba(0,0,0,0.45)]"
+                      />
                     )}
                   </button>
                 </div>
@@ -242,10 +242,10 @@ export const ShoppingCartPage = () => {
               cartTitles.map((title, idx) => (
                 <div
                   key={idx}
-                  className="bg-[#18181B] p-7 rounded-2xl border border-[#27272A] flex justify-between items-center"
+                  className="bg-[#18181B] p-7 rounded-2xl border border-[#27272A] flex justify-between items-center shadow-[inset_0_1px_0_rgba(255,255,255,0.1),inset_0_-3px_6px_rgba(0,0,0,0.35)]"
                 >
                   <div className="flex flex-col gap-1">
-                    <h3 className="text-[#FFFFFF] text-[21.79px] font-medium font-['Inter'] leading-8">
+                    <h3 className="text-[#FFFFFF] text-[21.79px] font-medium font-['Inter'] leading-8 [text-shadow:0_1px_2px_rgba(0,0,0,0.45)]">
                       {title}
                     </h3>
                     <p className="text-[#9F9FA9] text-[19.37px] font-normal font-['Inter'] leading-7">
@@ -255,18 +255,26 @@ export const ShoppingCartPage = () => {
 
                   <button
                     onClick={() => handleRemove(title)}
-                    className="text-red-500 hover:bg-red-900/20 p-2 rounded-lg transition-colors"
+                    className="text-red-500 hover:bg-red-900/20 p-2 rounded-lg transition-colors select-none"
                     aria-label="Remove item"
                   >
-                    <Trash2 size={24} />
+                    <Trash2
+                      size={24}
+                      className="drop-shadow-[0_1px_2px_rgba(0,0,0,0.45)]"
+                    />
                   </button>
                 </div>
               ))
             )}
 
             {/* Subscription Benefits */}
-            <div className="w-full p-7 bg-blue-600/10 rounded-2xl border border-blue-600/30">
-              <h3 className="text-blue-400 text-xl font-medium font-['Inter'] leading-8 mb-4">
+            <div
+              className="w-full p-7 rounded-2xl
+      bg-gradient-to-b from-blue-500/20 to-blue-700/10
+      border border-blue-500/30
+      shadow-[inset_0_1px_0_rgba(255,255,255,0.15),inset_0_-3px_6px_rgba(0,0,0,0.3)]"
+            >
+              <h3 className="text-blue-300 text-xl font-medium font-['Inter'] leading-8 mb-4 [text-shadow:0_1px_2px_rgba(0,0,0,0.45)]">
                 Subscription Benefits
               </h3>
 
@@ -276,7 +284,7 @@ export const ShoppingCartPage = () => {
                     key={index}
                     className="text-zinc-300 text-base font-normal font-['Inter'] leading-6 flex gap-2"
                   >
-                    <span>•</span>
+                    <span className="text-blue-400">•</span>
                     <span>{benefit}</span>
                   </li>
                 ))}
@@ -286,9 +294,14 @@ export const ShoppingCartPage = () => {
 
           {/* Right Column: Order Summary & Pricing Rules */}
           <div className="space-y-6">
-            <div className="w-full max-w-sm bg-zinc-900 rounded-2xl border border-zinc-800 p-7">
+            <div
+              className="w-full max-w-sm rounded-2xl p-7
+      bg-gradient-to-b from-[#1F1F23] to-[#121214]
+      border border-zinc-800
+      shadow-[inset_0_1px_0_rgba(255,255,255,0.1),inset_0_-3px_6px_rgba(0,0,0,0.35)]"
+            >
               {/* Header */}
-              <h2 className="text-white text-2xl font-medium font-['Inter'] leading-8 mb-4">
+              <h2 className="text-white text-2xl font-medium font-['Inter'] leading-8 mb-4 [text-shadow:0_1px_2px_rgba(0,0,0,0.45)]">
                 Order Summary
               </h2>
 
@@ -313,10 +326,10 @@ export const ShoppingCartPage = () => {
               {/* Total Section */}
               <div className="pt-7 mt-7 border-t border-zinc-800">
                 <div className="flex justify-between items-center mb-2">
-                  <span className="text-white text-2xl font-normal font-['Inter']">
+                  <span className="text-white text-2xl font-normal font-['Inter'] [text-shadow:0_1px_2px_rgba(0,0,0,0.45)]">
                     Total
                   </span>
-                  <span className="text-white text-2xl font-normal font-['Inter']">
+                  <span className="text-white text-2xl font-normal font-['Inter'] [text-shadow:0_1px_2px_rgba(0,0,0,0.45)]">
                     ${Number(total).toFixed(2)}
                   </span>
                 </div>
@@ -330,9 +343,15 @@ export const ShoppingCartPage = () => {
                 <button
                   onClick={handleProceedToCheckout}
                   disabled={totalItemCount === 0 || isCheckoutLoading}
-                  className={`w-full h-14 flex items-center justify-center bg-blue-600 hover:bg-blue-700 transition-colors rounded-[32px] text-white text-xl font-medium font-['Inter'] ${totalItemCount === 0 || isCheckoutLoading
-                    ? "opacity-50 cursor-not-allowed"
-                    : ""
+                  className={`w-full h-14 flex items-center justify-center rounded-[32px] text-white text-xl font-semibold font-['Inter'] select-none
+          bg-gradient-to-b from-[#007AFF] to-[#0B60BD]
+          border border-[#007AFF4D]
+          shadow-[inset_0_1px_0_rgba(255,255,255,0.35),inset_0_-3px_6px_rgba(0,0,0,0.35)]
+          [text-shadow:0_1px_2px_rgba(0,0,0,0.45)]
+          transition-all duration-200
+          ${totalItemCount === 0 || isCheckoutLoading
+                      ? "opacity-50 cursor-not-allowed"
+                      : "cursor-pointer hover:brightness-110 active:scale-[0.98]"
                     }`}
                 >
                   {isCheckoutLoading
@@ -340,7 +359,7 @@ export const ShoppingCartPage = () => {
                     : "Proceed to Checkout"}
                 </button>
                 <Link to="/subscription-suggestions" className="w-full hidden">
-                  <button className="w-full h-14 flex items-center justify-center bg-zinc-800 hover:bg-zinc-700 transition-colors rounded-[32px] text-white text-xl font-medium font-['Inter']">
+                  <button className="w-full h-14 flex items-center justify-center bg-zinc-800 hover:bg-zinc-700 transition-colors rounded-[32px] text-white text-xl font-medium font-['Inter'] select-none shadow-[inset_0_1px_0_rgba(255,255,255,0.12),inset_0_-3px_6px_rgba(0,0,0,0.35)] [text-shadow:0_1px_2px_rgba(0,0,0,0.45)]">
                     Add More Programs
                   </button>
                 </Link>
@@ -348,8 +367,13 @@ export const ShoppingCartPage = () => {
             </div>
 
             {/* Pricing Rules */}
-            <div className="w-full max-w-sm bg-zinc-900 rounded-2xl border border-zinc-800 p-7">
-              <h3 className="text-white text-xl font-medium font-['Inter'] leading-8 mb-4">
+            <div
+              className="w-full max-w-sm rounded-2xl p-7
+      bg-gradient-to-b from-[#1F1F23] to-[#121214]
+      border border-zinc-800
+      shadow-[inset_0_1px_0_rgba(255,255,255,0.1),inset_0_-3px_6px_rgba(0,0,0,0.35)]"
+            >
+              <h3 className="text-white text-xl font-medium font-['Inter'] leading-8 mb-4 [text-shadow:0_1px_2px_rgba(0,0,0,0.45)]">
                 Pricing Rules
               </h3>
 
@@ -359,7 +383,7 @@ export const ShoppingCartPage = () => {
                     key={index}
                     className="text-zinc-400 text-base font-normal font-['Inter'] leading-6 flex gap-2"
                   >
-                    <span>•</span>
+                    <span className="text-blue-400">•</span>
                     <span>{rule}</span>
                   </li>
                 ))}

@@ -13,7 +13,7 @@ import {
   Zap,
 } from "lucide-react";
 import { useEffect } from "react";
-
+const AMAZON_BOOK_URL = "https://www.amazon.com/stores/Jonathan-Karma/author/B0HJFGRLNL?ref=ap_rdr&shoppingPortalEnabled=true";
 const timelineEvents = [
   {
     side: "left",
@@ -111,34 +111,95 @@ export const FounderStoryPage = () => {
         <section className="py-20 md:py-28 px-6 md:px-12 lg:px-24 flex items-center min-h-[85vh]">
           <div className="max-w-[1400px] w-full mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center relative z-10">
             {/* Left Column: Story Content */}
-            <div className="flex flex-col items-start text-left space-y-6">
+            <div
+              className="relative flex flex-col items-start text-left space-y-6 w-full max-w-2xl
+        rounded-3xl p-8 sm:p-10 overflow-hidden select-none
+        bg-gradient-to-b from-[#16203A]/70 to-[#0B1220]/70
+        border border-white/10 backdrop-blur-sm
+        shadow-[inset_0_1px_0_rgba(255,255,255,0.12),inset_0_-3px_6px_rgba(0,0,0,0.35)]"
+            >
+              {/* Accent bar on the left edge */}
+              <div className="absolute left-0 inset-y-6 w-1 rounded-r-full bg-gradient-to-b from-[#2B7FFF] to-[#0B60BD]" />
 
-
-              <h1 className="text-4xl md:text-5xl lg:text-[44px] font-extrabold leading-[1.1] tracking-tight text-white w-full">
+              <h1 className="text-4xl md:text-5xl lg:text-[44px] font-extrabold leading-[1.1] tracking-tight text-white w-full drop-shadow-[0_2px_3px_rgba(0,0,0,0.45)]">
                 Beating All{" "}
-                <span className="text-blue-500">The Odds</span>
+                <span className="text-transparent bg-clip-text bg-gradient-to-b from-[#5AA2FF] to-[#1D63E8]">
+                  The Odds
+                </span>
               </h1>
 
-              <p className="text-[#FFFFFFB2] text-base sm:text-lg leading-relaxed max-w-xl font-normal ">
+              {/* Divider */}
+              <div className="h-px w-20 bg-gradient-to-r from-[#2B7FFF] to-transparent" />
+
+              <p className="text-[#FFFFFFB2] text-base sm:text-lg leading-relaxed max-w-xl font-normal">
                 My life has been a journey through unimaginable hardship — loss,
                 addiction, violence, illness, and recovery. Every obstacle
                 became another reason to fight, learn, and grow. Today my
                 purpose is helping others discover that transformation is always
                 possible.
               </p>
-
             </div>
 
-            {/* Right Column: Poster Image */}
-            <div className="relative group max-w-lg lg:max-w-none mx-auto w-full">
-              <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-[24px] blur opacity-25 group-hover:opacity-40 transition duration-1000 group-hover:duration-200" />
-              <div className="relative rounded-[20px] overflow-hidden border border-zinc-800 bg-[#0F172A] shadow-2xl">
-                <img
-                  src="/founderImg2.jpg"
-                  alt="VNET Trauma Survivors Poster"
-                  className="w-full h-auto object-cover scale-[1.01] hover:scale-[1.03] transition-transform duration-700"
-                />
-              </div>
+            {/* Right Column: Book */}
+            <div className="mx-auto w-full max-w-[300px] flex flex-col items-center gap-10">
+              <a
+                href={AMAZON_BOOK_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Buy The Warrior's Way by Jonathan Karma on Amazon"
+                className="group relative block w-full [perspective:1200px] cursor-pointer"
+              >
+                {/* Contact shadow under the book (no glow) */}
+                <div className="absolute -bottom-6 left-[10%] right-[10%] h-5 rounded-[50%] bg-black/80 blur-xl transition-all duration-500 group-hover:scale-90 group-hover:opacity-60" />
+
+                {/* Book wrapper */}
+                <div
+                  className="relative aspect-[2/3] w-full transition-transform duration-500 ease-out
+            [transform:rotateY(-12deg)_rotateX(2deg)]
+            group-hover:[transform:rotateY(0deg)_rotateX(0deg)_translateY(-6px)]"
+                >
+                  {/* Page-edge sheets */}
+                  <div className="absolute inset-y-[2%] right-0 left-[3%] translate-x-[10px] rounded-r-md bg-gradient-to-r from-zinc-300 to-zinc-500 border border-zinc-600/60" />
+                  <div className="absolute inset-y-[1%] right-0 left-[2%] translate-x-[6px] rounded-r-md bg-gradient-to-r from-zinc-200 to-zinc-400 border border-zinc-500/60" />
+                  <div className="absolute inset-y-[0.5%] right-0 left-[1%] translate-x-[3px] rounded-r-md bg-gradient-to-r from-white to-zinc-300 border border-zinc-400/60" />
+
+                  {/* Cover */}
+                  <div className="absolute inset-0 overflow-hidden rounded-l-[3px] rounded-r-md bg-[#0A0C10] border border-white/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.2),inset_0_-3px_6px_rgba(0,0,0,0.35)]">
+                    <img
+                      src="/bookCover.png"
+                      alt="The Warrior's Way by Jonathan Karma, book cover"
+                      className="absolute inset-0 h-full w-full object-cover scale-[1.06]"
+                    />
+                    <div className="pointer-events-none absolute inset-y-0 left-0 w-[7%] bg-gradient-to-r from-black/70 via-black/25 to-transparent" />
+                    <div className="pointer-events-none absolute inset-y-0 left-[7%] w-[2%] bg-gradient-to-r from-white/20 to-transparent" />
+                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/15 via-transparent to-black/25" />
+                    <div
+                      className="pointer-events-none absolute inset-0 -translate-x-full skew-x-12
+                bg-gradient-to-r from-transparent via-white/25 to-transparent
+                transition-transform duration-1000 ease-out group-hover:translate-x-full"
+                    />
+                  </div>
+                </div>
+              </a>
+
+              {/* Amazon button */}
+              <a
+                href={AMAZON_BOOK_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-full py-3.5 px-6
+          text-sm font-bold tracking-wide text-slate-950 select-none no-underline
+          bg-gradient-to-b from-[#FFD36B] to-[#F0A500]
+          border border-amber-200/60
+          shadow-[inset_0_1px_0_rgba(255,255,255,0.7),inset_0_-3px_6px_rgba(120,70,0,0.35)]
+          [text-shadow:0_1px_0_rgba(255,255,255,0.5)]
+          transition-transform duration-200 active:scale-[0.97]"
+              >
+                Get the Book on Amazon
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14m0 0l-6-6m6 6l-6 6" />
+                </svg>
+              </a>
             </div>
           </div>
         </section>
@@ -150,7 +211,7 @@ export const FounderStoryPage = () => {
             <span className="text-zinc-500 text-xs font-bold tracking-widest uppercase block mb-3">
               The Journey
             </span>
-            <h2 className="text-3xl md:text-5xl font-extrabold text-white mb-4 font-sora">
+            <h2 className="text-3xl md:text-5xl font-extrabold text-white mb-4 font-sora [text-shadow:0_1px_2px_rgba(0,0,0,0.45)]">
               Life <span className="text-blue-500">Timeline</span>
             </h2>
             <p className="text-[#94A3B8] text-sm sm:text-base leading-relaxed max-w-lg mx-auto font-normal font-['Inter']">
@@ -161,7 +222,7 @@ export const FounderStoryPage = () => {
 
           {/* Timeline Path Container */}
           <div className="max-w-[1400px] mx-auto relative">
-            {/* Vertical central timeline line (glowing gradient matching path colors) */}
+            {/* Vertical central timeline line */}
             <div className="absolute left-4 lg:left-1/2 top-4 bottom-4 w-[2px] bg-gradient-to-b from-slate-200 via-red-500 via-orange-500 via-rose-500 via-purple-500 via-blue-500 to-emerald-500 opacity-30 -translate-x-1/2" />
 
             {/* Event Nodes */}
@@ -175,10 +236,10 @@ export const FounderStoryPage = () => {
                     className={`flex flex-col lg:flex-row items-start ${isLeft ? "lg:flex-row-reverse" : ""
                       } relative w-full`}
                   >
-                    {/* Timeline Dot (glowing ring + custom gradient) */}
+                    {/* Timeline Dot */}
                     <div className="absolute left-4 lg:left-1/2 -translate-x-1/2 top-8 z-20 flex items-center justify-center">
                       <div
-                        className={`w-5 h-5 rounded-full bg-gradient-to-br ${event.dotColor} flex items-center justify-center relative`}
+                        className={`w-5 h-5 rounded-full bg-gradient-to-br ${event.dotColor} !shadow-[inset_0_1px_0_rgba(255,255,255,0.5),inset_0_-2px_3px_rgba(0,0,0,0.35)] flex items-center justify-center relative`}
                       >
                         <div className="w-2.5 h-2.5 rounded-full bg-[#030303]" />
                         {/* Pulsing ring outline */}
@@ -197,11 +258,18 @@ export const FounderStoryPage = () => {
                         <div className="absolute left-0 top-10 w-16 h-[1.5px] bg-gradient-to-l from-blue-500/0 to-blue-500/20 hidden lg:block" />
                       )}
 
-                      {/* Glassmorphic Event Card */}
-                      <div className="relative group p-6 sm:p-7 bg-[#19273C] hover:bg-[#0F1322]/80 border border-white/[0.03] hover:border-blue-500/20 rounded-[20px] transition-all duration-500 hover:-translate-y-1.5 shadow-[0_8px_30px_rgb(0,0,0,0.4)] hover:shadow-[0_20px_40px_rgba(11,96,189,0.12)]">
+                      {/* Glossy Event Card */}
+                      <div
+                        className="relative group p-6 sm:p-7 rounded-[20px] select-none
+                          bg-gradient-to-b from-[#1F3150] to-[#142033]
+                          hover:from-[#16203A] hover:to-[#0B1220]
+                          border border-white/10 hover:border-blue-400/30
+                          shadow-[inset_0_1px_0_rgba(255,255,255,0.12),inset_0_-3px_6px_rgba(0,0,0,0.35)]
+                          transition-all duration-500 hover:-translate-y-1.5"
+                      >
                         {/* Event Badge */}
                         <span
-                          className={`inline-flex px-3 py-1 rounded-full text-[9px] font-extrabold uppercase tracking-wider mb-4 ${event.badgeColor}`}
+                          className={`inline-flex px-3 py-1 rounded-full text-[9px] font-extrabold uppercase tracking-wider mb-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.2),inset_0_-2px_4px_rgba(0,0,0,0.3)] [text-shadow:0_1px_2px_rgba(0,0,0,0.45)] ${event.badgeColor}`}
                         >
                           {event.badge}
                         </span>
@@ -209,11 +277,15 @@ export const FounderStoryPage = () => {
                         {/* Header with Title and Icon */}
                         <div className="flex items-center gap-3.5 mb-3">
                           <div
-                            className={`p-2 rounded-xl bg-white/[0.03] border border-white/[0.06] ${event.iconColor}`}
+                            className={`p-2 rounded-xl bg-gradient-to-b from-white/10 to-white/[0.02] border border-white/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.2),inset_0_-3px_6px_rgba(0,0,0,0.35)] ${event.iconColor}`}
                           >
-                            <Icon size={18} strokeWidth={1.8} />
+                            <Icon
+                              size={18}
+                              strokeWidth={1.8}
+                              className="drop-shadow-[0_1px_2px_rgba(0,0,0,0.45)]"
+                            />
                           </div>
-                          <h3 className="text-white text-lg sm:text-xl font-bold font-sora tracking-tight leading-snug">
+                          <h3 className="text-white text-lg sm:text-xl font-bold font-sora tracking-tight leading-snug [text-shadow:0_1px_2px_rgba(0,0,0,0.45)]">
                             {event.title}
                           </h3>
                         </div>
@@ -243,7 +315,7 @@ export const FounderStoryPage = () => {
                 <span className="text-zinc-500 text-xs font-bold tracking-widest uppercase block mb-3">
                   The Mission
                 </span>
-                <h2 className="text-3xl sm:text-4xl font-extrabold text-[#FFFFFF] font-sora">
+                <h2 className="text-3xl sm:text-4xl font-extrabold text-[#FFFFFF] font-sora [text-shadow:0_1px_2px_rgba(0,0,0,0.45)]">
                   Why I Created <span className="text-[#155DFC]">vNXT</span>
                 </h2>
               </div>
@@ -298,14 +370,22 @@ export const FounderStoryPage = () => {
                   return (
                     <div
                       key={idx}
-                      className="bg-[#19273C] border border-zinc-900 rounded-xl px-4 py-3.5 flex items-center gap-3 hover:border-blue-500/20 transition-all duration-300"
+                      className="rounded-xl px-4 py-3.5 flex items-center gap-3 select-none
+                        bg-gradient-to-b from-[#1F3150] to-[#142033]
+                        border border-white/10 hover:border-blue-400/30
+                        shadow-[inset_0_1px_0_rgba(255,255,255,0.12),inset_0_-3px_6px_rgba(0,0,0,0.35)]
+                        transition-all duration-300"
                     >
                       <div
-                        className={`p-2 rounded-lg ${item.bg} ${item.color}`}
+                        className={`p-2 rounded-lg border border-white/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.2),inset_0_-2px_4px_rgba(0,0,0,0.3)] ${item.bg} ${item.color}`}
                       >
-                        <ItemIcon size={16} strokeWidth={2} />
+                        <ItemIcon
+                          size={16}
+                          strokeWidth={2}
+                          className="drop-shadow-[0_1px_2px_rgba(0,0,0,0.45)]"
+                        />
                       </div>
-                      <span className="text-white text-xs sm:text-sm font-semibold font-sora">
+                      <span className="text-white text-xs sm:text-sm font-semibold font-sora [text-shadow:0_1px_2px_rgba(0,0,0,0.45)]">
                         {item.label}
                       </span>
                     </div>
@@ -316,21 +396,23 @@ export const FounderStoryPage = () => {
 
             {/* Right Column: Quote Card */}
             <div className="relative group max-w-lg lg:max-w-none mx-auto w-full">
-              {/* Soft Glow Behind */}
-              <div className="absolute -inset-1 bg-gradient-to-r from-blue-600/30 to-purple-600/30 rounded-[26px] blur-xl opacity-30 group-hover:opacity-40 transition-opacity" />
-
-              {/* Gradient Card */}
-              <div className="relative p-8 sm:p-10 bg-gradient-to-br from-[#0F172B] via-[#162456] to-[#3C0366] border border-white/[0.08] rounded-[24px] shadow-2xl relative overflow-hidden flex flex-col justify-between min-h-[300px] hover:border-blue-500/30 transition-all duration-500">
-                {/* Inner ambient glows for premium depth */}
+              <div
+                className="relative p-8 sm:p-10 rounded-[24px] overflow-hidden flex flex-col justify-between min-h-[300px]
+                  bg-gradient-to-br from-[#0F172B] via-[#162456] to-[#3C0366]
+                  border border-white/10 hover:border-blue-400/30
+                  shadow-[inset_0_1px_0_rgba(255,255,255,0.15),inset_0_-3px_6px_rgba(0,0,0,0.4)]
+                  transition-all duration-500"
+              >
+                {/* Inner ambient glows */}
                 <div className="absolute -top-[100px] -right-[100px] w-[220px] h-[220px] rounded-full blur-[70px] bg-blue-400/10 pointer-events-none" />
                 <div className="absolute -bottom-[100px] -left-[100px] w-[220px] h-[220px] rounded-full blur-[70px] bg-purple-500/10 pointer-events-none" />
 
                 <div className="relative z-10">
                   <Award
-                    className="text-[#2B7FFF] size-8 mb-6"
+                    className="text-[#2B7FFF] size-8 mb-6 drop-shadow-[0_2px_3px_rgba(0,0,0,0.45)]"
                     strokeWidth={1.5}
                   />
-                  <blockquote className="text-white text-xl sm:text-[26px] font-bold font-sora leading-relaxed tracking-wide">
+                  <blockquote className="text-white text-xl sm:text-[26px] font-bold font-sora leading-relaxed tracking-wide [text-shadow:0_1px_2px_rgba(0,0,0,0.45)]">
                     "Sacrifice who you are today for what you can become
                     tomorrow."
                   </blockquote>
@@ -346,11 +428,6 @@ export const FounderStoryPage = () => {
           </div>
         </section>
       </div>
-      {/* <StartFreeButton
-        text="Start Free Assessment"
-        showIcon
-        className="px-6 py-3.5 md:px-8 md:py-4 text-base md:text-lg shadow-[#155DFC4D] w-full sm:w-auto"
-      /> */}
     </>
   );
 };

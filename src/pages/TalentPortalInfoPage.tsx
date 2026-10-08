@@ -170,16 +170,23 @@ export default function TalentPortalInfoPage() {
         </section>
 
         {/* WHAT IT IS SECTION */}
-        <section className="bg-gradient-to-b from-[#0D1526] via-[#0A101D] to-[#070C16] border border-white/10 rounded-3xl p-8 sm:p-14 relative overflow-hidden shadow-2xl shadow-blue-950/20 group">
+        <section className="bg-gradient-to-b from-[#0D1526] via-[#0A101D] to-[#070C16] border border-white/10 rounded-3xl p-8 sm:p-14 relative overflow-hidden shadow-[inset_0_1px_0_rgba(255,255,255,0.1),inset_0_-3px_6px_rgba(0,0,0,0.35)] group">
           <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-500/10 rounded-full blur-3xl pointer-events-none group-hover:bg-blue-500/15 transition-all duration-500" />
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
             <div className="lg:col-span-7 space-y-6">
-              <div className="inline-flex items-center gap-2 text-cyan-400 text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full bg-cyan-400/10 border border-cyan-400/20">
-                <Rocket className="w-4 h-4" />
+              <div
+                className="inline-flex items-center gap-2 px-3 py-1 rounded-full select-none
+          text-cyan-300 text-xs font-bold uppercase tracking-widest
+          bg-gradient-to-b from-cyan-500/25 to-cyan-700/15
+          border border-cyan-400/30
+          shadow-[inset_0_1px_0_rgba(255,255,255,0.2),inset_0_-2px_4px_rgba(0,0,0,0.3)]
+          [text-shadow:0_1px_2px_rgba(0,0,0,0.45)]"
+              >
+                <Rocket className="w-4 h-4 drop-shadow-[0_1px_2px_rgba(0,0,0,0.45)]" />
                 What is the Talent Portal?
               </div>
-              <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-white leading-tight">
+              <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-white leading-tight [text-shadow:0_1px_2px_rgba(0,0,0,0.45)]">
                 An All-in-One Career Acceleration Engine
               </h2>
               <p className="text-zinc-300 leading-relaxed text-base sm:text-lg">
@@ -195,16 +202,16 @@ export default function TalentPortalInfoPage() {
                 <div
                   key={item.title}
                   className={`group p-6 rounded-2xl text-center space-y-3 select-none
-        bg-gradient-to-b from-[#172238] to-[#0F1727]
-        border border-white/10 ${COLORS[item.color].cardHover}
-        shadow-[inset_0_1px_0_rgba(255,255,255,0.12),inset_0_-3px_6px_rgba(0,0,0,0.35)]
-        transition-all duration-300 hover:-translate-y-1`}
+            bg-gradient-to-b from-[#172238] to-[#0F1727]
+            border border-white/10 ${COLORS[item.color].cardHover}
+            shadow-[inset_0_1px_0_rgba(255,255,255,0.12),inset_0_-3px_6px_rgba(0,0,0,0.35)]
+            transition-all duration-300 hover:-translate-y-1`}
                 >
                   <div
                     className={`w-12 h-12 mx-auto rounded-2xl flex items-center justify-center
-          bg-gradient-to-b border ${COLORS[item.color].tile}
-          shadow-[inset_0_1px_0_rgba(255,255,255,0.25),inset_0_-3px_6px_rgba(0,0,0,0.35)]
-          transition-transform duration-300 group-hover:scale-110`}
+              bg-gradient-to-b border ${COLORS[item.color].tile}
+              shadow-[inset_0_1px_0_rgba(255,255,255,0.25),inset_0_-3px_6px_rgba(0,0,0,0.35)]
+              transition-transform duration-300 group-hover:scale-110`}
                   >
                     <span className="flex items-center justify-center drop-shadow-[0_2px_3px_rgba(0,0,0,0.45)]">
                       {item.icon}
@@ -345,11 +352,11 @@ export default function TalentPortalInfoPage() {
         </section>
 
         {/* CALL TO ACTION */}
-        <section className="text-center bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 rounded-3xl p-10 sm:p-20 space-y-8 shadow-2xl shadow-blue-900/40 relative overflow-hidden group">
+        <section className="text-center bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 rounded-3xl p-10 sm:p-20 space-y-8 shadow-[inset_0_1px_0_rgba(255,255,255,0.25),inset_0_-3px_6px_rgba(0,0,0,0.35)] relative overflow-hidden group">
           <div className="absolute top-0 right-0 w-96 h-96 bg-white/15 rounded-full blur-3xl pointer-events-none group-hover:scale-125 transition-transform duration-700" />
           <div className="absolute bottom-0 left-0 w-96 h-96 bg-cyan-400/15 rounded-full blur-3xl pointer-events-none" />
 
-          <h2 className="text-3xl sm:text-6xl font-black text-white tracking-tight leading-tight relative z-10">
+          <h2 className="text-3xl sm:text-6xl font-black text-white tracking-tight leading-tight relative z-10 [text-shadow:0_2px_4px_rgba(0,0,0,0.35)]">
             Ready to Unlock Your Talent Potential?
           </h2>
           <p className="text-blue-100 text-base sm:text-xl max-w-2xl mx-auto leading-relaxed relative z-10">
@@ -358,7 +365,7 @@ export default function TalentPortalInfoPage() {
 
           <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-5 relative z-10">
             <Link to="/dashboard/user/talent-portal">
-              <Button className="bg-white text-blue-700 hover:bg-zinc-100 px-10 py-7 rounded-full font-bold text-lg shadow-[inset_0_1px_0_rgba(255,255,255,0.9),inset_0_-3px_6px_rgba(0,0,0,0.15),0_8px_24px_rgba(0,0,0,0.2)] [text-shadow:0_1px_1px_rgba(255,255,255,0.5)] transition-all cursor-pointer select-none">
+              <Button className="bg-white text-blue-700 hover:bg-zinc-100 px-10 py-7 rounded-full font-bold text-lg shadow-[inset_0_1px_0_rgba(255,255,255,0.9),inset_0_-3px_6px_rgba(0,0,0,0.15)] [text-shadow:0_1px_1px_rgba(255,255,255,0.5)] transition-all cursor-pointer select-none">
                 Get Started Now <ChevronRight className="w-5 h-5 ml-1" />
               </Button>
             </Link>

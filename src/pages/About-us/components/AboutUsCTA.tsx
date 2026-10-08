@@ -21,7 +21,9 @@ export const AboutUsCTA = ({
   const [isAssessmentOpen, setIsAssessmentOpen] = useState(false);
 
   return (
-    <section className={`relative ${bgClass} py-16 md:py-24 overflow-hidden min-h-[500px] flex items-center`}>
+    <section
+      className={`relative ${bgClass} py-16 md:py-24 overflow-hidden min-h-[500px] flex items-center shadow-[inset_0_1px_0_rgba(255,255,255,0.2),inset_0_-3px_6px_rgba(0,0,0,0.3)]`}
+    >
       {/* Bottom Curve */}
       <div
         className="absolute bottom-0 left-0 w-full z-0"
@@ -33,6 +35,7 @@ export const AboutUsCTA = ({
           fill="currentColor"
           xmlns="http://www.w3.org/2000/svg"
           preserveAspectRatio="none"
+          aria-hidden="true"
         >
           <path
             fill="currentColor"
@@ -43,7 +46,7 @@ export const AboutUsCTA = ({
       </div>
 
       <div className="relative z-10 max-w-4xl mx-auto px-6 text-center w-full">
-        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 leading-tight">
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 leading-tight [text-shadow:0_2px_4px_rgba(0,0,0,0.35)]">
           {title}
         </h2>
 
@@ -60,7 +63,7 @@ export const AboutUsCTA = ({
           <StartFreeButton
             text="Start Free Assessment"
             showIcon
-            className="px-6 py-3.5 md:px-8 md:py-4 text-base md:text-lg shadow-[#155DFC4D] w-full sm:w-auto"
+            className="px-6 py-3.5 md:px-8 md:py-4 text-base md:text-lg w-full sm:w-auto"
           />
         </div>
       </div>

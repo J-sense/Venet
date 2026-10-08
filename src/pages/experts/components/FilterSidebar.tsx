@@ -55,14 +55,15 @@ export default function FilterSidebar({
   return (
     <aside
       className={`
-        bg-[#0F172A] border border-[#1E293B]/60 rounded-2xl p-6 w-full lg:w-[400px] shrink-0
-        transition-all duration-300
-        ${isOpen ? "block fixed inset-y-0 left-0 z-50 overflow-y-auto w-80 m-4 shadow-2xl lg:relative lg:inset-auto lg:m-0" : "hidden lg:block"}
-      `}
+    bg-gradient-to-b from-[#162036] to-[#0B1220] border border-[#1E293B]/60 rounded-2xl p-6 w-full lg:w-[400px] shrink-0
+    shadow-[inset_0_1px_0_rgba(255,255,255,0.1),inset_0_-3px_6px_rgba(0,0,0,0.35)]
+    transition-all duration-300
+    ${isOpen ? "block fixed inset-y-0 left-0 z-50 overflow-y-auto w-80 m-4 lg:relative lg:inset-auto lg:m-0" : "hidden lg:block"}
+  `}
     >
       <div className="flex items-center justify-between mb-6 pb-4 border-b border-slate-800/80">
-        <div className="flex items-center gap-2 text-white font-bold text-[18px] font-medium ">
-          <SlidersHorizontal className="w-5 h-5 text-[#FFFFFF]" />
+        <div className="flex items-center gap-2 text-white font-bold text-[18px] font-medium [text-shadow:0_1px_2px_rgba(0,0,0,0.45)]">
+          <SlidersHorizontal className="w-5 h-5 text-[#FFFFFF] drop-shadow-[0_1px_2px_rgba(0,0,0,0.45)]" />
           <span>Filters</span>
         </div>
 
@@ -70,7 +71,11 @@ export default function FilterSidebar({
           <button
             onClick={onReset}
             title="Reset all filters"
-            className="text-gray-400 hover:text-white p-1.5 hover:bg-slate-800/50 rounded-lg transition-colors flex items-center gap-1 text-xs"
+            className="text-gray-300 hover:text-white px-2.5 py-1.5 rounded-lg transition-all flex items-center gap-1 text-xs select-none cursor-pointer
+          bg-gradient-to-b from-white/10 to-white/[0.02] hover:from-white/20 hover:to-white/[0.06]
+          border border-white/10
+          shadow-[inset_0_1px_0_rgba(255,255,255,0.15),inset_0_-2px_4px_rgba(0,0,0,0.35)]
+          [text-shadow:0_1px_2px_rgba(0,0,0,0.45)]"
           >
             <RotateCcw className="w-3.5 h-3.5" />
             <span>Reset</span>
@@ -79,7 +84,10 @@ export default function FilterSidebar({
           {onClose && (
             <button
               onClick={onClose}
-              className="lg:hidden text-gray-400 hover:text-white p-1 hover:bg-slate-800 rounded-lg"
+              className="lg:hidden text-gray-300 hover:text-white p-1.5 rounded-lg transition-all select-none cursor-pointer
+            bg-gradient-to-b from-white/10 to-white/[0.02] hover:from-white/20 hover:to-white/[0.06]
+            border border-white/10
+            shadow-[inset_0_1px_0_rgba(255,255,255,0.15),inset_0_-2px_4px_rgba(0,0,0,0.35)]"
             >
               <X className="w-5 h-5" />
             </button>
@@ -102,7 +110,8 @@ export default function FilterSidebar({
               placeholder="Search experts..."
               value={filters.search}
               onChange={(e) => onFilterChange({ search: e.target.value })}
-              className="w-full bg-[#1E293B] border border-[#64748B] focus:border-[#3B82F6] focus:ring-1 focus:ring-[#3B82F6] rounded-xl pl-10 pr-4 py-2.5 text-white placeholder-gray-500 text-sm outline-none transition-all"
+              className="w-full bg-gradient-to-b from-[#182338] to-[#1E293B] border border-[#64748B] focus:border-[#3B82F6] focus:ring-1 focus:ring-[#3B82F6] rounded-xl pl-10 pr-4 py-2.5 text-white placeholder-gray-500 text-sm outline-none transition-all
+            shadow-[inset_0_2px_4px_rgba(0,0,0,0.35),inset_0_-1px_0_rgba(255,255,255,0.06)]"
             />
           </div>
         </div>
@@ -124,7 +133,7 @@ export default function FilterSidebar({
                     type="checkbox"
                     checked={isChecked}
                     onChange={() => handleSpecialtyChange(specialty)}
-                    className="w-4 h-4 rounded border-slate-700 bg-[#070C15] text-[#3B82F6] focus:ring-[#3B82F6]/50 focus:ring-offset-0 transition-colors cursor-pointer"
+                    className="w-4 h-4 rounded border-slate-700 bg-[#070C15] text-[#3B82F6] focus:ring-[#3B82F6]/50 focus:ring-offset-0 transition-colors cursor-pointer shadow-[inset_0_1px_2px_rgba(0,0,0,0.5)]"
                   />
                   <span className="text-[16px] font-medium">{specialty}</span>
                 </label>
@@ -151,7 +160,7 @@ export default function FilterSidebar({
                     name="rating-filter"
                     checked={isChecked}
                     onChange={() => onFilterChange({ rating: ratingOption.value })}
-                    className="w-4 h-4 rounded-full border-slate-700 bg-[#070C15] text-[#3B82F6] focus:ring-[#3B82F6]/50 focus:ring-offset-0 transition-colors cursor-pointer"
+                    className="w-4 h-4 rounded-full border-slate-700 bg-[#070C15] text-[#3B82F6] focus:ring-[#3B82F6]/50 focus:ring-offset-0 transition-colors cursor-pointer shadow-[inset_0_1px_2px_rgba(0,0,0,0.5)]"
                   />
                   <span className="text-[#FAFAFA]  text-[16px] font-medium">{ratingOption.label}</span>
                 </label>
@@ -174,7 +183,8 @@ export default function FilterSidebar({
                 max="500"
                 value={filters.minPrice || ""}
                 onChange={(e) => handlePriceRangeChange(parseInt(e.target.value), filters.maxPrice)}
-                className="w-full bg-[#070C15] border border-slate-800 focus:border-[#3B82F6] rounded pl-6 pr-3 py-3 text-white text-sm outline-none transition-all [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                className="w-full bg-gradient-to-b from-[#05080F] to-[#0B111D] border border-slate-800 focus:border-[#3B82F6] rounded-lg pl-6 pr-3 py-3 text-white text-sm outline-none transition-all [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none
+              shadow-[inset_0_2px_4px_rgba(0,0,0,0.4),inset_0_-1px_0_rgba(255,255,255,0.05)]"
                 placeholder="0"
               />
             </div>
@@ -187,7 +197,8 @@ export default function FilterSidebar({
                 max="500"
                 value={filters.maxPrice || ""}
                 onChange={(e) => handlePriceRangeChange(filters.minPrice, parseInt(e.target.value))}
-                className="w-full bg-[#070C15] border border-slate-800 focus:border-[#3B82F6] rounded pl-6 pr-3 py-3 text-white text-sm outline-none transition-all [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                className="w-full bg-gradient-to-b from-[#05080F] to-[#0B111D] border border-slate-800 focus:border-[#3B82F6] rounded-lg pl-6 pr-3 py-3 text-white text-sm outline-none transition-all [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none
+              shadow-[inset_0_2px_4px_rgba(0,0,0,0.4),inset_0_-1px_0_rgba(255,255,255,0.05)]"
                 placeholder="500"
               />
             </div>
@@ -201,14 +212,14 @@ export default function FilterSidebar({
               max="500"
               value={filters.maxPrice}
               onChange={(e) => handlePriceRangeChange(filters.minPrice, parseInt(e.target.value))}
-              className="w-full h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-[#3B82F6] focus:outline-none"
+              className="w-full h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-[#3B82F6] focus:outline-none shadow-[inset_0_1px_2px_rgba(0,0,0,0.5)]"
               style={{
                 background: `linear-gradient(to right, #3B82F6 0%, #3B82F6 ${(filters.maxPrice / 500) * 100}%, #1E293B ${(filters.maxPrice / 500) * 100}%, #1E293B 100%)`
               }}
             />
             <div className="flex justify-between text-gray-500 text-[11px] font-semibold mt-2">
               <span>$0</span>
-              <span className="text-[#3B82F6] bg-[#3B82F6]/10 px-2 py-0.5 rounded-md border border-[#3B82F6]/20">
+              <span className="text-[#6AA8FF] bg-gradient-to-b from-[#3B82F6]/30 to-[#3B82F6]/10 px-2 py-0.5 rounded-md border border-[#3B82F6]/30 shadow-[inset_0_1px_0_rgba(255,255,255,0.2),inset_0_-2px_3px_rgba(0,0,0,0.3)] [text-shadow:0_1px_2px_rgba(0,0,0,0.45)]">
                 ${filters.minPrice} - ${filters.maxPrice}
               </span>
               <span>$500</span>
