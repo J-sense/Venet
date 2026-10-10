@@ -62,7 +62,7 @@ export function UserSidebar({ isOpen, onClose, navItems, user: userProp }: Sideb
         <div className="p-6 flex flex-col items-center justify-center w-full border-b border-[#1F1F1F]/60">
           <Link to={"/"}>
             <img
-              src="/VNetLogo.png"
+              src="/VNextLogo.png"
               alt="VNET"
               className="h-auto w-[260px] max-w-[160px] object-contain brightness-110 rounded-full"
             />
@@ -89,8 +89,8 @@ export function UserSidebar({ isOpen, onClose, navItems, user: userProp }: Sideb
                   to={item.href}
                   onClick={onClose}
                   className={`relative flex items-center gap-3 px-3.5 py-2.5 rounded-[10px] transition-all duration-300 ${isActive
-                      ? "bg-blue-500/10 outline outline-1 outline-blue-500/20 text-[16px] shadow-sm shadow-blue-500/5"
-                      : "hover:bg-[#171717] hover:text-white text-[16px] text-[#94A3B8] hover:translate-x-1.5"
+                    ? "bg-blue-500/10 outline outline-1 outline-blue-500/20 text-[16px] shadow-sm shadow-blue-500/5"
+                    : "hover:bg-[#171717] hover:text-white text-[16px] text-[#94A3B8] hover:translate-x-1.5"
                     }`}
                 >
                   {/* Active Accent Line Indicator */}

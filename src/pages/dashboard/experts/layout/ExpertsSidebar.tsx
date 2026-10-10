@@ -19,15 +19,14 @@ export function ExpertsSidebar({ isOpen, onClose, navItems }: SidebarProps) {
 
   return (
     <aside
-      className={`bg-[#18181B] border-r border-[#1F1F1F] fixed top-0 left-0 z-40 flex h-screen w-[260px] flex-col transition-transform duration-300 ${
-        isOpen ? "translate-x-0" : "-translate-x-full"
-      }`}
+      className={`bg-[#18181B] border-r border-[#1F1F1F] fixed top-0 left-0 z-40 flex h-screen w-[260px] flex-col transition-transform duration-300 ${isOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
     >
       {/* Logo Section */}
       <div className="p-6 flex flex-col items-center justify-center w-full border-b border-[#1F1F1F]/60">
         <Link to={"/"} onClick={onClose}>
           <img
-            src="/VNetLogo.png"
+            src="/VNextLogo.png"
             alt="VNET"
             className="h-auto w-[260px] max-w-[160px] object-contain brightness-110 rounded-full"
           />
@@ -55,11 +54,10 @@ export function ExpertsSidebar({ isOpen, onClose, navItems }: SidebarProps) {
                 key={item.href}
                 to={item.href}
                 onClick={onClose}
-                className={`relative flex items-center gap-3 px-3.5 py-2.5 rounded-[10px] transition-all duration-300 ${
-                  isActive
+                className={`relative flex items-center gap-3 px-3.5 py-2.5 rounded-[10px] transition-all duration-300 ${isActive
                     ? "bg-blue-500/10 outline outline-1 outline-blue-500/20 text-[16px] shadow-sm shadow-blue-500/5"
                     : "hover:bg-[#171717] hover:text-white text-[16px] text-[#94A3B8] hover:translate-x-1.5"
-                }`}
+                  }`}
               >
                 {/* Active Accent Line Indicator */}
                 {isActive && (
@@ -82,9 +80,8 @@ export function ExpertsSidebar({ isOpen, onClose, navItems }: SidebarProps) {
 
                 {/* Label */}
                 <span
-                  className={`text-base font-medium font-['Inter'] leading-6 ${
-                    isActive ? "text-blue-400" : "text-[#94A3B8]"
-                  }`}
+                  className={`text-base font-medium font-['Inter'] leading-6 ${isActive ? "text-blue-400" : "text-[#94A3B8]"
+                    }`}
                 >
                   {item.label}
                 </span>
