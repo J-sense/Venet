@@ -155,21 +155,31 @@ export default function ExpertsDetails() {
           <div className="lg:col-span-5 xl:col-span-4 order-1 lg:order-2 lg:sticky lg:top-24">
             <div className="space-y-4">
               {/* Dynamic top status badge */}
-              <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-2xl p-4 flex items-center justify-between text-xs">
+              <div
+                className="rounded-2xl p-4 flex items-center justify-between text-xs select-none
+    bg-gradient-to-b from-emerald-500/20 to-emerald-700/10
+    border border-emerald-400/30
+    shadow-[inset_0_1px_0_rgba(255,255,255,0.15),inset_0_-3px_6px_rgba(0,0,0,0.3)]"
+              >
                 <div className="flex items-center gap-2">
                   <span className="relative flex h-2.5 w-2.5">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+                    {/* <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span> */}
+                    {/* <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500 shadow-[inset_0_1px_0_rgba(255,255,255,0.5)]"></span> */}
                   </span>
-                  <span className="text-slate-300 font-bold">
+                  <span className="text-slate-200 font-bold [text-shadow:0_1px_2px_rgba(0,0,0,0.45)]">
                     Accepting Bookings
                   </span>
                 </div>
-                <span className="text-emerald-400 font-extrabold font-mono text-[10px] bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-1 rounded-full uppercase">
+                <span
+                  className="text-emerald-300 font-extrabold font-mono text-[10px] uppercase px-2.5 py-1 rounded-full
+      bg-gradient-to-b from-emerald-400/30 to-emerald-600/15
+      border border-emerald-400/35
+      shadow-[inset_0_1px_0_rgba(255,255,255,0.2),inset_0_-2px_4px_rgba(0,0,0,0.3)]
+      [text-shadow:0_1px_2px_rgba(0,0,0,0.45)]"
+                >
                   Available
                 </span>
               </div>
-
               {/* Booking Component */}
               <CustomBooking
                 expert={expert}

@@ -25,7 +25,7 @@ const renderSessionActionButton = (
   onJoin: (s: any) => void,
   isMobile = false
 ) => {
-  console.log(session, "sessionsss");
+  // console.log(session, "sessionsss");
   const baseStyle = isMobile
     ? "w-full font-bold py-3 px-6 rounded-xl flex items-center justify-center gap-2 text-sm transition-all whitespace-nowrap"
     : "font-semibold py-2.5 px-5 rounded-xl flex items-center gap-2 text-sm transition-all whitespace-nowrap";
@@ -264,20 +264,18 @@ export const UpcomingSessions = ({
         <div className="flex items-center gap-2 border-b border-white/10 pt-1">
           <button
             onClick={() => setActiveTab("upcoming")}
-            className={`flex items-center gap-2 px-4 py-2.5 text-sm font-semibold border-b-2 transition-all cursor-pointer ${
-              activeTab === "upcoming"
+            className={`flex items-center gap-2 px-4 py-2.5 text-sm font-semibold border-b-2 transition-all cursor-pointer ${activeTab === "upcoming"
                 ? "border-blue-500 text-blue-400 bg-blue-500/10 rounded-t-lg"
                 : "border-transparent text-zinc-400 hover:text-zinc-200 hover:bg-white/5 rounded-t-lg"
-            }`}
+              }`}
           >
             <Clock className="w-4 h-4" />
             <span>Scheduled & Active</span>
             <span
-              className={`text-xs px-2 py-0.5 rounded-full font-bold ${
-                activeTab === "upcoming"
+              className={`text-xs px-2 py-0.5 rounded-full font-bold ${activeTab === "upcoming"
                   ? "bg-blue-500/20 text-blue-300"
                   : "bg-zinc-800 text-zinc-400"
-              }`}
+                }`}
             >
               {upcomingSessions.length}
             </span>
@@ -285,20 +283,18 @@ export const UpcomingSessions = ({
 
           <button
             onClick={() => setActiveTab("completed")}
-            className={`flex items-center gap-2 px-4 py-2.5 text-sm font-semibold border-b-2 transition-all cursor-pointer ${
-              activeTab === "completed"
+            className={`flex items-center gap-2 px-4 py-2.5 text-sm font-semibold border-b-2 transition-all cursor-pointer ${activeTab === "completed"
                 ? "border-emerald-500 text-emerald-400 bg-emerald-500/10 rounded-t-lg"
                 : "border-transparent text-zinc-400 hover:text-zinc-200 hover:bg-white/5 rounded-t-lg"
-            }`}
+              }`}
           >
             <CheckCircle2 className="w-4 h-4" />
             <span>Completed</span>
             <span
-              className={`text-xs px-2 py-0.5 rounded-full font-bold ${
-                activeTab === "completed"
+              className={`text-xs px-2 py-0.5 rounded-full font-bold ${activeTab === "completed"
                   ? "bg-emerald-500/20 text-emerald-300"
                   : "bg-zinc-800 text-zinc-400"
-              }`}
+                }`}
             >
               {completedSessions.length}
             </span>

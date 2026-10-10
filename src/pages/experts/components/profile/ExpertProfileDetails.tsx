@@ -180,7 +180,14 @@ export default function ExpertProfileDetails({
               <h1 className="text-2xl md:text-3xl font-extrabold text-white tracking-tight flex items-center justify-center md:justify-start gap-2">
                 {name}
               </h1>
-              <span className="self-center md:self-auto bg-[#007AFF]/15 text-[#3B82F6] text-xs font-semibold px-3 py-1 rounded-full border border-[#3B82F6]/20 w-fit">
+              <span
+                className="self-center md:self-auto w-fit select-none px-3 py-1 rounded-full
+    text-xs font-semibold text-blue-300
+    bg-gradient-to-b from-[#007AFF]/30 to-[#0B60BD]/15
+    border border-[#3B82F6]/35
+    shadow-[inset_0_1px_0_rgba(255,255,255,0.2),inset_0_-2px_4px_rgba(0,0,0,0.3)]
+    [text-shadow:0_1px_2px_rgba(0,0,0,0.45)]"
+              >
                 {specialty}
               </span>
             </div>
@@ -190,8 +197,15 @@ export default function ExpertProfileDetails({
             </p>
 
             <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 mt-4 text-sm font-semibold">
-              <div className="flex items-center gap-1.5 bg-amber-400/10 text-amber-400 px-3 py-1.5 rounded-xl border border-amber-400/20">
-                <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
+              <div
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl select-none
+    text-amber-300
+    bg-gradient-to-b from-amber-400/30 to-amber-600/15
+    border border-amber-400/35
+    shadow-[inset_0_1px_0_rgba(255,255,255,0.2),inset_0_-2px_4px_rgba(0,0,0,0.3)]
+    [text-shadow:0_1px_2px_rgba(0,0,0,0.45)]"
+              >
+                <Star className="w-4 h-4 fill-amber-300 text-amber-300 drop-shadow-[0_1px_2px_rgba(0,0,0,0.45)]" />
                 <span>
                   {rating > 0 ? `${rating.toFixed(1)} Rating` : "No Ratings"}
                 </span>
@@ -202,7 +216,13 @@ export default function ExpertProfileDetails({
               {yearsExperience && (
                 <>
                   <div className="hidden md:block text-slate-600">•</div>
-                  <div className="text-slate-300 bg-slate-800/50 px-3 py-1.5 rounded-xl border border-slate-700/40">
+                  <div
+                    className="text-slate-200 px-3 py-1.5 rounded-xl select-none
+        bg-gradient-to-b from-slate-600/40 to-slate-800/40
+        border border-slate-500/30
+        shadow-[inset_0_1px_0_rgba(255,255,255,0.15),inset_0_-2px_4px_rgba(0,0,0,0.3)]
+        [text-shadow:0_1px_2px_rgba(0,0,0,0.45)]"
+                  >
                     {yearsExperience}
                   </div>
                 </>
